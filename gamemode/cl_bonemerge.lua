@@ -54,10 +54,10 @@ function s_Meta:CreateNewBonemerge(szModel)
 					self:AddEffects(EF_BONEMERGE)
 					self.LastParent = nil
 				end
-			end
-			
-			if ply:CharID() != self.nLastCharID then
-				self:Remove()
+				
+				if self.LastParent:CharID() != self.nLastCharID then
+					self:Remove()
+				end
 			end
 		else
 			if !IsValid(self.LastParent) then
