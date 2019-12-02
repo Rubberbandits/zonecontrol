@@ -1,0 +1,16 @@
+ITEM.Name = "SKS"
+ITEM.Desc = "The soviet self-loading rifle developed during WW2. Widely available and cheap all throughout the former Soviet states. Uses 7.62x39mm."
+ITEM.Model = "models/weapons/tfa_ins2/w_sks.mdl"
+ITEM.WeaponClass = "tfa_ins2_sks"
+ITEM.Weight = 4
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.07
+ITEM.DegradeRate = 0.08
+ITEM.FOV 			= 33;
+ITEM.CamPos 		= Vector( 48.22, -33.92, 23.22 );
+ITEM.LookAt 		= Vector( 8.04, 1.61, 0 );
+ITEM.SelfRepairCondition = 70
+ITEM.AmmoType = "762x39"
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 32500

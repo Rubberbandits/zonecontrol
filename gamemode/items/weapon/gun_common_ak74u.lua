@@ -1,0 +1,16 @@
+ITEM.Name = "AKS-74U"
+ITEM.Desc = "A modern Kalashnikov rifle with an 4 inch barrel. Gas operated, rotating bolt operating system that is handy and compact. Sold overseas as the Krinkov, it is a favorite of many a warlord."
+ITEM.Model = "models/weapons/tfa_ins2/w_aks74u.mdl"
+ITEM.WeaponClass = "tfa_ins2_aks74u"
+ITEM.Weight = 2
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.05
+ITEM.DegradeRate = 0.010
+ITEM.FOV 			= 46
+ITEM.CamPos 		= Vector( 50, 4.47, 0.9 )
+ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
+ITEM.SelfRepairCondition = 70
+ITEM.AmmoType = "545x39"
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 28000

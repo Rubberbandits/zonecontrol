@@ -1,0 +1,16 @@
+ITEM.Name = "MK18 Mod 0"
+ITEM.Desc = "Close Quarter Battle Receiver equipped M4A1 Carbine, short barrel length and tight ergonomics make this gun a foreigner's wet dream. Uses 5.56x45mm."
+ITEM.Model = "models/weapons/tfa_ins2/w_mk18.mdl"
+ITEM.WeaponClass = "tfa_ins2_mk18"
+ITEM.Weight = 3
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.02
+ITEM.DegradeRate = 0.05
+ITEM.FOV 			= 20;
+ITEM.CamPos 		= Vector( 50, 50, 50 );
+ITEM.LookAt 		= Vector( 4.83, 0, 0 );
+ITEM.SelfRepairCondition = 90
+ITEM.AmmoType = "556x45"
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 120000

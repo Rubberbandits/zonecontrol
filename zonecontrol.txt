@@ -1,0 +1,7 @@
+"zonecontrol"
+{
+	"base"			"base"
+	"title"			"ZoneControl"
+	"menusystem" 	"1"
+	"maps"			"^rp_"
+}

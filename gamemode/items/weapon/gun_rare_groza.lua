@@ -1,0 +1,16 @@
+ITEM.Name = "OTs-14 Groza"
+ITEM.Desc = "Russian selective fire bullpup assault rifle chambered in 9x39mm SP-6, a subsonic armor piercing round. Fires 9x39mm."
+ITEM.Model = "models/weapons/tfa_ins2/w_groza.mdl"
+ITEM.WeaponClass = "tfa_ins2_groza"
+ITEM.Weight = 3
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.04
+ITEM.DegradeRate = 0.1
+ITEM.FOV 			= 46
+ITEM.CamPos 		= Vector( 50, 4.47, 0.9 )
+ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
+ITEM.SelfRepairCondition = 90
+ITEM.AmmoType = "9x39"
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 90000

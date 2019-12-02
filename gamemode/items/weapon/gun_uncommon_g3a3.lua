@@ -1,0 +1,16 @@
+ITEM.Name = "HK G3"
+ITEM.Desc = "A battle rifle straight from the Cold War, popular with many NATO countries because of its reliablity and endurance. Uses 7.62x51mm."
+ITEM.Model = "models/weapons/tfa_ins2/w_g3a3.mdl"
+ITEM.WeaponClass = "tfa_ins2_g3a3"
+ITEM.Weight = 4
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.04
+ITEM.DegradeRate = 0.05
+ITEM.FOV 			= 20;
+ITEM.CamPos 		= Vector( 100, 50, 50 );
+ITEM.LookAt 		= Vector( 0, 0, 0 );
+ITEM.SelfRepairCondition = 80
+ITEM.AmmoType = "762x51"
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 48000
