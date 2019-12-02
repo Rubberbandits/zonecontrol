@@ -8,10 +8,10 @@ ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.Bonemerge = "models/stalker_2019/radsuit.mdl";
 ITEM.Bodygroups = {
-	{0, 0}
+	{1, 0}
 }
 ITEM.RemoveBody = true
-ITEM.HelmetBodygroup = {0,1}
+ITEM.HelmetBodygroup = {1,1}
 ITEM.AllowGender = true
 ITEM.ArtifactSlots = 1
 ITEM.Vars = {

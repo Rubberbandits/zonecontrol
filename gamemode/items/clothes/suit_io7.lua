@@ -10,10 +10,10 @@ ITEM.BulkPrice =  55000;
 ITEM.License =  LICENSE_BLACK;
 ITEM.Bonemerge = "models/stalker_2019/io7a.mdl";
 ITEM.Bodygroups = {
-	{0, 0}
+	{1, 0}
 }
 ITEM.RemoveBody = true
-ITEM.HelmetBodygroup = {0,1}
+ITEM.HelmetBodygroup = {1,1}
 ITEM.AllowGender = true
 ITEM.Vars = {
 	Equipped = false,
