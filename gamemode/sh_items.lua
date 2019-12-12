@@ -221,7 +221,7 @@ if( #s_tSuitFiles > 0 ) then
 end
 
 for k,v in next, GM.SuitVariants do
-	local classname = k.."_bdu"
+	local classname = "bdu_"..k
 	
 	-- this prevents autorefresh from affecting items.
 	if( GM.Items[classname] ) then return end
