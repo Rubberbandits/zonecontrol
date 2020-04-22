@@ -42,14 +42,7 @@ if( CLIENT ) then
 		end
 	end
 	netstream.Hook( "nRemoveItem", nRemoveItem );
-	
-	local function nTooHeavy()
-		
-		GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "That's too heavy for you to carry.", { CB_ALL, CB_IC } );
-		
-	end
-	netstream.Hook( "nTooHeavy", nTooHeavy );
-	
+
 else
 	
 	local function nRemoveItem( ply, k )
