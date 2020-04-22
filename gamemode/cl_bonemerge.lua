@@ -1,6 +1,6 @@
 local s_Meta = FindMetaTable("Player")
 
-function s_Meta:CreateNewBonemerge(szModel)
+function s_Meta:CreateNewBonemerge(szModel, iBoneScale)
 	if !IsValidModel(szModel) then return end
 
 	local b = ClientsideModel(szModel, RENDERGROUP_OPAQUE)
@@ -47,6 +47,7 @@ function s_Meta:CreateNewBonemerge(szModel)
 				
 				if ply:CharID() != self.nLastCharID then
 					GAMEMODE.BonemergeEntities[self] = nil
+					ply.BodyHidden = false
 					self:Remove()
 				end
 			else
@@ -58,6 +59,7 @@ function s_Meta:CreateNewBonemerge(szModel)
 				
 				if self.LastParent:CharID() != self.nLastCharID then
 					GAMEMODE.BonemergeEntities[self] = nil
+					ply.BodyHidden = false
 					self:Remove()
 				end
 			end
@@ -86,6 +88,12 @@ function s_Meta:CreateNewBonemerge(szModel)
 		end
 	end
 	hook.Add("Think", b, b.Think)
+	
+	if iBoneScale then
+		for i = 0, b:GetBoneCount() - 1 do 
+			b:ManipulateBoneScale(i, Vector(iBoneScale, iBoneScale, iBoneScale))
+		end
+	end
 	
 	GAMEMODE.BonemergeEntities[b] = b
 	return b
@@ -163,14 +171,17 @@ local function BonemergeThink()
 				local metaitem = GAMEMODE:GetItemByID(n.szClass)
 				if metaitem.Bonemerge then
 					local mdl = metaitem.Bonemerge
+					local scale
 					
 					if metaitem.AllowGender then
 						if v:Gender() == GENDER_FEMALE then
 							mdl = string.StripExtension(mdl).."_f.mdl"
 						end
+					elseif metaitem.ScaleForGender and v:Gender() == GENDER_FEMALE then
+						scale = metaitem.ScaleForGender
 					end
 			
-					v[n.szClass] = v:CreateNewBonemerge(mdl)
+					v[n.szClass] = v:CreateNewBonemerge(mdl, scale)
 					
 					if metaitem.RemoveBody and GAMEMODE.BonemergeBodies[v] then
 						GAMEMODE.BonemergeBodies[v]:Remove()

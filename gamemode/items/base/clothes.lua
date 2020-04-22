@@ -5,6 +5,7 @@
 	ITEM.Bodygroups - table, bodygroups to set on bonemerged 
 	ITEM.RemoveBody - bool, remove default bonemerged body
 	ITEM.HelmetBodygroup - table, bodygroup to be set when helmet is worn.
+	ITEM.ScaleForGender - int, when you dont have a female variant of a model, scale the body to try to make it fit better.
 --]]
 
 -- hey, maybe we can find the helmet mat indexes on the model for each suit and just set them to ambient/occlusionproxy. lmao ghetto bonemerge models.
@@ -65,6 +66,7 @@ BASE.functions.WearHelmet = {
 		--engine/occlusionproxy
 		
 		if SERVER then
+			item:Owner():SetSkin(0)
 			for i = 1, #item:Owner():GetMaterials() do
 				item:Owner():SetSubMaterial(i - 1, "engine/occlusionproxy")
 			end
@@ -86,10 +88,8 @@ BASE.functions.RemoveHelmet = {
 		
 		if SERVER then
 			item:Transmit()
-			
-			for i = 1, #item:Owner():GetMaterials() do
-				item:Owner():SetSubMaterial(i - 1, item:Owner():GetMaterials()[i])
-			end
+			item:Owner():SetSkin(item:Owner():GetCharFromID( item:Owner():CharID() ).Skingroup)
+			item:Owner():SetSubMaterial()
 		end
 		
 		return true
