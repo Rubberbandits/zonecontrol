@@ -10,7 +10,7 @@ GM.ChatLines = GM.ChatLines or { };
 function GM:AddChat( filter, font, ... )
 
 	local text = "<font=CombineControl.ChatNormal>"
-	local unedited = "";
+	local unedited = {};
 
 	if (font) then
 		text = "<font="..(font or "CombineControl.ChatNormal")..">"
@@ -23,15 +23,15 @@ function GM:AddChat( filter, font, ... )
 			text = text.."<img="..ttx..","..v:Width().."x"..v:Height()..">"
 		elseif (type(v) == "table" and v.r and v.g and v.b) then
 			text = text.."<color="..v.r..","..v.g..","..v.b..">"
+			unedited[#unedited + 1] = Color(v.r, v.g, v.b);
 		elseif (type(v) == "Player") then
-			local color = team.GetColor(v:Team())
-
 			text = text..v:RPName():gsub("<", "&lt;"):gsub(">", "&gt;")
-			unedited = unedited..v:RPName();
+			
+			unedited[#unedited + 1] = v:RPName();
 		else
 			if( !v ) then continue end
 			text = text..tostring(v):gsub("<", "&lt;"):gsub(">", "&gt;")
-			unedited = unedited..tostring(v):gsub("<", "&lt;"):gsub(">", "&gt;");
+			unedited[#unedited + 1] = tostring(v):gsub("<", "&lt;"):gsub(">", "&gt;");
 			text = text:gsub("%b//", function(value)
 				local inner = value:sub(2, -2)
 
@@ -49,9 +49,10 @@ function GM:AddChat( filter, font, ... )
 		end
 	end
 
+	unedited[#unedited + 1] = "\n"
 	text = text.."</font>"
 	table.insert( self.ChatLines, { CurTime(), filter, font, text, owner } );
-	MsgC( unedited:gsub("&lt;", "<"):gsub("&gt;", ">") .. "\n" );
+	MsgC(unpack(unedited));
 	
 	if( #self.ChatLines > 100 ) then
 		
