@@ -3,7 +3,7 @@ local s_Meta = FindMetaTable("Player")
 function s_Meta:CreateNewBonemerge(szModel)
 	if !IsValidModel(szModel) then return end
 
-	b = ClientsideModel(szModel, RENDERGROUP_OPAQUE)
+	local b = ClientsideModel(szModel, RENDERGROUP_OPAQUE)
 	if !b then return end
 	b:SetModel(szModel)
 	b:InvalidateBoneCache()
@@ -46,6 +46,7 @@ function s_Meta:CreateNewBonemerge(szModel)
 				end
 				
 				if ply:CharID() != self.nLastCharID then
+					GAMEMODE.BonemergeEntities[self] = nil
 					self:Remove()
 				end
 			else
@@ -56,11 +57,13 @@ function s_Meta:CreateNewBonemerge(szModel)
 				end
 				
 				if self.LastParent:CharID() != self.nLastCharID then
+					GAMEMODE.BonemergeEntities[self] = nil
 					self:Remove()
 				end
 			end
 		else
 			if !IsValid(self.LastParent) then
+				GAMEMODE.BonemergeEntities[self] = nil
 				self:Remove()
 			else
 				self:SetParent(self.LastParent)
@@ -152,6 +155,8 @@ local function BonemergeThink()
 				v[n.szClass] = nil
 				GAMEMODE.BonemergeItems[m] = nil
 				GAMEMODE.DummyItems[m] = nil
+				
+				continue
 			end
 			
 			if n.Owner == v and (!v[n.szClass] or !IsValid(v[n.szClass])) and n.Vars["Equipped"] then
@@ -166,10 +171,6 @@ local function BonemergeThink()
 					end
 			
 					v[n.szClass] = v:CreateNewBonemerge(mdl)
-
-					if metaitem.DummyItemUpdate then
-						metaitem.DummyItemUpdate(n)
-					end
 					
 					if metaitem.RemoveBody and GAMEMODE.BonemergeBodies[v] then
 						GAMEMODE.BonemergeBodies[v]:Remove()
@@ -198,6 +199,10 @@ local function BonemergeThink()
 								v[n.szClass]:SetSubMaterial(submaterial[1], submaterial[2])
 							end
 						end
+					end
+					
+					if metaitem.DummyItemUpdate then
+						metaitem.DummyItemUpdate(n)
 					end
 				end
 			elseif !n.Vars["Equipped"] and v[n.szClass] then
