@@ -1,4 +1,4 @@
-function nAInvalidMap( tab )
+local function nAInvalidMap( tab )
 	
 	GAMEMODE:AddChat( { CB_ALL, CB_OOC }, "CombineControl.ChatNormal", Color( 200, 0, 0, 255 ), "Error: Invalid map specified." );
 	
@@ -13,35 +13,35 @@ function nAInvalidMap( tab )
 end
 netstream.Hook( "nAInvalidMap", nAInvalidMap );
 
-function nASeeAll()
+local function nASeeAll()
 	
 	GAMEMODE.SeeAll = !GAMEMODE.SeeAll;
 	
 end
 netstream.Hook( "nASeeAll", nASeeAll );
 
-function nASeeAllProps()
+local function nASeeAllProps()
 
 	GAMEMODE.SeeAllSavedProps = !GAMEMODE.SeeAllSavedProps;
 	
 end
 netstream.Hook( "nASeeAllProps", nASeeAllProps );
 
-function nAPlayMusic( song )
+local function nAPlayMusic( song )
 
 	GAMEMODE:PlayMusic( song );
 	
 end
 netstream.Hook( "nAPlayMusic", nAPlayMusic );
 
-function nAStopMusic()
+local function nAStopMusic()
 	
 	GAMEMODE:FadeOutMusic();
 	
 end
 netstream.Hook( "nAStopMusic", nAStopMusic );
 
-function nAListItems( filter )
+local function nAListItems( filter )
 	
 	if( filter == "" ) then
 		chat.OldAddText( Color( 128, 128, 128, 255 ), "ITEM LIST:" );
@@ -67,7 +67,7 @@ function nAListItems( filter )
 end
 netstream.Hook( "nAListItems", nAListItems );
 
-function nAListArtifacts( filter )
+local function nAListArtifacts( filter )
 	
 	if( filter == "" ) then
 		chat.OldAddText( Color( 128, 128, 128, 255 ), "ITEM LIST:" );
@@ -93,7 +93,7 @@ function nAListArtifacts( filter )
 end
 netstream.Hook( "nAListArtifacts", nAListArtifacts );
 
-function GM:UpdateAdminInventory( inv, targ )
+local function GM:UpdateAdminInventory( inv, targ )
 	
 	if( !CCP.AdminInv or !CCP.AdminInv:IsValid() ) then return end
 	
@@ -107,12 +107,13 @@ function GM:UpdateAdminInventory( inv, targ )
 		local i = GAMEMODE:GetItemByID( v.ItemClass );
 		
 		local icon = vgui.Create( "DModelPanel", CCP.AdminInv.Scroll );
+		local vars = v.Vars
 		icon.Item = v.ItemClass;
 		icon.InventoryID = k;
 		
 		icon:SetPos( x, y );
 		if( i and i.Model ) then
-			icon:SetModel( i.Model );
+			icon:SetModel( vars.Model or i.Model );
 		end
 		icon:SetSize( 48, 48 );
 		
@@ -132,8 +133,8 @@ function GM:UpdateAdminInventory( inv, targ )
 			
 		end
 		
-		if( i.IconMaterial ) then icon.Entity:SetMaterial( i.IconMaterial ) end
-		if( i.IconColor ) then icon.Entity:SetColor( i.IconColor ) end
+		if( i.IconMaterial ) then icon.Entity:SetMaterial( vars.IconMaterial or i.IconMaterial ) end
+		if( i.IconColor ) then icon.Entity:SetColor( vars.IconMaterial or i.IconColor ) end
 		
 		function icon:LayoutEntity() end
 		
@@ -170,9 +171,9 @@ function GM:UpdateAdminInventory( inv, targ )
 				
 			end
 			
-			CCP.AdminInv.Model:SetModel( i.Model );
-			CCP.AdminInv.Title:SetText( i.Name );
-			CCP.AdminInv.Desc:SetText( i.Desc );
+			CCP.AdminInv.Model:SetModel( vars.Model or i.Model );
+			CCP.AdminInv.Title:SetText( vars.Name or i.Name );
+			CCP.AdminInv.Desc:SetText( vars.Desc or i.Desc );
 			
 			if( i.LookAt ) then
 				
@@ -190,8 +191,8 @@ function GM:UpdateAdminInventory( inv, targ )
 				
 			end
 			
-			if( i.IconMaterial ) then CCP.AdminInv.Model.Entity:SetMaterial( i.IconMaterial ) end
-			if( i.IconColor ) then CCP.AdminInv.Model.Entity:SetColor( i.IconColor ) end
+			if( i.IconMaterial ) then CCP.AdminInv.Model.Entity:SetMaterial( vars.IconMaterial or i.IconMaterial ) end
+			if( i.IconColor ) then CCP.AdminInv.Model.Entity:SetColor( vars.IconColor or i.IconColor ) end
 			
 			local y = 0;
 			
@@ -243,7 +244,7 @@ function GM:UpdateAdminInventory( inv, targ )
 	
 end
 
-function nAEditInventory( targ, inv )
+local function nAEditInventory( targ, inv )
 	
 	if( !LocalPlayer():IsAdmin() ) then
 		
@@ -325,7 +326,7 @@ function nAEditInventory( targ, inv )
 end
 netstream.Hook( "nAEditInventory", nAEditInventory );
 
-function nAUpdateInventory( ply, tab )
+local function nAUpdateInventory( ply, tab )
 	
 	if( !LocalPlayer():IsAdmin() ) then
 		
@@ -338,7 +339,7 @@ function nAUpdateInventory( ply, tab )
 end
 netstream.Hook( "nAUpdateInventory", nAUpdateInventory );
 
-function nAStopSound()
+local function nAStopSound()
 	
 	RunConsoleCommand( "stopsound" );
 	
