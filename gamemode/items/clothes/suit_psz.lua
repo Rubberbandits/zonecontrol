@@ -14,7 +14,6 @@ ITEM.Bodygroups = {
 }
 ITEM.RemoveBody = true
 ITEM.HelmetBodygroup = {0,0}
-ITEM.AllowGender = true
 ITEM.Vars = {
 	Equipped = false,
 	Upgrades = {},
