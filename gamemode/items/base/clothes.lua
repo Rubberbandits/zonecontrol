@@ -358,6 +358,11 @@ BASE.FunctionHooks.PostEquip = function(item)
 				end
 			end
 		end
+		if item:GetVar( "HelmetEquipped", false ) then
+			for i = 1, #item:Owner():GetMaterials() do
+				item:Owner():SetSubMaterial(i - 1, "engine/occlusionproxy")
+			end
+		end
 	end
 end
 BASE.FunctionHooks.PostUnequip = function(item)
