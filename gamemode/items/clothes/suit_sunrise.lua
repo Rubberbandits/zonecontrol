@@ -11,7 +11,10 @@ ITEM.License =  LICENSE_BLACK;
 ITEM.Bonemerge = "models/tnb/stalker_2019/sunrise.mdl";
 ITEM.RemoveBody = true
 ITEM.AllowGender = true
-ITEM.HelmetBodygroup = {0,1}
+ITEM.HelmetBodygroup = {1,1}
+ITEM.Bodygroups = {
+	{1, 0}
+}
 ITEM.ArtifactSlots = 2
 ITEM.Vars = {
 	Equipped = false,
