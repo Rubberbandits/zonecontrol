@@ -354,7 +354,12 @@ function GM:CharCreatePage1()
 		
 	end
 	function CCP.CharCreatePanel.ModelDisplay:LayoutEntity( ent ) return end
-	CCP.CharCreatePanel.ModelDisplay:InitializeModel( self.BodyModels[1], CCP.CharCreatePanel.ModelDisplay.Entity )
+	
+	local body_mdl = self.BodyModels[1]
+	if string.find( GAMEMODE.CharCreateSelectedModel, "female" ) then 
+		body_mdl = string.StripExtension(GAMEMODE.BodyModels[1]).."_f.mdl"
+	end
+	local bonemerge_ent = CCP.CharCreatePanel.ModelDisplay:InitializeModel( body_mdl, CCP.CharCreatePanel.ModelDisplay.Entity )
 	
 	/*local oldPaint = CCP.CharCreatePanel.ModelDisplay.Paint;
 	function CCP.CharCreatePanel.ModelDisplay:Paint( w, h ) -- for debug
@@ -394,6 +399,11 @@ function GM:CharCreatePage1()
 			
 			GAMEMODE.CharCreateSelectedModel = self.ModelPath;
 			CCP.CharCreatePanel.ModelDisplay:SetModel( self.ModelPath );
+			if string.find( self.ModelPath, "female" ) then 
+				bonemerge_ent:SetModel(string.StripExtension(GAMEMODE.BodyModels[1]).."_f.mdl")
+			else
+				bonemerge_ent:SetModel(GAMEMODE.BodyModels[1])
+			end
 			
 		end
 		function model:PaintOver( w, h )
@@ -563,7 +573,12 @@ function GM:CharCreatePage2()
 		
 	end
 	function CCP.CharCreatePanel.ModelDisplay:LayoutEntity( ent ) return end
-	CCP.CharCreatePanel.ModelDisplay:InitializeModel( self.BodyModels[1], CCP.CharCreatePanel.ModelDisplay.Entity )
+	
+	local body_mdl = self.BodyModels[1]
+	if string.find( GAMEMODE.CharCreateSelectedModel, "female" ) then 
+		body_mdl = string.StripExtension(GAMEMODE.BodyModels[1]).."_f.mdl"
+	end
+	local bonemerge_ent = CCP.CharCreatePanel.ModelDisplay:InitializeModel( body_mdl, CCP.CharCreatePanel.ModelDisplay.Entity )
 
 	CCP.CharCreatePanel.NameLabel = vgui.Create( "DLabel", CCP.CharCreatePanel.ContentPane );
 	CCP.CharCreatePanel.NameLabel:SetText( "Name" );
@@ -823,7 +838,12 @@ function GM:CharCreatePage3()
 		
 	end
 	function CCP.CharCreatePanel.ModelDisplay:LayoutEntity( ent ) return end
-	CCP.CharCreatePanel.ModelDisplay:InitializeModel( self.BodyModels[1], CCP.CharCreatePanel.ModelDisplay.Entity )
+
+	local body_mdl = self.BodyModels[1]
+	if string.find( GAMEMODE.CharCreateSelectedModel, "female" ) then 
+		body_mdl = string.StripExtension(GAMEMODE.BodyModels[1]).."_f.mdl"
+	end
+	local bonemerge_ent = CCP.CharCreatePanel.ModelDisplay:InitializeModel( body_mdl, CCP.CharCreatePanel.ModelDisplay.Entity )
 	
 	CCP.CharCreatePanel.ItemsList = vgui.Create( "DScrollPanel", CCP.CharCreatePanel.ContentPane );
 	CCP.CharCreatePanel.ItemsList:SetSize( 444, 326 );
@@ -1160,7 +1180,11 @@ function GM:CharSelectPopulateCharacters()
 			if( self:IsHovered() and !self.m_bLastHovered ) then
 			
 				CCP.CharCreatePanel.Model:SetModel( v.Model );
-				CCP.CharCreatePanel.Model:InitializeModel( v.Body, CCP.CharCreatePanel.Model.Entity );
+				if !CCP.CharCreatePanel.Model.Body then
+					CCP.CharCreatePanel.Model.Body = CCP.CharCreatePanel.Model:InitializeModel( v.Body, CCP.CharCreatePanel.Model.Entity );
+				else
+					CCP.CharCreatePanel.Model.Body:SetModel(v.Body)
+				end
 				CCP.CharCreatePanel.Model.Entity:SetSkin( tonumber( v.Skingroup ) );
 				
 			end
@@ -1258,8 +1282,6 @@ function GM:CharCreateDelete()
 		
 	end
 	
-	--CCP.CharSelect.ModelDisplay:SetModel( "" );
-	
 	for k, v in pairs( self.Characters ) do
 	
 		local charpane = vgui.Create( "DPanel" );
@@ -1280,7 +1302,11 @@ function GM:CharCreateDelete()
 			if( self:IsHovered() and !self.m_bLastHovered ) then
 			
 				CCP.CharCreatePanel.Model:SetModel( v.Model );
-				CCP.CharCreatePanel.Model:InitializeModel( v.Body, CCP.CharCreatePanel.Model.Entity );
+				if !CCP.CharCreatePanel.Model.Body then
+					CCP.CharCreatePanel.Model.Body = CCP.CharCreatePanel.Model:InitializeModel( v.Body, CCP.CharCreatePanel.Model.Entity );
+				else
+					CCP.CharCreatePanel.Model.Body:SetModel(v.Body)
+				end
 				CCP.CharCreatePanel.Model.Entity:SetSkin( tonumber( v.Skingroup ) );
 				
 			end

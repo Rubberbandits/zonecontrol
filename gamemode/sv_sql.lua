@@ -696,6 +696,11 @@ function meta:SaveNewCharacter( name, title, titleone, titletwo, model, trait, s
 	local d = os.date( "!%m/%d/%y %H:%M:%S" );
 	local ply = self;
 	local inventoryTbl = {}
+	
+	local body_mdl = GAMEMODE.BodyModels[1]
+	if string.find( model, "female" ) then 
+		body_mdl = string.StripExtension(GAMEMODE.BodyModels[1]).."_f.mdl"
+	end
 
 	local rublediff = GAMEMODE.RubleBudget;
 	for k,v in next, gear do
@@ -737,7 +742,7 @@ function meta:SaveNewCharacter( name, title, titleone, titletwo, model, trait, s
 		tab["TitleOne"] = util.TableToJSON( { ["onduty"] = "", ["offduty"] = titleone } );
 		tab["TitleTwo"] = util.TableToJSON( { ["onduty"] = "", ["offduty"] = titletwo } );
 		tab["Model"] = model;
-		tab["Body"] = "models/stalker_2019/anorak.mdl";
+		tab["Body"] = body_mdl;
 		tab["Trait"] = trait;
 		tab["Skingroup"] = skin;
 		tab["Date"] = d;
@@ -779,7 +784,7 @@ function meta:SaveNewCharacter( name, title, titleone, titletwo, model, trait, s
 	query:setString( 4, util.TableToJSON( { ["onduty"] = "", ["offduty"] = titletwo } ) );
 	query:setString( 5, util.TableToJSON( { ["onduty"] = "", ["offduty"] = title } ) );
 	query:setString( 6, model );
-	query:setString( 7, "models/stalker_2019/anorak.mdl" );
+	query:setString( 7, body_mdl );
 	query:setNumber( 8, trait );
 	query:setNumber( 9, skin );
 	query:setString( 10, d );

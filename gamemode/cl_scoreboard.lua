@@ -247,8 +247,15 @@ function GM:ScoreboardAdd( ply, y, n )
 		if item.Owner != ply then continue end
 		if !item.Vars["Equipped"] then continue end
 		local metaitem = GAMEMODE:GetItemByID(item.szClass)
+		local mdl_str = metaitem.Bonemerge
 		
-		local mdl = icon:InitializeModel(metaitem.Bonemerge,icon.Entity)
+		if metaitem.AllowGender then
+			if ply:Gender() == GENDER_FEMALE then
+				mdl_str = string.StripExtension(mdl_str).."_f.mdl"
+			end
+		end
+		
+		local mdl = icon:InitializeModel(mdl_str, icon.Entity)
 		if metaitem.Bodygroups then
 			for k,v in next, metaitem.Bodygroups do
 				mdl:SetBodygroup(v[1], v[2])
