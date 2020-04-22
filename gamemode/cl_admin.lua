@@ -92,8 +92,8 @@ local function nAListArtifacts( filter )
 	
 end
 netstream.Hook( "nAListArtifacts", nAListArtifacts );
-
-local function GM:UpdateAdminInventory( inv, targ )
+  
+function GM:UpdateAdminInventory( inv, targ )
 	
 	if( !CCP.AdminInv or !CCP.AdminInv:IsValid() ) then return end
 	
