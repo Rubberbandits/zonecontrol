@@ -886,29 +886,29 @@ function meta:VisibleRPName()
 	
 end
 
-function meta:Notify( color, text, ... )
+function meta:Notify( font, color, text, ... )
 
 	if( CLIENT ) then
 	
-		GAMEMODE:AddChat( { CB_ALL, CB_OOC }, "CombineControl.ChatNormal", color, Format( text, ... ) );
+		GAMEMODE:AddChat( { CB_ALL, CB_OOC }, font or "CombineControl.ChatNormal", color, Format( text, ... ) );
 		
 	elseif( SERVER ) then
 		
-		netstream.Start( self, "NotifyPlayer", color, text, {...} );
+		netstream.Start( self, "NotifyPlayer", font, color, text, {...} );
 	
 	end
 
 end
 
-function GM:Notify( rf, color, text, ... )
+function GM:Notify( rf, font, color, text, ... )
 
 	if( CLIENT ) then
 	
-		GAMEMODE:AddChat( { CB_ALL, CB_OOC }, "CombineControl.ChatNormal", color, Format( text, ... ) );
+		GAMEMODE:AddChat( { CB_ALL, CB_OOC }, font or "CombineControl.ChatNormal", color, Format( text, ... ) );
 		
 	elseif( SERVER ) then
 		
-		netstream.Start( rf, "NotifyPlayer", color, text, {...} );
+		netstream.Start( rf, "NotifyPlayer", font, color, text, {...} );
 	
 	end
 
@@ -924,9 +924,9 @@ end
 
 if( CLIENT ) then
 
-	netstream.Hook( "NotifyPlayer", function( color, text, varargs )
+	netstream.Hook( "NotifyPlayer", function( font, color, text, varargs )
 		
-		LocalPlayer():Notify( color, text, unpack( varargs ) );
+		LocalPlayer():Notify( font, color, text, unpack( varargs ) );
 	
 	end );
 	
