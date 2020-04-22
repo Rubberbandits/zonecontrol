@@ -568,8 +568,6 @@ kingston.chat.register_type("pm", {
 	end,
 })
 
--- roll?
-
 kingston.chat.Languages = { };
 kingston.chat.Languages[TRAIT_ENGLISH] = { "English", "/eng" };
 kingston.chat.Languages[TRAIT_CHINESE] = { "Chinese", "/chi" };

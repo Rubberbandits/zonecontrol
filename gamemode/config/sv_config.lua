@@ -1,5 +1,5 @@
-GM.MySQLHost = "urpgbdev.site.nfoservers.com";
-GM.MySQLUser = "urpgbdev";
-GM.MySQLPass = "jrNUiS4mYC";
-GM.MySQLDB = "urpgbdev_stalker";
+GM.MySQLHost = "localhost";
+GM.MySQLUser = "root";
+GM.MySQLPass = "";
+GM.MySQLDB = "test";
 GM.MySQLPort = 3306;
