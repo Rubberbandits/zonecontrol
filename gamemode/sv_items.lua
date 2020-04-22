@@ -113,7 +113,7 @@ function GM:ItemPickedUp( ply, item )
 			end
 
 			if ply:InventoryWeight() + metaitem.Weight > ply:InventoryMaxWeight() then
-				ply:Notify(Color(255,100,0), "You're now over-encumbered.")
+				ply:Notify(nil, Color(255,100,0), "You're now over-encumbered.")
 				ply:SetRunSpeed( ply:GetWalkSpeed() );
 			end
 			
@@ -124,7 +124,7 @@ function GM:ItemPickedUp( ply, item )
 			end
 			
 			if ply:InventoryWeight() > ply:InventoryMaxWeight() then
-				ply:Notify(Color(255,100,0), "You're now over-encumbered.")
+				ply:Notify(nil, Color(255,100,0), "You're now over-encumbered.")
 				ply:SetRunSpeed( ply:GetWalkSpeed() );
 			end
 			
@@ -149,7 +149,7 @@ function GM:ItemDropped( ply, item )
 		if( ply:InventoryWeight() <= ply:InventoryMaxWeight() ) then
 			local walk, run, jump, crouch = ply:GetSpeeds();
 			ply:SetRunSpeed( run );
-			ply:Notify(Color(255,100,0), "You're no longer over-encumbered.")
+			ply:Notify(nil, Color(255,100,0), "You're no longer over-encumbered.")
 		end
 	end
 	

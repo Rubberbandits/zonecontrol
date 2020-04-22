@@ -7,6 +7,8 @@
 	ITEM.HelmetBodygroup - table, bodygroup to be set when helmet is worn.
 --]]
 
+-- hey, maybe we can find the helmet mat indexes on the model for each suit and just set them to ambient/occlusionproxy. lmao ghetto bonemerge models.
+
 BASE.Vars = {
 	Equipped = false,
 	Upgrades = {},
@@ -114,7 +116,7 @@ BASE.functions.Unequip = {
 			end
 			
 			if item:GetVar( "Durability", 0 ) < 1 then
-				item:Owner():Notify(Color(255,255,255), "Your suit has broken.")
+				item:Owner():Notify(nil, Color(255,255,255), "Your suit has broken.")
 			end
 			
 			GAMEMODE:SpeedThink( item:Owner() )

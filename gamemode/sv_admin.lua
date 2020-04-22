@@ -21,7 +21,7 @@ function concommand.AddGamemaster( cmd, func, sa, playertarget )
 		
 		if( !ply:HasCharFlag( "G" ) ) then
 			
-			netstream.Start( ply, "nANotGamemaster" );
+			ply:Notify( nil, COLOR_ERROR, "You need to be a gamemaster to do this.")
 			
 			return;
 			
@@ -40,7 +40,7 @@ function concommand.AddAdmin( cmd, func, sa, playertarget )
 		
 		if( ply:EntIndex() != 0 and !ply:IsAdmin() ) then
 			
-			netstream.Start( ply, "nANotAdmin" );
+			ply:Notify( nil, COLOR_ERROR, "You need to be an admin to do this.")
 			
 			return;
 			
@@ -48,7 +48,7 @@ function concommand.AddAdmin( cmd, func, sa, playertarget )
 		
 		if( ply:EntIndex() != 0 and sa and !ply:IsSuperAdmin() ) then
 
-			netstream.Start( ply, "nANotSuperAdmin" );
+			ply:Notify( nil, COLOR_ERROR, "You need to be a superadmin to do this.")
 			
 			return;
 			
@@ -67,21 +67,21 @@ function concommand.AddAdminVariable( cmd, var, default, friendlyvar, sa )
 		
 		if( !ply:IsAdmin() ) then
 			
-			netstream.Start( ply, "nANotAdmin" );
+			ply:Notify( nil, COLOR_ERROR, "You need to be an admin to do this.")
 			return;
 			
 		end
 		
 		if( sa and !ply:IsSuperAdmin() ) then
 
-			netstream.Start( ply, "nANotSuperAdmin" );
+			ply:Notify( nil, COLOR_ERROR, "You need to be a superadmin to do this.")
 			return;
 			
 		end
 		
 		if( !args[1] ) then
 			
-			netstream.Start( ply, "nANoValueSpecified" );
+			ply:Notify(nil, COLOR_ERROR, "Error: no value specified.")
 			return;
 			
 		end
@@ -89,7 +89,7 @@ function concommand.AddAdminVariable( cmd, var, default, friendlyvar, sa )
 		GAMEMODE["Set" .. var]( GAMEMODE, tonumber( args[1] ) );
 		
 		GAMEMODE:LogAdmin( "[V] " .. ply:Nick() .. " set variable \"" .. var .. "\" to \"" .. tonumber( args[1] ) .. "\".", ply );
-		GAMEMODE:Notify(nil, Color(255,255,255,255), "%s set %s to %s.", ply:Nick(), friendlyvar, tostring(val))
+		GAMEMODE:Notify(nil, nil, Color(255,255,255,255), "%s set %s to %s.", ply:Nick(), friendlyvar, tostring(val))
 		
 	end
 	concommand.Add( cmd, c );
@@ -105,7 +105,7 @@ concommand.AddAdminVariable( "rpa_announcing_duration", "BlowoutAnnounceDuration
 
 local function Restart( ply, args )
 	
-	netstream.Start( nil, "nARestart", ply );
+	GAMEMODE:Notify(nil, "CombineControl.ChatHuge", COLOR_ERROR "%s is restarting the server in five seconds.", ply:Nick())
 	
 	GAMEMODE:LogAdmin( "[R] " .. ply:Nick() .. " restarted the server.", ply );
 	
@@ -127,7 +127,7 @@ local function DisableAI( ply, args )
 	
 	if( !args[1] ) then
 		
-		netstream.Start( ply, "nANoValueSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no value specified.")
 		return;
 		
 	end
@@ -136,7 +136,7 @@ local function DisableAI( ply, args )
 	
 	if( n != 0 and n != 1 ) then
 		
-		netstream.Start( ply, "nAInvalidValue" );
+		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 		return;
 		
 	end
@@ -150,14 +150,14 @@ local function ChangeLevel( ply, args )
 	
 	if( !args[1] ) then
 		
-		netstream.Start( ply, "nANoValueSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no value specified.")
 		return;
 		
 	end
 	
 	if( table.HasValue( GAMEMODE:GetMaps(), args[1] ) ) then
 
-		netstream.Start( nil, "nAChangeMap", ply, args[1] );
+		GAMEMODE:Notify(nil, "CombineControl.ChatHuge", COLOR_ERROR, "%s is changing the map to %s in five seconds.", ply:Nick(), map)
 		
 		GAMEMODE:LogAdmin( "[R] " .. ply:Nick() .. " changed the map to " .. args[1] .. ".", ply );
 		
@@ -176,7 +176,7 @@ local function NameWarn( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -189,7 +189,7 @@ local function NameWarn( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -200,7 +200,7 @@ local function Kill( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -214,11 +214,11 @@ local function Kill( ply, args )
 		targ:Kill();
 		
 		GAMEMODE:LogAdmin( "[D] " .. ply:Nick() .. " killed player " .. nick .. ".", ply );
-		netstream.Start( targ, "nAKill", nick, ply );
+		targ:Notify(nil, COLOR_NOTIF, "%s killed you.", ply:Nick())
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -229,7 +229,7 @@ local function Explode( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -251,12 +251,12 @@ local function Explode( ply, args )
 		targ:SetVelocity( Vector( math.random( -200, 200 ), math.random( -200, 200 ), math.random( 300, 600 ) ) );
 		
 		GAMEMODE:LogAdmin( "[D] " .. ply:Nick() .. " exploded player " .. nick .. ".", ply );
-		
-		netstream.Start( targ, "nAExplode", nick, ply );
+
+		targ:Notify(nil, COLOR_NOTIF, "%s exploded you.", ply:Nick())
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -267,7 +267,7 @@ local function Slap( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -282,11 +282,11 @@ local function Slap( ply, args )
 		
 		GAMEMODE:LogAdmin( "[P] " .. ply:Nick() .. " slapped player " .. nick .. ".", ply );
 
-		netstream.Start( targ, "nASlap", nick, ply );
+		targ:Notify(nil, COLOR_NOTIF, "%s slapped you.", ply:Nick())
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -297,7 +297,7 @@ local function KO( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -313,11 +313,11 @@ local function KO( ply, args )
 		
 		GAMEMODE:LogAdmin( "[U] " .. ply:Nick() .. " KO'd player " .. nick .. ".", ply );
 		
-		netstream.Start( targ, "nAKO", nick, ply );
+		targ:Notify(nil, COLOR_NOTIF, "%s knocked you out.", ply:Nick())
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -328,7 +328,7 @@ local function Wake( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -344,11 +344,11 @@ local function Wake( ply, args )
 		
 		GAMEMODE:LogAdmin( "[U] " .. ply:Nick() .. " woke player " .. nick .. ".", ply );
 		
-		netstream.Start( targ, "nAWake", nick, ply );
+		targ:Notify(nil, COLOR_NOTIF, "%s woke you up.", ply:Nick())
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -359,7 +359,7 @@ local function Kick( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -374,21 +374,19 @@ local function Kick( ply, args )
 		
 	end
 	
-	local reasonin = args[2] or "";
-	
 	if( targ and targ:IsValid() ) then
 		
 		local nick = targ:RPName();
 		
 		targ:Kick( reason );
 		
-		GAMEMODE:LogAdmin( "[K] " .. ply:Nick() .. " kicked player " .. nick .. " (" .. reasonin .. ").", ply );
+		GAMEMODE:LogAdmin( "[K] " .. ply:Nick() .. " kicked player " .. nick .. " (" .. args[2] or "No reason specified." .. ").", ply );
 		
-		netstream.Start( nil, "nAKick", nick, ply, reasonin );
+		GAMEMODE:Notify(nil, nil, COLOR_NOTIF, "%s was kicked by %s. (%s)", nick, ply:Nick(), args[2] or "No reason specified.")
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -424,21 +422,21 @@ local function Ban( ply, args )
 	
 		if( #args == 0 ) then
 			
-			netstream.Start( ply, "nANoTargetSpecified" );
+			ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 			return;
 			
 		end
 		
 		if( #args == 1 ) then
 			
-			netstream.Start( ply, "nANoDurationSpecified" );
+			ply:Notify(nil, COLOR_ERROR, "Error: no duration specified.")
 			return;
 			
 		end
 		
 		if( tonumber( args[2] ) < 0 ) then
 			
-			netstream.Start( ply, "nANegativeDuration" );
+			ply:Notify(nil, COLOR_ERROR, "Error: Invalid duration.")
 			return;
 			
 		end
@@ -502,6 +500,7 @@ local function Ban( ply, args )
 			targ:Kick( reason );
 			
 			GAMEMODE:LogConsole( "[B] Console banned player " .. nick .. " for " .. args[2] .. " minutes (" .. reasonin .. ").", true );
+			GAMEMODE:Notify(nil, nil, COLOR_NOTIF, "%s was banned by Console for %s minutes. (%s)", nick, args[2], args[3] or "No reason specified.")
 			
 		elseif( string.find( args[1], "STEAM_" ) ) then
 			
@@ -511,6 +510,7 @@ local function Ban( ply, args )
 			GAMEMODE:AddBan( args[1], args[2], reasonin, os.date( "!%m/%d/%y %H:%M:%S" ) );
 			
 			GAMEMODE:LogConsole( "[B] Console banned SteamID " .. args[1] .. " for " .. args[2] .. " minutes (" .. reasonin .. ").", true );
+			GAMEMODE:Notify(nil, nil, COLOR_NOTIF, "%s was banned by Console for %s minutes. (%s)", args[1], args[2], args[3] or "No reason specified.")
 			
 		else
 			
@@ -539,7 +539,7 @@ local function Ban( ply, args )
 		
 		GAMEMODE:LogAdmin( "[B] " .. ply:Nick() .. " banned player " .. nick .. " for " .. args[2] .. " minutes (" .. reasonin .. ").", ply );
 		
-		netstream.Start( nil, "nABan", nick, ply, args[2], reasonin );
+		GAMEMODE:Notify(nil, nil, COLOR_NOTIF, "%s was banned by %s for %s minutes. (%s)", nick, ply:Nick(), args[2], args[3] or "No reason specified.")
 		
 	elseif( string.find( args[1], "STEAM_" ) ) then
 		
@@ -550,11 +550,11 @@ local function Ban( ply, args )
 		
 		GAMEMODE:LogAdmin( "[B] " .. ply:Nick() .. " banned SteamID " .. args[1] .. " for " .. args[2] .. " minutes (" .. reasonin .. ").", ply );
 		
-		netstream.Start( ply, "nAOBan", args[1], ply, args[2], reasonin );
+		GAMEMODE:Notify(nil, nil, COLOR_NOTIF, "%s was banned by %s for %s minutes. (%s)", args[1], ply:Nick(), args[2], args[3] or "No reason specified.")
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -565,14 +565,14 @@ local function ChangeBanLength( ply, args )
 	
 	if( #args == 0 ) then
 		
-		ply:Notify(Color( 200, 0, 0, 255 ), "Error: No SteamID specified.")
+		ply:Notify(nil, COLOR_ERROR, "Error: No SteamID specified.")
 		return;
 		
 	end
 	
 	if( #args == 1 ) then
 		
-		netstream.Start( ply, "nANoDurationSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: No duration specified.")
 		return;
 		
 	end
@@ -581,14 +581,14 @@ local function ChangeBanLength( ply, args )
 	
 	if( !len ) then
 		
-		netstream.Start( ply, "nAInvalidValue" );
+		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 		return;
 		
 	end
 	
 	if( len < 0 ) then
 
-		netstream.Start( ply, "nANegativeDuration" );
+		ply:Notify(nil, COLOR_ERROR, "Error: Invalid duration.")
 		return;
 		
 	end
@@ -599,7 +599,7 @@ local function ChangeBanLength( ply, args )
 		
 		if( !k ) then
 			
-			ply:Notify(Color( 200, 0, 0, 255 ), "Error: No ban found for SteamID given.")
+			ply:Notify(nil, COLOR_ERROR, "Error: No ban found for SteamID given.")
 			
 		else
 			
@@ -619,7 +619,7 @@ local function ChangeBanLength( ply, args )
 		
 	else
 
-		netstream.Start( ply, "nAInvalidValue" );
+		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 		
 	end
 	
@@ -630,7 +630,7 @@ local function Unban( ply, args )
 	
 	if( #args == 0 ) then
 		
-		ply:Notify(Color( 200, 0, 0, 255 ), "Error: No SteamID specified.")
+		ply:Notify(nil, COLOR_ERROR, "Error: No SteamID specified.")
 		return;
 		
 	end
@@ -641,7 +641,7 @@ local function Unban( ply, args )
 		
 		if( !k ) then
 			
-			ply:Notify(Color( 200, 0, 0, 255 ), "Error: No ban found for SteamID given.")
+			ply:Notify(nil, COLOR_ERROR, "Error: No ban found for SteamID given.")
 			
 		else
 			
@@ -650,7 +650,7 @@ local function Unban( ply, args )
 			
 			GAMEMODE:LogAdmin( "[B] " .. ply:Nick() .. " unbanned SteamID " .. args[1] .. ".", ply );
 			
-			netstream.Start( ply, "nAUnBan", args[1] );
+			GAMEMODE:Notify(nil, nil, COLOR_NOTIF, "%s unbanned SteamID %s.", ply:Nick(), args[1])
 			
 			local tab = { };
 			
@@ -672,7 +672,7 @@ local function Unban( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nAInvalidSteamID" );
+		ply:Notify(nil, COLOR_ERROR, "Error: Invalid SteamID specified.")
 		
 	end
 	
@@ -732,7 +732,7 @@ local function GiveMoney( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -750,12 +750,13 @@ local function GiveMoney( ply, args )
 		
 		targ:AddMoney( amt );
 		targ:UpdateCharacterField( "Money", tostring( targ:Money() ) );
+		targ:Notify(nil, COLOR_NOTIF, "%s gave you %d rubles.", ply:Nick(), amt)
 		
 		GAMEMODE:LogAdmin( "[M] " .. ply:Nick() .. " gave " .. targ:RPName() .. " " .. tostring( amt ) .. " rubles.", ply );
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -766,7 +767,7 @@ local function Goto( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -780,7 +781,7 @@ local function Goto( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -792,7 +793,7 @@ local function Bring( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -806,7 +807,7 @@ local function Bring( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -818,14 +819,14 @@ local function Send( ply, args )
 
 	if( #args == 0 ) then
 	
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
 	
 	if( #args == 1 ) then
 	
-		netstream.Start( ply, "nANoValueSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no value specified.")
 		return;
 		
 	end
@@ -842,13 +843,13 @@ local function Send( ply, args )
 		
 		else
 		
-			netstream.Start( ply, "nANoSecondTargetFound" );
+			ply:Notify(nil, COLOR_ERROR, "Error: second target not found.")
 		
 		end
 	
 	else
 	
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 	
 	end
 
@@ -894,7 +895,7 @@ local function SetCharModel( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -920,6 +921,7 @@ local function SetCharModel( ply, args )
 		
 		if( !table.HasValue( GAMEMODE.CitizenModels, model ) ) then
 			
+			print("setting body")
 			targ:SetBody("")
 			
 		end
@@ -930,12 +932,11 @@ local function SetCharModel( ply, args )
 		GAMEMODE:LogAdmin( "[M] " .. ply:Nick() .. " changed player " .. targ:RPName() .. "'s model to \"" .. model .. "\".", ply );
 		
 		local rf = { ply, targ };
-		
-		netstream.Start( rf, "nASetModel", ply, targ, model );
+		GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s set %s's model to %s.", ply:Nick(), targ:Nick(), model)
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -946,7 +947,7 @@ local function SetModelSelf( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no model specified.")
 		return;
 		
 	end
@@ -977,15 +978,9 @@ local function SetModelSelf( ply, args )
 		ply.CharModel = model;
 		ply:UpdateCharacterField( "Model", model );
 		
-		GAMEMODE:LogAdmin( "[GM] " .. ply:Nick() .. " changed player " .. ply:RPName() .. "'s model to \"" .. model .. "\".", ply );
+		GAMEMODE:LogAdmin( "[GM] " .. ply:Nick() .. " changed their model to \"" .. model .. "\".", ply );
 		
-		local rf = { ply };
-		
-		netstream.Start( rf, "nASetModel", ply, targ, model );
-		
-	else
-		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_NOTIF, "You've set your own model to %s.", model)
 		
 	end
 	
@@ -996,14 +991,14 @@ local function SetName( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
 	
 	if( #args == 1 ) then
 		
-		netstream.Start( ply, "nANoValueSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no value specified.")
 		return;
 		
 	end
@@ -1034,7 +1029,7 @@ local function SetName( ply, args )
 				
 				local rf = { ply, targ };
 
-				netstream.Start( rf, "nAChangeName", ply, targ, old, name );
+				GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s changed %s's roleplay name from %s to %s", ply:Nick(), targ:Nick(), old, name)
 				
 			end
 			
@@ -1042,7 +1037,7 @@ local function SetName( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -1053,14 +1048,14 @@ local function SetTied( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
 	
 	if( #args == 1 ) then
 		
-		netstream.Start( ply, "nANoValueSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no value specified.")
 		return;
 		
 	end
@@ -1070,7 +1065,7 @@ local function SetTied( ply, args )
 	
 	if( !val or ( val != 0 and val != 1 ) ) then
 		
-		netstream.Start( ply, "nAInvalidValue" );
+		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 		
 	end
 	
@@ -1080,7 +1075,7 @@ local function SetTied( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -1091,14 +1086,14 @@ local function AddBadge( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
 	
 	if( #args == 1 ) then
 		
-		netstream.Start( ply, "nANoValueSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no value specified.")
 		return;
 		
 	end
@@ -1108,7 +1103,7 @@ local function AddBadge( ply, args )
 	
 	if( !val or targ:HasBadge( val ) ) then
 		
-		netstream.Start( ply, "nAInvalidValue" );
+		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 		
 	end
 	
@@ -1119,7 +1114,7 @@ local function AddBadge( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -1130,14 +1125,14 @@ local function RemoveBadge( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
 	
 	if( #args == 1 ) then
 		
-		netstream.Start( ply, "nANoValueSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no value specified.")
 		return;
 		
 	end
@@ -1147,7 +1142,7 @@ local function RemoveBadge( ply, args )
 	
 	if( !val or !targ:HasBadge( val ) ) then
 		
-		netstream.Start( ply, "nAInvalidValue" );
+		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 		
 	end
 	
@@ -1158,7 +1153,7 @@ local function RemoveBadge( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -1169,7 +1164,7 @@ local function SetCharFlag( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -1198,11 +1193,11 @@ local function SetCharFlag( ply, args )
 		
 		if( flags == "" ) then
 			
-			netstream.Start( rf, "nARemoveCharFlags", ply, targ );
+			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s removed all of %s's flags.", ply:Nick(), targ:Nick())
 			
 		else
 			
-			netstream.Start( rf, "nASetCharFlags", ply, targ, flags );
+			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s set %s's flags to \"%s\"", ply:Nick(), targ:Nick(), flags)
 			
 		end
 		
@@ -1210,7 +1205,7 @@ local function SetCharFlag( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -1229,8 +1224,6 @@ local function FlagsRoster( ply, args )
 	
 	local function qF( err )
 		
-		netstream.Start( ply, "nANoFlagsRoster" );
-		
 	end
 	
 	mysqloo.Query( "SELECT RPName, CharFlags FROM cc_chars WHERE CharFlags != ''", qS, qF );
@@ -1242,7 +1235,7 @@ local function SetToolTrust( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -1252,7 +1245,7 @@ local function SetToolTrust( ply, args )
 	
 	if( trust != 0 and trust != 1 and trust != 2 ) then
 		
-		netstream.Start( ply, "nAInvalidValue" );
+		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 		return;
 		
 	end
@@ -1266,12 +1259,12 @@ local function SetToolTrust( ply, args )
 		local rf = { ply, targ };
 		
 		if( trust == 0 ) then
-			
-			netstream.Start( rf, "nARemoveToolTrust", ply, targ );
+
+			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s removed %s's tooltrust.", ply:Nick(), targ:Nick())
 			
 		else
-			
-			netstream.Start( rf, "nASetToolTrust", ply, targ, trust == 2 );
+
+			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s set %s's tooltrust to level %d.", ply:Nick(), targ:Nick(), trust)
 			
 		end
 		
@@ -1289,7 +1282,7 @@ local function SetToolTrust( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -1300,7 +1293,7 @@ local function SetPhysTrust( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -1310,7 +1303,7 @@ local function SetPhysTrust( ply, args )
 	
 	if( trust != 0 and trust != 1 ) then
 		
-		netstream.Start( ply, "nAInvalidValue" );
+		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 		return;
 		
 	end
@@ -1319,7 +1312,7 @@ local function SetPhysTrust( ply, args )
 		
 		if( targ:IsAdmin() ) then
 			
-			netstream.Start( ply, "nAAdminTarget" );
+			ply:Notify(nil, COLOR_ERROR, "Error: this target is an admin.")
 			return;
 			
 		end
@@ -1332,11 +1325,11 @@ local function SetPhysTrust( ply, args )
 		
 		if( trust == 0 ) then
 			
-			netstream.Start( rf, "nARemovePhysTrust", ply, targ );
+			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s has removed %s's phystrust.", ply:Nick(), targ:Nick())
 			
 		else
 			
-			netstream.Start( rf, "nASetPhysTrust", ply, targ );
+			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s has given %s phystrust.", ply:Nick(), targ:Nick())
 			
 		end
 		
@@ -1354,7 +1347,7 @@ local function SetPhysTrust( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -1365,7 +1358,7 @@ local function SetPropTrust( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -1375,7 +1368,7 @@ local function SetPropTrust( ply, args )
 	
 	if( trust != 0 and trust != 1 ) then
 		
-		netstream.Start( ply, "nAInvalidValue" );
+		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 		return;
 		
 	end
@@ -1384,7 +1377,7 @@ local function SetPropTrust( ply, args )
 		
 		if( targ:IsAdmin() ) then
 			
-			netstream.Start( ply, "nAAdminTarget" );
+			ply:Notify(nil, COLOR_ERROR, "Error: this target is an admin.")
 			return;
 			
 		end
@@ -1397,11 +1390,11 @@ local function SetPropTrust( ply, args )
 		
 		if( trust == 0 ) then
 			
-			netstream.Start( rf, "nARemovePropTrust", ply, targ );
+			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s has removed %s's proptrust.", ply:Nick(), targ:Nick())
 			
 		else
 		
-			netstream.Start( rf, "nASetPropTrust", ply, targ );
+			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s has given %s proptrust.", ply:Nick(), targ:Nick())
 			
 		end
 		
@@ -1409,7 +1402,7 @@ local function SetPropTrust( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -1420,7 +1413,7 @@ local function EditInventory( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -1442,7 +1435,7 @@ local function EditInventory( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -1463,7 +1456,7 @@ function nARemoveItem( ply, targ, k )
 		GAMEMODE:LogAdmin( "[I] " .. ply:Nick() .. " removed character " .. targ:RPName() .. "'s item \"" .. targ.Inventory[k]:GetName() .. "\".", ply );
 		GAMEMODE:LogItems( "[R] " .. targ:VisibleRPName() .. "'s item " .. targ.Inventory[k]:GetName() .. " was removed by " .. ply:Nick() .. ".", ply );
 		
-		netstream.Start( targ, "nARemoveItem", ply, item:GetClass() );
+		targ:Notify(nil, COLOR_NOTIF, "%s has removed your %s (%s)!", ply:Nick(), item:GetName(), item:GetClass())
 		
 		if item:GetVar("Equipped", false) then
 			item:CallFunction("Unequip", true)
@@ -1488,7 +1481,7 @@ local function PlayMusic( ply, args )
 	
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nAInvalidValue" );
+		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 		return;
 		
 	end
@@ -1541,7 +1534,7 @@ local function PlayMusic( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nAInvalidValue" );
+		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 		
 	end
 	
@@ -1552,7 +1545,7 @@ local function PlayMusicTarget( ply, args )
 	
 	if( #args < 2 ) then
 		
-		netstream.Start( ply, "nAInvalidValue" );
+		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 		return;
 		
 	end
@@ -1613,7 +1606,7 @@ local function PlayMusicTarget( ply, args )
 				
 			else
 
-				ply:Notify(Color( 200, 0, 0, 255 ), "Error: No target found (\"&s\"). Skipping.", args[i])
+				ply:Notify(nil, COLOR_ERROR, "Error: No target found (\"&s\"). Skipping.", args[i])
 				
 			end
 			
@@ -1623,7 +1616,7 @@ local function PlayMusicTarget( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nAInvalidValue" );
+		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 		
 	end
 	
@@ -1718,21 +1711,21 @@ local function CreateFire( ply, args )
 	
 	if( !num ) then
 		
-		netstream.Start( ply, "nANoValueSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no value specified.")
 		return;
 		
 	end
 	
 	if( num < 1 ) then
 		
-		netstream.Start( ply, "nAInvalidValue" );
+		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 		return;
 		
 	end
 	
 	if( num > 60 * 60 * 24 ) then
 		
-		netstream.Start( ply, "nAInvalidValue" );
+		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 		return;
 		
 	end
@@ -1835,7 +1828,7 @@ local function SetLicenses( ply, args )
 
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -1845,16 +1838,16 @@ local function SetLicenses( ply, args )
 	
 	if( targ and targ:IsValid() ) then
 	
-		ply:SetBusinessLicenses( t );
-		ply:UpdateCharacterField( "BusinessLicenses", ply:BusinessLicenses() );
+		targ:SetBusinessLicenses( t );
+		targ:UpdateCharacterField( "BusinessLicenses", targ:BusinessLicenses() );
 		
 		GAMEMODE:LogAdmin( "[F] " .. ply:Nick() .. " changed player " .. targ:RPName() .. "'s licenses to \"" .. t .. "\".", ply );
 		
-		netstream.Start( ply, "nPopulateBusiness" );
+		netstream.Start( targ, "nPopulateBusiness" );
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 
@@ -1865,7 +1858,7 @@ local function TakeFromStockpile( ply, args )
 
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -1876,7 +1869,7 @@ local function TakeFromStockpile( ply, args )
 	
 	if stockpile then
 		if !stockpile.Inventory[item_id] then
-			ply:Notify(Color(200,0,0), "Error: Invalid item specified.")
+			ply:Notify(nil, Color(200,0,0), "Error: Invalid item specified.")
 			return
 		end
 		
@@ -1899,7 +1892,7 @@ local function TakeFromStockpile( ply, args )
 		
 	else
 		
-		ply:Notify(Color(200,0,0), "Error: No stockpile found")
+		ply:Notify(nil, Color(200,0,0), "Error: No stockpile found")
 		
 	end
 
@@ -1910,7 +1903,7 @@ local function GiveAccessToStockpile( ply, args )
 
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -1941,14 +1934,13 @@ local function GiveAccessToStockpile( ply, args )
 			
 		else
 		
-			print("id not found")
-			-- add notification for this
+			ply:Notify(nil, COLOR_ERROR, "Error: stockpile not found.")
 			
 		end
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 
@@ -1959,7 +1951,7 @@ local function TakeAccessToStockpile( ply, args )
 
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -1999,14 +1991,13 @@ local function TakeAccessToStockpile( ply, args )
 			
 		else
 		
-			print("id not found")
-			-- add notification for this
+			ply:Notify(nil, COLOR_ERROR, "Error: stockpile not found.")
 			
 		end
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	
@@ -2033,16 +2024,16 @@ concommand.Add( "rp_propdesc", SetEntityDesc );
 local function BlowoutTriggerInstant( ply, args )
 
 	if GAMEMODE:BlowoutEnabled() < 1 then
-		ply:Notify(Color(255,32,32), "Blowouts are disabled, use rpa_blowout_enabled 1.")
+		ply:Notify(nil, Color(255,32,32), "Blowouts are disabled, use rpa_blowout_enabled 1.")
 		return
 	end
 	
 	if kingston.blowout.get_var("Bool", "active_blowout") then 
-		ply:Notify(Color(255,32,32), "A blowout is already in progress!")
+		ply:Notify(nil, Color(255,32,32), "A blowout is already in progress!")
 		return
 	end
 	
-	ply:Notify(Color(32,255,32), "Instant blowout sequence starting.")
+	ply:Notify(nil, Color(32,255,32), "Instant blowout sequence starting.")
 	kingston.blowout.initiate(true)
 	
 	GAMEMODE:LogAdmin( Format("[F] %s started an instant blowout sequence.", ply:Nick()), ply );
@@ -2053,16 +2044,16 @@ concommand.AddAdmin( "rpa_triggerblowoutinstant", BlowoutTriggerInstant );
 local function BlowoutTriggerDelayed( ply, args )
 
 	if GAMEMODE:BlowoutEnabled() < 1 then
-		ply:Notify(Color(255,32,32), "Blowouts are disabled, use rpa_blowout_enabled 1.")
+		ply:Notify(nil, Color(255,32,32), "Blowouts are disabled, use rpa_blowout_enabled 1.")
 		return
 	end
 	
 	if kingston.blowout.get_var("Bool", "active_blowout") then 
-		ply:Notify(Color(255,32,32), "A blowout is already in progress!")
+		ply:Notify(nil, Color(255,32,32), "A blowout is already in progress!")
 		return
 	end
 
-	ply:Notify(Color(32,255,32), "Delayed blowout sequence starting.")
+	ply:Notify(nil, Color(32,255,32), "Delayed blowout sequence starting.")
 	kingston.blowout.initiate()
 	
 	GAMEMODE:LogAdmin( Format("[F] %s started a delayed blowout sequence.", ply:Nick()), ply );
@@ -2092,7 +2083,7 @@ concommand.AddAdmin( "rpa_panic", PanicCleanup );
 local function SetDamageMultiplier( ply, args )
 	local mult = args[1] and tonumber(args[1])
 	if !mult then
-		ply:Notify(Color(200,0,0), "Error: Invalid multiplier specified.")
+		ply:Notify(nil, Color(200,0,0), "Error: Invalid multiplier specified.")
 		return
 	end
 
@@ -2100,10 +2091,10 @@ local function SetDamageMultiplier( ply, args )
 	if cvar then
 		cvar:SetFloat(mult)
 		
-		ply:Notify(Color(0,200,0), "Global damage multipler set to %s", args[1])
+		ply:Notify(nil, Color(0,200,0), "Global damage multipler set to %s", args[1])
 		GAMEMODE:LogAdmin( Format("[F] %s set the global damage multiplier to %s.", ply:Nick(), args[1]), ply );
 	else
-		ply:Notify(Color(200,0,0), "Error: Somehow the TFA damage multipler CVar is missing!")
+		ply:Notify(nil, Color(200,0,0), "Error: Somehow the TFA damage multipler CVar is missing!")
 	end
 end	
 concommand.AddAdmin( "rpa_setdmgmult", SetDamageMultiplier, true );
@@ -2112,7 +2103,7 @@ local function GiveStockpile( ply, args )
 
 	if( #args == 0 ) then
 		
-		netstream.Start( ply, "nANoTargetSpecified" );
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
 		return;
 		
 	end
@@ -2126,7 +2117,7 @@ local function GiveStockpile( ply, args )
 		
 	else
 		
-		netstream.Start( ply, "nANoTargetFound" );
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
 		
 	end
 	

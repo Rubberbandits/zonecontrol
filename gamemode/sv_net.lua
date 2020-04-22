@@ -185,7 +185,7 @@ local function nAdminRemoveStockpile( ply, id )
 	local function onSuccess( ret )
 
 		GAMEMODE.LoadedStockpiles[id] = nil
-		ply:Notify(Color(0,200,0,255), "Stockpile removed successfully.")
+		ply:Notify(nil, Color(0,200,0,255), "Stockpile removed successfully.")
 		
 		local function onSuccess( ret )
 		end

@@ -133,7 +133,7 @@ if SERVER then
 		
 		local ret = chat_data.can_say(id, ply)
 		if isstring(ret) then -- error
-			ply:Notify(Color(200,0,0,255), ret)
+			ply:Notify(nil, Color(200,0,0,255), ret)
 			return
 		end
 		
@@ -322,7 +322,7 @@ kingston.chat.register_type("ooc", {
 	can_say = function(chat_type, ply, text)
 		if ply.LastOOC and CurTime() < ply.LastOOC + GAMEMODE:OOCDelay() then
 			if !ply:IsAdmin() then
-				ply:Notify(Color(200,200,200), "Wait %s seconds to talk in OOC.", tostring(math.Round(ply.LastOOC + GAMEMODE:OOCDelay() - CurTime())))
+				ply:Notify(nil, Color(200,200,200), "Wait %s seconds to talk in OOC.", tostring(math.Round(ply.LastOOC + GAMEMODE:OOCDelay() - CurTime())))
 				return false
 			end
 		end
@@ -557,7 +557,7 @@ kingston.chat.register_type("pm", {
 		local chat_data = kingston.chat.get(chat_type)
 		local target = GAMEMODE:FindPlayer(args[1], speaker)
 		if !target then
-			speaker:Notify(Color(255,0,0), "Specified player not found.")
+			speaker:Notify(nil, Color(255,0,0), "Specified player not found.")
 			return
 		end
 		
@@ -680,7 +680,7 @@ kingston.chat.register_type("roll", {
 		mod = tonumber(mod)
 
 		if not (num and sides) then
-			speaker:Notify(Color(200, 0, 0), "Missing arguments for roll.")
+			speaker:Notify(nil, Color(200, 0, 0), "Missing arguments for roll.")
 
 			return
 		end

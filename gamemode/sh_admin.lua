@@ -7,7 +7,7 @@ function GM:PlayerNoClip( ply )
 		
 		if( CLIENT and IsFirstTimePredicted() ) then
 			
-			LocalPlayer():Notify(Color( 200, 0, 0, 255 ), "You need to be an admin to do this.")
+			LocalPlayer():Notify(nil, Color( 200, 0, 0, 255 ), "You need to be an admin to do this.")
 			
 		end
 		
