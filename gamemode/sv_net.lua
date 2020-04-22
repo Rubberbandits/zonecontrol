@@ -199,7 +199,7 @@ netstream.Hook( "nAdminRemoveStockpile", nAdminRemoveStockpile );
 
 local function nSetupStockpile( ply, name ) -- could be sql injected... need prepped queries.
 	
-	if( ply:HasCharFlag( "M" ) and ply.StartStockpileCreation ) then
+	if( ply.StartStockpileCreation ) then
 	
 		CreateNewStockpileEntry( ply, name );
 		ply.StartStockpileCreation = false;
