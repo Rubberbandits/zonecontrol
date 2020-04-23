@@ -1,0 +1,41 @@
+ITEM.Name =  "Geiger Counter";
+ITEM.Desc =  "An old geiger counter, seems to work well enough if not entirely accurate.";
+ITEM.Model =  "models/kali/miscstuff/stalker/sensor_a.mdl";
+ITEM.Weight =  0.5;
+ITEM.FOV =  12;
+ITEM.CamPos =  Vector( 50, 50, 50 );
+ITEM.LookAt =  Vector( 0, 0, 0 );
+ITEM.BulkPrice =  1000;
+ITEM.License =  LICENSE_BLACK;
+ITEM.functions = {}
+ITEM.functions.Equip = {
+	SelectionName = "Equip",
+	OnUse = function(item)	
+		if CLIENT then
+			GAMEMODE.GeigerCounterEquipped = true
+		end
+		
+		item:SetVar("Equipped", true)
+		
+		return true
+	end,
+	CanRun = function(item)
+		return !item:GetVar("Equipped", false)
+	end,
+}
+ITEM.functions.Unequip = {
+	SelectionName = "Unequip",
+	OnUse = function(item)	
+		if CLIENT then
+			GAMEMODE.GeigerCounterEquipped = false
+		end
+		
+		item:SetVar("Equipped", false)
+		
+		return true
+	end,
+	CanRun = function(item)
+		return item:GetVar("Equipped", false)
+	end,
+}
+

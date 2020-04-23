@@ -193,23 +193,6 @@ local typeTable = {
 			end
 		end,
 	},
-	[DETECTOR_RAD] = {
-		model = "models/kali/miscstuff/stalker/sensor_a.mdl",
-		bodygroup = {},
-		skin = 1,
-		fov = 6,
-		campos = Vector(-38, 0, 40),
-		lookat = Vector(0, 0, 0),
-		think = function(self)
-			-- sound
-		end,
-		paintoverlay = function(self, w, h)
-			cam.Start3D2D(self.Entity:GetPos(), Angle(0,0,0), 1)
-				surface.SetDrawColor( 0, 0, 0, 255 )
-				surface.DrawRect( 0, 0, 8, 8 )
-			cam.End3D2D()
-		end,
-	},
 }
 
 function PANEL:Init()
@@ -297,7 +280,7 @@ function PANEL:Paint( w, h )
 			end
 		end
 		
-		--self:DrawModel()
+		self:DrawModel()
 		
 		if typeTable[self:GetType()] and typeTable[self:GetType()].paintoverlay then
 			typeTable[self:GetType()].paintoverlay(self, w, h)

@@ -34,6 +34,10 @@ function kingston.geiger.render()
 	local pos_x = (ScrW() - (ScrW() / 12)) - ((ScrW() / 6.25) / 2)
 	local pos_y = ((ScrH() / 1.45)) - ((ScrH() / 3.5156) / 2)
 	
+	if GAMEMODE.Detector then
+		pos_y = ((ScrH() / 6.5)) - ((ScrH() / 3.5156) / 2)
+	end
+	
 	local rate = LocalPlayer():GetExposureRate()
 	local last_angle = GAMEMODE.LastGeigerAngle
 	local next_angle = kingston.geiger.calculate_angle(rate)
@@ -66,10 +70,12 @@ function kingston.geiger.render()
 	GAMEMODE.LastGeigerAngle = next_angle
 end
 
-local function dev_draw()
-	kingston.geiger.render()
+local function RenderGeigerCounter()
+	if GAMEMODE.GeigerCounterEquipped then
+		kingston.geiger.render()
+	end
 end
-hook.Add("HUDPaint", "geiger_dev", dev_draw)
+hook.Add("HUDPaint", "STALKER.RenderGeigerCounter", RenderGeigerCounter)
 
 local meta = FindMetaTable("Player")
 function meta:GetExposureRate()
