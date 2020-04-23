@@ -415,7 +415,7 @@ do -- Enable
 		end
 
 		self:SetPlayer(ply)
-		cookie.Set("cc_thirdperson", 1)
+		cookie.Set("zc_thirdperson", 1)
 	end
 
 	function ctp:Disable()
@@ -456,7 +456,7 @@ do -- Enable
 		self.NodeView = false
 
 		RunConsoleCommand("ctp_enabled", "0")
-		cookie.Set("cc_thirdperson", 0)
+		cookie.Set("zc_thirdperson", 0)
 	end
 
 	function ctp:IsEnabled()

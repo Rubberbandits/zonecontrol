@@ -850,3 +850,15 @@ function GM:OnGamemodeLoaded()
 		end
 	end
 end
+
+function player.GetAllLoaded()
+	local players = {}
+	
+	for _,ply in next, player.GetAll() do
+		if ply:IsValid() and ply:CharID() > 0 then
+			players[#players + 1] = ply
+		end
+	end
+	
+	return players
+end

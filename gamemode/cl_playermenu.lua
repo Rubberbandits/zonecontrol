@@ -2317,11 +2317,11 @@ end
 
 function ccToggleThirdPerson( ply, cmd, args )
 	
-	cookie.Set( "cc_thirdperson", 1 - cookie.GetNumber( "cc_thirdperson", 0 ) );
+	cookie.Set( "zc_thirdperson", 1 - cookie.GetNumber( "zc_thirdperson", 0 ) );
 	
 	if( CCP.PlayerMenu and CCP.PlayerMenu:IsValid() and CCP.PlayerMenu.SettingsThird and CCP.PlayerMenu.SettingsThird:IsValid() ) then
 		
-		CCP.PlayerMenu.SettingsThird:SetValue( cookie.GetNumber( "cc_thirdperson", 0 ) );
+		CCP.PlayerMenu.SettingsThird:SetValue( cookie.GetNumber( "zc_thirdperson", 0 ) );
 		
 	end
 	

@@ -39,3 +39,8 @@ ITEM.functions.Unequip = {
 	end,
 }
 
+function ITEM:Initialize()
+	if self:GetVar("Equipped", false) then
+		self.functions["Equip"].OnUse(self)
+	end
+end

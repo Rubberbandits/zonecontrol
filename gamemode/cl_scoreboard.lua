@@ -1,3 +1,6 @@
+kingston = kingston or {}
+kingston.scoreboard = kingston.scoreboard or {}
+
 function GM:ScoreboardHide()
 	
 	if( CCP.Scoreboard ) then
@@ -407,6 +410,10 @@ function GM:CCCreatePlayerData( ply )
 	
 end
 
+-- thanks to whoever wrote those piece of shit DMenus, DMenu:AddPanel is broke as shit.
+-- no child panel can have focus when a DMenu is running, so only use it to display information if you really need to have a panel there.
+
+
 GM.AdminOptions = {
 	{
 		txt = "Kick",
@@ -429,6 +436,60 @@ GM.AdminOptions = {
 			RunConsoleCommand("rpa_goto", targ:RPName())
 		end,
 	},
+	{
+		txt = "Send To",
+		icon = "icon16/door_out.png",
+		func = function(targ) end,
+		sub_menu = {
+			gen_func = function(ply, menu)
+				local tbl = {}
+				
+				for _,targ in next, player.GetAllLoaded() do
+					tbl[#tbl + 1] = {
+						txt = targ:RPName(),
+						icon = "icon16/user.png",
+						func = function()
+							RunConsoleCommand("rpa_send", ply:RPName(), targ:RPName())
+						end,
+					}
+				end
+				
+				return tbl
+			end,
+		},
+	},
+	{
+		txt = "Give rubles",
+		icon = "icon16/money_add.png",
+		func = function(targ)
+			Derma_StringRequest(
+				"Give Rubles", 
+				"Enter amount to give to player.",
+				"",
+				function(text) RunConsoleCommand("rpa_givemoney", targ:RPName(), text) end
+			)
+		end,
+	},
+	{
+		txt = "Tie up",
+		icon = "icon16/link.png",
+		can_run = function(targ)
+			return !targ:TiedUp()
+		end,
+		func = function(targ) 
+			RunConsoleCommand("rpa_settied", targ:RPName(), 1)
+		end,
+	},
+	{
+		txt = "Untie",
+		icon = "icon16/link_break.png",
+		can_run = function(targ)
+			return targ:TiedUp()
+		end,
+		func = function(targ) 
+			RunConsoleCommand("rpa_settied", targ:RPName(), 0)
+		end,
+	},
 }
 
 GM.PlayerOptions = {
@@ -441,28 +502,88 @@ GM.PlayerOptions = {
 	},
 }
 
+-- n-n-n-nestiiiiing
 local meta = FindMetaTable("Player")
-function meta:ShowUserOptions()
-	local menu = DermaMenu()
+function meta:ShowUserOptions(menu, will_open)
+	menu = menu or DermaMenu()
+	kingston.scoreboard.player_menu = menu
 	menu.TargetPlayer = self
 	
 	if LocalPlayer():IsAdmin() then
 		for _,option in next, GAMEMODE.AdminOptions do
+			if option.can_run and !option.can_run(self) then
+				continue
+			end
+		
 			local menu_opt = menu:AddOption(option.txt, function() option.func(self) end)
+			
 			if option.icon then
 				menu_opt:SetIcon(option.icon)
 			end
+			
+			if option.sub_menu then
+				local sub_menu = menu_opt:AddSubMenu()
+				
+				if option.sub_menu.gen_func then
+					local ret = option.sub_menu.gen_func(self, sub_menu)
+					kingston.scoreboard.handle_menu_generation(sub_menu, ret)
+					
+					continue
+				end
+				
+				if option.sub_menu.panel then
+					local pnl = option.sub_menu.panel(self, sub_menu)
+					sub_menu:AddPanel(pnl)
+				
+					continue
+				end
+				
+				for _,sub_opt in next, option.sub_menu do
+					if sub_opt.can_run and !sub_opt.can_run(self) then
+						continue
+					end
+					
+					local sub_menu_opt = sub_menu:AddOption(sub_opt.txt, function() sub_opt.func(self) end)
+					
+					if sub_opt.icon then
+						sub_menu_opt:SetIcon(sub_opt.icon)
+					end
+				end
+			end	
 		end
 		
 		menu:AddSpacer()
 	end
 	
 	for _,option in next, GAMEMODE.PlayerOptions do
+		if option.can_run and !option.can_run(self) then
+			continue
+		end
+	
 		local menu_opt = menu:AddOption(option.txt, function() option.func(self) end)
+		
 		if option.icon then
 			menu_opt:SetIcon(option.icon)
 		end
 	end
 	
-	menu:Open()
+	if !will_open then
+		menu:Open()
+	end
+end
+
+function kingston.scoreboard.handle_menu_generation(menu, info)
+	if !istable(info) then return end
+	
+	for _,option in next, info do
+		if option.can_run and !option.can_run(self) then
+			continue
+		end
+		
+		local opt = menu:AddOption(option.txt, function() option.func() end)
+		
+		if option.icon then
+			opt:SetIcon(option.icon)
+		end
+	end
 end

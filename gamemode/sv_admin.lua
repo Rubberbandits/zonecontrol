@@ -376,11 +376,11 @@ local function Kick( ply, args )
 	
 	if( targ and targ:IsValid() ) then
 		
-		local nick = targ:RPName();
+		local nick = targ:RPName() or targ:Nick();
 		
 		targ:Kick( reason );
-		
-		GAMEMODE:LogAdmin( "[K] " .. ply:Nick() .. " kicked player " .. nick .. " (" .. args[2] or "No reason specified." .. ").", ply );
+
+		GAMEMODE:LogAdmin( "[K] " .. ply:Nick() .. " kicked player " .. nick .. " (" .. (args[2] or "No reason specified.") .. ").", ply );
 		
 		GAMEMODE:Notify(nil, nil, COLOR_NOTIF, "%s was kicked by %s. (%s)", nick, ply:Nick(), args[2] or "No reason specified.")
 		
@@ -480,7 +480,7 @@ local function Ban( ply, args )
 		
 	end
 	
-	local reasonin = args[3] or "";
+	local reasonin = args[3] or "No reason specified.";
 	
 	if( !IsValid( ply ) ) then
 	
@@ -921,7 +921,6 @@ local function SetCharModel( ply, args )
 		
 		if( !table.HasValue( GAMEMODE.CitizenModels, model ) ) then
 			
-			print("setting body")
 			targ:SetBody("")
 			
 		end

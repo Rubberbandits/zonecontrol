@@ -189,7 +189,7 @@ function GM:InitPostEntity()
 	
 	netstream.Start( "nRequestPData" );
 	netstream.Start( "RetrieveDummyItems" );
-	if cookie.GetNumber( "cc_thirdperson", 0 ) == 1 then
+	if cookie.GetNumber( "zc_thirdperson", 0 ) == 1 then
 	
 		ctp:Enable();
 	

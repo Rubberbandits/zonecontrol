@@ -959,6 +959,7 @@ function GM:CreateCCContext( ent )
 	gui.EnableScreenClicker( true );
 	
 	local menu = DermaMenu();
+	CCContextMenu = menu;
 	menu:SetPos( gui.MousePos() );
 	
 	for _, v in pairs( options ) do
@@ -1007,6 +1008,14 @@ function GM:CreateCCContext( ent )
 			
 		end
 		
+	end
+	
+	if CCSelectedEnt:IsPlayer() and LocalPlayer():IsAdmin() then
+		local sub, parent = menu:AddSubMenu("Admin")
+		parent:SetIcon("icon16/user_edit.png")
+	
+		sub.TargetPlayer = CCSelectedEnt
+		CCSelectedEnt:ShowUserOptions(sub, true)
 	end
 	
 	menu:Open();

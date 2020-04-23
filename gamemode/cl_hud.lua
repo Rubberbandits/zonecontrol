@@ -492,12 +492,6 @@ function GM:ShouldDrawLocalPlayer( ply )
 		
 	end
 	
-	if( cookie.GetNumber( "cc_thirdperson", 0 ) == 1 ) then
-		
-		return self:ShouldDoThirdPerson( ply );
-		
-	end
-	
 	return false;
 	
 end

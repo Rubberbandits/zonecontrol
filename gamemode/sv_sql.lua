@@ -196,6 +196,7 @@ local CharTable = {
 };
 
 local PlayerTable = {
+	{ "IPAddress", "VARCHAR(128)" },
 	{ "LastName", "VARCHAR(128)", "" },
 	{ "ToolTrust", "INT", "0" },
 	{ "PhysTrust", "INT", "1" },
@@ -490,7 +491,7 @@ function meta:SQLSaveNewPlayer()
 	end
 	
 	GAMEMODE:LogSQL( "Creating new player record for user " .. self:Nick() .. "..." );
-	mysqloo.Query( "INSERT INTO cc_players ( SteamID ) VALUES ( '" .. self:SteamID() .. "' )", qS );
+	mysqloo.Query( "INSERT INTO cc_players ( SteamID, IPAddress, LastName ) VALUES ( '" .. self:SteamID() .. "', '".. self:IPAddress() .."', '".. self:Nick() .."' )", qS );
 	
 end
 
