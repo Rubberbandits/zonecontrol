@@ -359,6 +359,7 @@ BASE.FunctionHooks.PostEquip = function(item)
 			end
 		end
 		if item:GetVar( "HelmetEquipped", false ) then
+			item:Owner():SetSkin(0)
 			for i = 1, #item:Owner():GetMaterials() do
 				item:Owner():SetSubMaterial(i - 1, "engine/occlusionproxy")
 			end

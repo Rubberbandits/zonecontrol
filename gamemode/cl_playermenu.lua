@@ -567,14 +567,17 @@ function GM:PMCreateBio()
 		if !item.Vars["Equipped"] then continue end
 		local metaitem = GAMEMODE:GetItemByID(item.szClass)
 		local mdl_str = metaitem.Bonemerge
+		local scale
 		
 		if metaitem.AllowGender then
 			if LocalPlayer():Gender() == GENDER_FEMALE then
 				mdl_str = string.StripExtension(mdl_str).."_f.mdl"
 			end
+		elseif metaitem.ScaleForGender and LocalPlayer():Gender() == GENDER_FEMALE then
+			scale = metaitem.ScaleForGender
 		end
 		
-		local mdl = CCP.PlayerMenu.CharacterModel:InitializeModel(mdl_str,CCP.PlayerMenu.CharacterModel.Entity)
+		local mdl = CCP.PlayerMenu.CharacterModel:InitializeModel(mdl_str,CCP.PlayerMenu.CharacterModel.Entity, scale)
 		if metaitem.Bodygroups then
 			for k,v in next, metaitem.Bodygroups do
 				mdl:SetBodygroup(v[1], v[2])

@@ -695,6 +695,9 @@ function GM:AdminPlayerMenuDisable()
 	CCP.AdminMenu.TT0:SetDisabled( true );
 	CCP.AdminMenu.TT1:SetDisabled( true );
 	CCP.AdminMenu.TT2:SetDisabled( true );
+	CCP.AdminMenu.SetRankUser:SetDisabled( true );
+	CCP.AdminMenu.SetRankGM:SetDisabled( true );
+	CCP.AdminMenu.SetRankAdmin:SetDisabled( true );
 	CCP.AdminMenu.EditInventory:SetDisabled( true );
 	CCP.AdminMenu.WarnName:SetDisabled( true );
 	CCP.AdminMenu.GiveAccessToStockpile:SetDisabled( true );
@@ -746,6 +749,22 @@ function GM:AdminPlayerMenuEnable( ply )
 		CCP.AdminMenu.TT0:SetDisabled( false );
 		CCP.AdminMenu.TT1:SetDisabled( false );
 		CCP.AdminMenu.TT2:SetDisabled( true );
+	end
+	
+	if LocalPlayer():IsSuperAdmin() and !ply:IsSuperAdmin() then
+		if ply:IsUserGroup("user") then
+			CCP.AdminMenu.SetRankUser:SetDisabled( true );
+			CCP.AdminMenu.SetRankGM:SetDisabled( false );
+			CCP.AdminMenu.SetRankAdmin:SetDisabled( false );
+		elseif ply:IsUserGroup("gamemaster") then
+			CCP.AdminMenu.SetRankUser:SetDisabled( false );
+			CCP.AdminMenu.SetRankGM:SetDisabled( true );
+			CCP.AdminMenu.SetRankAdmin:SetDisabled( false );
+		else
+			CCP.AdminMenu.SetRankUser:SetDisabled( false );
+			CCP.AdminMenu.SetRankGM:SetDisabled( false );
+			CCP.AdminMenu.SetRankAdmin:SetDisabled( true );
+		end
 	end
 	
 	CCP.AdminMenu.EditInventory:SetDisabled( false );
@@ -1101,21 +1120,21 @@ function GM:AdminCreatePlayersMenu()
 	
 	CCP.AdminMenu.ModelLabel = vgui.Create( "DLabel", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.ModelLabel:SetText( "Character Model" );
-	CCP.AdminMenu.ModelLabel:SetPos( 220, 220 );
+	CCP.AdminMenu.ModelLabel:SetPos( 220, 190 );
 	CCP.AdminMenu.ModelLabel:SetFont( "CombineControl.LabelMedium" );
 	CCP.AdminMenu.ModelLabel:SizeToContents();
 	CCP.AdminMenu.ModelLabel:PerformLayout();
 	
 	CCP.AdminMenu.Model = vgui.Create( "DTextEntry", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.Model:SetFont( "CombineControl.LabelMedium" );
-	CCP.AdminMenu.Model:SetPos( 340, 220 );
+	CCP.AdminMenu.Model:SetPos( 340, 190 );
 	CCP.AdminMenu.Model:SetSize( 300, 20 );
 	CCP.AdminMenu.Model:PerformLayout();
 	
 	CCP.AdminMenu.ModelBut = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.ModelBut:SetFont( "CombineControl.LabelSmall" );
 	CCP.AdminMenu.ModelBut:SetText( "Apply" );
-	CCP.AdminMenu.ModelBut:SetPos( 650, 220 );
+	CCP.AdminMenu.ModelBut:SetPos( 650, 190 );
 	CCP.AdminMenu.ModelBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.ModelBut:DoClick()
 		
@@ -1128,7 +1147,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.PhysTrust0 = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.PhysTrust0:SetFont( "CombineControl.LabelSmall" );
 	CCP.AdminMenu.PhysTrust0:SetText( "Remove Physgun" );
-	CCP.AdminMenu.PhysTrust0:SetPos( 220, 250 );
+	CCP.AdminMenu.PhysTrust0:SetPos( 220, 220 );
 	CCP.AdminMenu.PhysTrust0:SetSize( 100, 20 );
 	function CCP.AdminMenu.PhysTrust0:DoClick()
 		
@@ -1143,7 +1162,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.PhysTrust1 = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.PhysTrust1:SetFont( "CombineControl.LabelSmall" );
 	CCP.AdminMenu.PhysTrust1:SetText( "Give Physgun" );
-	CCP.AdminMenu.PhysTrust1:SetPos( 330, 250 );
+	CCP.AdminMenu.PhysTrust1:SetPos( 330, 220 );
 	CCP.AdminMenu.PhysTrust1:SetSize( 100, 20 );
 	function CCP.AdminMenu.PhysTrust1:DoClick()
 		
@@ -1158,7 +1177,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.PropTrust0 = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.PropTrust0:SetFont( "CombineControl.LabelSmall" );
 	CCP.AdminMenu.PropTrust0:SetText( "Remove Proptrust" );
-	CCP.AdminMenu.PropTrust0:SetPos( 220, 280 );
+	CCP.AdminMenu.PropTrust0:SetPos( 220, 250 );
 	CCP.AdminMenu.PropTrust0:SetSize( 100, 20 );
 	function CCP.AdminMenu.PropTrust0:DoClick()
 		
@@ -1173,7 +1192,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.PropTrust1 = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.PropTrust1:SetFont( "CombineControl.LabelSmall" );
 	CCP.AdminMenu.PropTrust1:SetText( "Give Proptrust" );
-	CCP.AdminMenu.PropTrust1:SetPos( 330, 280 );
+	CCP.AdminMenu.PropTrust1:SetPos( 330, 250 );
 	CCP.AdminMenu.PropTrust1:SetSize( 100, 20 );
 	function CCP.AdminMenu.PropTrust1:DoClick()
 		
@@ -1188,7 +1207,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.TT0 = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.TT0:SetFont( "CombineControl.LabelSmall" );
 	CCP.AdminMenu.TT0:SetText( "TT: None" );
-	CCP.AdminMenu.TT0:SetPos( 220, 310 );
+	CCP.AdminMenu.TT0:SetPos( 220, 280 );
 	CCP.AdminMenu.TT0:SetSize( 100, 20 );
 	function CCP.AdminMenu.TT0:DoClick()
 		
@@ -1204,7 +1223,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.TT1 = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.TT1:SetFont( "CombineControl.LabelSmall" );
 	CCP.AdminMenu.TT1:SetText( "TT: Basic" );
-	CCP.AdminMenu.TT1:SetPos( 330, 310 );
+	CCP.AdminMenu.TT1:SetPos( 330, 280 );
 	CCP.AdminMenu.TT1:SetSize( 100, 20 );
 	function CCP.AdminMenu.TT1:DoClick()
 		
@@ -1220,7 +1239,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.TT2 = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.TT2:SetFont( "CombineControl.LabelSmall" );
 	CCP.AdminMenu.TT2:SetText( "TT: Advanced" );
-	CCP.AdminMenu.TT2:SetPos( 440, 310 );
+	CCP.AdminMenu.TT2:SetPos( 440, 280 );
 	CCP.AdminMenu.TT2:SetSize( 100, 20 );
 	function CCP.AdminMenu.TT2:DoClick()
 		
@@ -1232,6 +1251,54 @@ function GM:AdminCreatePlayersMenu()
 	end
 	CCP.AdminMenu.TT2:SetDisabled( true );
 	CCP.AdminMenu.TT2:PerformLayout();
+	
+	CCP.AdminMenu.SetRankUser = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
+	CCP.AdminMenu.SetRankUser:SetFont( "CombineControl.LabelSmall" );
+	CCP.AdminMenu.SetRankUser:SetText( "User" );
+	CCP.AdminMenu.SetRankUser:SetPos( 220, 310 );
+	CCP.AdminMenu.SetRankUser:SetSize( 100, 20 );
+	function CCP.AdminMenu.SetRankUser:DoClick()
+		
+		RunConsoleCommand( "rpa_setrank", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, "user" );
+		CCP.AdminMenu.SetRankUser:SetDisabled( true );
+		CCP.AdminMenu.SetRankGM:SetDisabled( false );
+		CCP.AdminMenu.SetRankAdmin:SetDisabled( false );
+		
+	end
+	CCP.AdminMenu.SetRankUser:SetDisabled( true );
+	CCP.AdminMenu.SetRankUser:PerformLayout();
+	
+	CCP.AdminMenu.SetRankGM = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
+	CCP.AdminMenu.SetRankGM:SetFont( "CombineControl.LabelSmall" );
+	CCP.AdminMenu.SetRankGM:SetText( "Global GM" );
+	CCP.AdminMenu.SetRankGM:SetPos( 330, 310 );
+	CCP.AdminMenu.SetRankGM:SetSize( 100, 20 );
+	function CCP.AdminMenu.SetRankGM:DoClick()
+		
+		RunConsoleCommand( "rpa_setrank", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, "gamemaster" );
+		CCP.AdminMenu.SetRankUser:SetDisabled( false );
+		CCP.AdminMenu.SetRankGM:SetDisabled( true );
+		CCP.AdminMenu.SetRankAdmin:SetDisabled( false );
+		
+	end
+	CCP.AdminMenu.SetRankGM:SetDisabled( true );
+	CCP.AdminMenu.SetRankGM:PerformLayout();
+	
+	CCP.AdminMenu.SetRankAdmin = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
+	CCP.AdminMenu.SetRankAdmin:SetFont( "CombineControl.LabelSmall" );
+	CCP.AdminMenu.SetRankAdmin:SetText( "Admin" );
+	CCP.AdminMenu.SetRankAdmin:SetPos( 440, 310 );
+	CCP.AdminMenu.SetRankAdmin:SetSize( 100, 20 );
+	function CCP.AdminMenu.SetRankAdmin:DoClick()
+		
+		RunConsoleCommand( "rpa_setrank", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, "admin" );
+		CCP.AdminMenu.SetRankUser:SetDisabled( false );
+		CCP.AdminMenu.SetRankGM:SetDisabled( false );
+		CCP.AdminMenu.SetRankAdmin:SetDisabled( true );
+		
+	end
+	CCP.AdminMenu.SetRankAdmin:SetDisabled( true );
+	CCP.AdminMenu.SetRankAdmin:PerformLayout();
 	
 	CCP.AdminMenu.GiveAccessToStockpile = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.GiveAccessToStockpile:SetFont( "CombineControl.LabelSmall" );

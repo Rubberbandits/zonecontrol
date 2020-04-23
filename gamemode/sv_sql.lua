@@ -200,6 +200,7 @@ local PlayerTable = {
 	{ "ToolTrust", "INT", "0" },
 	{ "PhysTrust", "INT", "1" },
 	{ "PropTrust", "INT", "1" },
+	{ "Rank", "VARCHAR(128)", "user" },
 	{ "NewbieStatus", "INT", 1 },
 	{ "DonationAmount", "DOUBLE", "0" },
 	{ "CustomMaxProps", "INT", "0" },

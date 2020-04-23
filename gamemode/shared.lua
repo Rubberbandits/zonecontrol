@@ -1,4 +1,4 @@
--- 5/25/2013
+-- 4/22/2020
 
 DeriveGamemode( "sandbox" );
 
@@ -772,7 +772,7 @@ end
 
 function meta:IsEventCoordinator()
 	
-	return self:GetUserGroup() == "eventcoordinator" or self:HasCharFlag( "G" );
+	return self:GetUserGroup() == "gamemaster" or self:HasCharFlag( "G" );
 	
 end
 

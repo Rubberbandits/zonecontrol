@@ -27,12 +27,11 @@ function ENT:Think()
 		for k,v in next, ents do
 			if !v:IsPlayer() then continue end
 			
-			local dist = v:GetPos():Distance(self:GetPos())
+			local dist = v:GetPos():DistToSqr(self:GetPos())
 			local intensity = self:GetSourceIntensity()
-			local calc_amt = math.Clamp(math.Round((intensity * self:GetSourceSize()^2) / dist^2, 2), 0, intensity) * v:GetRadiationResistance()
-			print(calc_amt)
+			local calc_amt = math.Clamp(math.Round((intensity * self:GetSourceSize()^2) / dist, 2), 0, intensity) * v:GetRadiationResistance()
 			if calc_amt > 0 then
-				v:ApplyRadiation(calc_amt)
+				--v:ApplyRadiation(calc_amt)
 			end
 		end
 		

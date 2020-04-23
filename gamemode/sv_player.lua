@@ -213,6 +213,8 @@ function meta:LoadPlayer( data )
 	
 	self:SetDonationAmount( tonumber( data.DonationAmount ), true );
 	
+	self:SetUserGroup(data.Rank)
+	
 end
 
 function nRequestPData( ply )

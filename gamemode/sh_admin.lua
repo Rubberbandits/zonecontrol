@@ -52,7 +52,7 @@ function GM:PlayerNoClip( ply )
 				
 			end
 			
-			if( ply:IsEventCoordinator() or ply:HasCharFlag( "G" ) ) then
+			if( ply:IsEventCoordinator() ) then
 				
 				ply.NoclipPos = ply:GetPos();
 				

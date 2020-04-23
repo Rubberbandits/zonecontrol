@@ -37,6 +37,18 @@ function wrapText(text, width, font)
 	return lines, maxW
 end
 
+function surface.DrawTexturedRectRotatedPoint( x, y, w, h, rot, x0, y0 )
+	
+	local c = math.cos( math.rad( rot ) )
+	local s = math.sin( math.rad( rot ) )
+	
+	local newx = y0 * s - x0 * c
+	local newy = y0 * c + x0 * s
+	
+	surface.DrawTexturedRectRotated( x + newx, y + newy, w, h, rot )
+	
+end
+
 function GM:CreateIronDev()
 	
 	CCP.IronDev = vgui.Create( "DFrame" );

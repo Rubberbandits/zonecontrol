@@ -58,6 +58,7 @@ include( "cl_think.lua" );
 include( "cl_weaponselect.lua" );
 include( "cl_blowout.lua" );
 include( "cl_bonemerge.lua" );
+include( "cl_geiger.lua" );
 
 include( "gui/skin.lua" );
 include( "gui/ccarea.lua" );

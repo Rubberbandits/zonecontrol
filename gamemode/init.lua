@@ -101,6 +101,7 @@ AddCSLuaFile( "cl_think.lua" );
 AddCSLuaFile( "cl_weaponselect.lua" );
 AddCSLuaFile( "cl_blowout.lua" );
 AddCSLuaFile( "cl_bonemerge.lua" );
+AddCSLuaFile( "cl_geiger.lua" );
 
 AddCSLuaFile( "gui/skin.lua" );
 AddCSLuaFile( "gui/ccarea.lua" );

@@ -19,7 +19,7 @@ function concommand.AddGamemaster( cmd, func, sa, playertarget )
 	
 	local function c( ply, _, args )
 		
-		if( !ply:HasCharFlag( "G" ) ) then
+		if( !ply:IsEventCoordinator() ) then
 			
 			ply:Notify( nil, COLOR_ERROR, "You need to be a gamemaster to do this.")
 			
@@ -2123,3 +2123,44 @@ local function GiveStockpile( ply, args )
 	
 end
 concommand.AddAdmin( "rpa_givestockpile", GiveStockpile );
+
+local function SetRank(ply, args)
+	if #args == 0 then
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
+		return
+	end
+	
+	local targ = GAMEMODE:FindPlayer(args[1], ply)
+	local rank = args[2] or "user"
+	
+	if targ and targ:IsValid() then
+		targ:SetUserGroup(rank)
+		targ:UpdatePlayerField("Rank", rank)
+		
+		GAMEMODE:Notify({ply, targ}, nil, COLOR_NOTIF, "%s set %s's rank to %s.", ply:Nick(), targ:Nick(), rank)
+	else
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
+	end
+end
+concommand.AddAdmin("rpa_setrank", SetRank, true)
+
+local function set_rank(ply, _, args)
+	if ply:IsValid() then
+		return
+	end
+	
+	local targ = GAMEMODE:FindPlayer(args[1])
+	local rank = args[2] or "user"
+	if targ and targ:IsValid() then
+		targ:SetUserGroup(rank)
+		targ:UpdatePlayerField("Rank", rank)
+		
+		MsgC(COLOR_NOTIF, Format("%s's rank has been set to %s.\n", targ:Nick(), rank))
+		targ:Notify(nil, COLOR_NOTIF, "Console set your rank to %s.", rank)
+	elseif( string.find( args[1], "STEAM_" ) ) then
+		GAMEMODE:UpdatePlayerFieldOffline(args[1], "Rank", rank)
+	else
+		MsgC(COLOR_ERR, "Error: no target found.\n")
+	end
+end
+concommand.Add( "rpa_serversetrank", set_rank );

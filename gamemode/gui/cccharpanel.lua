@@ -163,7 +163,7 @@ hook.Add( "PostDrawCharPanel", "charpanel", function( panel, entity )
 	
 end )
 
-function PANEL:InitializeModel( mdl, parent )
+function PANEL:InitializeModel( mdl, parent, scale )
 
 	if( !self.modelList ) then self.modelList = {} end;
 
@@ -181,6 +181,12 @@ function PANEL:InitializeModel( mdl, parent )
 		
 		b.drawModel = true;
 		
+	end
+	
+	if scale then
+		for i = 0, b:GetBoneCount() - 1 do 
+			b:ManipulateBoneScale(i, Vector(scale, scale, scale))
+		end
 	end
 		
 	self.modelList[#self.modelList + 1] = b;
