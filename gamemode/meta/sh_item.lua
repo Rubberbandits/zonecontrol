@@ -274,6 +274,9 @@ function item:RemoveItem(network)
 
 	GAMEMODE.g_ItemTable[self:GetID()] = nil;
 	self:Owner().Inventory[self:GetID()] = nil;
+	
+	hook.Run("ItemDropped", self:Owner(), self)
+	
 	setmetatable( self, nil );
 	self = nil;
 	
