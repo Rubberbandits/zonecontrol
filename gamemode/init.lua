@@ -30,6 +30,7 @@ include( "sh_reload.lua" );
 include( "sh_sandbox.lua" );
 include( "sh_weapons.lua" );
 include( "sh_blowout.lua" );
+include( "sh_logs.lua" );
 include( "sv_admin.lua" );
 include( "sv_business.lua" );
 include( "sv_charcreate.lua" );
@@ -81,6 +82,7 @@ AddCSLuaFile( "sh_reload.lua" );
 AddCSLuaFile( "sh_sandbox.lua" );
 AddCSLuaFile( "sh_weapons.lua" );
 AddCSLuaFile( "sh_blowout.lua" );
+AddCSLuaFile( "sh_logs.lua" );
 AddCSLuaFile( "cl_items.lua" );
 AddCSLuaFile( "cl_admin.lua" );
 AddCSLuaFile( "cl_adminmenu.lua" );
@@ -157,7 +159,7 @@ function GM:Initialize()
 	end
 	
 	self:InitSQL();
-	self:SetupDataDirectories();
+	hook.Run("SetupDataDirectories")
 	self:LoadBans();
 	RetrieveStockpiles();
 	

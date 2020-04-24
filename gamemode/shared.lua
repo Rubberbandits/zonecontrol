@@ -1,11 +1,12 @@
 -- 4/22/2020
+-- honestly this gamemode has been recoded so massively im hesistant to call it combinecontrol
 
 DeriveGamemode( "sandbox" );
 
 GM.Name = "ZoneControl";
-GM.Author = "Disseminate";
+GM.Author = "rusty";
 GM.Website = "";
-GM.Email = "disseminate@luaforfood.com";
+GM.Email = "";
 
 function GM:GetGameDescription()
 	
