@@ -13,7 +13,7 @@ SWEP.Firearm				= true
 
 SWEP.Primary.ClipSize 		= 10
 SWEP.Primary.DefaultClip 	= 0
-SWEP.Primary.Ammo			= "cc_smg"
+SWEP.Primary.Ammo			= "gauss"
 SWEP.Primary.InfiniteAmmo	= true
 SWEP.Primary.Automatic		= false
 SWEP.Primary.Sound			= "kingston_wpn/gauss_shoot.ogg"
@@ -49,12 +49,15 @@ SWEP.ItemCamPos = Vector(-2.94, 50, 0.27)
 SWEP.ItemLookAt = Vector(-1.44, 0, 0)
 
 function SWEP:Reload()
-	if self:Clip1() == 0 and self.Owner:HasItem("xgauss_battery") then
+	local item = self.Owner:HasItem("gauss")
+	if self:Clip1() == 0 and item then
+		if istable(item) and !item.IsItem then
+			item = item[1]
+		end
 
-		self:SetClip1(10)
+		self:SetClip1(item:GetVar("Amount", 5))
 
 		if SERVER then
-			local item = self.Owner:HasItem("xgauss_battery")
 			item:RemoveItem(true)
 		end
 

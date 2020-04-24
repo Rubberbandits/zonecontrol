@@ -449,7 +449,7 @@ kingston.chat.register_type("pda", {
 			return {}
 		end
 		
-		chat_data.on_run(chat_type, speaker, text, {target})
+		chat_data.on_run(chat_type, speaker, text, {target, speaker})
 		return {}
 	end,
 	can_hear = function(chat_type, speaker, listener)

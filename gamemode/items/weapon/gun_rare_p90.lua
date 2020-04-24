@@ -1,7 +1,7 @@
 ITEM.Name = "FN P90"
 ITEM.Desc = "A compact PDW designed in Belgium. Created for usage in tight quarters, it boasts a high magazine capacity and short barrel length. Uses 5.7x28mm."
-ITEM.Model = "models/weapons/tfa_ins2/w_mwr_p90.mdl"
-ITEM.WeaponClass = "tfa_ins2_mwr_p90"
+ITEM.Model = "models/weapons/tfa_cod/mwr/w_p90.mdl"
+ITEM.WeaponClass = "tfa_mwr_p90"
 ITEM.Weight = 2.5
 ITEM.SafetyPos = Vector(0,0,0)
 ITEM.SafetyAng = Angle(-12.4, 0, 0)

@@ -349,6 +349,8 @@ end
 
 function GM:PlayerSpawnSENT( ply, class )
 	
+	print("sent")
+	
 	if( ply:IsAdmin() or ply:IsEventCoordinator() ) then
 	
 		return true;
@@ -360,6 +362,12 @@ function GM:PlayerSpawnSENT( ply, class )
 end
 
 function GM:PlayerSpawnSWEP( ply, class, info )
+	
+	return false;
+	
+end
+
+function GM:PlayerGiveSWEP( ply, class, info )
 	
 	return false;
 	
