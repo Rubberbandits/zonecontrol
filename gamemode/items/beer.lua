@@ -16,7 +16,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "You pop the cap and drink the beer.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "You pop the cap and drink the beer.")
 			
 		else
 			

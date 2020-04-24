@@ -68,6 +68,10 @@ kingston.chat.default_type = {
 		local chat_data = kingston.chat.get(chat_type)
 		local chat_str_data = chat_data.construct_string(chat_type, ply, text)
 		
+		if chat_data.print_console then
+			MsgC(chat_data.text_color, chat_data.print_console(chat_type, ply, text))
+		end
+		
 		GAMEMODE:AddChat(chat_data.chat_filter, chat_data.chat_font, unpack(chat_str_data))
 	end,
 	can_say = function(chat_type, ply)
@@ -267,6 +271,9 @@ kingston.chat.register_type("it", {
 	construct_string = function(chat_type, ply, text)
 		return {Color(131, 196, 251), "** ", text}
 	end,
+	print_console = function(chat_type, ply, text)
+		return Format("[i][%s] ", ply:RPName())
+	end,
 })
 
 kingston.chat.register_type("lit", {
@@ -274,6 +281,9 @@ kingston.chat.register_type("lit", {
 	chat_range = 1000,
 	construct_string = function(chat_type, ply, text)
 		return {Color(131, 196, 251), "** ", text}
+	end,
+	print_console = function(chat_type, ply, text)
+		return Format("[Li][%s] ", ply:RPName())
 	end,
 })
 

@@ -89,7 +89,7 @@ function GM:PlayerBindPress( ply, bind, down )
 		
 		if( LocalPlayer():TiedUp() ) then
 			
-			self:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "You can't switch characters while tied up.", { CB_ALL, CB_OOC } );
+			LocalPlayer():Notify(nil, COLOR_ERR, "You can't switch characters while tied up.")
 			return true;
 			
 		end

@@ -16,7 +16,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "The drink goes down like a thin syrup, tasting like a bad mix of artificial sweeteners and preservative. The taste lingers a while after you've gulped down your fill, and only sours the more your smack your lips to try and get it away.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "The drink goes down like a thin syrup, tasting like a bad mix of artificial sweeteners and preservative. The taste lingers a while after you've gulped down your fill, and only sours the more your smack your lips to try and get it away.")
 	
 		end
 		

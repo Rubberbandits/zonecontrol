@@ -16,7 +16,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "Taking a drink, you're reminded of nasty western light beers and cheap apple cider. There's not enough alcohol in the kvass for it to be classified as an alcoholic beverage in Russia, but you're certain enough of this stuff will give you a good buzz. That is, if you can stomach enough of the piss-like drink.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "Taking a drink, you're reminded of nasty western light beers and cheap apple cider. There's not enough alcohol in the kvass for it to be classified as an alcoholic beverage in Russia, but you're certain enough of this stuff will give you a good buzz. That is, if you can stomach enough of the piss-like drink.")
 	
 		end
 		

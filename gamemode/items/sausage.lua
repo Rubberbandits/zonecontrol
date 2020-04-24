@@ -19,7 +19,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "The sausage is very chewy. Every so often there is a speck of bone, but otherwise the meat is very flavorful. Very salty.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "The sausage is very chewy. Every so often there is a speck of bone, but otherwise the meat is very flavorful. Very salty.")
 			
 			
 		end

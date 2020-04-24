@@ -19,7 +19,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "As you take the pills, you feel your presence float away from yourself. You are immune to psychostimulation, and devoid of emotion. It's getting cold in here.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "As you take the pills, you feel your presence float away from yourself. You are immune to psychostimulation, and devoid of emotion. It's getting cold in here.")
 			
 			
 		end

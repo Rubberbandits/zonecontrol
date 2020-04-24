@@ -14,7 +14,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "You take a blade and carefully sharpen it against the stone blocks, honing its edge.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "You take a blade and carefully sharpen it against the stone blocks, honing its edge.")
 			
 			
 		end

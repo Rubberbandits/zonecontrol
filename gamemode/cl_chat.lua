@@ -477,7 +477,7 @@ if( !chat.OldAddText ) then
 			
 		end
 		
-		GAMEMODE:AddChat( col, "CombineControl.ChatNormal", str, { CB_ALL, CB_OOC } );
+		GAMEMODE:AddChat( { CB_ALL, CB_OOC }, "CombineControl.ChatNormal", col, str );
 		
 	end
 	
@@ -503,7 +503,7 @@ function GM:AddPDANotification(header, body, notif_x, notif_y, is_priority)
 end
 
 function GM:PDANotificationAdded(notif)
-	MsgC(Color(128,128,128), Format("[PDA] %s\t", notif.header))
+	MsgC(Color(128, 128, 128), Format("[PDA] %s\t", notif.header))
 	MsgC(Color(229, 201, 98), Format("%s\n", notif.body))
 	
 	if cookie.GetNumber("zc_pdasound", 1) == 1 or notif.priority then
@@ -512,7 +512,7 @@ function GM:PDANotificationAdded(notif)
 end
 
 local function nStockpileNameTaken()
-	GAMEMODE:AddChat( Color( 255, 20, 20 ), "CombineControl.ChatNormal", "This stockpile name is already taken!", { CB_ALL, CB_OOC } );
+	LocalPlayer():Notify(nil, COLOR_ERR, "This stockpile name is already taken!")
 end
 netstream.Hook( "nStockpileNameTaken", nStockpileNameTaken );
 

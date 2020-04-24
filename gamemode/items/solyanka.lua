@@ -16,7 +16,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "You choke down the cold soup with bitterness. The different chunks of meal remind you of about every different dinner you've experienced over the past month, but all in exceptionally shitty ways. They say hot solyanka is a cure for any sickness, but the way your stomach's beginning to rumble, you wonder if cold solyanka has the opposite effect.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "You choke down the cold soup with bitterness. The different chunks of meal remind you of about every different dinner you've experienced over the past month, but all in exceptionally shitty ways. They say hot solyanka is a cure for any sickness, but the way your stomach's beginning to rumble, you wonder if cold solyanka has the opposite effect.")
 	
 		end
 		

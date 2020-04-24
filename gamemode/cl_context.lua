@@ -223,7 +223,7 @@ function GM:GetCCOptions( ent, dist )
 						
 					else
 						
-						self:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "You need more money to do that!", { CB_ALL, CB_IC } );
+						self:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "You need more money to do that!")
 						
 					end
 					
@@ -237,7 +237,7 @@ function GM:GetCCOptions( ent, dist )
 					
 					netstream.Start( "nCSellDoor", ent );
 					
-					self:AddChat( Color( 229, 201, 98, 255 ), "CombineControl.ChatNormal", "You sold the door for 80% of its original value (" .. tostring( math.floor( ent:DoorPrice() * 0.8 ) ) .. " rubles).", { CB_ALL, CB_IC } );
+					self:AddChat( Color( 229, 201, 98, 255 ), "CombineControl.ChatNormal", "You sold the door for 80% of its original value (" .. tostring( math.floor( ent:DoorPrice() * 0.8 ) ) .. " rubles).")
 					
 				end, nil, 100 };
 				
@@ -459,19 +459,19 @@ function GM:GetCCOptions( ent, dist )
 							
 							CCP.RadioSelector:Remove();
 							
-							GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "You change the radio channel to " .. tostring( val ) .. ".", { CB_ALL, CB_IC } );
+							LocalPlayer():Notify(nil, Color(200,200,200,255), "You change the radio channel to " .. tostring( val ) .. ".")
 							
 							netstream.Start( "nCRadioChannel", ent, val );
 							
 						else
 							
-							GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "Highest channel is 999.", { CB_ALL, CB_IC } );
+							LocalPlayer():Notify(nil, COLOR_ERR, "Highest channel is 999.")
 							
 						end
 						
 					else
 						
-						GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "Lowest channel is 0.", { CB_ALL, CB_IC } );
+						LocalPlayer():Notify(nil, COLOR_ERR, "Lowest channel is 0.")
 						
 					end
 					
@@ -626,7 +626,7 @@ function GM:CCCreateDoorNameEdit()
 			
 		else
 			
-			GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "Error: Name must be between 1 and 50 characters.", { CB_ALL, CB_OOC } );
+			LocalPlayer():Notify(nil, COLOR_ERR, "Error: Name must be between 1 and 50 characters.")
 			
 		end
 		
@@ -769,7 +769,7 @@ function GM:CCCreateGiveCredits()
 		
 		if( LocalPlayer():GetPos():Distance( CCSelectedEnt:GetPos() ) > 100 ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "They're too far away.", { CB_ALL, CB_OOC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "They're too far away.")
 			return;
 			
 		end
@@ -784,7 +784,7 @@ function GM:CCCreateGiveCredits()
 			
 		else
 			
-			GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "You don't have this many rubles!", { CB_ALL, CB_OOC } );
+			LocalPlayer():Notify(nil, COLOR_ERR, "You don't have this many rubles!")
 			
 		end
 		
