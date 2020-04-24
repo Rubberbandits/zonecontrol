@@ -50,5 +50,5 @@ function ITEM:CanDrop()
 end
 
 function ITEM:OnUnloadItem()
-	GAMEMODE.GeigerCounterEquipped = false
+	
 end

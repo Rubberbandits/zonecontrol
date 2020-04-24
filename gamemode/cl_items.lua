@@ -83,13 +83,3 @@ netstream.Hook("DropItem", function(id)
 		item:DropItem()
 	end
 end)
-
-netstream.Hook("UnloadItem", function(id)
-	if !LocalPlayer().Inventory then return end
-	local item = LocalPlayer().Inventory[id]
-	if item then
-		item:OnUnloadItem()
-		LocalPlayer().Inventory[id] = nil
-		GAMEMODE.g_ItemTable[id] = nil
-	end
-end)
