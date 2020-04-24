@@ -83,6 +83,8 @@ local function nTakeFromStockpile( ply, index, id )
 			object:UpdateSave()
 
 			stockpile.Inventory[ret[1].id] = nil
+			
+			hook.Run("ItemPickedUp", ply, object)
 
 			GAMEMODE:LogItems("[G] " .. ply:VisibleRPName() .. " removed item " .. object:GetName() .. " from a stockpile.", ply);
 		end
