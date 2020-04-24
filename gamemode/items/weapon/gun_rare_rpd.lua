@@ -1,8 +1,8 @@
 ITEM.Name = "RPD"
-ITEM.Desc = "The old soviet LMG. Fires AK47 rounds at a high rate of fire with a belt feed. Not very accurate but can put down a good amount of rounds down range.  Uses 7.62x39."
+ITEM.Desc = "The old soviet LMG. Fires at a high rate with a belt feed. Not very accurate but can put down a good amount of rounds down range.  Uses 7.62x39mm."
 ITEM.Model = "models/weapons/tfa_cod/mwr/w_rpd.mdl"
 ITEM.WeaponClass = "tfa_mwr_rpd"
-ITEM.Weight = 6
+ITEM.Weight = 7.5
 ITEM.SafetyPos = Vector(0,0,0)
 ITEM.SafetyAng = Angle(-12.4, 0, 0)
 ITEM.JamChance = 0.09
@@ -13,4 +13,4 @@ ITEM.LookAt 		= Vector( 0, 0, 0 );
 ITEM.SelfRepairCondition = 75
 ITEM.AmmoType = "762x39"
 ITEM.License = LICENSE_BLACK;
-ITEM.BulkPrice = 70000
+ITEM.BulkPrice = 210000

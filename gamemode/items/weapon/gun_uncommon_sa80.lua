@@ -13,4 +13,4 @@ ITEM.LookAt 		= Vector( 0, 0, 0 );
 ITEM.SelfRepairCondition = 80
 ITEM.AmmoType = "556x45"
 ITEM.License = LICENSE_BLACK;
-ITEM.BulkPrice = 37500
+ITEM.BulkPrice = 90000

@@ -1,5 +1,5 @@
 ITEM.Name = "RPK"
-ITEM.Desc = "An LMG-ized AK74. Uses a heavier barrel and either larger magazines or drum magazines. Decently accurate and fairly versatile compared to other LMGS. Uses 7.62x39mm"
+ITEM.Desc = "An LMG-ized AKM. Uses a heavier barrel and either larger magazines or drum magazines. Decently accurate and fairly versatile compared to other LMGs. Uses 7.62x39mm"
 ITEM.Model = "models/weapons/tfa_ins2/w_rpk.mdl"
 ITEM.WeaponClass = "tfa_ins2_rpk"
 ITEM.Weight = 5
@@ -13,4 +13,4 @@ ITEM.LookAt 		= Vector( 11.25, 0, 0 );
 ITEM.SelfRepairCondition = 75
 ITEM.AmmoType = "762x39"
 ITEM.License = LICENSE_BLACK;
-ITEM.BulkPrice = 42000
+ITEM.BulkPrice = 120000

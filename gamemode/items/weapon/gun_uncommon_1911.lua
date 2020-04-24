@@ -1,4 +1,4 @@
-ITEM.Name = "Colt 1911"
+ITEM.Name = "Colt 1911 S70"
 ITEM.Desc = "Quintessential american pistol. Won two world wars. Uses .45 ACP."
 ITEM.Model = "models/weapons/tfa_cod/mwr/w_m1911.mdl"
 ITEM.WeaponClass = "tfa_mwr_m1911"
@@ -13,4 +13,4 @@ ITEM.LookAt 		= Vector( 0, 0, 0 );
 ITEM.SelfRepairCondition = 85
 ITEM.AmmoType = "45acp"
 ITEM.License = LICENSE_BLACK;
-ITEM.BulkPrice = 16000
+ITEM.BulkPrice = 52000

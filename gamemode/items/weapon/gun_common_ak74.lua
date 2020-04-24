@@ -1,5 +1,5 @@
 ITEM.Name = "AK-74"
-ITEM.Desc = "The 1970s replacement for the AKM, firing an intermediate high velocity round. It achieves greater effective range, accuracy, and reliability than its predecessor. "
+ITEM.Desc = "The 1970s replacement for the AKM, firing an intermediate high velocity round. It achieves greater effective range, accuracy, and reliability than its predecessor. Fires 5.45x39mm."
 ITEM.Model = "models/weapons/w_tfa_dm_ak74.mdl"
 ITEM.WeaponClass = "tfa_dm_ak74"
 ITEM.Weight = 3
@@ -13,4 +13,4 @@ ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
 ITEM.SelfRepairCondition = 70
 ITEM.AmmoType = "545x39"
 ITEM.License = LICENSE_BLACK;
-ITEM.BulkPrice = 30000
+ITEM.BulkPrice = 60000

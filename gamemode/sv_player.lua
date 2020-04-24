@@ -295,13 +295,11 @@ function meta:LoadCharacter( data )
 	if self.Inventory then
 		if table.Count(self.Inventory) > 0 then
 			for k,v in next, self.Inventory do
-				if v:GetVar("Equipped",false) then
-					if v.OnUnloadItem then
-						v:OnUnloadItem()
-					end
-					GAMEMODE.g_ItemTable[k] = nil
-					self.Inventory[k] = nil
+				if v.OnUnloadItem then
+					v:OnUnloadItem()
 				end
+				GAMEMODE.g_ItemTable[k] = nil
+				self.Inventory[k] = nil
 			end
 		end
 	end

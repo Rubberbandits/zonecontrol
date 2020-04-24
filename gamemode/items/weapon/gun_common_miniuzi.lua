@@ -1,8 +1,8 @@
 ITEM.Name = "Mini-Uzi"
-ITEM.Desc = "Miniturized Uzi. Higher rate of fire and more uncontrollable, but usable with one hand. Uses 9x19mm."
+ITEM.Desc = "Miniaturized Uzi. Higher rate of fire and more uncontrollable, but usable with one hand. Uses 9x19mm."
 ITEM.Model = "models/weapons/tfa_cod/mwr/w_miniuzi.mdl"
 ITEM.WeaponClass = "tfa_mwr_uzi"
-ITEM.Weight = 2
+ITEM.Weight = 3
 ITEM.SafetyPos = Vector(0,0,0)
 ITEM.SafetyAng = Angle(-12.4, 0, 0)
 ITEM.JamChance = 0.09
@@ -13,4 +13,4 @@ ITEM.LookAt 		= Vector( 0, 0, 0 );
 ITEM.SelfRepairCondition = 75
 ITEM.AmmoType = "9x19"
 ITEM.License = LICENSE_BLACK;
-ITEM.BulkPrice = 20000
+ITEM.BulkPrice = 60000

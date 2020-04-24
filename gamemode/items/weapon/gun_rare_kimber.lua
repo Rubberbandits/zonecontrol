@@ -1,5 +1,5 @@
 ITEM.Name = "Kimber Night Warrior"
-ITEM.Desc = "A 1911 for the stalker or Merc wanting a bit more accurization and modernity. Not a gun to be left unmaintained.  Uses .45 ACP."
+ITEM.Desc = "A 1911 for the stalker or Merc wanting a bit more accuracy and modernity. Not a gun to be left unmaintained.  Uses .45 ACP."
 ITEM.Model = "models/weapons/w_nb_ins_knw.mdl"
 ITEM.WeaponClass = "tfa_ins2_knw"
 ITEM.Weight = 1
@@ -13,4 +13,4 @@ ITEM.LookAt 		= Vector( 0, 0, 0 );
 ITEM.SelfRepairCondition = 90
 ITEM.AmmoType = "45acp"
 ITEM.License = LICENSE_BLACK;
-ITEM.BulkPrice = 35000
+ITEM.BulkPrice = 105000

@@ -1,4 +1,4 @@
-ITEM.Name = "Toz"
+ITEM.Name = "TOZ"
 ITEM.Desc = "A full size double barrel hunting shotgun. Popular with rookies. Uses 12 gauge shells or slugs."
 ITEM.Model = "models/weapons/tfa_ins2/w_doublebarrel.mdl"
 ITEM.WeaponClass = "tfa_ins2_doublebarrel"
@@ -13,4 +13,4 @@ ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
 ITEM.SelfRepairCondition = 75
 ITEM.AmmoType = "12ga"
 ITEM.License = LICENSE_BLACK;
-ITEM.BulkPrice = 14000
+ITEM.BulkPrice = 42000

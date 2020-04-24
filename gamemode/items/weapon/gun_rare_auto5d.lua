@@ -1,0 +1,16 @@
+ITEM.Name = "Auto 5D"
+ITEM.Desc = "A carbine version of the swedish AK5. Not too common due to not too many being produced or brought to the zone. The short length and folding stock makes it good for being a tunnel rat. Fires 5.56x45mm."
+ITEM.Model = "models/weapons/tfa_ins2/w_ak5d.mdl"
+ITEM.WeaponClass = "tfa_ins2_ak5d"
+ITEM.Weight = 3.75
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.01
+ITEM.DegradeRate = 0.02
+ITEM.FOV 			= 20;
+ITEM.CamPos 		= Vector( 50, 50, 50 );
+ITEM.LookAt 		= Vector( 0, 0, 0 );
+ITEM.SelfRepairCondition = 90
+ITEM.AmmoType = "556x45"
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 175000

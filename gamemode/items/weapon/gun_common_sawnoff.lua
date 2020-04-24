@@ -1,8 +1,8 @@
-ITEM.Name = "Sawnoff Toz"
+ITEM.Name = "Sawnoff TOZ"
 ITEM.Desc = "A sawn off hunting shotgun. Highly popular to any stalker of any skill level. Uses 12 gauge shells or slugs."
 ITEM.Model = "models/weapons/tfa_cod/mwr/w_ranger.mdl"
 ITEM.WeaponClass = "tfa_mwr_ranger"
-ITEM.Weight = 1
+ITEM.Weight = 2
 ITEM.SafetyPos = Vector(0,0,0)
 ITEM.SafetyAng = Angle(-12.4, 0, 0)
 ITEM.JamChance = 0.02
@@ -13,4 +13,4 @@ ITEM.LookAt 		= Vector( 0, 0, 0 );
 ITEM.SelfRepairCondition = 75
 ITEM.AmmoType = "12ga"
 ITEM.License = LICENSE_BLACK;
-ITEM.BulkPrice = 12000
+ITEM.BulkPrice = 32000

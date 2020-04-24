@@ -147,6 +147,7 @@ local function BonemergeThink()
 		if !IsValid(v) then continue end
 		if !v.CharID then continue end
 		if v:CharID() <= 0 then continue end
+		if v:IsDormant() then continue end
 		
 		if !v.BodyHidden and !IsValid(GAMEMODE.BonemergeBodies[v]) then
 			GAMEMODE.BonemergeBodies[v] = v:CreateNewBonemerge(v:Body())
@@ -182,6 +183,9 @@ local function BonemergeThink()
 					end
 			
 					v[n.szClass] = v:CreateNewBonemerge(mdl, scale)
+					if !v[n.szClass] or !IsValid(v[n.szClass]) then
+						continue -- outside of pvs? creation failed.
+					end
 					
 					if metaitem.RemoveBody and GAMEMODE.BonemergeBodies[v] then
 						GAMEMODE.BonemergeBodies[v]:Remove()

@@ -296,10 +296,26 @@ kingston.chat.register_type("lme", {
 
 kingston.chat.register_type("event", {
 	chat_command = "/ev",
-	chat_range = 3000,
+	chat_range = math.huge,
 	chat_font = "CombineControl.ChatHuge",
 	construct_string = function(chat_type, ply, text)
 		return {Color(0, 191, 255), "[EVENT] ", text}
+	end,
+	can_say = function(chat_type, ply, text)
+		if !ply:IsAdmin() and !ply:IsEventCoordinator() then
+			return "You must be admin/gamemaster to run this command."
+		end
+		
+		return true
+	end,
+})
+
+kingston.chat.register_type("localevent", {
+	chat_command = "/lev",
+	chat_range = 3000,
+	chat_font = "CombineControl.ChatHuge",
+	construct_string = function(chat_type, ply, text)
+		return {Color(0, 191, 255), "[L-EVENT] ", text}
 	end,
 	can_say = function(chat_type, ply, text)
 		if !ply:IsAdmin() and !ply:IsEventCoordinator() then

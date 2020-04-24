@@ -1,8 +1,8 @@
 ITEM.Name = "M40A3"
-ITEM.Desc = "The primary sniper rifle of the USMC. Glass bedded action in a McMillan fibreglass stock, with a free floated match-grade heavy barrel."
+ITEM.Desc = "The primary sniper rifle of the USMC. Glass bedded action in a McMillan fibreglass stock, with a free floated match-grade heavy barrel. Uses 7.61x51mm."
 ITEM.Model = "models/weapons/tfa_cod/mwr/w_m40a3.mdl"
 ITEM.WeaponClass = "tfa_mwr_m40a3"
-ITEM.Weight = 7
+ITEM.Weight = 7.5
 ITEM.SafetyPos = Vector(0,0,0)
 ITEM.SafetyAng = Angle(-12.4, 0, 0)
 ITEM.JamChance = 0.05
@@ -13,4 +13,4 @@ ITEM.LookAt 		= Vector( 8.04, -11.25, -4.82 );
 ITEM.SelfRepairCondition = 75
 ITEM.AmmoType = "762x51"
 ITEM.License = LICENSE_BLACK;
-ITEM.BulkPrice = 60000
+ITEM.BulkPrice = 180000

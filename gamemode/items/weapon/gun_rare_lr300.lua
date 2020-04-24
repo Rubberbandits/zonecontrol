@@ -1,5 +1,5 @@
 ITEM.Name = "LR-300"
-ITEM.Desc = "A buffer tube-less AR-15 allowing for a folding stock. Can be made very short while still being a useful rifle. Fires 5.56mm."
+ITEM.Desc = "A buffer tube-less AR-15 allowing for a folding stock. Can be made very short while still being a useful rifle. Fires 5.56x45mm."
 ITEM.Model = "models/weapons/tfa_ins2/w_zm_lr300.mdl"
 ITEM.WeaponClass = "tfa_ins2_zm_lr300"
 ITEM.Weight = 3
@@ -13,4 +13,4 @@ ITEM.LookAt 		= Vector( 0, 0, 0 );
 ITEM.SelfRepairCondition = 90
 ITEM.AmmoType = "556x45"
 ITEM.License = LICENSE_BLACK;
-ITEM.BulkPrice = 90000
+ITEM.BulkPrice = 270000

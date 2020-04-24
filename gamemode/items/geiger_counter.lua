@@ -44,3 +44,11 @@ function ITEM:Initialize()
 		self.functions["Equip"].OnUse(self)
 	end
 end
+
+function ITEM:CanDrop()
+	return !self:GetVar( "Equipped", false );
+end
+
+function ITEM:OnUnloadItem()
+	
+end

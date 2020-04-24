@@ -1,4 +1,4 @@
-ITEM.Name = "M92fs Beretta"
+ITEM.Name = "M92 FS Beretta"
 ITEM.Desc = "A tried and true pistol, adopted by army and police forces across the globe. Uses 9x19mm."
 ITEM.Model = "models/weapons/tfa_cod/mwr/w_m9.mdl"
 ITEM.WeaponClass = "tfa_mwr_m9"
@@ -13,4 +13,4 @@ ITEM.LookAt 		= Vector( 0, 0, 0 );
 ITEM.SelfRepairCondition = 85
 ITEM.AmmoType = "9x19"
 ITEM.License = LICENSE_BLACK;
-ITEM.BulkPrice = 18000
+ITEM.BulkPrice = 50000
