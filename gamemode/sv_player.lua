@@ -297,6 +297,7 @@ function meta:LoadCharacter( data )
 			for k,v in next, self.Inventory do
 				if v.OnUnloadItem then
 					v:OnUnloadItem()
+					netstream.Start(self, "UnloadItem", k)
 				end
 				GAMEMODE.g_ItemTable[k] = nil
 				self.Inventory[k] = nil
