@@ -1,4 +1,4 @@
-GM.MusicVolume = GM.MusicVolume or cookie.GetNumber("cc_musicvolume", 1)
+GM.MusicVolume = GM.MusicVolume or cookie.GetNumber("zc_musicvolume", 1)
 
 function GM:GetSongDuration( path )
 	
@@ -24,7 +24,7 @@ end
 
 function GM:CanPlayMusic()
 	
-	return cookie.GetNumber( "cc_music", 1 ) == 1;
+	return cookie.GetNumber( "zc_music", 1 ) == 1;
 	
 end
 

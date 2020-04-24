@@ -14,7 +14,7 @@ function GM:CharCreateThink()
 			if( !CCP.Quiz or !CCP.Quiz:IsValid() ) then
 				
 				self.QueueCharCreate = false;
-				cookie.Set( "cc_doneintro", 2 );
+				cookie.Set( "zc_doneintro", 2 );
 				
 				self:CreateCharEditor();
 				

@@ -360,7 +360,7 @@ function GM:PMCreateNotes()
 	CCP.PlayerMenu.Notes.Entry:SetPos( 10, 34 );
 	CCP.PlayerMenu.Notes.Entry:SetSize( 380, 220 );
 	CCP.PlayerMenu.Notes.Entry:PerformLayout();
-	CCP.PlayerMenu.Notes.Entry:SetValue( cookie.GetString( "zc_notes_" .. LocalPlayer():CharID(), "" ) );
+	CCP.PlayerMenu.Notes.Entry:SetValue( cookie.GetString( "cc_notes_" .. LocalPlayer():CharID(), "" ) );
 	CCP.PlayerMenu.Notes.Entry:SetMultiline( true );
 	CCP.PlayerMenu.Notes.Entry:RequestFocus();
 	CCP.PlayerMenu.Notes.Entry:SetCaretPos( string.len( CCP.PlayerMenu.Notes.Entry:GetValue() ) );

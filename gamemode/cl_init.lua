@@ -160,7 +160,7 @@ function GM:DisableCursor()
 	_G.CursorOverlay:Remove()
 end
 
-if cookie.GetNumber("cc_cursor", 0) == 1 then
+if cookie.GetNumber("zc_cursor", 0) == 1 then
 	GM:CreateCursor()
 end
 

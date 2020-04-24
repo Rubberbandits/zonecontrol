@@ -1142,6 +1142,7 @@ function SWEP:PreDrawViewModel(vm, wep, ply)
 end
 
 function SWEP:InScope()
+	if !CLIENT then return false end
 	if self.Scoped and LocalPlayer():GetViewEntity() == LocalPlayer() and self.IronMode == IRON_AIM then
 
 		return true

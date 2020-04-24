@@ -309,7 +309,7 @@ end
 function nIntroStart( force )
 	
 	GAMEMODE.QueueCharCreate = false;
-	cookie.Set( "cc_doneintro", 2 );
+	cookie.Set( "zc_doneintro", 2 );
 	
 	GAMEMODE:CreateCharEditor();
 	
@@ -440,7 +440,7 @@ function GM:CalcView( ply, pos, ang, fov, znear, zfar )
 		
 	end
 	
-	if( cookie.GetNumber( "cc_headbob", 0 ) == 1 ) then
+	if( cookie.GetNumber( "zc_headbob", 0 ) == 1 ) then
 		
 		local hmul = 0;
 		local len2d = ply:GetVelocity():Length2D();
@@ -1605,7 +1605,7 @@ function GM:HUDPaint()
 	
 	if( self.CombineCameraView and self.CombineCameraView:IsValid() ) then
 		
-		if( cookie.GetNumber( "cc_chat", 1 ) == 1 ) then
+		if( cookie.GetNumber( "zc_chat", 1 ) == 1 ) then
 			
 			self:DrawChat();
 			self:DrawRadioChat();
@@ -1620,7 +1620,7 @@ function GM:HUDPaint()
 	
 	if( !self.CharCreate ) then
 		
-		if( cookie.GetNumber( "cc_hud", 1 ) == 1 and !self.Mastermind ) then
+		if( cookie.GetNumber( "zc_hud", 1 ) == 1 and !self.Mastermind ) then
 			
 			self:DrawDamage();
 			self:DrawDrugs();
@@ -1644,14 +1644,14 @@ function GM:HUDPaint()
 			
 		end
 		
-		if( cookie.GetNumber( "cc_chat", 1 ) == 1 ) then
+		if( cookie.GetNumber( "zc_chat", 1 ) == 1 ) then
 			
 			self:DrawChat();
 			self:DrawRadioChat();
 			
 		end
 		
-		if( cookie.GetNumber( "cc_hud", 1 ) != 1 ) then
+		if( cookie.GetNumber( "zc_hud", 1 ) != 1 ) then
 			
 			self:DrawConsciousness();
 			self:DrawWeaponSelect();

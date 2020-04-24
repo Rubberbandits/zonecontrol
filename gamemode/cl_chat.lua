@@ -506,7 +506,7 @@ function GM:PDANotificationAdded(notif)
 	MsgC(Color(128,128,128), Format("[PDA] %s\t", notif.header))
 	MsgC(Color(229, 201, 98), Format("%s\n", notif.body))
 	
-	if cookie.GetNumber("cc_pdasound", 1) == 1 or notif.priority then
+	if cookie.GetNumber("zc_pdasound", 1) == 1 or notif.priority then
 		surface.PlaySound("kingston/pda/pda_tip.ogg")
 	end
 end
