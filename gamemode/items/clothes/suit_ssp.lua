@@ -6,10 +6,16 @@ ITEM.Weight =  12;
 ITEM.FOV =  20;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
-ITEM.WearModel = "models/kingston/stalker/ssp_suit.mdl";
+ITEM.Bonemerge = "models/tnb/stalker_2019/ssp.mdl";
+ITEM.Bodygroups = {
+	{1, 0}
+}
+ITEM.RemoveBody = true
+ITEM.HelmetBodygroup = {1,1}
+ITEM.ScaleForGender = 0.8
 ITEM.NoVariants = true
 ITEM.ArtifactSlots = 3
-ITEM.Submaterial = {
+ITEM.Submaterials = {
 	{ 0 , "models/kingstonstalker/ssp_suit/ssp_eco0" }
 }
 ITEM.HandsModel = {

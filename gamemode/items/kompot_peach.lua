@@ -16,7 +16,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "The sweet liquid washes down your throat, and it's quite satisfying. The solid fruit itself is delightful as well. You remind yourself that such a happily refreshing culinary experience is rare and regret not adequately savoring this one. If only the summer fruits were warmer.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "The sweet liquid washes down your throat, and it's quite satisfying. The solid fruit itself is delightful as well. You remind yourself that such a happily refreshing culinary experience is rare and regret not adequately savoring this one. If only the summer fruits were warmer.")
 	
 		end
 		

@@ -19,7 +19,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "The antidote starts to clear toxins from your system. Over time, you start to become dehydrated.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "The antidote starts to clear toxins from your system. Over time, you start to become dehydrated.")
 			
 			
 		end

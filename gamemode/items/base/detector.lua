@@ -14,7 +14,7 @@ BASE.functions.Equip = {
 		
 			local detector = vgui.Create("CCDetector")
 			detector:SetSize(400, 600)
-			detector:SetPos(ScrW() - 350, ScrH() - 600)
+			detector:SetPos(ScrW() - (ScrW() / 4.571), ScrH() - (ScrH() / 1.49))
 			detector:SetType(metaitem.DetectorType)
 			GAMEMODE.Detector = detector
 			

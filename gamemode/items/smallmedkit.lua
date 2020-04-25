@@ -1,7 +1,7 @@
 -- This file was converted to Kingston item system by Niggerlicious conversion kit --
 ITEM.Name =  "Gauze Bandages";
 ITEM.Desc =  "A roll of gauze bandages. Used for emergency first aid.";
-ITEM.Model =  "models/props/cs_office/Paper_towels.mdl";
+ITEM.Model =  "models/stalker/item/medical/bandage.mdl";
 ITEM.Weight =  1;
 ITEM.FOV =  9;
 ITEM.CamPos =  Vector( 50, 50, 50 );
@@ -16,7 +16,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "You wrap the wound in bandages.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "You wrap the wound in bandages.")
 			
 		else
 			

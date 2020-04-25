@@ -347,6 +347,38 @@ GM.WeaponStatistics["Primary.RPM"] = function(weapon, value)
 	
 	return new_value
 end
+GM.WeaponStatistics["PrintName"] = function( weapon, value )
+	if !weapon:GetOwner().EquippedWeapons then return value end
+	local id = weapon:GetOwner().EquippedWeapons[weapon:GetClass()]
+	local item = GAMEMODE.g_ItemTable[id]
+	if item then
+		return item:GetVar("Name", item.Name)
+	end
+end
+GM.WeaponStatistics["Secondary.IronFOV"] = function( weapon, value )
+	if !weapon:GetOwner().EquippedWeapons then return value end
+	local id = weapon:GetOwner().EquippedWeapons[weapon:GetClass()]
+	local item = GAMEMODE.g_ItemTable[id]
+	if item and item.IronFOV then
+		return item.IronFOV
+	end
+end
+GM.WeaponStatistics["Slot"] = function( weapon, value )
+	if !weapon:GetOwner().EquippedWeapons then return value end
+	local id = weapon:GetOwner().EquippedWeapons[weapon:GetClass()]
+	local item = GAMEMODE.g_ItemTable[id]
+	if item and item.Slot then
+		return item.Slot
+	end
+end
+GM.WeaponStatistics["SlotPos"] = function( weapon, value )
+	if !weapon:GetOwner().EquippedWeapons then return value end
+	local id = weapon:GetOwner().EquippedWeapons[weapon:GetClass()]
+	local item = GAMEMODE.g_ItemTable[id]
+	if item and item.SlotPos then
+		return item.SlotPos
+	end
+end
 
 hook.Add( "TFA_GetStat", "STALKER.Statistics", function( weapon, stat, value )
 
@@ -467,6 +499,9 @@ function player_meta:GetAmmoCount(ammotype)
 		return old_GetAmmoCount(self, ammotype)
 	else
 		local amt = 0
+		
+		if !self.Inventory then return 0 end
+		
 		for _,item in next, self.Inventory do
 			if item:GetClass() == ammotype then
 				amt = amt + item:GetVar("Amount",0)

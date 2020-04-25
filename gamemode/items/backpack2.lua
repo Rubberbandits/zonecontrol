@@ -9,3 +9,7 @@ ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.CarryAdd =  35;
 ITEM.BulkPrice =  10000;
 ITEM.License =  LICENSE_BLACK;
+
+function ITEM:GetCarryWeight()
+	return self.CarryAdd
+end

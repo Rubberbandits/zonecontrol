@@ -216,7 +216,7 @@ end
 
 netstream.Hook( "nPDANameTaken", function()
 
-	GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "This PDA name is taken.", { CB_ALL, CB_OOC } );
+	LocalPlayer():Notify(nil, COLOR_ERR, "This PDA name is taken.")
 
 end );
 

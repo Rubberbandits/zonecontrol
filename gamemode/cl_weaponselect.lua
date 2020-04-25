@@ -71,7 +71,11 @@ GM.OverrideSlots["gmod_tool"] = { 3, 3 };
 
 function GM:WeaponSelectGetPrintName( wep )
 	
-	if( wep.PrintName ) then return wep.PrintName; end
+	if !wep.IsTFAWeapon then
+		if( wep.PrintName ) then return wep.PrintName; end
+	else
+		return wep:GetStat("PrintName")
+	end
 	if( self.WeaponSelectEngineNames[wep:GetClass()] ) then return self.WeaponSelectEngineNames[wep:GetClass()]; end
 	
 	return wep:GetClass();
@@ -82,7 +86,11 @@ function GM:WeaponSelectGetSlot( wep )
 	
 	if( self.OverrideSlots[wep:GetClass()] ) then return self.OverrideSlots[wep:GetClass()][1] end
 	
-	if( wep.Slot ) then return wep.Slot end
+	if !wep.IsTFAWeapon then
+		if( wep.Slot ) then return wep.Slot end
+	else
+		return wep:GetStat("Slot")
+	end
 	
 	return 3;
 	
@@ -92,7 +100,11 @@ function GM:WeaponSelectGetSlotPos( wep )
 	
 	if( self.OverrideSlots[wep:GetClass()] ) then return self.OverrideSlots[wep:GetClass()][2] end
 	
-	if( wep.SlotPos ) then return wep.SlotPos end
+	if !wep.IsTFAWeapon then
+		if( wep.SlotPos ) then return wep.SlotPos end
+	else
+		return wep:GetStat("SlotPos")
+	end
 	
 	return 1;
 	

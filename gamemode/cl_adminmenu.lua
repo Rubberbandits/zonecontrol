@@ -1482,20 +1482,20 @@ function GM:AMCreateBanEntry()
 					RunConsoleCommand( "rpa_ban", sid, math.ceil( tonumber( dur ) ), reason );
 					
 				else
-					
-					GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "Error: Negative duration specified.", { CB_ALL, CB_OOC } );
+
+					LocalPlayer():Notify(nil, COLOR_ERR, "Error: Negative duration specified.")
 					
 				end
 				
 			else
-				
-				GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "Error: Invalid duration specified.", { CB_ALL, CB_OOC } );
+
+				LocalPlayer():Notify(nil, COLOR_ERR, "Error: Invalid duration specified.")
 				
 			end
 			
 		else
 			
-			GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "Error: Invalid SteamID specified.", { CB_ALL, CB_OOC } );
+			LocalPlayer():Notify(nil, COLOR_ERR, "Error: Invalid SteamID specified.")
 			
 		end
 		

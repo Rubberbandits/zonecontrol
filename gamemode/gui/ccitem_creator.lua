@@ -62,6 +62,7 @@ function PANEL:Init()
 	self.DataListView:SetMultiSelect(false)
 	self.DataListView:AddColumn("Key")
 	self.DataListView:AddColumn("Value")
+	self.DataListView.SortByColumn = function() end
 	self.DataListView.DoDoubleClick = function(panel, id, line)
 		if self.HandleSpecificKey[line:GetColumnText(1)] then
 			self.HandleSpecificKey[line:GetColumnText(1)](self)
@@ -100,6 +101,7 @@ function PANEL:Init()
 	self.SaveButton:SetText("Save")
 	self.SaveButton.DoClick = function(button)
 		self:SaveCurrentItem()
+		GAMEMODE:PMUpdateInventory()
 		self:Close()
 	end
 end

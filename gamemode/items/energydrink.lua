@@ -19,7 +19,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "The energy drink has a sugary, acidic taste. It doesn't feel like battery acid, but it does taste like it. Zing!", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "The energy drink has a sugary, acidic taste. It doesn't feel like battery acid, but it does taste like it. Zing!")
 			
 			
 		end

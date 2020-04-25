@@ -245,13 +245,13 @@ function GM:PMCreateNameEdit()
 				
 			else
 				
-				GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "Error: Name cannot include '#', '~' or '%'.", { CB_ALL, CB_OOC } );
+				LocalPlayer():Notify(nil, COLOR_ERR, "Error: Name cannot include '#', '~' or '%'.")
 				
 			end
 			
 		else
 			
-			GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "Error: Name must be between " .. GAMEMODE.MinNameLength .. " and " .. GAMEMODE.MaxNameLength .. " characters.", { CB_ALL, CB_OOC } );
+			LocalPlayer():Notify(nil, COLOR_ERR, "Error: Name must be between " .. GAMEMODE.MinNameLength .. " and " .. GAMEMODE.MaxNameLength .. " characters.")
 			
 		end
 		
@@ -333,7 +333,7 @@ function GM:PMCreateDescEdit()
 			
 		else
 			
-			GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "Error: Description must be less than " .. GAMEMODE.MaxDescLength .. " characters.", { CB_ALL, CB_OOC } );
+			LocalPlayer():Notify(nil, COLOR_ERR, "Error: Description must be less than " .. GAMEMODE.MaxDescLength .. " characters.")
 			
 		end
 		
@@ -521,7 +521,7 @@ function GM:PMCreateTitleEdit()
 			
 		else
 			
-			GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "Error: Titles must be less than 128 characters.", { CB_ALL, CB_OOC } );
+			LocalPlayer():Notify(nil, COLOR_ERR, "Error: Titles must be less than 128 characters.")
 			
 		end
 		
@@ -559,7 +559,7 @@ function GM:PMCreateBio()
 		return LocalPlayer():GetPlayerColor();
 		
 	end
-	if self.BonemergeBodies[LocalPlayer()] then
+	if self.BonemergeBodies[LocalPlayer()] and IsValid(self.BonemergeBodies[LocalPlayer()]) then
 		CCP.PlayerMenu.CharacterModel:InitializeModel(self.BonemergeBodies[LocalPlayer()]:GetModel(), CCP.PlayerMenu.CharacterModel.Entity)
 	end
 	for id,item in next, GAMEMODE.BonemergeItems do
@@ -1285,17 +1285,17 @@ function GM:PMPopulateBusiness()
 						
 						netstream.Start( "nBuyItem", item, true );
 						
-						GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "You bought one.", { CB_ALL, CB_IC } );
+						LocalPlayer():Notify(nil, Color(200,200,200,255), "You bought one.")
 						
 					else
 						
-						GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "Your inventory is full. You can't carry this.", { CB_ALL, CB_IC } );
+						LocalPlayer():Notify(nil, COLOR_ERR, "Your inventory is full. You can't carry this.")
 						
 					end
 					
 				else
 					
-					GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "You need more money to buy this!", { CB_ALL, CB_IC } );
+					LocalPlayer():Notify(nil, COLOR_ERR, "You need more money to buy this!")
 					
 				end
 				
@@ -1315,17 +1315,17 @@ function GM:PMPopulateBusiness()
 						
 						netstream.Start( "nBuyItem", item, false );
 						
-						GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "You bought five.", { CB_ALL, CB_IC } );
+						LocalPlayer():Notify(nil, Color(200,200,200,255), "You bought five.")
 						
 					else
 						
-						GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "Your inventory is full. You can't carry this.", { CB_ALL, CB_IC } );
+						LocalPlayer():Notify(nil, COLOR_ERR, "Your inventory is full. You can't carry this.")
 						
 					end
 					
 				else
 					
-					GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "You need more money to buy this!", { CB_ALL, CB_IC } );
+					LocalPlayer():Notify(nil, COLOR_ERR, "You need more money to buy this!")
 					
 				end
 				
@@ -1875,13 +1875,13 @@ function GM:PMCreatePDANameEdit( item )
 				
 			else
 				
-				GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "Error: Name cannot include '#', '~' or '%'.", { CB_ALL, CB_OOC } );
+				LocalPlayer():Notify(nil, COLOR_ERR, "Error: Name cannot include '#', '~' or '%'.")
 				
 			end
 			
 		else
 			
-			GAMEMODE:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "Error: Name must be between " .. GAMEMODE.MinNameLength .. " and " .. GAMEMODE.MaxNameLength .. " characters.", { CB_ALL, CB_OOC } );
+			LocalPlayer():Notify(nil, COLOR_ERR, "Error: Name must be between " .. GAMEMODE.MinNameLength .. " and " .. GAMEMODE.MaxNameLength .. " characters.")
 			
 		end
 		

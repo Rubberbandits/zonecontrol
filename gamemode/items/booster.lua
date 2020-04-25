@@ -19,7 +19,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "You take a cautious sip from the bottle despite your best instincts. After a few swigs from the odd Zone concoction, you feel an odd sense of serenity with the Zone. Your senses are dulled but you're absolutely full of energy.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "You take a cautious sip from the bottle despite your best instincts. After a few swigs from the odd Zone concoction, you feel an odd sense of serenity with the Zone. Your senses are dulled but you're absolutely full of energy.")
 			
 			
 		end

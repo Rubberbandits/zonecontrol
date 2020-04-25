@@ -1285,7 +1285,6 @@ function GM:DrawAmmo()
 			if( w.Primary.ClipSize > -1 ) then
 				
 				local clip = w:Clip1();
-				local ammo = w:Ammo1();
 				
 				surface.SetFont( "CombineControl.HUDAmmo" );
 				local x1, y1 = surface.GetTextSize( clip );

@@ -68,6 +68,10 @@ kingston.chat.default_type = {
 		local chat_data = kingston.chat.get(chat_type)
 		local chat_str_data = chat_data.construct_string(chat_type, ply, text)
 		
+		if chat_data.print_console then
+			MsgC(chat_data.text_color, chat_data.print_console(chat_type, ply, text))
+		end
+		
 		GAMEMODE:AddChat(chat_data.chat_filter, chat_data.chat_font, unpack(chat_str_data))
 	end,
 	can_say = function(chat_type, ply)
@@ -149,6 +153,7 @@ if SERVER then
 			rf = chat_data.calculate_rf(id, ply, text)
 		end
 		
+		if !rf then return end
 		if #rf == 0 then return end
 		
 		netstream.Start(rf, "nReceiveMessage", id, ply, text)
@@ -267,6 +272,9 @@ kingston.chat.register_type("it", {
 	construct_string = function(chat_type, ply, text)
 		return {Color(131, 196, 251), "** ", text}
 	end,
+	print_console = function(chat_type, ply, text)
+		return Format("[i][%s] ", ply:RPName())
+	end,
 })
 
 kingston.chat.register_type("lit", {
@@ -274,6 +282,9 @@ kingston.chat.register_type("lit", {
 	chat_range = 1000,
 	construct_string = function(chat_type, ply, text)
 		return {Color(131, 196, 251), "** ", text}
+	end,
+	print_console = function(chat_type, ply, text)
+		return Format("[Li][%s] ", ply:RPName())
 	end,
 })
 
@@ -297,7 +308,7 @@ kingston.chat.register_type("lme", {
 kingston.chat.register_type("event", {
 	chat_command = "/ev",
 	chat_range = math.huge,
-	chat_font = "CombineControl.ChatHuge",
+	chat_font = "CombineControl.ChatBig",
 	construct_string = function(chat_type, ply, text)
 		return {Color(0, 191, 255), "[EVENT] ", text}
 	end,
@@ -313,7 +324,7 @@ kingston.chat.register_type("event", {
 kingston.chat.register_type("localevent", {
 	chat_command = "/lev",
 	chat_range = 3000,
-	chat_font = "CombineControl.ChatHuge",
+	chat_font = "CombineControl.ChatBig",
 	construct_string = function(chat_type, ply, text)
 		return {Color(0, 191, 255), "[L-EVENT] ", text}
 	end,
@@ -405,6 +416,8 @@ kingston.chat.register_type("pda", {
 			end
 		end
 		
+		if !args[2] then return end
+		
 		if args[1] == "all" then
 			header = pda_name.." -> all"
 		else
@@ -449,7 +462,7 @@ kingston.chat.register_type("pda", {
 			return {}
 		end
 		
-		chat_data.on_run(chat_type, speaker, text, {target})
+		chat_data.on_run(chat_type, speaker, text, {target, speaker})
 		return {}
 	end,
 	can_hear = function(chat_type, speaker, listener)
@@ -507,6 +520,7 @@ kingston.chat.register_type("radio", {
 		return {Color(72, 118, 255), "[Radio] ", ply, ": ", text}
 	end,
 	calculate_rf = function(chat_type, ply, text)
+		local chat_data = kingston.chat.get(chat_type)
 		local rf = {}
 		local special_rf = {}
 		for k,v in next, player.GetAll() do
@@ -562,10 +576,13 @@ kingston.chat.register_type("pm", {
 		local args = kingston.chat.parse_arguments(text)
 		local target = GAMEMODE:FindPlayer(args[1], ply)
 		
+		local start = text:find(args[2])
+		body = text:sub(start, #text)
+		
 		if ply == LocalPlayer() then
-			return {Color(160, 255, 160), "[PM to ", target, "]: ", args[2]}
+			return {Color(160, 255, 160), "[PM to ", target, "]: ", body}
 		else
-			return {Color(160, 255, 160), "[PM from ", ply, "]: ", args[2]}
+			return {Color(160, 255, 160), "[PM from ", ply, "]: ", body}
 		end
 	end,
 	calculate_rf = function(chat_type, speaker, text)
@@ -577,7 +594,7 @@ kingston.chat.register_type("pm", {
 			return
 		end
 		
-		return {target}
+		return {target, speaker}
 	end,
 	can_say = function(chat_type, ply, text)
 		return true

@@ -278,3 +278,9 @@ end
 function BASE:CanSell()
 	return !self:GetVar("Equipped", false) and (self:GetVar("Durability", 0) >= self.SellDurability)
 end
+function BASE:OnPlayerDeath()
+	local weapon = self:Owner():GetWeapon(self.WeaponClass)
+	if weapon and weapon:IsValid() then
+		self:SetVar("Clip1", weapon:Clip1(), false, true)
+	end
+end

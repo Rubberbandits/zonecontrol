@@ -6,7 +6,13 @@ ITEM.Weight =  12;
 ITEM.FOV =  20;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
-ITEM.WearModel = "models/kingston/stalker/suit_skat9.mdl";
+ITEM.Bonemerge = "models/tnb/stalker_2019/skat9.mdl";
+ITEM.Bodygroups = {
+	{1, 0}
+}
+ITEM.RemoveBody = true
+ITEM.HelmetBodygroup = {1,1}
+ITEM.ScaleForGender = 0.8
 ITEM.Vars = {
 	Equipped = false,
 	Upgrades = {},

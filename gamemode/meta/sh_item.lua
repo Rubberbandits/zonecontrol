@@ -274,6 +274,9 @@ function item:RemoveItem(network)
 
 	GAMEMODE.g_ItemTable[self:GetID()] = nil;
 	self:Owner().Inventory[self:GetID()] = nil;
+	
+	hook.Run("ItemDropped", self:Owner(), self)
+	
 	setmetatable( self, nil );
 	self = nil;
 	
@@ -288,11 +291,12 @@ function item:StockpileItem( id )
 
 	local function onSuccess()
 		stockpile.Inventory[self:GetID()] = true
-		
 		GAMEMODE.g_ItemTable[self:GetID()] = nil
 		self:Owner().Inventory[self:GetID()] = nil
 		
-		setmetatable( self, nil )
+		hook.Run("ItemDropped", self:Owner(), self)
+		
+		setmetatable(self, nil)
 		self = nil
 	end
 	mysqloo.Query(Format("UPDATE cc_items SET Owner = 0, Stockpile = %d WHERE id = %d", id, self:GetID()), onSuccess)

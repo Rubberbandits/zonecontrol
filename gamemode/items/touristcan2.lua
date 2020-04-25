@@ -16,7 +16,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()	   
 	    if( CLIENT ) then
 	       
-	        GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "It's very dense, and it looks like a cake-and-fish Oreo. It has a bit of an acquired taste, and isn't as moist as you would like, but it is pretty filling.", { CB_ALL, CB_IC } );
+	        LocalPlayer():Notify(nil, Color(200,200,200,255), "It's very dense, and it looks like a cake-and-fish Oreo. It has a bit of an acquired taste, and isn't as moist as you would like, but it is pretty filling.")
 	       
 	    end
 	   

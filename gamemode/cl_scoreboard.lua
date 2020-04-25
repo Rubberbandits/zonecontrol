@@ -243,7 +243,7 @@ function GM:ScoreboardAdd( ply, y, n )
 		
 	end
 	
-	if self.BonemergeBodies[ply] then
+	if self.BonemergeBodies[ply] and IsValid(self.BonemergeBodies[ply]) then
 		icon:InitializeModel(self.BonemergeBodies[ply]:GetModel(), icon.Entity)
 	end
 	for id,item in next, GAMEMODE.BonemergeItems do

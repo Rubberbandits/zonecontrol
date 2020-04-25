@@ -12,7 +12,7 @@ ITEM.Bodygroups = {
 }
 ITEM.RemoveBody = true
 ITEM.HelmetBodygroup = {1,1}
-ITEM.AllowGender = true
+ITEM.ScaleForGender = 0.8
 ITEM.ArtifactSlots = 1
 ITEM.Vars = {
 	Equipped = false,

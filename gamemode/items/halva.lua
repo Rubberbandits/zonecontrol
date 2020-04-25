@@ -16,7 +16,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "The confection crumbles and crunches in your mouth. It's like being at the beach and gnawing on the sand, only it's in particularly oily and rocky clumps. That is, after you've done your best to scrape what you could of the awful thing out of the tin. It's not much for a meal, and it's beyond sub-par for a dessert. The highlight of the meal is the lingering taste of burnt semechki.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "The confection crumbles and crunches in your mouth. It's like being at the beach and gnawing on the sand, only it's in particularly oily and rocky clumps. That is, after you've done your best to scrape what you could of the awful thing out of the tin. It's not much for a meal, and it's beyond sub-par for a dessert. The highlight of the meal is the lingering taste of burnt semechki.")
 	
 		end
 		

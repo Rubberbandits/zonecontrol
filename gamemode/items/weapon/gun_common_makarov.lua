@@ -15,4 +15,4 @@ ITEM.AmmoType = "9x18"
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 24000
 ITEM.Slot = 2
-ITEM.SlotPos = 187
+ITEM.SlotPos = 1

@@ -19,7 +19,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "The anabiotic starts to kick in quickly. Your mind is overwhelmed with emptiness. Within moments, your vision fades, and you black out entirely. You wake to a cold sweat, your body shaking and your head aching.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "The anabiotic starts to kick in quickly. Your mind is overwhelmed with emptiness. Within moments, your vision fades, and you black out entirely. You wake to a cold sweat, your body shaking and your head aching.")
 			GAMEMODE:DrugEffectBreen();	
 			
 		else

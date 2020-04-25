@@ -16,7 +16,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()	   
 	    if( CLIENT ) then
 	       
-	        GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "Although bland, the canned tuna is quite filling. The meat is wet, but it feels dry. The oiley taste lingers in your mouth.", { CB_ALL, CB_IC } );
+	        LocalPlayer():Notify(nil, Color(200,200,200,255), "Although bland, the canned tuna is quite filling. The meat is wet, but it feels dry. The oiley taste lingers in your mouth.")
 	       
 	    end
 	   

@@ -16,7 +16,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "As your teeth sink into the meaty gelatin, you're surprised and delighted to taste hints of garlic and other hidden seasonings. It's a simple yet wholesome meal, and not as bad as you were expecting. Maybe USSR life wasn't so bad.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "As your teeth sink into the meaty gelatin, you're surprised and delighted to taste hints of garlic and other hidden seasonings. It's a simple yet wholesome meal, and not as bad as you were expecting. Maybe USSR life wasn't so bad.")
 	
 		end
 		

@@ -16,7 +16,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "Your teeth sink with a crunch into the wholesome snack. The bread and all of the stacked items atop it are wonderfully warm and fresh. You've safely concluded that is yet another of life's invaluable little pleasures.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "Your teeth sink with a crunch into the wholesome snack. The bread and all of the stacked items atop it are wonderfully warm and fresh. You've safely concluded that is yet another of life's invaluable little pleasures.")
 	
 		end
 		

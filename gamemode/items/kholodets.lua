@@ -16,7 +16,7 @@ ITEM.functions.Use = {
 		local ply = self:Owner()		
 		if( CLIENT ) then
 			
-			GAMEMODE:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", "It's about what you expected: bland, generally slimy, and stringy in all the wrong ways. At least it's a filling and potentially wholesome meal. There's never been a more perfect food analogy for Soviet rule.", { CB_ALL, CB_IC } );
+			LocalPlayer():Notify(nil, Color(200,200,200,255), "It's about what you expected: bland, generally slimy, and stringy in all the wrong ways. At least it's a filling and potentially wholesome meal. There's never been a more perfect food analogy for Soviet rule.")
 	
 		end
 		

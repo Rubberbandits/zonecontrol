@@ -8,7 +8,13 @@ ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  10000;
 ITEM.License =  LICENSE_BLACK;
-ITEM.WearModel = "models/kingston/stalker/suit_trench.mdl";
+ITEM.Bonemerge = "models/tnb/stalker_2019/trenchcoat_io7mask.mdl";
+ITEM.Bodygroups = {
+	{0, 1}
+}
+ITEM.RemoveBody = true
+ITEM.HelmetBodygroup = {0,0}
+ITEM.ScaleForGender = 0.8
 ITEM.Vars = {
 	Equipped = false,
 	Upgrades = {},
