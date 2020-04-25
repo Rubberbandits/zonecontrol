@@ -2325,7 +2325,7 @@ function ccToggleThirdPerson( ply, cmd, args )
 		
 	end
 	
-	if val == 1 then
+	if cookie.GetNumber( "zc_thirdperson", 0 ) == 1 then
 	
 		ctp:Enable()
 		

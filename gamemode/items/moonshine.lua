@@ -11,6 +11,7 @@ ITEM.License =  LICENSE_BLACK;
 ITEM.functions = {}
 ITEM.functions.Use = {
 	SelectionName = "Drink",
+	RemoveOnUse = true,
 	OnUse = function(self)
 		local ply = self:Owner()		
 		if( CLIENT ) then
