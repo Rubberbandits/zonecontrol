@@ -6,6 +6,7 @@ kingston.log.db_struct = {
 	{ "Category", "VARCHAR(128)" },
 	{ "Log", "VARCHAR(8192)" },
 }
+kingston.log.console_log = true
 kingston.log.should_log = {
 	sql = true,
 	bugs = true,
@@ -41,7 +42,7 @@ function kingston.log.db_write(category, text, ...)
 	end
 end
 
-/* old ass aliases for logging systems as i REALLY dont want to go through and change them all */
+/* aliases for logging systems */
 
 function GM:SetupDataDirectories()
 	

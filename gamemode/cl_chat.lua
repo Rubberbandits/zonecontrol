@@ -31,7 +31,7 @@ function GM:AddChat( filter, font, ... )
 		else
 			if( !v ) then continue end
 			text = text..tostring(v):gsub("<", "&lt;"):gsub(">", "&gt;")
-			unedited[#unedited + 1] = tostring(v):gsub("<", "&lt;"):gsub(">", "&gt;");
+			unedited[#unedited + 1] = tostring(v)
 			text = text:gsub("%b//", function(value)
 				local inner = value:sub(2, -2)
 
@@ -509,6 +509,8 @@ function GM:PDANotificationAdded(notif)
 	if cookie.GetNumber("zc_pdasound", 1) == 1 or notif.priority then
 		surface.PlaySound("kingston/pda/pda_tip.ogg")
 	end
+	
+	kingston.log.write("chat", "[pda][%s] %s", notif.header, notif.body)
 end
 
 local function nStockpileNameTaken()
