@@ -602,9 +602,9 @@ function GM:DoPlayerDeath( ply, attacker, dmg )
 		
 		for _, v in pairs( ply.Inventory ) do
 			
-			if( GAMEMODE:GetItemByID( v:GetClass() ) and GAMEMODE:GetItemByID( v:GetClass() ).OnPlayerDeath ) then
+			if( v.OnPlayerDeath ) then
 				
-				GAMEMODE:GetItemByID( v:GetClass() ).OnPlayerDeath( v );
+				v:OnPlayerDeath()
 				
 			end
 			
