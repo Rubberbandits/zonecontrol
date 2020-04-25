@@ -559,7 +559,7 @@ function GM:PMCreateBio()
 		return LocalPlayer():GetPlayerColor();
 		
 	end
-	if self.BonemergeBodies[LocalPlayer()] then
+	if self.BonemergeBodies[LocalPlayer()] and IsValid(self.BonemergeBodies[LocalPlayer()]) then
 		CCP.PlayerMenu.CharacterModel:InitializeModel(self.BonemergeBodies[LocalPlayer()]:GetModel(), CCP.PlayerMenu.CharacterModel.Entity)
 	end
 	for id,item in next, GAMEMODE.BonemergeItems do
