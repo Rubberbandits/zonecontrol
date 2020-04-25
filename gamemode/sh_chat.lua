@@ -307,7 +307,7 @@ kingston.chat.register_type("lme", {
 kingston.chat.register_type("event", {
 	chat_command = "/ev",
 	chat_range = math.huge,
-	chat_font = "CombineControl.ChatHuge",
+	chat_font = "CombineControl.ChatBig",
 	construct_string = function(chat_type, ply, text)
 		return {Color(0, 191, 255), "[EVENT] ", text}
 	end,
@@ -323,7 +323,7 @@ kingston.chat.register_type("event", {
 kingston.chat.register_type("localevent", {
 	chat_command = "/lev",
 	chat_range = 3000,
-	chat_font = "CombineControl.ChatHuge",
+	chat_font = "CombineControl.ChatBig",
 	construct_string = function(chat_type, ply, text)
 		return {Color(0, 191, 255), "[L-EVENT] ", text}
 	end,
