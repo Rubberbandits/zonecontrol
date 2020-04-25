@@ -1,0 +1,14 @@
+ITEM.Name = "D25S"
+ITEM.Desc = "Frankenstein modified semi-automatic sniper rifle consisting of parts from a FD308 and a H&K G28. Probably a custom job. Uses 7.62x51mm."
+ITEM.Model = "models/weapons/tfa_cod/mwr/w_dmr25.mdl"
+ITEM.WeaponClass = "tfa_mwr_d25s"
+ITEM.Weight = 8
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.04
+ITEM.DegradeRate = 0.05
+ITEM.FOV 			= 46
+ITEM.CamPos 		= Vector( 50, 4.47, 0.9 )
+ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
+ITEM.SelfRepairCondition = 80
+ITEM.AmmoType = "762x51"

@@ -95,7 +95,7 @@ kingston.chat.default_type = {
 		return speaker:GetPos():DistToSqr(listener:GetPos()) <= (chat_data.chat_range * chat_data.chat_range)
 	end,
 	handle_log = function(chat_type, ply, text)
-		kingston.log.write("chat", "[%s (%s)][%s] %s", ply:RPName(), ply:Nick(), chat_type, text)
+		kingston.log.write("chat", "[%s][%s (%s)] %s", chat_type, ply:RPName(), ply:Nick(), text)
 	end,
 	
 	-- default args: name, text
@@ -578,7 +578,7 @@ if CLIENT then
 	netstream.Hook("nChatRadioSurround", function(chat_type, ply, text)
 		local chat_data = kingston.chat.get(chat_type)
 	
-		kingston.log.write("chat", "[%s (%s)][radio_sur] %s", ply:RPName(), ply:Nick(), text)
+		kingston.log.write("chat", "[radio_sur][%s (%s)] %s", ply:RPName(), ply:Nick(), text)
 		GAMEMODE:AddChat({ CB_ALL, CB_IC }, "CombineControl.ChatNormal", chat_data.text_color, ply, ": ", text)
 	end)
 end
