@@ -110,6 +110,10 @@ function SWEP:ThinkChild()
 			self.RemoveTime = nil;
 			local item = self.Owner:HasItem(self:GetClass())
 			if item then
+				if istable(item) and !item.IsItem then
+					item = item[1]
+				end
+				
 				item:CallFunction("Unequip")
 				item:RemoveItem(true)
 			end

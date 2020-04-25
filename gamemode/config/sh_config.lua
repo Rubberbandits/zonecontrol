@@ -161,6 +161,12 @@ GM.BodyModels = {
 	"models/tnb/stalker_2019/anorak_f.mdl",
 }
 
+-- efficiency
+GM.EfficientModelCheck = {}
+for k,v in next, GM.CitizenModels do
+	GM.EfficientModelCheck[v] = true
+end
+
 -- General Gameplay
 
 GM.UseHunger = false;

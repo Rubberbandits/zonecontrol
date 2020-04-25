@@ -7,15 +7,21 @@ end
 
 function kingston.blowout.is_protected(ent)
 	if ent:IsPlayer() then
+		if ent:CharID() == 0 then
+			return true
+		end
+	
 		if ent:HasCharFlag("Y") then
 			return true
 		end
 		
-		for k,v in next, ent.Inventory do
-			if v:GetClass() == "psiband" and v:GetVar("Equipped", false) then
-				return true
-			elseif v:GetClass() == "psiband_monolith" and v:GetVar("Equipped", false) then
-				return false
+		if ent.Inventory then
+			for k,v in next, ent.Inventory do
+				if v:GetClass() == "psiband" and v:GetVar("Equipped", false) then
+					return true
+				elseif v:GetClass() == "psiband_monolith" and v:GetVar("Equipped", false) then
+					return false
+				end
 			end
 		end
 		

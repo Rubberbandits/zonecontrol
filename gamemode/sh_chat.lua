@@ -517,6 +517,7 @@ kingston.chat.register_type("radio", {
 		return {Color(72, 118, 255), "[Radio] ", ply, ": ", text}
 	end,
 	calculate_rf = function(chat_type, ply, text)
+		local chat_data = kingston.chat.get(chat_type)
 		local rf = {}
 		local special_rf = {}
 		for k,v in next, player.GetAll() do
@@ -587,7 +588,7 @@ kingston.chat.register_type("pm", {
 			return
 		end
 		
-		return {target}
+		return {target, speaker}
 	end,
 	can_say = function(chat_type, ply, text)
 		return true

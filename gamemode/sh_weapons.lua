@@ -499,6 +499,9 @@ function player_meta:GetAmmoCount(ammotype)
 		return old_GetAmmoCount(self, ammotype)
 	else
 		local amt = 0
+		
+		if !self.Inventory then return 0 end
+		
 		for _,item in next, self.Inventory do
 			if item:GetClass() == ammotype then
 				amt = amt + item:GetVar("Amount",0)

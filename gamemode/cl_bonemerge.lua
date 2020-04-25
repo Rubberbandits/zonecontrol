@@ -148,6 +148,7 @@ local function BonemergeThink()
 		if !v.CharID then continue end
 		if v:CharID() <= 0 then continue end
 		if v:IsDormant() then continue end
+		if !GAMEMODE.EfficientModelCheck[v:GetModel()] then continue end
 		
 		if !v.BodyHidden and !IsValid(GAMEMODE.BonemergeBodies[v]) then
 			GAMEMODE.BonemergeBodies[v] = v:CreateNewBonemerge(v:Body())

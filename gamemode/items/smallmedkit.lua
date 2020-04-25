@@ -1,7 +1,7 @@
 -- This file was converted to Kingston item system by Niggerlicious conversion kit --
 ITEM.Name =  "Gauze Bandages";
 ITEM.Desc =  "A roll of gauze bandages. Used for emergency first aid.";
-ITEM.Model =  "models/props/cs_office/Paper_towels.mdl";
+ITEM.Model =  "models/stalker/item/medical/bandage.mdl";
 ITEM.Weight =  1;
 ITEM.FOV =  9;
 ITEM.CamPos =  Vector( 50, 50, 50 );

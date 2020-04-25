@@ -89,7 +89,7 @@ function concommand.AddAdminVariable( cmd, var, default, friendlyvar, sa )
 		GAMEMODE["Set" .. var]( GAMEMODE, tonumber( args[1] ) );
 		
 		GAMEMODE:LogAdmin( "[V] " .. ply:Nick() .. " set variable \"" .. var .. "\" to \"" .. tonumber( args[1] ) .. "\".", ply );
-		GAMEMODE:Notify(nil, nil, Color(255,255,255,255), "%s set %s to %s.", ply:Nick(), friendlyvar, tostring(val))
+		GAMEMODE:Notify(nil, nil, Color(255,255,255,255), "%s set %s to %s.", ply:Nick(), friendlyvar, tostring(args[1]))
 		
 	end
 	concommand.Add( cmd, c );

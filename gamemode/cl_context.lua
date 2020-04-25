@@ -842,7 +842,7 @@ function GM:CCCreatePlayerViewer( ent )
         return ent:GetPlayerColor();
        
     end
-	if self.BonemergeBodies[ent] then
+	if self.BonemergeBodies[ent] and IsValid(self.BonemergeBodies[ent]) then
 		CCP.PlayerViewer.CharacterModel:InitializeModel(self.BonemergeBodies[ent]:GetModel(), CCP.PlayerViewer.CharacterModel.Entity)
 	end
 	for id,item in next, GAMEMODE.BonemergeItems do

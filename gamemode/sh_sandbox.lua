@@ -348,9 +348,7 @@ function GM:PlayerSpawnRagdoll( ply, model )
 end
 
 function GM:PlayerSpawnSENT( ply, class )
-	
-	print("sent")
-	
+
 	if( ply:IsAdmin() or ply:IsEventCoordinator() ) then
 	
 		return true;
