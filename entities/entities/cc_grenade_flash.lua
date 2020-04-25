@@ -27,9 +27,7 @@ function ENT:Explode( tr )
 		
 	end
 	
-	net.Start( "nFlashbang" );
-		net.WriteVector( self:GetPos() );
-	net.Broadcast();
+	netstream.Start("nFlashbang", self:GetPos())
 	
 	self:Remove();
 	
@@ -37,9 +35,8 @@ end
 
 if( CLIENT ) then
 	
-	local function nFlashbang( len )
-		
-		local vec = net.ReadVector();
+	local function nFlashbang( vec )
+
 		local tvec = vec:ToScreen();
 		
 		local d = DynamicLight( 1 );
@@ -71,6 +68,6 @@ if( CLIENT ) then
 		end
 		
 	end
-	net.Receive( "nFlashbang", nFlashbang );
+	netstream.Hook( "nFlashbang", nFlashbang );
 	
 end
