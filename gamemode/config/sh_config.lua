@@ -282,7 +282,7 @@ GM.GearSelection = {
 GM.DefaultSelfRepairCond = 90
 
 GM.RubleBudget = 8500;
-GM.SellPercentage = 50;
+GM.SellPercentage = 70;
 
 GM.StalkerCursorEnabled = false
 
@@ -291,7 +291,7 @@ GM.SellToMenuEnabled = true
 GM.ModSalesModifier = 15
 GM.AttachSalesModifier = 25
 
-GM.GiveOldBDUBack = false
+GM.GiveOldBDUBack = true
 
 -- Voices
 

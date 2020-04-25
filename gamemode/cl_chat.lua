@@ -510,7 +510,7 @@ function GM:PDANotificationAdded(notif)
 		surface.PlaySound("kingston/pda/pda_tip.ogg")
 	end
 	
-	kingston.log.write("chat", "[pda][%s] %s", notif.header, notif.body)
+	kingston.log.write("chat", "[%s][pda] %s", notif.header, notif.body)
 end
 
 local function nStockpileNameTaken()
