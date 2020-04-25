@@ -153,6 +153,7 @@ if SERVER then
 			rf = chat_data.calculate_rf(id, ply, text)
 		end
 		
+		if !rf then return end
 		if #rf == 0 then return end
 		
 		netstream.Start(rf, "nReceiveMessage", id, ply, text)
@@ -415,6 +416,8 @@ kingston.chat.register_type("pda", {
 			end
 		end
 		
+		if !args[2] then return end
+		
 		if args[1] == "all" then
 			header = pda_name.." -> all"
 		else
@@ -573,10 +576,13 @@ kingston.chat.register_type("pm", {
 		local args = kingston.chat.parse_arguments(text)
 		local target = GAMEMODE:FindPlayer(args[1], ply)
 		
+		local start = text:find(args[2])
+		body = text:sub(start, #text)
+		
 		if ply == LocalPlayer() then
-			return {Color(160, 255, 160), "[PM to ", target, "]: ", args[2]}
+			return {Color(160, 255, 160), "[PM to ", target, "]: ", body}
 		else
-			return {Color(160, 255, 160), "[PM from ", ply, "]: ", args[2]}
+			return {Color(160, 255, 160), "[PM from ", ply, "]: ", body}
 		end
 	end,
 	calculate_rf = function(chat_type, speaker, text)
