@@ -223,7 +223,7 @@ function GM:GetCCOptions( ent, dist )
 						
 					else
 						
-						self:AddChat( Color( 200, 0, 0, 255 ), "CombineControl.ChatNormal", "You need more money to do that!")
+						LocalPlayer():Notify(nil, COLOR_ERR, "You need more money to do that!")
 						
 					end
 					
@@ -236,8 +236,7 @@ function GM:GetCCOptions( ent, dist )
 				local option = { "Sell", function()
 					
 					netstream.Start( "nCSellDoor", ent );
-					
-					self:AddChat( Color( 229, 201, 98, 255 ), "CombineControl.ChatNormal", "You sold the door for 80% of its original value (" .. tostring( math.floor( ent:DoorPrice() * 0.8 ) ) .. " rubles).")
+					LocalPlayer():Notify(nil, Color( 229, 201, 98, 255 ), "You sold the door for 80% of its original value (" .. tostring( math.floor( ent:DoorPrice() * 0.8 ) ) .. " rubles).")
 					
 				end, nil, 100 };
 				
@@ -399,7 +398,7 @@ function GM:GetCCOptions( ent, dist )
 				
 				local option = { "Examine", function()
 					
-					self:AddChat( Color( 200, 200, 200, 255 ), "CombineControl.ChatNormal", GAMEMODE:GetItemByID( ent:GetItemClass() ).Desc, { CB_ALL, CB_IC } );
+					self:AddChat( { CB_ALL, CB_IC }, "CombineControl.ChatNormal", Color( 200, 200, 200, 255 ), GAMEMODE:GetItemByID( ent:GetItemClass() ).Desc );
 					
 					netstream.Start( "nCExamine" );
 					
