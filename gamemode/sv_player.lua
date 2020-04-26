@@ -514,14 +514,6 @@ function GM:EntityTakeDamage( ent, dmg )
 		
 		if( dmg:GetDamageType() == DMG_CRUSH ) then return end
 		
-		if ply.TimeSinceDead then
-			if !ply:Alive() and dmg:GetAttacker():GetPos():Distance(ply:GetPos()) <= 128 and CurTime() - ply.TimeSinceDead > 5 then
-				ply:Spawn()
-				
-				return
-			end
-		end
-			
 		local pdmg = DamageInfo();
 		pdmg:SetAttacker( dmg:GetAttacker() );
 		pdmg:SetDamage( dmg:GetDamage() );

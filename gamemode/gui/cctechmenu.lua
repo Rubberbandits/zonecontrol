@@ -63,7 +63,7 @@ function PANEL:SendToMenu( ItemObj )
 
 	local weapon_upgrades = {}
 	for k,v in next, GAMEMODE.Upgrades do
-		if( v.Item != ItemObj:GetClass() ) then continue end
+		if( !v.Item[ItemObj:GetClass()] ) then continue end
 		
 		weapon_upgrades[#weapon_upgrades + 1] = k;
 	end
@@ -213,7 +213,7 @@ function PANEL:SpawnUpgradeLayout(layout, item_obj)
 		upgrade:SetUpgradeImage( meta_upgrade.IconPage, meta_upgrade.IconX, meta_upgrade.IconY );
 		upgrade.CurrentItem = item_obj;
 		upgrade.ChildButtons = {};
-		
+
 		for upgrade_class,_ in next, item_obj:GetVar( "Upgrades", {} ) do
 			if( upgrade_class == class ) then
 				upgrade.ItemHasUpgrade = true;
@@ -239,7 +239,7 @@ function PANEL:SpawnUpgradeLayout(layout, item_obj)
 				child_upgrade:SetUpgradeImage( meta_upgrade.IconPage, meta_upgrade.IconX, meta_upgrade.IconY );
 				child_upgrade.CurrentItem = item_obj;
 				child_upgrade.ChildButtons = {};
-				
+
 				for upgrade_class,_ in next, item_obj:GetVar( "Upgrades", {} ) do
 					if( upgrade_class == child_class ) then
 						child_upgrade.ItemHasUpgrade = true;
@@ -268,7 +268,7 @@ function PANEL:SpawnUpgradeLayout(layout, item_obj)
 							gchild_upgrade.UpgradeID = child_class;
 							gchild_upgrade:SetUpgradeImage( meta_upgrade.IconPage, meta_upgrade.IconX, meta_upgrade.IconY );
 							gchild_upgrade.CurrentItem = item_obj;
-							
+
 							for upgrade_class,_ in next, item_obj:GetVar( "Upgrades", {} ) do
 								if( upgrade_class == child_class ) then
 									gchild_upgrade.ItemHasUpgrade = true;
@@ -299,27 +299,36 @@ function PANEL:SpawnUpgradeLayout(layout, item_obj)
 			local child_height = #upgrade.ChildButtons * 25
 			local next_child_y = new_y - child_height / #upgrade.ChildButtons
 
-			for k,v in next, upgrade.ChildButtons do
-				if #v.ChildButtons > 0  then
-					local gchild_height = #v.ChildButtons * 50
-					v:SetPos(block_container:GetWide() / 2 - 50, next_child_y + (gchild_height / 2) - 25)
-					next_child_y = next_child_y + gchild_height + 25
-					
-					local new_x, new_y = v:GetPos()
-					local next_gchild_y = new_y - gchild_height / 2 + 25
-					for m,n in next, v.ChildButtons do
-						n:SetPos(block_container:GetWide() - 110, next_gchild_y)
-						next_gchild_y = next_gchild_y + 54
+			if #upgrade.ChildButtons > 1 then
+				for k,v in next, upgrade.ChildButtons do
+					if #v.ChildButtons > 0  then
+						local gchild_height = #v.ChildButtons * 50
+						v:SetPos(block_container:GetWide() / 2 - 50, next_child_y + (gchild_height / 2) - 25)
+						next_child_y = next_child_y + gchild_height + 25
 						
-						
-						if next_gchild_y > block_container:GetTall() then
-							block_container:SetSize(self.Container:GetWide() - self.Container.VBar:GetWide(), next_gchild_y + next_gchild_y - block_container:GetTall())
-							upgrade:SetPos(12, block_container:GetTall() / 2 - 25)
+						local new_x, new_y = v:GetPos()
+						local next_gchild_y = new_y - gchild_height / 2 + 25
+						for m,n in next, v.ChildButtons do
+							n:SetPos(block_container:GetWide() - 110, next_gchild_y)
+							next_gchild_y = next_gchild_y + 54
+							
+							
+							if next_gchild_y > block_container:GetTall() then
+								block_container:SetSize(self.Container:GetWide() - self.Container.VBar:GetWide(), next_gchild_y + next_gchild_y - block_container:GetTall())
+								upgrade:SetPos(12, block_container:GetTall() / 2 - 25)
+							end
 						end
+					else
+						v:SetPos(block_container:GetWide() / 2 - 50, next_child_y)
+						next_child_y = next_child_y + 54
 					end
-				else
-					v:SetPos(block_container:GetWide() / 2 - 50, next_child_y)
-					next_child_y = next_child_y + 54
+				end
+			else
+				for k,v in next, upgrade.ChildButtons do
+					v:SetPos(block_container:GetWide() / 2 - 50, block_container:GetTall() / 2 - 25)
+					for m,n in next, v.ChildButtons do
+						n:SetPos(block_container:GetWide() - 110, block_container:GetTall() / 2 - 25)
+					end
 				end
 			end
 		end

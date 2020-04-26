@@ -2068,11 +2068,31 @@ function GM:PaintUpgradeToolTip(panel, x, y)
 
 	end
 	
+	stats_y = stats_y + 24
+	
+	for k,v in next, upgrade.RequiredItems do
+		local proper_name = GAMEMODE:GetItemByID(v[1]).Name
+		local str = Format("%dx %s", v[2], proper_name)
+		
+		if panel.RequiredItems[v[1]] then
+			surface.SetTextColor(Color(20,200,20))
+		else
+			surface.SetTextColor(Color(200,20,20))
+		end
+	
+		local tW,tH = surface.GetTextSize(str)
+		surface.SetTextPos(x + ScrW() / 50, stats_y + tH)
+		surface.DrawText(str)
+		stats_y = stats_y + tH
+	end
+	
+	stats_y = stats_y + 24
+	
 	surface.SetDrawColor(Color(255, 255, 255, 255))
 	surface.SetMaterial(tooltip_material)
-	surface.DrawTexturedRectUV(x + ScrH() / 45, stats_y + 24, ScrW() / 7, ScrH() / 80, 0.271, 0.02, 0.54, 0.03)
+	surface.DrawTexturedRectUV(x + ScrH() / 45, stats_y, ScrW() / 7, ScrH() / 80, 0.271, 0.02, 0.54, 0.03)
 	
-	hook.Run("PaintUpgradeStats", upgrade, x, stats_y + 24)
+	hook.Run("PaintUpgradeStats", upgrade, x, stats_y)
 	
 	surface.DisableClipping(false)
 end

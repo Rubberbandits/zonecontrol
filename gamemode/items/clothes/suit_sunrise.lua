@@ -37,7 +37,7 @@ ITEM.ArmorValues = {
 	-- "Rupture" (sharp)
 	[DMG_SLASH] = .8,
 	-- "Bulletproof"
-	[DMG_BULLET] = 0,
+	[DMG_BULLET] = 0.91,
 	-- "Explosion"
 	[DMG_BLAST] = .9,
 	-- "Thermal"

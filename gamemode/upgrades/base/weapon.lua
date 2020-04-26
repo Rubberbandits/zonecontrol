@@ -59,9 +59,15 @@ function UPGRADE:CanUpgrade( item )
 		end
 	end
 	
-	if( self.RequiredUpgrade ) then
+	if( self.RequiredUpgrades ) then
 		local CurrentUpgrades = item:GetVar( "Upgrades", {} )
-		local bHasUpgrade = CurrentUpgrades[self.RequiredUpgrade]
+		local bHasUpgrade
+		for k,v in next, CurrentUpgrades do
+			if self.RequiredUpgrades[k] then
+				bHasUpgrade = true
+			end
+		end
+
 		if( !bHasUpgrade ) then return false end
 	end
 	

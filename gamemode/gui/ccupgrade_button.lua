@@ -34,6 +34,18 @@ function PANEL:SetUpgradeImage( nPage, nX, nY )
 	self.nUpgradePage = nPage;
 	self.nUpgradeX = nX;
 	self.nUpgradeY = nY;
+	
+	if self.UpgradeID then
+		local required_items = {}
+		local upgrade = GAMEMODE.Upgrades[self.UpgradeID]
+		if upgrade and upgrade.RequiredItems then
+			for k,v in next, upgrade.RequiredItems do
+				required_items[v[1]] = (LocalPlayer():HasItem(v[1]) and true) or false
+			end
+			
+			self.RequiredItems = required_items
+		end
+	end
 
 end
 
