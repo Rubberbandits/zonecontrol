@@ -238,7 +238,7 @@ GM.WeaponStatistics["Primary.Spread"] = function(weapon, value)
 			
 			if !upgrade.ReduceSpread then continue end
 			
-			new_value = math.Clamp(new_value * upgrade.ReduceSpread, 0.001, 0.5)
+			new_value = math.Clamp(new_value - upgrade.ReduceSpread, 0.001, 0.5)
 		end
 	end
 	
@@ -270,7 +270,7 @@ GM.WeaponStatistics["Primary.KickUp"] = function( weapon, value )
 			
 			if !upgrade.ReduceRecoilUp then continue end
 			
-			new_value = math.Clamp(new_value * upgrade.ReduceRecoilUp, 0.001, 1)
+			new_value = math.Clamp(new_value - upgrade.ReduceRecoilUp, 0.001, 1)
 		end
 	end
 	
@@ -287,7 +287,7 @@ GM.WeaponStatistics["Primary.KickHorizontal"] = function( weapon, value )
 			
 			if !upgrade.ReduceRecoilHorizontal then continue end
 			
-			new_value = math.Clamp(new_value * upgrade.ReduceRecoilHorizontal, 0.001, 1)
+			new_value = math.Clamp(new_value - upgrade.ReduceRecoilHorizontal, 0.001, 1)
 		end
 	end
 	
@@ -377,6 +377,14 @@ GM.WeaponStatistics["SlotPos"] = function( weapon, value )
 	local item = GAMEMODE.g_ItemTable[id]
 	if item and item.SlotPos then
 		return item.SlotPos
+	end
+end
+GM.WeaponStatistics["Primary.Damage"] = function(weapon, value)
+	if weapon:GetOwner().EquippedWeapons then
+		local item = GAMEMODE.g_ItemTable[weapon:GetOwner().EquippedWeapons[weapon:GetClass()]]
+		if item and item.Damage then
+			return item.Damage
+		end
 	end
 end
 
