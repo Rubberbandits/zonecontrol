@@ -18,7 +18,9 @@ kingston.log.should_log = {
 kingston.log.query_str = [[
 	INSERT INTO cc_logs (Date, Category, Log) VALUES (?, ?, ?);
 ]]
-
+kingston.log.select_date_str = [[SELECT * FROM cc_logs WHERE Date LIKE '%%%s%%' LIMIT %d, %d;]]
+kingston.log.select_category_str = [[SELECT * FROM cc_logs WHERE Category = '%s' LIMIT %d, %d;]]
+kingston.log.select_log_str = [[SELECT * FROM cc_logs WHERE Log LIKE '%%%s%%' LIMIT %d, %d;]]
 
 local function init_log_db_tbl(db)
 	mysqloo.Query("CREATE TABLE IF NOT EXISTS cc_logs ( id INT NOT NULL auto_increment, PRIMARY KEY ( id ) );")
@@ -40,6 +42,32 @@ function kingston.log.db_write(category, text, ...)
 	if kingston.log.console_log or kingston.log.should_log[category] then
 		MsgC(COLOR_LOG, str.."\n")
 	end
+end
+
+-- gotta use lambda funcs cus async
+
+function kingston.log.select_date(date_str, limit, offset, cb)
+	local function onSuccess(data, q)
+		cb(q, data)
+	end
+	
+	mysqloo.Query(Format(kingston.log.select_date_str, mysqloo.Escape(date_str), offset, limit), onSuccess)
+end
+
+function kingston.log.select_category(category, limit, offset, cb)
+	local function onSuccess(data, q)
+		cb(q, data)
+	end
+	
+	mysqloo.Query(Format(kingston.log.select_category_str, mysqloo.Escape(category), offset, limit), onSuccess)
+end
+
+function kingston.log.select_log(content, limit, offset, cb)
+	local function onSuccess(data, q)
+		cb(q, data)
+	end
+	
+	mysqloo.Query(Format(kingston.log.select_log_str, mysqloo.Escape(content), offset, limit), onSuccess)
 end
 
 /* aliases for logging systems */
