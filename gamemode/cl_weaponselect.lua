@@ -69,6 +69,21 @@ GM.OverrideSlots["weapon_physgun"] = { 3, 1 };
 GM.OverrideSlots["weapon_physcannon"] = { 3, 2 };
 GM.OverrideSlots["gmod_tool"] = { 3, 3 };
 
+local current_index = 1
+
+for _,weapon in next, weapons.GetList() do
+	if GM.OverrideSlots[weapon.ClassName] then continue end
+	local slot = 2
+	local stored_wep = weapons.GetStored(weapon.ClassName)
+	if stored_wep.Base == "tfa_nmrimelee_base" then
+		slot = 1
+	end
+	
+	stored_wep.Slot = slot
+	stored_wep.SlotPos = current_index
+	current_index = current_index + 1
+end
+
 function GM:WeaponSelectGetPrintName( wep )
 	
 	if !wep.IsTFAWeapon then
