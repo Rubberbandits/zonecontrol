@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Fabergé egg"
 ITEM.Desc =  "An elaborately decorated testament to vanity dating to the late 1800s."

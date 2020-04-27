@@ -1,0 +1,13 @@
+ITEM.Name =  "Anti-Rad Pills";
+ITEM.Desc =  "A packet of anti-radiation drugs that neutralize radiation accumulated in the body.";
+ITEM.Model =  "models/kali/miscstuff/stalker/aid/anti-rad.mdl";
+ITEM.Weight =  .1;
+ITEM.FOV =  12;
+ITEM.CamPos =  Vector( 50, 50, 50 );
+ITEM.LookAt =  Vector( 0, 0, 0 );
+ITEM.BulkPrice =  1500;
+ITEM.License =  LICENSE_BLACK;
+ITEM.UseText = "Consume"
+ITEM.ConsumeText = "You swallow the two pills. Afterwards, you feel a tad dizzy and nauseous."
+ITEM.HealAmount = 0
+ITEM.RadiationHealAmount = 20

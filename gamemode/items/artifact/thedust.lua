@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Dust"
 ITEM.Desc =  "Radioactive dust. Opaque to the eye yet transparent to light. Soft like ash, but appears coarse like sand. Weighs only as much as it's container."

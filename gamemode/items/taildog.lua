@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Blind dog tail";
 ITEM.Desc =  "The tail of a mutated mutt, chopped clean from the base. Makes for a less-than-impressive trophy.";
 ITEM.Model =  "models/dogtail.mdl";

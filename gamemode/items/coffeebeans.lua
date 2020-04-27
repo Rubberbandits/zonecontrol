@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Coffee Beans";
 ITEM.Desc =  "A box of coffee beans - rare to find these days. Boil some water and add these.";
 ITEM.Model =  "models/props_lab/box01a.mdl";

@@ -1,0 +1,9 @@
+ITEM.Name =  "Burnt Beans";
+ITEM.Desc =  "A burnt can of beans.";
+ITEM.Model =  "models/props_junk/garbage_metalcan001a.mdl";
+ITEM.Weight =  1;
+ITEM.FOV =  7;
+ITEM.CamPos =  Vector( 50, 50, 50 );
+ITEM.LookAt =  Vector( 0, 0, 0 );
+ITEM.ConsumeText = "You open and eat the can of burnt beans."
+ITEM.UseText = "Eat"

@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Meatball"
 ITEM.Desc =  "An immaculately polished ball bearing encapsulated by unnatural muscle mass. It can be felt tensing and relaxing in the hand."

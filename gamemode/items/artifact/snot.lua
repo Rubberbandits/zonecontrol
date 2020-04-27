@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Snot"
 ITEM.Desc =  "An irregular-shaped ball of biotic material. It visibly suctions in radioactive particulates."

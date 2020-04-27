@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Anomalous GPS"
 ITEM.Desc =  "This GPS's location is stuck permanently over the CNPP. Its owner's name is attached. 'MOTOROLA.'"

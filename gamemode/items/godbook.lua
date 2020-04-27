@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "The God Particle: Fact or Fiction?";
 ITEM.Desc =  "Recent literature on particle physics. It's hard to understand.";
 ITEM.Model =  "models/props_lab/binderredlabel.mdl";

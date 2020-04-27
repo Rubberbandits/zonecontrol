@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Sarcophagus"
 ITEM.Desc =  "An ecologist's lunchbox. Green light seeps through from inside, but you cannot open it. EXTREMELY RADIOACTIVE."

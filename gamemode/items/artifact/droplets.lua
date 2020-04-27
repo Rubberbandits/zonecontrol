@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Droplets"
 ITEM.Desc =  "Formed from the Burner anomaly, this artifact is tear-shaped and has a cracked, glossy substance similar to remains from a fire. Absorbs light, heat, and radiation from the environment. It has been attributed to erratic or manic-depressive behavior in Stalkers all of whom exhibit extreme fatigue."

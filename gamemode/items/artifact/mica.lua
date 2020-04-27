@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Mica"
 ITEM.Desc =  "A pocketed membrane of shiny, luminous strands. It could have once been carbon-based matter eaten away by acid. A rare artifact as the circumstances of its creation are seemingly random. Difficult to handle and sears exposed skin. Causes hemophilia."

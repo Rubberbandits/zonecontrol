@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Snowflake"
 ITEM.Desc =  "A convincing facsimile of serrated, bluish-white ice crystals. Constantly emits a numbing mist of cold and causes condensation all around it. Reacts violently with other artifacts and saps the warmth from the body. Emits radiation."

@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Wrenched"
 ITEM.Desc =  "Metallic compounds that have been turned inside out and perforated by overlapping attractive forces and subsequent reactions to high pressure. Certain conditions create smoother or more jagged edges. A constant force flows across its surface in unending, random patterns. Emits radiation."

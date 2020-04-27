@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Flash"
 ITEM.Desc =  "Pure light, stuck out of time. Encased in a dull, yet lustrous shell, it is extremely bright and scorches false after-images into the retinas when looked at. Produces light even when placed in containers or covered up. Conducts electricity away from the wielder."

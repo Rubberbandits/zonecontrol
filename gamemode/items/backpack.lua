@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Backpack";
 ITEM.Desc =  "A backpack. Useful for carrying more things.";
 ITEM.Model =  "models/props_junk/garbage_bag001a.mdl";

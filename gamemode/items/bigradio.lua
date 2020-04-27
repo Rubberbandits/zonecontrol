@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Radio";
 ITEM.Desc =  "A large radio.";
 ITEM.Model =  "models/props_lab/citizenradio.mdl";

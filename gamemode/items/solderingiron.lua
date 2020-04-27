@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Soldering Iron";
 ITEM.Desc =  "A soldering iron for connecting electronic parts.";
 ITEM.Model =  "models/props_lab/solderingiron01a.mdl";

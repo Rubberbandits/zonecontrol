@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Fireball"
 ITEM.Desc =  "Living metal the color of iron encased in raw glass. The air around it warps and roils as if heated and light the color of a forge shines brightly through splits in its inner surface. Invigorates the wielder, and is known as a Stalker’s best friend. No known negative effects other than slight fatigue."

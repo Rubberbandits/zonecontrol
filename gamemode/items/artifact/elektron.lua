@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Elektron"
 ITEM.Desc =  "A hunk of acrid crust formed around two double A batteries. They have a negative charge."

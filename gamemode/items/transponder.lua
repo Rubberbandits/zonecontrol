@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Transponder";
 ITEM.Desc =  "A radar transponder assembled from electronic parts.";
 ITEM.Model =  "models/props_citizen_tech/transponder.mdl";

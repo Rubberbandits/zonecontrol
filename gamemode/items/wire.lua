@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Spool of Wire";
 ITEM.Desc =  "A spool of thick fibers or wires utilized for equipment or electrical repair. Useful for the mechanically inclined.";
 ITEM.Model =  "models/materials_wire.mdl";

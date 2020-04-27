@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Sewing Kit";
 ITEM.Desc =  "A collection of sewing supplies.";
 ITEM.Model =  "models/sewing_kit_a.mdl";

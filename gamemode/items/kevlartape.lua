@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Kevlar Tape";
 ITEM.Desc =  "Heat and impact resistant aramid fiber strips. Contrary to popular belief, NOT adhesive-backed.";
 ITEM.Model =  "models/props_lab/box01a.mdl";

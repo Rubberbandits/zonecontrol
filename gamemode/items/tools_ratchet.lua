@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Socket Set";
 ITEM.Desc =  "A 21 piece socket set. Supposedly, these can tighten bolts.";
 ITEM.Model =  "models/toolkit_p.mdl";

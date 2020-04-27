@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Soul"
 ITEM.Desc =  "Post-animate material that seems to have flowed into a semi-rigid amorphous shape. It is slightly flexible and varies in color and form. Something luminous shifts beneath its surface. Many believe these to be the remains of good stalkers and are held in high regard. Emits radiation."

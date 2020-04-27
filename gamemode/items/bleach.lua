@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Bleach";
 ITEM.Desc =  "It's used to take the stains out of clothes. Highly toxic.";
 ITEM.Model =  "models/props_junk/garbage_plasticbottle002a.mdl";

@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "US Dollars";
 ITEM.Desc =  "A fistful of dollars. Nobody will accept this around here.";
 ITEM.Model =  "models/props/cs_assault/Dollar.mdl";

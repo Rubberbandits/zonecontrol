@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Mama's Beads"
 ITEM.Desc =  "A rotating double helix tipped by colored knobs on each side. It floats above the ground, suspended by a weird magic. Its colors vary from darkest blue to the color of cooling magma. Emits dull reddish emanations and is only found at night, hidden away from prying eyes."

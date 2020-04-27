@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Guitar";
 ITEM.Desc =  "A string instrument widely used by stalkers of all factions throughout the Zone.";
 ITEM.Model =  "models/stalkertnb/acoustic.mdl";

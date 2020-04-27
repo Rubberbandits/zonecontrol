@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Industrial Grease";
 ITEM.Desc =  "A semisolid lubricant. Goes on mechanisms that can't be lubed constantly or where typical lubricating oil won't stay in position.";
 ITEM.Model =  "models/grease.mdl";

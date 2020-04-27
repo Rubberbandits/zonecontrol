@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Teapot";
 ITEM.Desc =  "A kettle with a pipe to let steam out. Used for boiling water.";
 ITEM.Model =  "models/props_interiors/pot01a.mdl";

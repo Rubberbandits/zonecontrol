@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Lucky Bolt";
 ITEM.Desc =  "A single bolt. It's shine has worn down over time, after travel in someone's pocket for so long.";
 ITEM.Model =  "models/kali/miscstuff/stalker/bolt.mdl";

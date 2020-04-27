@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Meat Chunk"
 ITEM.Desc =  "A semi-organic growth that resembles flesh. It secretes a thin mucous membrane which protects against chemical burns. Appears to form around fossils that have been exposed to anomalies. Causes rapid cell growth and emits radiation."

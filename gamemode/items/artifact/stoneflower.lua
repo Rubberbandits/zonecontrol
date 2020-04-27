@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Stone Flower"
 ITEM.Desc =  "A porous geode with large, irregular perforations spread across it. From within shimmers turquoise liquid crystals. A visible haze of energy resolves around it and disperses continuously. Hardens the skin and lends the wielder strength. Emits radiation."

@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Wrench";
 ITEM.Desc =  "A wrench that's useful for mechanical work.";
 ITEM.Model =  "models/props_c17/tools_wrench01a.mdl";

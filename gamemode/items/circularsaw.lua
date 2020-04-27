@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Circular Saw";
 ITEM.Desc =  "A saw for cutting wood";
 ITEM.Model =  "models/props_forest/circularsaw01.mdl";

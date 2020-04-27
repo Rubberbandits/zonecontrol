@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Charger"
 ITEM.Desc =  "A metallic shell containing an electric arc. STALKERs are rumored to charge batteries with it."

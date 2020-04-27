@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Heavy Case";
 ITEM.Desc =  "A locked case. I can only guess what's inside, but it's heavy as all hell. This must be worth my trouble.";
 ITEM.Model =  "models/z-o-m-b-i-e/st/box/st_box_metall_01.mdl";

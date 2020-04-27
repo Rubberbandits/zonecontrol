@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Centrifuge";
 ITEM.Desc =  "An American-branded centrifuge. This seems expensive.";
 ITEM.Model =  "models/z-o-m-b-i-e/ST/technica/st_transiver_15.mdl";

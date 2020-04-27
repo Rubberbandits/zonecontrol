@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Vamp"
 ITEM.Desc =  "A gold ring set in stone. You feel cold with it in your possession. After short periods of use, users become anaemic."

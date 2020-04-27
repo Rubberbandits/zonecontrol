@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Pneumothorax in a Clinical Environment";
 ITEM.Desc =  "Russian medical literature.";
 ITEM.Model =  "models/props_lab/binderblue.mdl";

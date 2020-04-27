@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Bubble"
 ITEM.Desc =  "A fluorescent, lustrous green compound of several hollow, organic formations. Emits a visible gaseous substance that eliminates radiation rapidly without harming the wielder. The user, over time, seems to become more insubstantial, their presence diminished."

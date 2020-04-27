@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Goldfish"
 ITEM.Desc =  "A deadspace pocket of focused gravitational energy turned in on itself. Physically it is almost indescribable; the closest one can come is its superficial resemblance to a human stomach. Its surface is grey and reflective, yet shimmers with vigor like a disturbed pool of water. Emits radiation."

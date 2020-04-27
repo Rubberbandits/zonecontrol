@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Military Documents";
 ITEM.Desc =  "Manila folder full of important military documents. These can be sold for a reward.";
 ITEM.Model =  "models/stalker/item/handhelds/files2.mdl";

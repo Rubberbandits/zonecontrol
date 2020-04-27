@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Paper";
 ITEM.Desc =  "A blank piece of paper.";
 ITEM.Model =  "models/props_c17/paper01.mdl";

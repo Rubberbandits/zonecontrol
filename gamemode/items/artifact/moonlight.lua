@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Moonlight"
 ITEM.Desc =  "A solitary mote of purest energy held within what appears to be thick, translucent ceramic. Occasionally gives off strong static discharges and is far heavier than it appears. Strands of energy trace the fingers when held. It gazes into you, calming mind and spirit."

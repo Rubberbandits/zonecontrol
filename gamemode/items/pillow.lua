@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Memory Foam Pillow";
 ITEM.Desc =  "A very valuable commodity in the Zone. Like sleeping on a cloud.";
 

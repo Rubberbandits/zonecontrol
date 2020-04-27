@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Sparkler"
 ITEM.Desc =  "Hardened brown discharge preserved by anomalous forces. Generates strong electromagnetic forces and a static field. Bright energy currents flow across its surface at varying speeds and then dissipate. Emanates occasional metallic ringing noises."

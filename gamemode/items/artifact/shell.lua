@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Shell"
 ITEM.Desc =  "Fungus like metal plates interconnected by brown, root like growths. The connection tapers towards the middle and shimmers with forces unseen. Merges with the users’ nervous system and vastly increases endurance. Emits radiation."

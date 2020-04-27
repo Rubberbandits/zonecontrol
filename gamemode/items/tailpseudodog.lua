@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Pseudodog tail";
 ITEM.Desc =  "The tail of a Pseudodog, chopped clean from the base. Makes for a decent trophy.";
 ITEM.Model =  "models/dogtail.mdl";

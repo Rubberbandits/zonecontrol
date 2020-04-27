@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Laptop";
 ITEM.Desc =  "A TOBISHA brand laptop. Bound to carry some important information.";
 ITEM.Model =  "models/z-o-m-b-i-e/st/el_tehnika/st_notebook_01.mdl";

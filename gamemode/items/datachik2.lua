@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Advanced GPS";
 ITEM.Desc =  "A more modern way to store and transfer co-ordinate data. It's also secured by some kind of encryption.";
 ITEM.Model =  "models/kali/miscstuff/stalker/sensor_c.mdl";

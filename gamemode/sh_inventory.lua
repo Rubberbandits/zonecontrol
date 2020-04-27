@@ -175,9 +175,9 @@ function meta:GiveItem( item_class, vars )
 
 	local object = item( self, item_class );
 	
-	if( Vars ) then
+	if( vars ) then
 		
-		object.Vars = Vars;
+		table.Merge(object.Vars, vars)
 		
 	end
 	

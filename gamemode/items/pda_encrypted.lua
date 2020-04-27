@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Encrypted PDA";
 ITEM.Desc =  "An encrypted Multimedia PDA. May contain some lucrative information - someone's probably got the tools to crack into it.";
 ITEM.Model =  "models/stalker/item/handhelds/pda.mdl";

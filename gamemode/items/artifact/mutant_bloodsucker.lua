@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Bloodsucker Resistances"
 ITEM.Desc =  "If you have this, you're either a bloodsucker or a CHEATING BASTARD."

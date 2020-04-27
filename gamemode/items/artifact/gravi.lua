@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Gravi"
 ITEM.Desc =  "An amalgamation of metallic compounds blended together by intense gravitational fields. Bright and incandescent streaks auburn and dusky beige stand out against the darker impurities inlaid into the artifact. It comes away smooth to the touch, and exhibits a mild zero-point gravitational field around it that pushes things away. Emits radiation."

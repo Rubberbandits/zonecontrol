@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Pliers";
 ITEM.Desc =  "A pair of pliers, handy for electronic work";
 ITEM.Model =  "models/props_c17/tools_pliers01a.mdl";
