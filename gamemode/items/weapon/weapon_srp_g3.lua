@@ -14,3 +14,4 @@ ITEM.SelfRepairCondition = 70
 ITEM.AmmoType = "762x51"
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 200000
+ITEM.Slot = 2

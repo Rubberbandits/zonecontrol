@@ -13,3 +13,4 @@ ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
 ITEM.SelfRepairCondition = 50
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 2500
+ITEM.Slot = 1

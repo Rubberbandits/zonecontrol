@@ -1,6 +1,6 @@
 ITEM.Name = "Kitchen Knife"
 ITEM.Desc = "Fillet your foes just as easily as your roast boar with this impressive kitchen knife."
-ITEM.Model = "models/weapons/tfa_nmrih/w_tool_barricade.mdl"
+ITEM.Model = "models/weapons/tfa_nmrih/w_me_kitknife.mdl"
 ITEM.WeaponClass = "tfa_nmrih_kknife"
 ITEM.Weight = 1
 ITEM.SafetyPos = Vector(0,0,0)
@@ -13,3 +13,4 @@ ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
 ITEM.SelfRepairCondition = 40
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 2500
+ITEM.Slot = 1
