@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Stone Blood"
 ITEM.Desc =  "Raw viscera that has formed into a nebulous mass. Varies in color, ranging from light reds to deep blacks. Seems to take on characteristics from that which it is formed. Oozes a sticky, crimson substance. "

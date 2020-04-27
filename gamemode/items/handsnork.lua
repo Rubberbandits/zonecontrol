@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Snork leg";
 ITEM.Desc =  "Snork feet and legs contain a huge number of highly elastic tendons. This explains the beast's ability to perform its characteristic long leaps at its prey. Fresh specimens may be of interest to those with scientific pursuits.";
 ITEM.Model =  "models/lagsnork.mdl";

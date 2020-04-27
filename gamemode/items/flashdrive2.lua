@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "64gb Flash drive";
 ITEM.Desc =  "A convenient way to store and transfer data. 64 gigs of storage, whatever that means.";
 ITEM.Model =  "models/kali/miscstuff/stalker/usb_b.mdl";

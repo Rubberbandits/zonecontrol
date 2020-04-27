@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Tea Leaves";
 ITEM.Desc =  "A box of tea leaves. Boil some water and add these.";
 ITEM.Model =  "models/props_lab/box01a.mdl";

@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Svoboda Case";
 ITEM.Desc =  "A suitcase with an airport security lock on the handle. FREEDOM emblem stenciled onto it's face. You'll need help or a key to crack it open.";
 ITEM.Model =  "models/props_c17/SuitCase001a.mdl";

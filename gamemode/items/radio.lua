@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Radio";
 ITEM.Desc =  "A handheld communication device. In the Zone, interference is common, and you never know who - or what - listening in.";
 ITEM.Model =  "models/kali/miscstuff/stalker/radio.mdl";

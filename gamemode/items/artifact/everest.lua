@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Everest"
 ITEM.Desc =  "The heart of the snowstorm. Upon touch, your body temperature drastically lowers."

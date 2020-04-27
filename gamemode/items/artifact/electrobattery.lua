@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Electro Battery"
 ITEM.Desc =  "Composed seemingly only of rust, this artifact appears to be generated around what in ordinary circumstances would be a centralized electromagnet. Bands of string-like oxidation have twisted to intersect across two parabolic arches, giving it a delicate appearance. The air around it thrums, heavy with potential. Generates an intense static charge."

@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Class A Extinguisher";
 ITEM.Desc =  "Very expired. WARNING: WOOD, PAPER, OR TEXTILE ONLY.";
 ITEM.Model =  "models/props/cs_office/Fire_Extinguisher.mdl";

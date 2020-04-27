@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Box of Engine Parts";
 ITEM.Desc =  "Assorted parts and kits for an engine.";
 ITEM.Model =  "models/props_junk/cardboard_box004a.mdl";

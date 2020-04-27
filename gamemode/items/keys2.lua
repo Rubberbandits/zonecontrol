@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Keyring";
 ITEM.Desc =  "A ring of wrought-iron keys, jingling audibly. It probably opens a handful of doors somewhere, maybe.";
 ITEM.Model =  "models/key.mdl";

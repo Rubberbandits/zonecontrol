@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Box of Walnuts";
 ITEM.Desc =  "A box of walnuts. Round, single-seeded stone fruits. Pre-cursor to the bolt, previously used to mark paths and trails.";
 ITEM.Model =  "models/props_lab/box01a.mdl";

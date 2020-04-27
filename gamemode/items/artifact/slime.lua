@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Slime"
 ITEM.Desc =  "A dazzling web of transparent, brittle chemical residue. The gaze rolls off it like water and its form seems to subtly change with time. A subtle current of air is detectable around it as well as a cooling effect."

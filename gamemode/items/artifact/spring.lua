@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Spring"
 ITEM.Desc =  "Two bluish copper discs about a quarter-inch thick held a foot and a half apart. Ethereal, white translucence holds them together which slightly compresses in the center. Matter can freely pass in between but the discs cannot be moved out of position. Emits no radiation."

@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Military Installation Sign";
 ITEM.Desc =  "A simple sheet metal sign, greeting soldiers who enter the checkpoint. A true testament to a STALKER's idiocy - what better a trophy is there?";
 ITEM.Model =  "models/z-o-m-b-i-e/st/sign/st_sign_pg_01.mdl";

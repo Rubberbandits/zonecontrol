@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Urchin"
 ITEM.Desc =  "A rare byproduct of the Burnt Fuzz anomaly. A tiny ball of ashen-brown quills formed around a zero-density core. Theorized to be formed from the ionization and polarization of anomalous materials at a critical stability. Filters away radiation at the expense of high blood pressure and hemophilia."

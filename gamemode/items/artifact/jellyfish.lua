@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Jellyfish"
 ITEM.Desc =  "One of the most common artifacts in the Zone. An intertwining web of ossified matter that has a strange energy emanating from its center. Widespread and not very valuable, but has the pleasant quality of something familiar. Emits radiation."

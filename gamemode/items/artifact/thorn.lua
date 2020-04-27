@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Thorn"
 ITEM.Desc =  "The unfortunate result of human interaction with acidic anomalies. Unique in that it only forms from human flesh in such circumstances. It is a small black-brown ball covered with thick, razor sharp spikes, giving it a severe appearance. Handling it will inevitably result in numerous lacerations and hemorrhaging of blood. Drains radiation from the body."

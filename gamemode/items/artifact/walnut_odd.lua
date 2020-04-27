@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Lucky Walnut"
 ITEM.Desc =  "A pale tree nut, roughly 3ccm in size. Heavy and intricately hollowed-makes noise like a seashell. Radioactive and charred."

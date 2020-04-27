@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Tin Mug";
 ITEM.Desc =  "A cheap milsurp or survivalist cup, made of stamped metal.";
 ITEM.Model =  "models/z-o-m-b-i-e/st/kitchen/st_posuda_krujka_01.mdl";

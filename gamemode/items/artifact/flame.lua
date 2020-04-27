@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Flame"
 ITEM.Desc =  "A burning core of energy contained within a surprisingly cool shell of mottled glass. The imperfections of its surface render it rough to the touch and slightly opaque. A white vapor constantly emits from its surface."

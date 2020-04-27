@@ -209,3 +209,24 @@ netstream.Hook("ChangeItemData", function(ply, id, data)
 		item:SetVar(k, v, nil, true)
 	end
 end)
+
+netstream.Hook("StackItem", function(ply, item_id, to_stack_id)
+	local item = ply.Inventory[item_id]
+	local to_stack = ply.Inventory[to_stack_id]
+	
+	if item and to_stack then
+		if item:CanStack(to_stack) then
+			item:OnStack(to_stack)
+		end
+	end
+end)
+
+netstream.Hook("SplitStack", function(ply, item_id, amt)
+	local item = ply.Inventory[item_id]
+	
+	if item and item.CanSplitStack then
+		if item:CanSplitStack(amt) then
+			item:SplitStack(amt)
+		end
+	end
+end)

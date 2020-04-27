@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Kolobok"
 ITEM.Desc =  "A spiky ball of bristles seemingly held together by nothing. The spines vary in color, usually black or brown and can be smooth and hair-like or as sharp and rigid as spikes. On occasion, a necrotic green glow can be seen in the center. Possesses incredible healing capabilities. Emits radiation."

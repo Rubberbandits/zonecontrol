@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Prehospital Trauma";
 ITEM.Desc =  "A Western publication on trauma-based emergency medical care.";
 ITEM.Model =  "models/props_lab/bindergreen.mdl";

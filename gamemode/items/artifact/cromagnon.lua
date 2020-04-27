@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Cro-Magnon"
 ITEM.Desc =  "Flesh-coated remainder of an ancient being. When close, you can hear it's whispers."

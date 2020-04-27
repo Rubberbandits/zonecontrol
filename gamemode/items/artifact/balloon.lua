@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Balloon"
 ITEM.Desc =  "A tiny crystal known to absorb aerosolized neurotoxins, chemicals and poisons."

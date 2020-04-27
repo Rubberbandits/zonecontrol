@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Kanifol";
 ITEM.Desc =  "A tin of a resin-like substance.";
 ITEM.Model =  "models/box_kanifol.mdl";

@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Eye"
 ITEM.Desc =  "A tubular shaped, magma-like artifact that resembles a bright yellow- human eye on one end and darkens and tapers off on the other. The eye-portion glows brightly from within. It is pleasantly warm when held and vastly increases the user’s metabolism. It is also said to bring good luck. "

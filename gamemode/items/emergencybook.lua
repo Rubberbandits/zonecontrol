@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Air-based Emergency Services: A Primer";
 ITEM.Desc =  "A Russian-published book on air EMS.";
 ITEM.Model =  "models/props_lab/binderblue.mdl";

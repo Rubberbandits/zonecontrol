@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Pellicle"
 ITEM.Desc =  "An unidentifiable aqua-colored substrate with iridescent properties. Its surface is striated and contoured, stretched thin by anomalous processes. Exhibits gravimetric properties and insulates from acid burns by changing the makeup of the skin."

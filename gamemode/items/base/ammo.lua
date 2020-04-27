@@ -1,4 +1,5 @@
 -- this is mostly for identification purposes.
+BASE.Stackable = true
 BASE.Vars = {
 	Amount = 30,
 }
@@ -6,4 +7,63 @@ BASE.Vars = {
 function BASE:GetDesc()
 	local amt = self:GetVar("Amount", 0)
 	return Format(self.Desc, amt)
+end
+
+-- return true here to refresh the inventory
+function BASE:OnStack(item)
+	self:SetVar("Amount", self:GetVar("Amount", 0) + item:GetVar("Amount", 0))
+	item:RemoveItem()
+	
+	if CLIENT then
+		self:Owner():Notify(nil, COLOR_NOTIF, "You stacked the two boxes together.")
+	end
+	
+	return true
+end
+
+function BASE:CanStack(item)
+	if item.Base == self.Base and self.Class == item.Class then
+		return true
+	end
+end
+
+function BASE:GetWeight()
+	local meta = GAMEMODE:GetItemByID(self.Class)
+	local start_amount = meta.Vars.Amount
+	local start_weight = meta.Weight
+	
+	return math.Round(start_weight * (self:GetVar("Amount", 0) / start_amount), 2)
+end
+
+function BASE:Paint(pnl, w, h)
+	surface.SetFont("CombineControl.ChatSmall")
+	local amt = self:GetVar("Amount", 0)
+	local tW, tH = surface.GetTextSize(amt)
+	
+	surface.SetTextColor(Color(100,200,100))
+	surface.SetTextPos(w - tW, h - tH)
+	surface.DrawText(amt)
+end
+
+function BASE:CanSplitStack(amt)
+	if !amt then
+		amt = math.Round(self:GetVar("Amount", 0) / 2)
+	end
+
+	return (self:GetVar("Amount", 0) > 1) and (amt < self:GetVar("Amount", 0))
+end
+
+function BASE:SplitStack(amt)
+	if !amt then
+		amt = math.Round(self:GetVar("Amount", 0) / 2)
+	end
+	
+	if amt >= self:GetVar("Amount", 0) then return end
+	
+	self:SetVar("Amount", self:GetVar("Amount", 0) - amt, false, true)
+	
+	
+	local item = self:Owner():GiveItem(self.Class, {
+		Amount = amt,
+	})
 end

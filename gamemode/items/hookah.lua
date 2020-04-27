@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Hookah";
 ITEM.Desc =  "A makeshift hookah made from a teapot and some gas mask components. This is right up Freedom's alley.";
 ITEM.Model =  "models/z-o-m-b-i-e/ST/relax_room/st_kalyan_01.mdl";

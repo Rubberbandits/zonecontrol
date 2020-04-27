@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Lockbox";
 ITEM.Desc =  "A sizable lockbox. No clue what's inside, but it sure is heavy. Hopefully this is worth my trouble.";
 ITEM.Model =  "models/z-o-m-b-i-e/st/equipment_cache/st_equipment_seif_04.mdl";

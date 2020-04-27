@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Bar";
 ITEM.Desc =  "A heavy, tarnished chunk of metal.";
 ITEM.Model =  "models/props_debris/concrete_chunk05g.mdl";

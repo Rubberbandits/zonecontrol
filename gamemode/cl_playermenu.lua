@@ -810,6 +810,22 @@ function GM:PMCreateInventory()
 	CCP.PlayerMenu.InvScroll = vgui.Create( "DScrollPanel", CCP.PlayerMenu.ContentPane );
 	CCP.PlayerMenu.InvScroll:SetPos( 10, 10 );
 	CCP.PlayerMenu.InvScroll:SetSize( 400, CCP.PlayerMenu.ContentPane:GetTall() - 50 );
+	CCP.PlayerMenu.InvScroll:Receiver("ItemDragDrop", function(pnl, tbl, dropped, index)
+		if dropped then
+			local item = tbl[1].Item
+			if item.CanSplitStack and item:CanSplitStack() then
+				local amt
+				if index then
+					if index == 1 then
+						amt = 1
+					end
+				end
+				
+				netstream.Start("SplitStack", item:GetID(), amt)
+				GAMEMODE:PMUpdateInventory();
+			end
+		end
+	end, {"Split 1", "Split Half"})
 	function CCP.PlayerMenu.InvScroll:Paint( w, h )
 		
 		surface.SetDrawColor( 0, 0, 0, 70 );
@@ -880,7 +896,11 @@ local function GenerateActions(i, item)
 			
 			CCP.PlayerMenu["Button"..m] = vgui.Create( "DButton", CCP.PlayerMenu.InvButtonScroll );
 			CCP.PlayerMenu["Button"..m]:SetFont( "CombineControl.LabelSmall" );
-			CCP.PlayerMenu["Button"..m]:SetText( n.SelectionName );
+			if isfunction(n.SelectionName) then
+				CCP.PlayerMenu["Button"..m]:SetText( n.SelectionName(item) );
+			else
+				CCP.PlayerMenu["Button"..m]:SetText( n.SelectionName );
+			end
 			CCP.PlayerMenu["Button"..m]:SetPos( 0, y );
 			CCP.PlayerMenu["Button"..m]:SetSize( 100, 20 );
 			CCP.PlayerMenu["Button"..m].DoClick = function()
@@ -902,6 +922,9 @@ local function GenerateActions(i, item)
 	end
 	if( CCP.PlayerMenu["ButtonSell"] and CCP.PlayerMenu["ButtonSell"]:IsValid() ) then
 		CCP.PlayerMenu["ButtonSell"]:Remove();
+	end
+	if( CCP.PlayerMenu["ButtonSplit"] and CCP.PlayerMenu["ButtonSplit"]:IsValid() ) then
+		CCP.PlayerMenu["ButtonSplit"]:Remove();
 	end
 	
 	if item:CanDrop() then
@@ -979,6 +1002,25 @@ local function GenerateActions(i, item)
 			table.insert( CCP.PlayerMenu.InvButtons, CCP.PlayerMenu["ButtonSell"] );
 			y = y + 25;
 		end
+		
+		if item.CanSplitStack and item:CanSplitStack() then
+			CCP.PlayerMenu["ButtonSplit"] = vgui.Create( "DButton", CCP.PlayerMenu.InvButtonScroll );
+			CCP.PlayerMenu["ButtonSplit"]:SetFont( "CombineControl.LabelSmall" );
+			CCP.PlayerMenu["ButtonSplit"]:SetText( "Split" );
+			CCP.PlayerMenu["ButtonSplit"]:SetPos( 0, y );
+			CCP.PlayerMenu["ButtonSplit"]:SetSize( 100, 20 );
+			CCP.PlayerMenu["ButtonSplit"].DoClick = function()
+				if( item.CanSplitStack ) then
+					if( item:CanSplitStack() ) then
+						netstream.Start("SplitStack", item:GetID())
+						GAMEMODE:PMUpdateInventory();
+					end
+				end
+			end
+			CCP.PlayerMenu["ButtonSplit"]:PerformLayout();
+			table.insert( CCP.PlayerMenu.InvButtons, CCP.PlayerMenu["ButtonSplit"] );
+			y = y + 25;
+		end
 	end
 end
 
@@ -1001,6 +1043,24 @@ function GM:PMUpdateInventory()
 			local icon = vgui.Create( "DModelPanel", CCP.PlayerMenu.InvScroll );
 			icon.Item = v;
 			icon.InventoryID = k;
+			
+			if i.Stackable then
+				icon:Droppable("ItemDragDrop")
+				icon:Receiver("ItemDragDrop", function(pnl, tbl, dropped, menu_index, x, y)
+					local to_stack = tbl[1]
+					if pnl == to_stack then return end
+					if !dropped then return end
+
+					if v:CanStack(to_stack.Item) then
+						netstream.Start("StackItem", pnl.InventoryID, to_stack.InventoryID)
+					
+						local refresh = v:OnStack(to_stack.Item)
+						if refresh then
+							self:PMUpdateInventory()
+						end
+					end
+				end)
+			end
 			
 			icon:SetPos( x, y );
 			icon:SetModel( v:GetModel() );
@@ -1057,15 +1117,28 @@ function GM:PMUpdateInventory()
 			local p = icon.Paint;
 			
 			function icon:Paint( w, h )
-				
-				local pnl = self:GetParent():GetParent();
-				local x2, y2 = pnl:LocalToScreen( 0, 0 );
-				local w2, h2 = pnl:GetSize();
-				render.SetScissorRect( x2, y2, x2 + w2, y2 + h2, true );
+			
+				if self:IsDragging() then
+					surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+					surface.DrawOutlinedRect( 0, 0, w, h )
+				else
+					if !self:GetParent() then return end
+					local pnl = self:GetParent():GetParent();
+					if !pnl then return end
+					
+					local x2, y2 = pnl:LocalToScreen( 0, 0 );
+					local w2, h2 = pnl:GetSize();
+					render.SetScissorRect( x2, y2, x2 + w2, y2 + h2, true );
 
-				p( self, w, h );
+					p( self, w, h );
+					
+					render.SetScissorRect( 0, 0, 0, 0, false );
+				end
 				
-				render.SetScissorRect( 0, 0, 0, 0, false );
+				local item_paint = self.Item.Paint
+				if item_paint then
+					item_paint(self.Item, self, w, h)
+				end
 				
 			end
 			

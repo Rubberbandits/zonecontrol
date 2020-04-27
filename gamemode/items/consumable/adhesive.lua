@@ -1,0 +1,11 @@
+ITEM.Name =  "Adhesive";
+ITEM.Desc =  "A bottle of glue to stick things together.";
+ITEM.Model =  "models/props_junk/garbage_plasticbottle001a.mdl";
+ITEM.Weight =  1;
+ITEM.FOV =  14;
+ITEM.CamPos =  Vector( 50, 50, 50 );
+ITEM.LookAt =  Vector( 0, 0, 0 );
+ITEM.BulkPrice =  100;
+ITEM.License =  LICENSE_MISC;
+ITEM.ConsumeText = "You drink the liquid glue. Are you okay?"
+ITEM.UseText = "Drink"

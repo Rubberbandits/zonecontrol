@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Ion's Heart"
 ITEM.Desc =  "The calcified, radioactive heart of the legendary loner Ion."

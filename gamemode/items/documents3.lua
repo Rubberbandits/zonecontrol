@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Stack of Documents";
 ITEM.Desc =  "A bundle of important folders. These can be sold for a reward.";
 ITEM.Model =  "models/stalker/item/handhelds/files3.mdl";

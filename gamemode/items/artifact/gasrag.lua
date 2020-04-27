@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Rag"
 ITEM.Desc =  "A piece of cloth. Smells of gasoline."

@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Sword"
 ITEM.Desc =  "This jealous thing's passion is to poke you -- in fact, so much so, it toughens skin prior to puncture from exterior sources."

@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Guts"
 ITEM.Desc =  "A semi-organic amalgam of tissue and debris. Somehow, it tends to absorb supersonic shock waves."

@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Circular Saw";
 ITEM.Desc =  "An off-brand circular saw. There's no finger guard.";
 ITEM.Model =  "models/props/CS_militia/circularsaw01.mdl";

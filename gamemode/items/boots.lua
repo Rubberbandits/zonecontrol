@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Timberlands";
 ITEM.Desc =  "A set of size 46 Timberland wheat boots.";
 ITEM.Model =  "models/props_junk/Shoe001a.mdl";

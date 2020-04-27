@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Night Star"
 ITEM.Desc =  "Only found in the evening, this artifact is covered in intangible spikes of light, frozen in space. The center is a velvety grey substance that is cool to the touch. Causes bouts of paranoia and depressive emotions. It is unknown whether it makes the owner stronger temporarily, or merely makes nearby things lighter. Emits radiation."

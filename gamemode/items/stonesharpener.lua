@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Stone-sharpening Set";
 ITEM.Desc =  "A three-piece stone sharpening set suited to honing the blade of a knife.";
 ITEM.Model =  "models/box_condensers.mdl";

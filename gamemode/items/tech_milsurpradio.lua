@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Name =  "Radio Equipment";
 ITEM.Desc =  "A piece of high quality radio equipment widely used by stalkers of all factions throughout the Zone, particularly those with some spending money.";
 ITEM.Model =  "models/z-o-m-b-i-e/st/el_tehnika/st_priemnik_gorizont_01.mdl";

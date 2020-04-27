@@ -1,4 +1,4 @@
--- This file was converted to Kingston item system by Niggerlicious conversion kit --
+
 ITEM.Base = "artifact"
 ITEM.Name =  "Slug"
 ITEM.Desc =  "An almost invisible, insubstantial mass whose edges seem to melt out of existence. But for its copper-red emanations and silver edges, it would be impossible to see. It burdens the bearer greatly and any exertion seems greatly magnified, as if their strength is being drawn to something far away."
