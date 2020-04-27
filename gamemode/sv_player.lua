@@ -235,6 +235,8 @@ function meta:LoadCharacter( data )
 	self:Freeze( false );
 	
 	self:StripWeapons();
+	self.EquippedWeapons = {}
+	
 	self:ClearDrug();
 	
 	self:SetTeam( TEAM_CITIZEN );

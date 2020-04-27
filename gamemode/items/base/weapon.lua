@@ -82,6 +82,8 @@ BASE.functions.Unequip = {
 		local MetaItem = GAMEMODE:GetItemByID( item:GetClass() );
 		local weapon = item:Owner():GetWeapon( item.WeaponClass );
 		
+		if !weapon then return end
+		
 		local new_durability = math.Clamp(item:GetVar("Durability",100) - (item.DegradeRate * weapon:GetNW2Int("TimesFired", 0)), 0, item:GetVar("Durability",100)) 
 		item:SetVar("Durability", new_durability)
 		

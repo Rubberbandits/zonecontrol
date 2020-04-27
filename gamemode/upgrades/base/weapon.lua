@@ -47,7 +47,9 @@ function UPGRADE:CanUpgrade( item )
 	if( self.RequiredItems ) then
 		for _,requirement in next, self.RequiredItems do
 			local Items = item:Owner():HasItem( requirement[1] )
-			if( !Items or #Items < requirement[2] ) then return false end
+			if !Items then return false end
+			if Items.IsItem and requirement[2] > 1 then return false end
+			if !Items.IsItem and #Items < requirement[2] then return false end
 		end
 	end
 	

@@ -146,12 +146,6 @@ function GM:CreateCharCreate()
 	end
 	CCP.CharCreatePanel.TopBar.Buttons[1]:PerformLayout();
 	
-	if( self.CCMode == CC_SELECT or self.CCMode == CC_SELECT_C ) then
-	
-		CCP.CharCreatePanel.TopBar.Buttons[1]:SetDisabled( true )
-		
-	end
-	
 	CCP.CharCreatePanel.TopBar.Buttons[2] = vgui.Create( "DButton", CCP.CharCreatePanel.TopBar );
 	CCP.CharCreatePanel.TopBar.Buttons[2]:SetFont( "STALKER.LabelMenu" );
 	CCP.CharCreatePanel.TopBar.Buttons[2]:SetText( "Selection" );

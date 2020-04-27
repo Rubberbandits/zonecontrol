@@ -220,7 +220,7 @@ function PANEL:SpawnUpgradeLayout(layout, item_obj)
 				break;
 			end
 		end
-		
+
 		if( !meta_upgrade.CanUpgrade( meta_upgrade, item_obj ) ) then
 			upgrade:SetDisabled( true );
 		end

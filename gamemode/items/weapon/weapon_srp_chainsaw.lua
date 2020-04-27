@@ -1,6 +1,6 @@
 ITEM.Name = "Ural Chainsaw"
 ITEM.Desc = "A gas-powered chainsaw. Ideal for logging and serial killing."
-ITEM.Model = "models/weapons/tfa_nmrih/v_me_chainsaw.mdl"
+ITEM.Model = "models/weapons/tfa_nmrih/w_me_chainsaw.mdl"
 ITEM.WeaponClass = "tfa_nmrih_chainsaw"
 ITEM.Weight = 6
 ITEM.SafetyPos = Vector(0,0,0)
