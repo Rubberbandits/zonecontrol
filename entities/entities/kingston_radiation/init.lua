@@ -26,12 +26,13 @@ function ENT:Think()
 		local ents = ents.FindInSphere(self:GetPos(), self:GetZoneSize())
 		for k,v in next, ents do
 			if !v:IsPlayer() then continue end
+			if !v:Alive() then continue end
 			
 			local dist = v:GetPos():DistToSqr(self:GetPos())
 			local intensity = self:GetSourceIntensity()
 			local calc_amt = math.Clamp(math.Round((intensity * self:GetSourceSize()^2) / dist, 2), 0, intensity) * v:GetRadiationResistance()
 			if calc_amt > 0 then
-				--v:ApplyRadiation(calc_amt)
+				v:ApplyRadiation(calc_amt / 3600)
 			end
 		end
 		

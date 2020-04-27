@@ -1,6 +1,19 @@
 kingston = kingston or {}
 kingston.geiger = kingston.geiger or {}
 
+local meta = FindMetaTable("Player")
+function meta:GetExposureRate()
+	local calc_amt = 0
+	for k,v in next, ents.FindByClass("kingston_radiation") do
+		local dist = self:GetPos():DistToSqr(v:GetPos())
+		if dist < (v:GetZoneSize()*v:GetZoneSize()) then
+			calc_amt = calc_amt + math.Clamp(math.Round((v:GetSourceIntensity() * v:GetSourceSize()^2) / dist, 2), 0, v:GetSourceIntensity())
+		end
+	end
+	
+	return calc_amt
+end
+
 function kingston.geiger.calculate_angle(rate)
 	local base_degree = 40
 	local max_degree = 70
@@ -21,6 +34,7 @@ end
 local needle_mat = Material("kingston/geiger/needle.png", "noclamp smooth")
 local background_mat = Material("kingston/geiger/background.png", "noclamp smooth")
 local shield_mat = Material("kingston/geiger/shield.png", "noclamp smooth")
+local dosi_mat = Material("kingston/geiger/dosimeter.png", "noclamp smooth")
 
 function kingston.geiger.render()
 	if !GAMEMODE.LastRandomMovement then
@@ -77,15 +91,45 @@ local function RenderGeigerCounter()
 end
 hook.Add("HUDPaint", "STALKER.RenderGeigerCounter", RenderGeigerCounter)
 
-local meta = FindMetaTable("Player")
-function meta:GetExposureRate()
-	local calc_amt = 0
-	for k,v in next, ents.FindByClass("kingston_radiation") do
-		local dist = self:GetPos():DistToSqr(v:GetPos())
-		if dist < (v:GetZoneSize()*v:GetZoneSize()) then
-			calc_amt = calc_amt + math.Clamp(math.Round((v:GetSourceIntensity() * v:GetSourceSize()^2) / dist, 2), 0, v:GetSourceIntensity()) * self:GetRadiationResistance()
+function kingston.geiger.render_dosimeter()
+	surface.SetDrawColor(Color(0,0,0))
+	surface.DrawRect(0,0, ScrW(), ScrH())
+
+	surface.SetDrawColor(Color(255,255,255))
+	surface.SetMaterial(dosi_mat)
+	surface.DrawTexturedRect((ScrW() / 2) - ((ScrW() / 1.7) / 2),0, ScrW() / 1.7, ScrH())
+	
+	local dose = GAMEMODE.ReadingDosimeter:GetVar("Radiation", 0)
+	local start_pos = ScrW() / 3.38
+	local end_pos = ScrW() / 1.423
+	local cur_pos = math.Clamp(start_pos + (dose * (ScrW() / 480)), start_pos, end_pos)
+	
+	surface.SetDrawColor(Color(0,0,0))
+	surface.DrawRect(cur_pos, 0, 2, ScrH())
+	
+	surface.SetFont("CombineControl.ChatNormal")
+	local text = "Press any button to close."
+	local tW, tH = surface.GetTextSize(text)
+	local pos_x = (ScrW() / 2) - (tW / 2)
+	local pos_y = (ScrH() / 1.04)
+	
+	surface.SetDrawColor(255,255,255)
+	surface.SetTextColor(255,255,255)
+	surface.SetTextPos(pos_x, pos_y)
+	surface.DrawText(text)
+end
+
+local function RenderDosimeter()
+	if GAMEMODE.ReadingDosimeter then
+		if !input.IsKeyTrapping() then
+			input.StartKeyTrapping()
+		end
+		
+		kingston.geiger.render_dosimeter()
+		
+		if input.CheckKeyTrapping() then
+			GAMEMODE.ReadingDosimeter = nil
 		end
 	end
-	
-	return calc_amt
 end
+hook.Add("HUDPaint", "STALKER.RenderDosimeter", RenderDosimeter)

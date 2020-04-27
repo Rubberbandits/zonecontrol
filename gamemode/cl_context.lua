@@ -364,20 +364,7 @@ function GM:GetCCOptions( ent, dist )
 					
 					table.insert( tab, option );
 				end
-			elseif !ent:Alive() and ent:InDeathState() and (LocalPlayer():HasItem("med_medkit") or LocalPlayer():HasCharFlag("D")) then
-				local option = { "Revive", function()
-					
-					netstream.Start( "nCReviveStart", ent );
-					
-					GAMEMODE:CreateTimedProgressBar( 10, "Reviving...", ent, function()
-						
-						netstream.Start( "nCRevive", ent );
-						
-					end );
-					
-				end, nil, 64 };
 				
-				table.insert( tab, option );
 			end
 			
 			if( ent:PassedOut() and LocalPlayer():HasItem( "weapon_cc_knife" ) and ent:GetVelocity():Length2D() <= 5 ) then

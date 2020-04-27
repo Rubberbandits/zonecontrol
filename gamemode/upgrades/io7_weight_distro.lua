@@ -5,7 +5,7 @@ UPGRADE.Desc = "Special mounts distribute the carried load more evenly across th
 
 UPGRADE.IconPage = 5
 UPGRADE.IconX = 14
-UPGRADE.IconY = 32
+UPGRADE.IconY = 15
 
 UPGRADE.CarryAdd = 5
 
@@ -19,15 +19,11 @@ UPGRADE.PropertiesTooltip = {
 
 --CLASS
 UPGRADE.Item = {
-    suit_trenchsunrise = true,
-	suit_sunrise = true,
-	suit_combatsunrise = true,
+    suit_io7 = true,
 }
-
-UPGRADE.RequiredUpgrade = "sunrise_artifact_container_1";
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "intrm_toolkit", 1, false },
-	{ "parts_suit", 2, true },
+	{ "basic_toolkit", 1, false },
+	{ "parts_suit", 1, true },
 };

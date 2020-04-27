@@ -1,6 +1,6 @@
 --EFFECT
 UPGRADE.Base = "clothes"
-UPGRADE.Name = "Weight Distribution Frame";
+UPGRADE.Name = "Weight Distribution Vest";
 UPGRADE.Desc = "Special mounts distribute the carried load more evenly across the body.";
 
 UPGRADE.IconPage = 5
@@ -19,15 +19,11 @@ UPGRADE.PropertiesTooltip = {
 
 --CLASS
 UPGRADE.Item = {
-    suit_trenchsunrise = true,
-	suit_sunrise = true,
-	suit_combatsunrise = true,
+    suit_psz = true,
 }
-
-UPGRADE.RequiredUpgrade = "sunrise_artifact_container_1";
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "intrm_toolkit", 1, false },
-	{ "parts_suit", 2, true },
+	{ "basic_toolkit", 1, false },
+	{ "parts_suit", 1, true },
 };

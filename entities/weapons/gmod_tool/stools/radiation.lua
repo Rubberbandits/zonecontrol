@@ -3,7 +3,7 @@ TOOL.ClientConVar[ "source_intensity" ] = "100";
 TOOL.ClientConVar[ "zone_size" ] = "256";
 cleanup.Register( "radiation" );
 
-TOOL.Category		= "Point of Contact";
+TOOL.Category		= "100 Rads";
 TOOL.Name			= "Radiation Zone";
 TOOL.Command		= nil;
 TOOL.ConfigName		= "";

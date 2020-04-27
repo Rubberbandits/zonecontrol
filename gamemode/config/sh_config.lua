@@ -293,6 +293,9 @@ GM.AttachSalesModifier = 25
 
 GM.GiveOldBDUBack = true
 
+-- 10% of current rad, so like 1000 rads would remove 100 health at this rate
+GM.RadHealthReductionRate = 0.1
+
 -- Voices
 
 GM.VoicesEnabled = false;

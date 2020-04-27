@@ -105,6 +105,9 @@ function GM:PlayerSpawn( ply )
 	
 	ply:AllowFlashlight( true );
 	
+	ply:SetMaxHealth(100)
+	ply:SetHealth(100)
+	
 	ply:SetLastLegShot( -20 );
 	
 	ply:SetConsciousness( 100 );
@@ -116,9 +119,6 @@ function GM:PlayerSpawn( ply )
 	
 	ply:SetNotSolid( false );
 	ply:SetMoveType( MOVETYPE_WALK );
-	
-	ply:SetInDeathState(false)
-	ply.CountDownStart = false
 	
 	if( ply:Ragdoll() and ply:Ragdoll():IsValid() ) then
 		
@@ -992,3 +992,43 @@ function GM:PlayerSetHandsModel( pl, ent )
 		end
 	end
 end
+
+function meta:ApplyRadiation(amt)
+	if !amt or amt == 0 then return end
+
+	hook.Run("PlayerRadiationApplied", self, amt)
+end
+
+local function handle_rads(ply, amt)
+	local cur_health = ply:Health()
+	local cur_max = ply:GetMaxHealth()
+	local next_max = math.Clamp(ply:GetMaxHealth() - (amt * GAMEMODE.RadHealthReductionRate), 0, 100)
+	if cur_health > next_max then
+		ply:SetHealth(next_max)
+	end
+
+	ply:SetMaxHealth(next_max)
+	
+	if next_max <= 0 then
+		ply:Kill()
+	end
+end
+hook.Add("PlayerRadiationApplied", "STALKER.ApplyRadiationDamage", handle_rads)
+
+local function handle_dosi(ply, amt)
+	if ply.Inventory then
+		local items = ply:HasItem("dosimeter")
+		if istable(items) and !items.IsItem then
+			for k,v in next, items do
+				if v:GetVar("Activated", false) then
+					v:SetVar("Radiation", math.Clamp(v:GetVar("Radiation", 0) + amt, 0, 200), false, true)
+				end
+			end
+		elseif istable(items) then
+			if items:GetVar("Activated", false) then
+				items:SetVar("Radiation", math.Clamp(items:GetVar("Radiation", 0) + amt, 0, 200), false, true)
+			end
+		end
+	end
+end
+hook.Add("PlayerRadiationApplied", "STALKER.UpdateDosimeter", handle_dosi)
