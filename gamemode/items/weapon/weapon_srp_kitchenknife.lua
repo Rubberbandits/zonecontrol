@@ -1,0 +1,15 @@
+ITEM.Name = "Kitchen Knife"
+ITEM.Desc = "Fillet your foes just as easily as your roast boar with this impressive kitchen knife."
+ITEM.Model = "models/weapons/tfa_nmrih/w_tool_barricade.mdl"
+ITEM.WeaponClass = "tfa_nmrih_kknife"
+ITEM.Weight = 1
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0
+ITEM.DegradeRate = 0.1
+ITEM.FOV 			= 46
+ITEM.CamPos 		= Vector( 50, 4.47, 0.9 )
+ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
+ITEM.SelfRepairCondition = 40
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 1700

@@ -1,0 +1,15 @@
+ITEM.Name = "Machete"
+ITEM.Desc = "A must-have for anyone traveling off the beaten path in the Zone, the trusty machete is both weapon and tool."
+ITEM.Model = "models/weapons/tfa_nmrih/w_me_machete.mdl"
+ITEM.WeaponClass = "tfa_nmrih_machete"
+ITEM.Weight = 2
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0
+ITEM.DegradeRate = 0.05
+ITEM.FOV 			= 46
+ITEM.CamPos 		= Vector( 50, 4.47, 0.9 )
+ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
+ITEM.SelfRepairCondition = 30
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 7000
