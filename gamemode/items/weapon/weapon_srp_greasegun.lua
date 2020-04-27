@@ -1,0 +1,16 @@
+ITEM.Name = "M3 Grease Gun"
+ITEM.Desc = "An American submachine gun dating to the Second World War. Scores of these inexpensive .45s found their way to the black market due to their worldwide service with US forces for nearly fifty years."
+ITEM.Model = "models/weapons/w_smg_xoma_x4_m3grease.mdl"
+ITEM.WeaponClass = "xoma_x4_m3grease"
+ITEM.Weight = 2
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.02
+ITEM.DegradeRate = 0.05
+ITEM.FOV 			= 46
+ITEM.CamPos 		= Vector( 50, 4.47, 0.9 )
+ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
+ITEM.SelfRepairCondition = 70
+ITEM.AmmoType = "45acp"
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 50000

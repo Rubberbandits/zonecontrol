@@ -1,0 +1,16 @@
+ITEM.Name = "RPG-7"
+ITEM.Desc = "This rocket-propelled grenade launcher needs no introduction."
+ITEM.Model = "models/weapons/tfa_ins2/w_rpg.mdl"
+ITEM.WeaponClass = "tfa_ins2_rpg"
+ITEM.Weight = 8
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.02
+ITEM.DegradeRate = 0.05
+ITEM.FOV 			= 46
+ITEM.CamPos 		= Vector( 50, 4.47, 0.9 )
+ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
+ITEM.SelfRepairCondition = 70
+ITEM.AmmoType = "rpg"
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 500000

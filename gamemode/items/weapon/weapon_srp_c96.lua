@@ -1,0 +1,16 @@
+ITEM.Name = "Mauser C96"
+ITEM.Desc = "One of the earliest semi-automatic pistols to find success on the open market. A relic."
+ITEM.Model = "models/weapons/w_c96_one_handed.mdl"
+ITEM.WeaponClass = "tfa_nam_c96"
+ITEM.Weight = 3
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.02
+ITEM.DegradeRate = 0.05
+ITEM.FOV 			= 46
+ITEM.CamPos 		= Vector( 50, 4.47, 0.9 )
+ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
+ITEM.SelfRepairCondition = 70
+ITEM.AmmoType = "762x25"
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 90000

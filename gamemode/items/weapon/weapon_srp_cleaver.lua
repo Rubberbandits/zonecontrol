@@ -12,4 +12,4 @@ ITEM.CamPos 		= Vector( 50, 4.47, 0.9 )
 ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
 ITEM.SelfRepairCondition = 40
 ITEM.License = LICENSE_BLACK;
-ITEM.BulkPrice = 5000
+ITEM.BulkPrice = 3500
