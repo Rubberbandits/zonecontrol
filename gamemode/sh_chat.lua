@@ -547,15 +547,17 @@ kingston.chat.register_type("radio", {
 	no_console_print = true,
 	construct_string = function(chat_type, ply, text)
 		local chat_data = kingston.chat.get(chat_type)
-		if ply != LocalPlayer() and ply:GetPos():DistToSqr(LocalPlayer():GetPos()) <= (chat_data.chat_range * chat_data.chat_range) then
-			return {chat_data.text_color, Format(chat_data.text_format, ply:RPName(), text)}
+		if CLIENT then
+			if ply != LocalPlayer() and ply:GetPos():DistToSqr(LocalPlayer():GetPos()) <= (chat_data.chat_range * chat_data.chat_range) then
+				return {chat_data.text_color, Format(chat_data.text_format, ply:RPName(), text)}
+			end
 		end
 	
 		return {Color(72, 118, 255), "[Radio] ", ply, ": ", text}
 	end,
 	calculate_rf = function(chat_type, ply, text)
 		local chat_data = kingston.chat.get(chat_type)
-		local rf = {}
+		local rf = {ply}
 		local special_rf = {}
 		for k,v in next, player.GetAll() do
 			if ply != v and ply:GetPos():DistToSqr(v:GetPos()) <= (chat_data.chat_range * chat_data.chat_range) then
