@@ -34,7 +34,7 @@ function nBuyItem( ply, id, single )
 				
 				if( ply:InventoryWeight() < ply:InventoryMaxWeight() ) then
 					
-					ply:AddMoney( -1 * ( item.BulkPrice / 5 + ( ( item.BulkPrice / 5 ) / GAMEMODE.SellPercentage ) ) );
+					ply:AddMoney( -1 * math.Round(( item.BulkPrice / 5 + ( ( item.BulkPrice / 5 ) / GAMEMODE.SellPercentage ) )) );
 					ply:UpdateCharacterField( "Money", tostring( ply:Money() ) );
 					
 					ply:GiveItem( id, item.Vars or {} );
@@ -49,7 +49,7 @@ function nBuyItem( ply, id, single )
 				
 				if( ply:InventoryWeight() < ply:InventoryMaxWeight() ) then
 					
-					ply:AddMoney( -1 * item.BulkPrice );
+					ply:AddMoney( -1 * math.Round(item.BulkPrice) );
 					ply:UpdateCharacterField( "Money", tostring( ply:Money() ) );
 					
 					ply:GiveItem( id, item.Vars or {} );

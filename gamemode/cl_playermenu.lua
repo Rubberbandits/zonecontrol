@@ -1332,7 +1332,7 @@ function GM:PMPopulateBusiness()
 			desc:PerformLayout();
 
 			local price = vgui.Create( "DLabel", itempane );
-			price:SetText( "1 for " .. metaitem.BulkPrice / 5 + ( ( metaitem.BulkPrice / 5 ) / GAMEMODE.SellPercentage ) .. " rubles" );
+			price:SetText( "1 for " .. math.Round(metaitem.BulkPrice / 5 + ( ( metaitem.BulkPrice / 5 ) / GAMEMODE.SellPercentage )) .. " rubles" );
 			price:SetPos( 74 + tW + 20, 10 );
 			price:SetFont( "CombineControl.LabelTiny" );
 			price:SizeToContents();
