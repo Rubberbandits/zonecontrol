@@ -1536,176 +1536,89 @@ end
 netstream.Hook( "nBansList", nBansList );
 
 function GM:AdminCreateLogsMenu()
-	
 	CCP.AdminMenu.LogList = vgui.Create( "DListView", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.LogList:SetPos( 120, 10 );
 	CCP.AdminMenu.LogList:SetSize( 670, 406 );
+	CCP.AdminMenu.LogList:AddColumn( "Date" );
+	CCP.AdminMenu.LogList:AddColumn( "Category" );
 	CCP.AdminMenu.LogList:AddColumn( "Log" );
+	CCP.AdminMenu.LogList:AddLine( "No logs to display." );
+	CCP.AdminMenu.LogList.Position = 0
+	CCP.AdminMenu.LogList.Category = "chat"
+	CCP.AdminMenu.LogList.Date = os.date("!%x")
+	CCP.AdminMenu.LogList.Content = ""
 	
 	function CCP.AdminMenu.LogList:DoDoubleClick( lineID, line )
+		MsgC(Color(255, 0, 0), line:GetColumnText(3), "\n")
+		SetClipboardText(line:GetColumnText(3))
+	end
 	
-		MsgC( Color( 255, 0, 0 ), line:GetColumnText( 1 ), "\n")
+	CCP.AdminMenu.LogContent = vgui.Create( "DTextEntry", CCP.AdminMenu.ContentPane )
+	CCP.AdminMenu.LogContent:SetFont( "CombineControl.LabelMedium" )
+	CCP.AdminMenu.LogContent:SetPos( 10, 10 )
+	CCP.AdminMenu.LogContent:SetSize( 100, 20 )
+	CCP.AdminMenu.LogContent:SetValue("")
+	CCP.AdminMenu.LogContent:SetPlaceholderText("Log content (e.g. 'obtained item')")
+	CCP.AdminMenu.LogContent:PerformLayout()
+	function CCP.AdminMenu.LogContent:OnChange()
+		CCP.AdminMenu.LogList.Content = self:GetValue()
+	end
 	
+	CCP.AdminMenu.LogCategory = vgui.Create( "DComboBox", CCP.AdminMenu.ContentPane );
+	CCP.AdminMenu.LogCategory:SetFont( "CombineControl.LabelMedium" );
+	CCP.AdminMenu.LogCategory:SetPos( 10, 34 );
+	CCP.AdminMenu.LogCategory:SetSize( 100, 20 );
+	CCP.AdminMenu.LogCategory:SetValue( "chat" );
+	CCP.AdminMenu.LogCategory:AddChoice( "sql" );
+	CCP.AdminMenu.LogCategory:AddChoice( "bugs" );
+	CCP.AdminMenu.LogCategory:AddChoice( "console" );
+	CCP.AdminMenu.LogCategory:AddChoice( "admin" );
+	CCP.AdminMenu.LogCategory:AddChoice( "security" );
+	CCP.AdminMenu.LogCategory:AddChoice( "chat" );
+	CCP.AdminMenu.LogCategory:AddChoice( "sandbox" );
+	CCP.AdminMenu.LogCategory:AddChoice( "items" );
+	CCP.AdminMenu.LogCategory:PerformLayout();
+	function CCP.AdminMenu.LogCategory:OnSelect( index, val )
+		CCP.AdminMenu.LogList.Category = val
 	end
 	
 	CCP.AdminMenu.LogDate = vgui.Create( "DTextEntry", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.LogDate:SetFont( "CombineControl.LabelMedium" );
-	CCP.AdminMenu.LogDate:SetPos( 10, 346 );
+	CCP.AdminMenu.LogDate:SetPos( 10, 60 );
 	CCP.AdminMenu.LogDate:SetSize( 100, 20 );
-	CCP.AdminMenu.LogDate:SetValue( os.date( "!%y-%m-%d" ) );
+	CCP.AdminMenu.LogDate:SetValue( os.date( "!%x" ) );
 	CCP.AdminMenu.LogDate:PerformLayout();
-	
-	function CCP.AdminMenu.LogDate:OnSelect( index, val, data )
-		
-		CCP.AdminMenu.LogDate.DataVal = data;
-		
+	function CCP.AdminMenu.LogDate:OnChange()
+		CCP.AdminMenu.LogList.Date = self:GetValue()
 	end
 	
-	CCP.AdminMenu.LogAmountL = vgui.Create( "DLabel", CCP.AdminMenu.ContentPane );
-	CCP.AdminMenu.LogAmountL:SetText( "Number of logs:" );
-	CCP.AdminMenu.LogAmountL:SetPos( 10, 376 );
-	CCP.AdminMenu.LogAmountL:SetFont( "CombineControl.LabelSmall" );
-	CCP.AdminMenu.LogAmountL:SizeToContents();
-	CCP.AdminMenu.LogAmountL:PerformLayout();
-	
-	CCP.AdminMenu.LogAmount = vgui.Create( "DTextEntry", CCP.AdminMenu.ContentPane );
-	CCP.AdminMenu.LogAmount:SetFont( "CombineControl.LabelMedium" );
-	CCP.AdminMenu.LogAmount:SetPos( 10, 396 );
-	CCP.AdminMenu.LogAmount:SetSize( 100, 20 );
-	CCP.AdminMenu.LogAmount:SetNumeric( true );
-	CCP.AdminMenu.LogAmount:SetValue( 100 );
-	CCP.AdminMenu.LogAmount:PerformLayout();
-	
-	CCP.AdminMenu.LogButSQL = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
-	CCP.AdminMenu.LogButSQL:SetFont( "CombineControl.LabelSmall" );
-	CCP.AdminMenu.LogButSQL:SetText( "SQL" );
-	CCP.AdminMenu.LogButSQL:SetPos( 10, 10 );
-	CCP.AdminMenu.LogButSQL:SetSize( 100, 30 );
-	function CCP.AdminMenu.LogButSQL:DoClick()
-		
-		netstream.Start( "nGetLogList", "sql", CCP.AdminMenu.LogDate:GetValue(), math.floor( tonumber( CCP.AdminMenu.LogAmount:GetValue() ) ) );
-		
+	CCP.AdminMenu.Search = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
+	CCP.AdminMenu.Search:SetFont( "CombineControl.LabelSmall" );
+	CCP.AdminMenu.Search:SetText( "Search" );
+	CCP.AdminMenu.Search:SetPos( 10, 84 );
+	CCP.AdminMenu.Search:SetSize( 100, 30 );
+	function CCP.AdminMenu.Search:DoClick()
+		CCP.AdminMenu.LogList:Clear()
+		netstream.Start("RequestLogSearch", CCP.AdminMenu.LogList.Date, CCP.AdminMenu.LogList.Category, CCP.AdminMenu.LogList.Content, CCP.AdminMenu.LogList.Position)
 	end
-	CCP.AdminMenu.LogButSQL:PerformLayout();
-	
-	CCP.AdminMenu.LogButBugs = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
-	CCP.AdminMenu.LogButBugs:SetFont( "CombineControl.LabelSmall" );
-	CCP.AdminMenu.LogButBugs:SetText( "Bugs" );
-	CCP.AdminMenu.LogButBugs:SetPos( 10, 50 );
-	CCP.AdminMenu.LogButBugs:SetSize( 100, 30 );
-	function CCP.AdminMenu.LogButBugs:DoClick()
-		
-		netstream.Start( "nGetLogList", "bugs", CCP.AdminMenu.LogDate:GetValue(), math.floor( tonumber( CCP.AdminMenu.LogAmount:GetValue() ) ) );
-		
-	end
-	CCP.AdminMenu.LogButBugs:PerformLayout();
-	
-	CCP.AdminMenu.LogButAdmin = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
-	CCP.AdminMenu.LogButAdmin:SetFont( "CombineControl.LabelSmall" );
-	CCP.AdminMenu.LogButAdmin:SetText( "Admin" );
-	CCP.AdminMenu.LogButAdmin:SetPos( 10, 90 );
-	CCP.AdminMenu.LogButAdmin:SetSize( 100, 30 );
-	function CCP.AdminMenu.LogButAdmin:DoClick()
-		
-		netstream.Start( "nGetLogList", "admin", CCP.AdminMenu.LogDate:GetValue(), math.floor( tonumber( CCP.AdminMenu.LogAmount:GetValue() ) ) );
-		
-	end
-	CCP.AdminMenu.LogButAdmin:PerformLayout();
-	
-	CCP.AdminMenu.LogButSecurity = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
-	CCP.AdminMenu.LogButSecurity:SetFont( "CombineControl.LabelSmall" );
-	CCP.AdminMenu.LogButSecurity:SetText( "Security" );
-	CCP.AdminMenu.LogButSecurity:SetPos( 10, 130 );
-	CCP.AdminMenu.LogButSecurity:SetSize( 100, 30 );
-	function CCP.AdminMenu.LogButSecurity:DoClick()
-		
-		netstream.Start( "nGetLogList", "security", CCP.AdminMenu.LogDate:GetValue(), math.floor( tonumber( CCP.AdminMenu.LogAmount:GetValue() ) ) );
-		
-	end
-	CCP.AdminMenu.LogButSecurity:PerformLayout();
-	
-	CCP.AdminMenu.LogButChat = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
-	CCP.AdminMenu.LogButChat:SetFont( "CombineControl.LabelSmall" );
-	CCP.AdminMenu.LogButChat:SetText( "Chat" );
-	CCP.AdminMenu.LogButChat:SetPos( 10, 170 );
-	CCP.AdminMenu.LogButChat:SetSize( 100, 30 );
-	function CCP.AdminMenu.LogButChat:DoClick()
-		
-		netstream.Start( "nGetLogList", "chat", CCP.AdminMenu.LogDate:GetValue(), math.floor( tonumber( CCP.AdminMenu.LogAmount:GetValue() ) ) );
-		
-	end
-	CCP.AdminMenu.LogButChat:PerformLayout();
-	
-	CCP.AdminMenu.LogButSandbox = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
-	CCP.AdminMenu.LogButSandbox:SetFont( "CombineControl.LabelSmall" );
-	CCP.AdminMenu.LogButSandbox:SetText( "Sandbox" );
-	CCP.AdminMenu.LogButSandbox:SetPos( 10, 210 );
-	CCP.AdminMenu.LogButSandbox:SetSize( 100, 30 );
-	function CCP.AdminMenu.LogButSandbox:DoClick()
-		
-		netstream.Start( "nGetLogList", "sandbox", CCP.AdminMenu.LogDate:GetValue(), math.floor( tonumber( CCP.AdminMenu.LogAmount:GetValue() ) ) );
-		
-	end
-	CCP.AdminMenu.LogButSandbox:PerformLayout();
-	
-	CCP.AdminMenu.LogButItems = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
-	CCP.AdminMenu.LogButItems:SetFont( "CombineControl.LabelSmall" );
-	CCP.AdminMenu.LogButItems:SetText( "Items" );
-	CCP.AdminMenu.LogButItems:SetPos( 10, 250 );
-	CCP.AdminMenu.LogButItems:SetSize( 100, 30 );
-	function CCP.AdminMenu.LogButItems:DoClick()
-
-		netstream.Start( "nGetLogList", "items", CCP.AdminMenu.LogDate:GetValue(), math.floor( tonumber( CCP.AdminMenu.LogAmount:GetValue() ) ) );
-		
-	end
-	CCP.AdminMenu.LogButItems:PerformLayout();
-	
+	CCP.AdminMenu.Search:PerformLayout();
 end
 
-function nLogList( tab, e )
-	
-	if( CCP.AdminMenu.LogList and CCP.AdminMenu.LogList:IsValid() ) then
+function GM:PopulateAdminLogs(tbl)
+	if CCP.AdminMenu.LogList and CCP.AdminMenu.LogList:IsValid() then
+		CCP.AdminMenu.LogList:Clear()
 		
-		CCP.AdminMenu.LogList:Clear();
-		
-		if( e == 1 ) then
-			
-			CCP.AdminMenu.LogList:AddLine( "No logs to display." );
-			
-		elseif( e > 1 ) then
-			
-			CCP.AdminMenu.LogList:AddLine( "Showing " .. #tab - 1 .. "/" .. e - 1 .. " logs..." );
-			
-		else
-			
-			CCP.AdminMenu.LogList:AddLine( "Showing " .. #tab - 1 .. "/" .. #tab - 1 .. " logs..." );
-			
+		for _,log in next, tbl do
+			CCP.AdminMenu.LogList:AddLine(log.Date, log.Category, log.Log)
 		end
-		
-		for k, v in pairs( tab ) do
-			
-			if( v != "" ) then
-				
-				CCP.AdminMenu.LogList:AddLine( string.gsub( v, "\t", "     " ) );
-				
-			end
-			
-		end
-		
 	end
 	
-	timer.Simple( 0.01, function()
-		
-		if( CCP.AdminMenu and CCP.AdminMenu.LogList and CCP.AdminMenu.LogList.VBar and CCP.AdminMenu.LogList.VBar:IsValid() ) then
-			
-			CCP.AdminMenu.LogList.VBar:SetScroll( math.huge );
-			
+	timer.Simple(0.01, function()
+		if CCP.AdminMenu and CCP.AdminMenu.LogList and CCP.AdminMenu.LogList.VBar and CCP.AdminMenu.LogList.VBar:IsValid() then
+			CCP.AdminMenu.LogList.VBar:SetScroll(math.huge)
 		end
-		
-	end );
-	
+	end)
 end
-netstream.Hook( "nLogList", nLogList );
 
 function GM:AdminCreateRostersMenu()
 	

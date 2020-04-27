@@ -68,11 +68,15 @@ kingston.chat.default_type = {
 		local chat_data = kingston.chat.get(chat_type)
 		local chat_str_data = chat_data.construct_string(chat_type, ply, text)
 		
-		if chat_data.print_console then
-			MsgC(chat_data.text_color, chat_data.print_console(chat_type, ply, text))
-		end
+		chat_data.handle_log(chat_type, ply, text)
 		
-		GAMEMODE:AddChat(chat_data.chat_filter, chat_data.chat_font, unpack(chat_str_data))
+		if CLIENT then
+			if chat_data.print_console then
+				MsgC(chat_data.text_color, chat_data.print_console(chat_type, ply, text))
+			end
+		
+			GAMEMODE:AddChat(chat_data.chat_filter, chat_data.chat_font, unpack(chat_str_data))
+		end
 	end,
 	can_say = function(chat_type, ply)
 		if !ply:Alive() then
@@ -89,6 +93,18 @@ kingston.chat.default_type = {
 		local chat_data = kingston.chat.get(chat_type)
 	
 		return speaker:GetPos():DistToSqr(listener:GetPos()) <= (chat_data.chat_range * chat_data.chat_range)
+	end,
+	handle_log = function(chat_type, ply, text)
+		local chat_data = kingston.chat.get(chat_type)
+		if chat_data.no_console_print then
+			kingston.log.console_log = false
+		end
+		
+		kingston.log.write("chat", "[%s (%s)][%s] %s", ply:RPName(), ply:Nick(), chat_type, text)
+		
+		if chat_data.no_console_print then
+			kingston.log.console_log = true
+		end
 	end,
 	
 	-- default args: name, text
@@ -155,6 +171,8 @@ if SERVER then
 		
 		if !rf then return end
 		if #rf == 0 then return end
+		
+		chat_data.on_run(id, ply, text)
 		
 		netstream.Start(rf, "nReceiveMessage", id, ply, text)
 	end
@@ -247,12 +265,15 @@ end
 
 /* Default chat types */
 
-kingston.chat.register_type("ic", {})
+kingston.chat.register_type("ic", {
+	no_console_print = true,
+})
 
 kingston.chat.register_type("yell", {
 	chat_command = "/y",
 	chat_font = "CombineControl.ChatBig",
 	chat_range = 1000,
+	no_console_print = true,
 	construct_string = function(chat_type, ply, text)
 		return {Color(255, 50, 50), "[YELL] ", ply, ": ", text}
 	end,
@@ -262,6 +283,7 @@ kingston.chat.register_type("whisper", {
 	chat_command = "/w",
 	chat_range = 50,
 	chat_font = "CombineControl.ChatSmall",
+	no_console_print = true,
 	construct_string = function(chat_type, ply, text)
 		return {Color(91, 166, 221), "[WHISPER] ", ply, ": ", text}
 	end,
@@ -269,6 +291,7 @@ kingston.chat.register_type("whisper", {
 
 kingston.chat.register_type("it", {
 	chat_command = "/it",
+	no_console_print = true,
 	construct_string = function(chat_type, ply, text)
 		return {Color(131, 196, 251), "** ", text}
 	end,
@@ -280,6 +303,7 @@ kingston.chat.register_type("it", {
 kingston.chat.register_type("lit", {
 	chat_command = "/lit",
 	chat_range = 1000,
+	no_console_print = true,
 	construct_string = function(chat_type, ply, text)
 		return {Color(131, 196, 251), "** ", text}
 	end,
@@ -291,6 +315,7 @@ kingston.chat.register_type("lit", {
 kingston.chat.register_type("me", {
 	chat_command = {"/me"},
 	no_space = true,
+	no_console_print = true,
 	construct_string = function(chat_type, ply, text)
 		return {Color(131, 196, 251), "** ", ply, " ", text}
 	end,
@@ -300,6 +325,7 @@ kingston.chat.register_type("lme", {
 	chat_command = {"/lme"},
 	no_space = true,
 	chat_range = 1000,
+	no_console_print = true,
 	construct_string = function(chat_type, ply, text)
 		return {Color(131, 196, 251), "** ", ply, " ", text}
 	end,
@@ -362,6 +388,7 @@ kingston.chat.register_type("ooc", {
 kingston.chat.register_type("looc", {
 	chat_command = {"/looc", ".//", "[["},
 	chat_filter = {CB_ALL, CB_OOC},
+	no_console_print = true,
 	construct_string = function(chat_type, ply, text)
 		return {Color(138, 185, 209), "[LOOC] ", ply, ": ", text}
 	end,
@@ -391,10 +418,13 @@ kingston.chat.register_type("admin", {
 -- this really is awful
 kingston.chat.register_type("pda", {
 	chat_command = "/pda",
+	no_console_print = true,
 	on_run = function(chat_type, ply, text, rf)
 		local args = kingston.chat.parse_arguments(text)
 		local chat_data = kingston.chat.get(chat_type)
 		local chat_str_data = chat_data.construct_string(chat_type, ply, text, rf)
+		
+		chat_data.handle_log(chat_type, ply, text)
 
 		if args[1] == "all" then
 			netstream.Start(rf, "nAddPDANotif", chat_str_data.header, chat_str_data.body, 2, 5)
@@ -445,13 +475,16 @@ kingston.chat.register_type("pda", {
 		local chat_data = kingston.chat.types[chat_type]
 		local rf = {}
 		local args = kingston.chat.parse_arguments(text)
+		
+		if !args[2] then return end
+		
 		if args[1] == "all" then
 			for k,v in next, player.GetAll() do
 				if !chat_data.can_hear(chat_type, speaker, v) then continue end
 				
 				rf[#rf + 1] = v
 			end
-			
+
 			chat_data.on_run(chat_type, speaker, text, rf)
 			return {}
 		end
@@ -511,6 +544,7 @@ kingston.chat.register_type("radio", {
 	chat_command = {"/r", "/radio"},
 	chat_filter = {CB_ALL, CB_RADIO, CB_IC},
 	chat_font = "CombineControl.ChatRadio",
+	no_console_print = true,
 	construct_string = function(chat_type, ply, text)
 		local chat_data = kingston.chat.get(chat_type)
 		if ply != LocalPlayer() and ply:GetPos():DistToSqr(LocalPlayer():GetPos()) <= (chat_data.chat_range * chat_data.chat_range) then
@@ -564,6 +598,7 @@ if CLIENT then
 	netstream.Hook("nChatRadioSurround", function(chat_type, ply, text)
 		local chat_data = kingston.chat.get(chat_type)
 	
+		kingston.log.write("chat", "[%s (%s)][radio_sur] %s", ply:RPName(), ply:Nick(), text)
 		GAMEMODE:AddChat({ CB_ALL, CB_IC }, "CombineControl.ChatNormal", chat_data.text_color, ply, ": ", text)
 	end)
 end
@@ -572,6 +607,7 @@ kingston.chat.register_type("pm", {
 	chat_command = "/pm",
 	chat_filter = {CB_ALL, CB_OOC},
 	chat_font = "CombineControl.ChatNormal",
+	no_console_print = true,
 	construct_string = function(chat_type, ply, text)
 		local args = kingston.chat.parse_arguments(text)
 		local target = GAMEMODE:FindPlayer(args[1], ply)
@@ -579,10 +615,12 @@ kingston.chat.register_type("pm", {
 		local start = text:find(args[2])
 		body = text:sub(start, #text)
 		
-		if ply == LocalPlayer() then
-			return {Color(160, 255, 160), "[PM to ", target, "]: ", body}
-		else
-			return {Color(160, 255, 160), "[PM from ", ply, "]: ", body}
+		if CLIENT then
+			if ply == LocalPlayer() then
+				return {Color(160, 255, 160), "[PM to ", target, "]: ", body}
+			else
+				return {Color(160, 255, 160), "[PM from ", ply, "]: ", body}
+			end
 		end
 	end,
 	calculate_rf = function(chat_type, speaker, text)
@@ -615,6 +653,7 @@ for trait,info in next, kingston.chat.Languages do
 	local id = info[2]:sub(2, #info[2])
 	
 	kingston.chat.register_type(id, {
+		no_console_print = true,
 		chat_command = info[2],
 		-- any aspiring cheater could detour this and get the real text... but shh dont tell anyone
 		construct_string = function(chat_type, ply, text)
@@ -640,6 +679,7 @@ for trait,info in next, kingston.chat.Languages do
 	})
 	
 	kingston.chat.register_type(id.."Y", {
+		no_console_print = true,
 		chat_command = info[2].."y",
 		chat_font = "CombineControl.ChatBig",
 		chat_range = 1000,
@@ -667,6 +707,7 @@ for trait,info in next, kingston.chat.Languages do
 	})
 	
 	kingston.chat.register_type(id.."W", {
+		no_console_print = true,
 		chat_command = info[2].."w",
 		chat_font = "CombineControl.ChatSmall",
 		chat_range = 150,
@@ -696,6 +737,7 @@ end
 
 -- thank you tanknut im a lazy fuck, ive got like 24 hours to finish this
 kingston.chat.register_type("roll", {
+	no_console_print = true,
 	chat_command = "/roll",
 	chat_filter = {CB_ALL, CB_IC},
 	chat_font = "CombineControl.ChatNormal",

@@ -1,224 +1,115 @@
-GM.ConsoleLog = true;
+kingston = kingston or {}
+kingston.log = kingston.log or {}
+
+kingston.log.db_struct = {
+	{ "Date", "VARCHAR(20)" },
+	{ "Category", "VARCHAR(128)" },
+	{ "Log", "VARCHAR(8192)" },
+}
+kingston.log.console_log = true
+kingston.log.should_log = {
+	sql = true,
+	bugs = true,
+	admin = true,
+	console = true,
+	security = true,
+}
+
+kingston.log.query_str = [[
+	INSERT INTO cc_logs (Date, Category, Log) VALUES (?, ?, ?);
+]]
+kingston.log.search_str = [[SELECT * FROM cc_logs WHERE Date LIKE '%%%s%%' AND Category = '%s' AND Log LIKE '%%%s%%' LIMIT %d, %d;]]
+
+local function init_log_db_tbl(db)
+	mysqloo.Query("CREATE TABLE IF NOT EXISTS cc_logs ( id INT NOT NULL auto_increment, PRIMARY KEY ( id ) );")
+	GAMEMODE:InitSQLTable(kingston.log.db_struct, "cc_logs")
+	
+	kingston.log.query = db:prepare(kingston.log.query_str)
+end
+hook.Add("InitSQLTables", "STALKER.InitLogDBTable", init_log_db_tbl)
+
+function kingston.log.db_write(category, text, ...)
+	local str = Format(text, ...)
+
+	kingston.log.query:clearParameters()
+		kingston.log.query:setString(1, os.date("!%x %X"))
+		kingston.log.query:setString(2, category)
+		kingston.log.query:setString(3, str)
+	kingston.log.query:start()
+	
+	if kingston.log.console_log or kingston.log.should_log[category] then
+		MsgC(COLOR_LOG, str.."\n")
+	end
+end
+
+-- gotta use lambda funcs cus async
+
+function kingston.log.search(date_str, category, content, limit, offset, cb)
+	local function onSuccess(data, q)
+		cb(q, data)
+	end
+	
+	mysqloo.Query(Format(kingston.log.search_str, mysqloo.Escape(date_str), mysqloo.Escape(category), mysqloo.Escape(content), offset, limit), onSuccess)
+end
+
+/* aliases for logging systems */
 
 function GM:SetupDataDirectories()
 	
-	file.CreateDir( "CombineControl" );
-	file.CreateDir( "CombineControl/savedprops" );
-	file.CreateDir( "CombineControl/logs" );
-	file.CreateDir( "CombineControl/logs/" .. os.date( "!%y-%m-%d" ) );
-	
 end
 
-function GM:LogFile( name, text )
-	
-	if( !file.IsDir( "CombineControl/logs/" .. os.date( "!%y-%m-%d" ), "DATA" ) ) then
-		
-		file.CreateDir( "CombineControl/logs/" .. os.date( "!%y-%m-%d" ) );
-		
-	end
-	
-	local c = file.Read( "CombineControl/logs/" .. os.date( "!%y-%m-%d" ) .. "/" .. name .. ".txt" ) or "";
-	file.Write( "CombineControl/logs/" .. os.date( "!%y-%m-%d" ) .. "/" .. name .. ".txt", c .. text );
-	
+function GM:LogFile(category, text)
+	kingston.log.write(category, text)
 end
 
-function nGetLogList( ply, id, date, nLines )
-	
-	if( !ply:IsAdmin() ) then return end
-	
-	local n = math.Clamp( nLines, 0, 10000 );
-	
-	local c = file.Read( "CombineControl/logs/" .. date .. "/" .. id .. ".txt" ) or "";
-	local otab = string.Explode( "\n", c );
-	local tab = string.Explode( "\n", c );
-	
-	if( n > 0 ) then
-		
-		for i = 1, #tab - ( n + 1 ) do
-			
-			table.remove( tab, 1 );
-			
-		end
-		
+function GM:LogSQL(text)
+	if string.len(text) > 120 then
+		text = string.sub(text, 1, 120) .. " (...)"
 	end
 
-	netstream.Start( ply, "nLogList", tab, #otab );
-	
-end
-netstream.Hook( "nGetLogList", nGetLogList );
-
-function nGetRosterList( ply, id )
-	
-	if( !ply:IsAdmin() ) then return end
-
-	if( id == 0 ) then
-		
-		local function qS( ret )
-			
-			local tab = { };
-			
-			for _, v in pairs( ret ) do
-				
-				local sid = v.SteamID;
-				local rpname = v.RPName;
-				local cpflag = v.CombineFlag;
-				local laston = v.LastOnline;
-				
-				table.insert( tab, { sid, rpname, cpflag, laston } );
-				
-			end
-			
-			netstream.Start( ply, "nRosterList", tab );
-			
-			GAMEMODE:LogSQL( "Player " .. ply:Nick() .. " retrieved combine roster." );
-			
-		end
-		
-		mysqloo.Query( "SELECT SteamID, RPName, CombineFlag, LastOnline FROM cc_chars WHERE CombineFlag != ''", qS, qF );
-		
-	else
-		
-		local function qS( ret )
-			
-			local tab = { };
-			
-			for _, v in pairs( ret ) do
-				
-				local sid = v.SteamID;
-				local rpname = v.RPName;
-				local charflag = v.CharFlags;
-				local laston = v.LastOnline;
-				
-				table.insert( tab, { sid, rpname, charflag, laston } );
-				
-			end
-
-			netstream.Start( ply, "nRosterList", tab );
-			
-			GAMEMODE:LogSQL( "Player " .. ply:Nick() .. " retrieved flags roster." );
-			
-		end
-		
-		mysqloo.Query( "SELECT SteamID, RPName, CharFlags, LastOnline FROM cc_chars WHERE CharFlags != ''", qS, qF );
-		
-	end
-	
-end
-netstream.Hook( "nGetRosterList", nGetRosterList );
-
-function GM:LogSQL( text )
-	
-	if( string.len( text ) > 120 ) then
-		
-		text = string.sub( text, 1, 120 ) .. " (...)";
-		
-	end
-	
-	local ins = os.date( "!%H:%M:%S" ) .. "\t" .. text .. "\n";
-	self:LogFile( "sql", ins );
-	
-	if( self.ConsoleLog ) then
-		
-		MsgC( Color( 200, 200, 200, 255 ), ins );
-		
-	end
-	
+	self:LogFile("sql", text)
 end
 
-function GM:LogBug( text, forceconsole )
-	
-	local ins = os.date( "!%H:%M:%S" ) .. "\t" .. text .. "\n";
-	self:LogFile( "bugs", ins );
-	
-	if( self.ConsoleLog or forceconsole ) then
-		
-		MsgC( Color( 255, 0, 0, 255 ), ins );
-		
-	end
-	
+function GM:LogBug(text)
+	self:LogFile("bugs", text)
 end
 
-function GM:LogConsole( text, forceconsole )
-
-	local ins = os.date( "!%H:%M:%S" ) .. "\t" .. text .. "\n";
-	self:LogFile( "admin", ins );
-	
-	if( forceconsole ) then
-		
-		MsgC( Color( 200, 200, 200, 255 ), ins );
-		
-	end
-
+function GM:LogConsole(text)
+	self:LogFile("console", text)
 end
 
-function GM:LogAdmin( text, ply )
-	
-	local ins = os.date( "!%H:%M:%S" ) .. "\t" .. ply:SteamID() .. "\t" .. text .. "\n";
-	self:LogFile( "admin", ins );
-	
-	if( self.ConsoleLog ) then
-		
-		MsgC( Color( 200, 200, 200, 255 ), ins );
-		
-	end
-	
+function GM:LogAdmin(text, ply)
+	local ins = ply:SteamID() .. "\t" .. text
+	self:LogFile("admin", ins)
 end
 
-function GM:LogSecurity( steamid, networkid, name, text )
-	
-	local ins = os.date( "!%H:%M:%S" ) .. "\t" .. steamid .. "\t" .. networkid .. "\t" .. name .. "\t" .. text .. "\n";
-	self:LogFile( "security", ins );
-	
-	if( self.ConsoleLog ) then
-		
-		MsgC( Color( 200, 200, 200, 255 ), ins );
-		
-	end
-	
+function GM:LogSecurity(steamid, networkid, name, text)
+	local ins = steamid .. "\t" .. networkid .. "\t" .. name .. "\t" .. text
+	self:LogFile("security", ins)
 end
 
-function GM:LogChat( text, ply )
-	
-	local ins = os.date( "!%H:%M:%S" ) .. "\t" .. ply:SteamID() .. "\t" .. text .. "\n";
-	self:LogFile( "chat", ins );
-	
+function GM:LogChat(text, ply)
+	local ins = ply:SteamID() .. "\t" .. text
+	self:LogFile("chat", ins)
 end
 
-function GM:LogSandbox( text, ply )
-	
-	local ins = os.date( "!%H:%M:%S" ) .. "\t" .. ply:SteamID() .. "\t" .. text .. "\n";
-	self:LogFile( "sandbox", ins );
-	
-	if( self.ConsoleLog ) then
-		
-		MsgC( Color( 200, 200, 200, 255 ), ins );
-		
-	end
-	
+function GM:LogSandbox(text, ply)
+	local ins = ply:SteamID() .. "\t" .. text
+	self:LogFile("sandbox", ins)
 end
 
-function GM:LogItems( text, ply )
-	
-	local ins = os.date( "!%H:%M:%S" ) .. "\t" .. ply:SteamID() .. "\t" .. text .. "\n";
-	self:LogFile( "items", ins );
-	
-	if( self.ConsoleLog ) then
-		
-		MsgC( Color( 200, 200, 200, 255 ), ins );
-		
-	end
-	
+function GM:LogItems(text, ply)
+	local ins = ply:SteamID() .. "\t" .. text
+	self:LogFile("items", ins)
 end
 
-function GM:LogCombine( text, ply )
-	
-	local ins = os.date( "!%H:%M:%S" ) .. "\t" .. ply:SteamID() .. "\t" .. text .. "\n";
-	self:LogFile( "combine", ins );
-	
-	if( self.ConsoleLog ) then
-		
-		MsgC( Color( 200, 200, 200, 255 ), ins );
-		
-	end
-	
+/* networking */
+
+local function RequestLogSearch(ply, date_str, category, content, position)
+	if !ply:IsAdmin() then return end
+
+	kingston.log.search(date_str, category, content, 50, position, function(q, data)
+		netstream.Start(ply, "RequestLogSearch", data)
+	end)
 end
+netstream.Hook("RequestLogSearch", RequestLogSearch)

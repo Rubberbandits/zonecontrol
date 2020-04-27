@@ -39,6 +39,7 @@ include( "sh_reload.lua" );
 include( "sh_sandbox.lua" );
 include( "sh_weapons.lua" );
 include( "sh_blowout.lua" );
+include( "sh_logs.lua" );
 include( "cl_admin.lua" );
 include( "cl_adminmenu.lua" );
 include( "cl_binds.lua" );
@@ -59,6 +60,7 @@ include( "cl_weaponselect.lua" );
 include( "cl_blowout.lua" );
 include( "cl_bonemerge.lua" );
 include( "cl_geiger.lua" );
+include( "cl_logs.lua" );
 
 include( "gui/skin.lua" );
 include( "gui/ccarea.lua" );

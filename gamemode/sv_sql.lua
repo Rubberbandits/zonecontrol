@@ -37,7 +37,7 @@ function GM:InitSQL()
 		MsgC( Color( 200, 200, 200, 255 ), "MySQL successfully connected to " .. self:hostInfo() .. ".\nMySQL server version: " .. self:serverInfo() .. "\n" );
 		GAMEMODE.NoMySQL = false;
 		
-		GAMEMODE:InitSQLTables();
+		hook.Run("InitSQLTables", self)
 		
 		for k, v in pairs( GAMEMODE.SQLQueue ) do
 			
@@ -232,10 +232,10 @@ local ItemTable = {
 function GM:InitSQLTable( tab, dtab )
 	
 	for _, v in pairs( tab ) do
-		
+	
 		local function qS()
 			
-			-- self:LogSQL( "Column \"" .. v[1] .. "\" already exists in table " .. dtab .. "." );
+			--self:LogSQL( "Column \"" .. v[1] .. "\" already exists in table " .. dtab .. "." );
 			
 		end
 		
