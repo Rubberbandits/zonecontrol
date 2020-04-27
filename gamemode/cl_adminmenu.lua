@@ -2117,7 +2117,7 @@ function GM:AdminCreateRoleplayMenu()
 				function icon:Paint( w, h )
 					
 					local pnl = CCP.ItemsList.Pane;
-					if !pnl then continue end
+					if !pnl then return end
 					local x2, y2 = pnl:LocalToScreen( 0, 0 );
 					local w2, h2 = pnl:GetSize();
 					render.SetScissorRect( x2, y2, x2 + w2, y2 + h2, true );
