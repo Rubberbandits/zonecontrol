@@ -18,9 +18,7 @@ kingston.log.should_log = {
 kingston.log.query_str = [[
 	INSERT INTO cc_logs (Date, Category, Log) VALUES (?, ?, ?);
 ]]
-kingston.log.select_date_str = [[SELECT * FROM cc_logs WHERE Date LIKE '%%%s%%' LIMIT %d, %d;]]
-kingston.log.select_category_str = [[SELECT * FROM cc_logs WHERE Category = '%s' LIMIT %d, %d;]]
-kingston.log.select_log_str = [[SELECT * FROM cc_logs WHERE Log LIKE '%%%s%%' LIMIT %d, %d;]]
+kingston.log.search_str = [[SELECT * FROM cc_logs WHERE Date LIKE '%%%s%%' AND Category = '%s' AND Log LIKE '%%%s%%' LIMIT %d, %d;]]
 
 local function init_log_db_tbl(db)
 	mysqloo.Query("CREATE TABLE IF NOT EXISTS cc_logs ( id INT NOT NULL auto_increment, PRIMARY KEY ( id ) );")
@@ -46,28 +44,12 @@ end
 
 -- gotta use lambda funcs cus async
 
-function kingston.log.select_date(date_str, limit, offset, cb)
+function kingston.log.search(date_str, category, content, limit, offset, cb)
 	local function onSuccess(data, q)
 		cb(q, data)
 	end
 	
-	mysqloo.Query(Format(kingston.log.select_date_str, mysqloo.Escape(date_str), offset, limit), onSuccess)
-end
-
-function kingston.log.select_category(category, limit, offset, cb)
-	local function onSuccess(data, q)
-		cb(q, data)
-	end
-	
-	mysqloo.Query(Format(kingston.log.select_category_str, mysqloo.Escape(category), offset, limit), onSuccess)
-end
-
-function kingston.log.select_log(content, limit, offset, cb)
-	local function onSuccess(data, q)
-		cb(q, data)
-	end
-	
-	mysqloo.Query(Format(kingston.log.select_log_str, mysqloo.Escape(content), offset, limit), onSuccess)
+	mysqloo.Query(Format(kingston.log.search_str, mysqloo.Escape(date_str), mysqloo.Escape(category), mysqloo.Escape(content), offset, limit), onSuccess)
 end
 
 /* aliases for logging systems */
@@ -120,3 +102,14 @@ function GM:LogItems(text, ply)
 	local ins = ply:SteamID() .. "\t" .. text
 	self:LogFile("items", ins)
 end
+
+/* networking */
+
+local function RequestLogSearch(ply, date_str, category, content, position)
+	if !ply:IsAdmin() then return end
+
+	kingston.log.search(date_str, category, content, 50, position, function(q, data)
+		netstream.Start(ply, "RequestLogSearch", data)
+	end)
+end
+netstream.Hook("RequestLogSearch", RequestLogSearch)
