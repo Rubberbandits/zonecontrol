@@ -1539,8 +1539,8 @@ function GM:AdminCreateLogsMenu()
 	CCP.AdminMenu.LogList = vgui.Create( "DListView", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.LogList:SetPos( 120, 10 );
 	CCP.AdminMenu.LogList:SetSize( 670, 406 );
-	CCP.AdminMenu.LogList:AddColumn( "Date" );
-	CCP.AdminMenu.LogList:AddColumn( "Category" );
+	CCP.AdminMenu.LogList:AddColumn( "Date" ):SetFixedWidth(100)
+	CCP.AdminMenu.LogList:AddColumn( "Category" ):SetFixedWidth(64)
 	CCP.AdminMenu.LogList:AddColumn( "Log" );
 	CCP.AdminMenu.LogList:AddLine( "No logs to display." );
 	CCP.AdminMenu.LogList.Position = 0
