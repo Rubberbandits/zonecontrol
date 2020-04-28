@@ -1,7 +1,9 @@
--- 4/22/2020
+-- 4/28/2020
 -- honestly this gamemode has been recoded so massively im hesistant to call it combinecontrol
 
 DeriveGamemode( "sandbox" );
+
+util.IncludeDir("gui", false, true, "client")
 
 GM.Name = "ZoneControl";
 GM.Author = "rusty";

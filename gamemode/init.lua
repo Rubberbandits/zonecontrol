@@ -2,14 +2,15 @@ MsgC( Color( 200, 200, 200, 255 ), "Loading serverside...\n" );
 
 GM.FullyLoaded = GM.FullyLoaded or false;
 
+include( "sh_util.lua" );
 include( "sh_enum.lua" );
 
 include( "config/sv_config.lua" );
 include( "config/sh_config.lua" );
 
-include( "shared.lua" );
 include( "pon.lua" );
 include( "netstream2.lua" );
+include( "shared.lua" );
 
 include( "meta/sh_item.lua" );
 include( "sh_admin.lua" );
@@ -55,6 +56,7 @@ include( "sv_blowout.lua" );
 include( "ctp/sv_ctp.lua" );
 
 AddCSLuaFile( "cl_init.lua" );
+AddCSLuaFile( "sh_util.lua" );
 AddCSLuaFile( "sh_enum.lua" );
 AddCSLuaFile( "shared.lua" );
 
@@ -109,27 +111,6 @@ AddCSLuaFile( "cl_blowout.lua" );
 AddCSLuaFile( "cl_bonemerge.lua" );
 AddCSLuaFile( "cl_geiger.lua" );
 AddCSLuaFile( "cl_logs.lua" );
-
-AddCSLuaFile( "gui/skin.lua" );
-AddCSLuaFile( "gui/ccarea.lua" );
-AddCSLuaFile( "gui/cccamera.lua" );
-AddCSLuaFile( "gui/ccchat.lua" );
-AddCSLuaFile( "gui/ccframe.lua" );
-AddCSLuaFile( "gui/cclabel.lua" );
-AddCSLuaFile( "gui/ccprogbar.lua" );
-AddCSLuaFile( "gui/ccdetector.lua" );
-AddCSLuaFile( "gui/cctree.lua" );
-AddCSLuaFile( "gui/cctree_node.lua" );
-AddCSLuaFile( "gui/cctree_node_button.lua" );
-AddCSLuaFile( "gui/ccnotification.lua" );
-AddCSLuaFile( "gui/ccattachmentmenu.lua" );
-AddCSLuaFile( "gui/ccmaintainmenu.lua" );
-AddCSLuaFile( "gui/cctechmenu.lua" );
-AddCSLuaFile( "gui/ccupgrade_button.lua" );
-AddCSLuaFile( "gui/ccweapon_display.lua" );
-AddCSLuaFile( "gui/ccbdumenu.lua" );
-AddCSLuaFile( "gui/ccitem_creator.lua" );
-AddCSLuaFile( "gui/cccharpanel.lua" );
 
 AddCSLuaFile( "ctp/cl_ctp.lua" );
 

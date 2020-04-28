@@ -8,16 +8,17 @@ if( !CCP ) then
 	
 end
 
+include( "sh_util.lua" );
 include( "sh_enum.lua" );
 
 include( "config/sh_config.lua" );
 
-include( "shared.lua" );
 include( "pon.lua" );
 include( "netstream2.lua" );
 include( "gui_helper.lua" );
 include( "utf8.lua" );
 include( "markup.lua" );
+include( "shared.lua" );
 
 include( "meta/sh_item.lua" );
 include( "cl_items.lua" );
@@ -63,27 +64,6 @@ include( "cl_blowout.lua" );
 include( "cl_bonemerge.lua" );
 include( "cl_geiger.lua" );
 include( "cl_logs.lua" );
-
-include( "gui/skin.lua" );
-include( "gui/ccarea.lua" );
-include( "gui/cccamera.lua" );
-include( "gui/ccchat.lua" );
-include( "gui/ccframe.lua" );
-include( "gui/cclabel.lua" );
-include( "gui/ccdetector.lua" )
-include( "gui/ccprogbar.lua" );
-include( "gui/cctree.lua" );
-include( "gui/cctree_node.lua" );
-include( "gui/cctree_node_button.lua" );
-include( "gui/ccnotification.lua" );
-include( "gui/ccattachmentmenu.lua" );
-include( "gui/ccmaintainmenu.lua" );
-include( "gui/cctechmenu.lua" );
-include( "gui/ccupgrade_button.lua" );
-include( "gui/ccweapon_display.lua" );
-include( "gui/ccbdumenu.lua" );
-include( "gui/ccitem_creator.lua" );
-include( "gui/cccharpanel.lua" ); 
 
 include( "ctp/cl_ctp.lua" );
 
@@ -227,6 +207,10 @@ game.AddParticles( "particles/hunter_shield_impact.pcf" )
 game.AddParticles( "particles/warpshield.pcf" )
 game.AddParticles( "particles/advisor.pcf" )
 game.AddParticles( "particles/steampuff.pcf" )
+
+function ScreenScaleH(size)
+	return size * (ScrH() / 480)
+end
 
 GM.FullyLoaded = true;
 
