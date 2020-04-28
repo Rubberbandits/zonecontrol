@@ -15,6 +15,7 @@ ITEM.AmmoType = "762x51"
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 250000
 ITEM.Slot = 2
+ITEM.NoDefaultAtts = true
 ITEM.Vars = {
 	Equipped = false,
 	CurrentAttachments = {},

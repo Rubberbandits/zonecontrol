@@ -266,16 +266,20 @@ function item:RemoveItem(network)
 	
 		self:DeleteItem();
 		
-	end
-	
-	if network then
-		netstream.Start(self:Owner(), "RemoveItem", self:GetID())
+		if network then
+			netstream.Start(self:Owner(), "RemoveItem", self:GetID())
+		end
+		
 	end
 
 	GAMEMODE.g_ItemTable[self:GetID()] = nil;
-	self:Owner().Inventory[self:GetID()] = nil;
 	
-	hook.Run("ItemDropped", self:Owner(), self)
+	if self:Owner() and self:Owner():IsValid() and self:Owner():IsPlayer() then
+		print(self:Owner())
+		self:Owner().Inventory[self:GetID()] = nil;
+		
+		hook.Run("ItemDropped", self:Owner(), self)
+	end
 	
 	setmetatable( self, nil );
 	self = nil;

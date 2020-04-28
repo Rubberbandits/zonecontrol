@@ -178,18 +178,51 @@ function ENT:Use( ply, caller, type, val )
 		
 		self.Used = true;
 
-		if( !self.ItemObj ) then
-		
-			self.ItemObj = ply:GiveItem( self:GetItemClass(), metaitem.Vars );
-		
-		else
-
-			self.ItemObj.owner = ply;
-			self.ItemObj:SetCharID( ply:CharID() )
-			self.ItemObj:UpdateSave();
-			self.ItemObj:TransmitToOwner();
-			ply.Inventory[self.ItemObj:GetID()] = self.ItemObj
+		if !self.ItemObj then
+			local should_create = true
+			local metaitem = GAMEMODE:GetItemByID(self:GetItemClass())
+			if metaitem.Stackable then
+				local other_items = ply:HasItem(self:GetItemClass())
+				if other_items then
+					if !other_items.IsItem then
+						other_items = other_items[1]
+					end
+					
+					if other_items:CanStack(metaitem) then
+						other_items:AddItemToStack()
+						should_create = false
+					end
+				end
+			end
 			
+			if should_create then
+				self.ItemObj = ply:GiveItem( self:GetItemClass(), metaitem.Vars );
+			end
+		else
+			local should_transfer = true
+			local metaitem = GAMEMODE:GetItemByID(self:GetItemClass())
+			if metaitem.Stackable then
+				local other_items = ply:HasItem(self:GetItemClass())
+				if other_items then
+					if !other_items.IsItem then
+						other_items = other_items[1]
+					end
+					
+					if other_items:CanStack(self.ItemObj) then
+						other_items:AddItemToStack(self.ItemObj)
+						self.ItemObj = nil
+						should_transfer = false
+					end
+				end
+			end
+			
+			if should_transfer then
+				self.ItemObj.owner = ply;
+				self.ItemObj:SetCharID( ply:CharID() )
+				self.ItemObj:UpdateSave();
+				self.ItemObj:TransmitToOwner();
+				ply.Inventory[self.ItemObj:GetID()] = self.ItemObj
+			end
 		end
 		hook.Run( "ItemPickedUp", ply, self.ItemObj or self:GetItemClass() );
 		self:Remove();

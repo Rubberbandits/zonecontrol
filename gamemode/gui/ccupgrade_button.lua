@@ -10,11 +10,9 @@ function PANEL:DoClick()
 
 	-- parent is TechMenu.Container
 	local ItemObj = self.CurrentItem;
-	print(ItemObj)
 	if( ItemObj ) then
 	
 		local upgrade = GAMEMODE.Upgrades[self.UpgradeID];
-		print(upgrade.CanUpgrade( upgrade, ItemObj ))
 		if( upgrade.CanUpgrade( upgrade, ItemObj ) ) then
 
 			upgrade.OnUpgrade( upgrade, ItemObj );

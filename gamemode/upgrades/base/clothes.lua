@@ -70,9 +70,13 @@ function UPGRADE:OnUpgrade( item )
 				if( !requirement[3] ) then continue end
 				
 				local Items = item:Owner():HasItem( requirement[1] )
-				for i=1, requirement[2] do
-					local item = Items[i]
-					item:RemoveItem()
+				if Items.IsItem then
+					Items:RemoveItem()
+				else
+					for i=1, requirement[2] do
+						local item = Items[i]
+						item:RemoveItem()
+					end
 				end
 			end
 		end

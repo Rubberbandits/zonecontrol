@@ -1,8 +1,8 @@
-ITEM.Name = "EOTech Holosight"
-ITEM.Desc = "An expensive holographic sight from the world reknowned optics company, EOTech."
+ITEM.Name = "Aimpoint CompM2"
+ITEM.Desc = "An expensive laser sight from Aimpoint."
 ITEM.Model = "models/props_junk/cardboard_box004a.mdl"
 ITEM.Attachment = {
-	ins2_si_eotech = true,
+	ins2_si_rds = true,
 }
 ITEM.RequiredUpgrades = {
 	generic_opt_mount = true

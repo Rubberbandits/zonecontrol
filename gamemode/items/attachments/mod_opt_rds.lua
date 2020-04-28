@@ -1,8 +1,9 @@
-ITEM.Name = "EOTech Holosight"
-ITEM.Desc = "An expensive holographic sight from the world reknowned optics company, EOTech."
+ITEM.Name = "Red Dot Sight"
+ITEM.Desc = "Probably some chinese airsoft red dot sight. Who knows if it's going to hold up under recoil."
 ITEM.Model = "models/props_junk/cardboard_box004a.mdl"
 ITEM.Attachment = {
-	ins2_si_eotech = true,
+	ins2_si_kobra = true,
+	cod_si_rds = true,
 }
 ITEM.RequiredUpgrades = {
 	generic_opt_mount = true

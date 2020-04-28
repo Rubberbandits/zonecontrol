@@ -62,18 +62,15 @@ end
 
 -- return true here to refresh the inventory
 function ITEM:OnStack(item)
-	self:SetVar("Stacked", self:GetVar("Stacked", 0) + item:GetVar("Stacked", 0))
-	item:RemoveItem()
-	
-	if CLIENT then
-		self:Owner():Notify(nil, COLOR_NOTIF, "You stacked the two items together.")
-	end
+	self:SetVar("Stacked", self:GetVar("Stacked", 0) + item:GetVar("Stacked", 0), nil, true)
+	item:RemoveItem(true)
 	
 	return true
 end
 
+-- this can be passed a metaitem so dont use funcs
 function ITEM:CanStack(item)
-	if item.Base == self.Base and self.Class == item.Class and !self:GetVar("Activated", false) and !item:GetVar("Activated", false) then
+	if item.Base == self.Base and self.Class == item.Class and !self.Vars.Activated and !item.Vars.Activated then
 		return true
 	end
 end
@@ -118,4 +115,13 @@ function ITEM:SplitStack(amt)
 	local item = self:Owner():GiveItem(self.Class, {
 		Stacked = amt,
 	})
+end
+
+function ITEM:AddItemToStack(item)
+	if item then
+		self:OnStack(item)
+	else
+		local metaitem = GAMEMODE:GetItemByID(self:GetClass())
+		self:SetVar("Stacked", self:GetVar("Stacked", 0) + metaitem.Vars.Stacked, nil, true)
+	end
 end

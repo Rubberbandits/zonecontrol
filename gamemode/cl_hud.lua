@@ -775,7 +775,7 @@ function GM:DrawHealthBars()
 		
 	end
 	
-	self.HPDraw = math.Clamp( self.HPDraw, 0, 100 );
+	self.HPDraw = math.Clamp( self.HPDraw, 0, LocalPlayer():GetMaxHealth() );
 	self.ARDraw = math.Clamp( self.ARDraw, 0, 100 );
 	self.HGDraw = math.Clamp( self.HGDraw, 0, 100 );
 	
@@ -796,7 +796,7 @@ function GM:DrawHealthBars()
 	
 		local u0 = ScrW() - ( ScrW() / 7.38 );
 		local v0 = ScrH() - ( ScrH() / 7.5 );
-		local u1 = ScrW() - ( ScrW() / 7.38 ) + ( ScrW() / 9.3 ) * ( self.HPDraw / 100 );
+		local u1 = ScrW() - ( ScrW() / 7.38 ) + ( ScrW() / 9.3 ) * ( self.HPDraw / LocalPlayer():GetMaxHealth() );
 		local v1 = ScrH() - ( ScrH() / 7.5 ) + 8;
 	
 		surface.SetMaterial( matHints );

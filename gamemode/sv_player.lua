@@ -1004,16 +1004,12 @@ end
 local function handle_rads(ply, amt)
 	local cur_health = ply:Health()
 	local cur_max = ply:GetMaxHealth()
-	local next_max = math.Clamp(ply:GetMaxHealth() - (amt * GAMEMODE.RadHealthReductionRate), 0, 100)
+	local next_max = math.Clamp(ply:GetMaxHealth() - (amt * GAMEMODE.RadHealthReductionRate), 1, 100)
 	if cur_health > next_max then
 		ply:SetHealth(next_max)
 	end
 
 	ply:SetMaxHealth(next_max)
-	
-	if next_max <= 0 then
-		ply:Kill()
-	end
 end
 hook.Add("PlayerRadiationApplied", "STALKER.ApplyRadiationDamage", handle_rads)
 

@@ -15,3 +15,4 @@ ITEM.AmmoType = "762x54"
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 190000
 ITEM.Slot = 2
+ITEM.NoDefaultAtts = true

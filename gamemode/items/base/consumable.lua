@@ -32,12 +32,8 @@ BASE.functions.Use = {
 
 -- return true here to refresh the inventory
 function BASE:OnStack(item)
-	self:SetVar("Stacked", self:GetVar("Stacked", 0) + item:GetVar("Stacked", 0))
-	item:RemoveItem()
-	
-	if CLIENT then
-		self:Owner():Notify(nil, COLOR_NOTIF, "You stacked the two items together.")
-	end
+	self:SetVar("Stacked", self:GetVar("Stacked", 0) + item:GetVar("Stacked", 0), nil, true)
+	item:RemoveItem(true)
 	
 	return true
 end
@@ -86,4 +82,13 @@ function BASE:SplitStack(amt)
 	local item = self:Owner():GiveItem(self.Class, {
 		Stacked = amt,
 	})
+end
+
+function BASE:AddItemToStack(item)
+	if item then
+		self:OnStack(item)
+	else
+		local metaitem = GAMEMODE:GetItemByID(self:GetClass())
+		self:SetVar("Stacked", self:GetVar("Stacked", 0) + metaitem.Vars.Stacked, nil, true)
+	end
 end

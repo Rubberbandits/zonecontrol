@@ -68,6 +68,9 @@ GM.OverrideSlots = { };
 GM.OverrideSlots["weapon_physgun"] = { 3, 1 };
 GM.OverrideSlots["weapon_physcannon"] = { 3, 2 };
 GM.OverrideSlots["gmod_tool"] = { 3, 3 };
+GM.OverrideSlots["weapon_cc_hands"] = {1, 1};
+GM.OverrideSlots["weapon_cc_bolt"] = {1, 2};
+GM.OverrideSlots["weapon_cc_knife"] = {1, 3};
 
 local current_index = 1
 

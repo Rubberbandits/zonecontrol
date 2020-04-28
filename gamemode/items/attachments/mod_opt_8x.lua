@@ -1,8 +1,10 @@
-ITEM.Name = "EOTech Holosight"
-ITEM.Desc = "An expensive holographic sight from the world reknowned optics company, EOTech."
+ITEM.Name = "8x Rifle Scope"
+ITEM.Desc = "A very high end eight power rifle scope."
 ITEM.Model = "models/props_junk/cardboard_box004a.mdl"
 ITEM.Attachment = {
-	ins2_si_eotech = true,
+	cod_scope_7x = true,
+	tfa_ayykyu_sv98_scope = true,
+	ins2_si_mx4 = true,
 }
 ITEM.RequiredUpgrades = {
 	generic_opt_mount = true

@@ -1,8 +1,8 @@
-ITEM.Name = "EOTech Holosight"
-ITEM.Desc = "An expensive holographic sight from the world reknowned optics company, EOTech."
+ITEM.Name = "Elcan C79"
+ITEM.Desc = "An expensive telescopic sight, four-times magnification."
 ITEM.Model = "models/props_junk/cardboard_box004a.mdl"
 ITEM.Attachment = {
-	ins2_si_eotech = true,
+	ins2_si_c79 = true,
 }
 ITEM.RequiredUpgrades = {
 	generic_opt_mount = true

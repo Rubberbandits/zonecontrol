@@ -14,6 +14,7 @@ ITEM.SelfRepairCondition = 80
 ITEM.AmmoType = "50bmg"
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 750000
+ITEM.NoDefaultAtts = true
 ITEM.Vars = {
 	Equipped = false,
 	CurrentAttachments = {},

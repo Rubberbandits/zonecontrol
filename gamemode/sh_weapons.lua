@@ -415,6 +415,19 @@ hook.Add("TFA_SecondaryAttack", "STALKER.PreventADS", function(weapon)
 	end
 end)
 
+hook.Add("TFA_PreInitAttachments", "STALKER.PreventDefaultAtts", function(weapon)
+	if !weapon:GetOwner().EquippedWeapons then return end
+	local item = GAMEMODE.g_ItemTable[weapon:GetOwner().EquippedWeapons[weapon:GetClass()]]
+	if !item then return end
+	if !item.NoDefaultAtts then return end
+	
+	for k,v in next, weapon.Attachments do
+		if v.sel then
+			v.sel = nil
+		end
+	end
+end)
+
 hook.Add("TFA_FinalInitAttachments", "STALKER.Attachments", function(weapon)
 	if !weapon:GetOwner().EquippedWeapons then return end
 	local item = GAMEMODE.g_ItemTable[weapon:GetOwner().EquippedWeapons[weapon:GetClass()]]
