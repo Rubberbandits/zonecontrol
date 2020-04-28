@@ -14,3 +14,12 @@ ITEM.SelfRepairCondition = 85
 ITEM.AmmoType = "12ga"
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 110000
+ITEM.Vars = {
+	Equipped = false,
+	CurrentAttachments = {},
+	Upgrades = {
+		generic_opt_mount = true,
+	},
+	Durability = 100,
+	Clip1 = 0,
+};

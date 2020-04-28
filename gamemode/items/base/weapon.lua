@@ -6,7 +6,7 @@ BASE.Vars = {
 	Clip1 = 0,
 };
 BASE.WeaponType = "primary";
-BASE.DegradeRate = 1;
+BASE.DegradeRate = 0.5;
 BASE.StartDurability = 100; -- would not recommend you modify, modify DegrateRate!
 BASE.UseDurability = true;
 BASE.SellDurability = 50;
@@ -285,4 +285,7 @@ function BASE:OnPlayerDeath()
 	if weapon and weapon:IsValid() then
 		self:SetVar("Clip1", weapon:Clip1(), false, true)
 	end
+end
+function BASE:OnUnloadItem()
+	self:Owner().EquippedWeapons[self.WeaponClass] = nil;
 end

@@ -79,7 +79,7 @@ end
 -- This is a shared function.
 function UPGRADE:OnUpgrade( item )
 	local upgrades = item:GetVar( "Upgrades", {} )
-	if( !upgrades[upgrade] ) then
+	if( !upgrades[self.ClassName] ) then
 		upgrades[self.ClassName] = true
 		item:SetVar( "Upgrades", upgrades )
 		
@@ -88,6 +88,7 @@ function UPGRADE:OnUpgrade( item )
 				if( !requirement[3] ) then continue end
 				
 				local Items = item:Owner():HasItem( requirement[1] )
+				if !Items then return end
 				for i=1, requirement[2] do
 					local item = Items[i]
 					item:RemoveItem()

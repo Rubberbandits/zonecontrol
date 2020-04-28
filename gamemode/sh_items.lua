@@ -50,7 +50,7 @@ if( #files > 0 ) then
 		
 		include( "items/"..v );
 		
-		ITEM.Class = string.StripExtension( v );
+		ITEM.Class = string.StripExtension( v )
 		
 		if( ITEM.Base ) then
 			
@@ -99,6 +99,10 @@ for k,v in next, GM.MetaBases do
 		
 		ITEM.Class = string.StripExtension( n );
 		ITEM.Base = ITEM.Base or k;
+		
+		if ITEM.Base == "weapon" then
+			WEAPON_ALL[ITEM.Class] = true
+		end
 		
 		s_BaseItem = table.Copy( GM.MetaBases[k] );
 		table.Inherit( ITEM, s_BaseItem );

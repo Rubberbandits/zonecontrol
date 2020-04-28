@@ -423,8 +423,14 @@ hook.Add("TFA_FinalInitAttachments", "STALKER.Attachments", function(weapon)
 	local attachments = item:GetVar("CurrentAttachments", {})
 	for k,v in next, attachments do
 		local attachment = GAMEMODE:GetItemByID(k)
-		
-		weapon:Attach(attachment.Attachment)
+
+		for k,v in next, weapon.Attachments do
+			for m,n in next, attachment.Attachment do
+				if table.HasValue(v.atts, m) then
+					weapon:Attach(m)
+				end
+			end
+		end
 	end
 	
 	local upgrades = item:GetVar("Upgrades", {})
@@ -486,7 +492,7 @@ hook.Add("TFA_CanAttach", "STALKER.Attachments", function(weapon, attachment)
 	local found = false
 	for k,v in next, item:GetVar("CurrentAttachments", {}) do
 		local attachment_item = GAMEMODE:GetItemByID(k)
-		if attachment_item.Attachment == attachment then
+		if attachment_item.Attachment[attachment] then
 			found = true
 		end
 	end

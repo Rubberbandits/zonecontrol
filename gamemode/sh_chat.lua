@@ -79,11 +79,13 @@ kingston.chat.default_type = {
 		end
 	end,
 	can_say = function(chat_type, ply)
-		if !ply:Alive() then
+		local chat_data = kingston.chat.get(chat_type)
+		
+		if !chat_data.while_dead and !ply:Alive() then
 			return "You can't speak, you're dead."
 		end
 		
-		if ply:PassedOut() then
+		if !chat_data.while_dead and ply:PassedOut() then
 			return "You can't speak, you're passed out."
 		end
 
@@ -292,6 +294,7 @@ kingston.chat.register_type("whisper", {
 kingston.chat.register_type("it", {
 	chat_command = "/it",
 	no_console_print = true,
+	while_dead = true,
 	construct_string = function(chat_type, ply, text)
 		return {Color(131, 196, 251), "** ", text}
 	end,
@@ -304,6 +307,7 @@ kingston.chat.register_type("lit", {
 	chat_command = "/lit",
 	chat_range = 1000,
 	no_console_print = true,
+	while_dead = true,
 	construct_string = function(chat_type, ply, text)
 		return {Color(131, 196, 251), "** ", text}
 	end,
@@ -316,6 +320,7 @@ kingston.chat.register_type("me", {
 	chat_command = {"/me"},
 	no_space = true,
 	no_console_print = true,
+	while_dead = true,
 	construct_string = function(chat_type, ply, text)
 		return {Color(131, 196, 251), "** ", ply, " ", text}
 	end,
@@ -326,6 +331,7 @@ kingston.chat.register_type("lme", {
 	no_space = true,
 	chat_range = 1000,
 	no_console_print = true,
+	while_dead = true,
 	construct_string = function(chat_type, ply, text)
 		return {Color(131, 196, 251), "** ", ply, " ", text}
 	end,

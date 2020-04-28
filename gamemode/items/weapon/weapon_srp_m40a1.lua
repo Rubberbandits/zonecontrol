@@ -15,3 +15,12 @@ ITEM.AmmoType = "762x51"
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 250000
 ITEM.Slot = 2
+ITEM.Vars = {
+	Equipped = false,
+	CurrentAttachments = {},
+	Upgrades = {
+		generic_opt_mount = true,
+	},
+	Durability = 100,
+	Clip1 = 0,
+};

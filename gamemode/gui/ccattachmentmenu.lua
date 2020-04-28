@@ -16,8 +16,19 @@ function PANEL:SetAttachment(attachment, id)
 	self.buttons = {}
 	for k,v in next, GAMEMODE.g_ItemTable do
 		if v.Base != "weapon" then continue end
-		if !metaitem.CanAttachTo[v.Class] then continue end
 		if v:GetVar("CurrentAttachments",{})[attachment] then continue end
+		
+		local has_an_att = false
+		local stored_wep = weapons.GetStored(v.WeaponClass)
+		for k,v in next, stored_wep.Attachments do
+			for m,n in next, metaitem.Attachment do
+				if table.HasValue(v.atts, m) then
+					has_an_att = true
+				end
+			end
+		end
+		
+		if !has_an_att then continue end
 		
 		local skip_item = false
 		for m,n in next, metaitem.RequiredUpgrades do

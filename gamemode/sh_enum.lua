@@ -188,3 +188,5 @@ WEAPON_SHOTGUNS = {
 	gun_uncommon_w1200 = true,
 	gun_common_m500 = true,
 }
+
+WEAPON_ALL = {}

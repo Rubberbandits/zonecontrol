@@ -447,10 +447,22 @@ function GM:AdminCreateToolsMenu()
 	end
 	CCP.AdminMenu.StopSoundBut:PerformLayout();
 	
+	CCP.AdminMenu.RemoveVFire = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
+	CCP.AdminMenu.RemoveVFire:SetFont( "CombineControl.LabelSmall" );
+	CCP.AdminMenu.RemoveVFire:SetText( "Remove All Fire" );
+	CCP.AdminMenu.RemoveVFire:SetPos( 230, 10 );
+	CCP.AdminMenu.RemoveVFire:SetSize( 100, 20 );
+	function CCP.AdminMenu.RemoveVFire:DoClick()
+		
+		RunConsoleCommand("vfire_remove_all")
+		
+	end
+	CCP.AdminMenu.RemoveVFire:PerformLayout();
+	
 	CCP.AdminMenu.StockpilesBut = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.StockpilesBut:SetFont( "CombineControl.LabelSmall" );
 	CCP.AdminMenu.StockpilesBut:SetText( "Stockpiles" );
-	CCP.AdminMenu.StockpilesBut:SetPos( 230, 10 );
+	CCP.AdminMenu.StockpilesBut:SetPos( 340, 10 );
 	CCP.AdminMenu.StockpilesBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.StockpilesBut:DoClick()
 		
@@ -468,7 +480,7 @@ function GM:AdminCreateToolsMenu()
 	CCP.AdminMenu.DeleteStockpilesBut = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.DeleteStockpilesBut:SetFont( "CombineControl.LabelSmall" );
 	CCP.AdminMenu.DeleteStockpilesBut:SetText( "Delete Stockpiles" );
-	CCP.AdminMenu.DeleteStockpilesBut:SetPos( 340, 10 );
+	CCP.AdminMenu.DeleteStockpilesBut:SetPos( 450, 10 );
 	CCP.AdminMenu.DeleteStockpilesBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.DeleteStockpilesBut:DoClick()
 		
@@ -1549,6 +1561,21 @@ function GM:AdminCreateLogsMenu()
 	CCP.AdminMenu.LogList.Content = ""
 	
 	function CCP.AdminMenu.LogList:DoDoubleClick( lineID, line )
+		if line.PreviousPage then
+			CCP.AdminMenu.LogList.Position = math.Clamp(CCP.AdminMenu.LogList.Position - 50, 0, CCP.AdminMenu.LogList.Position)
+			netstream.Start("RequestLogSearch", CCP.AdminMenu.LogList.Date, CCP.AdminMenu.LogList.Category, CCP.AdminMenu.LogList.Content, CCP.AdminMenu.LogList.Position)
+			
+			return
+		end
+		
+		if line.NextPage then
+			CCP.AdminMenu.LogList.Position = CCP.AdminMenu.LogList.Position + 50
+			netstream.Start("RequestLogSearch", CCP.AdminMenu.LogList.Date, CCP.AdminMenu.LogList.Category, CCP.AdminMenu.LogList.Content, CCP.AdminMenu.LogList.Position)
+			
+			return
+		end
+		
+		
 		MsgC(Color(255, 0, 0), line:GetColumnText(3), "\n")
 		SetClipboardText(line:GetColumnText(3))
 	end
@@ -1599,6 +1626,8 @@ function GM:AdminCreateLogsMenu()
 	CCP.AdminMenu.Search:SetSize( 100, 30 );
 	function CCP.AdminMenu.Search:DoClick()
 		CCP.AdminMenu.LogList:Clear()
+		CCP.AdminMenu.LogList.Position = 0
+		
 		netstream.Start("RequestLogSearch", CCP.AdminMenu.LogList.Date, CCP.AdminMenu.LogList.Category, CCP.AdminMenu.LogList.Content, CCP.AdminMenu.LogList.Position)
 	end
 	CCP.AdminMenu.Search:PerformLayout();
@@ -1608,8 +1637,18 @@ function GM:PopulateAdminLogs(tbl)
 	if CCP.AdminMenu.LogList and CCP.AdminMenu.LogList:IsValid() then
 		CCP.AdminMenu.LogList:Clear()
 		
+		if CCP.AdminMenu.LogList.Position > 0 then
+			local line = CCP.AdminMenu.LogList:AddLine("Previous page", "", "")
+			line.PreviousPage = true
+		end
+		
 		for _,log in next, tbl do
 			CCP.AdminMenu.LogList:AddLine(log.Date, log.Category, log.Log)
+		end
+		
+		if #tbl == 50 then
+			local line = CCP.AdminMenu.LogList:AddLine("Next page", "", "")
+			line.NextPage = true
 		end
 	end
 	

@@ -1,5 +1,4 @@
-BASE.Attachment = ""
-BASE.CanAttachTo = {}
+BASE.Attachment = {}
 BASE.RequiredUpgrades = {}
 --BASE.AttachmentSlot = "" 
 -- use this to prevent two attachments from being able both be attached at the same time
@@ -35,7 +34,17 @@ function BASE:CanAttach(weapon)
 		if !weapon:GetVar("Upgrades", {})[k] then return false end
 	end
 	
-	return self.CanAttachTo[weapon:GetClass()]
+	local has_an_att = false
+	local stored_wep = weapons.GetStored(weapon.WeaponClass)
+	for k,v in next, stored_wep.Attachments do
+		for m,n in next, self.Attachment do
+			if table.HasValue(v.atts, m) then
+				has_an_att = true
+			end
+		end
+	end
+
+	return has_an_att
 end
 
 if SERVER then
@@ -53,7 +62,13 @@ if SERVER then
 
 		local weapon_ent = ply:GetWeapon(weapon.WeaponClass)
 		if weapon_ent and weapon_ent:IsValid() then
-			weapon_ent:Attach(attachment.Attachment)
+			for k,v in next, weapon_ent.Attachments do
+				for m,n in next, attachment.Attachment do
+					if table.HasValue(v.atts, m) then
+						weapon_ent:Attach(m)
+					end
+				end
+			end
 		end
 		
 		attachment:RemoveItem(true)
@@ -73,7 +88,13 @@ if SERVER then
 
 		local weapon_ent = ply:GetWeapon(weapon.WeaponClass)
 		if weapon_ent and weapon_ent:IsValid() then
-			weapon_ent:Detach(attachment.Attachment)
+			for k,v in next, weapon_ent.Attachments do
+				for m,n in next, attachment.Attachment do
+					if table.HasValue(v.atts, m) then
+						weapon_ent:Detach(m)
+					end
+				end
+			end
 		end
 		
 		ply:GiveItem(attach, attachment.Vars or {})
