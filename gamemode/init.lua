@@ -31,6 +31,8 @@ include( "sh_sandbox.lua" );
 include( "sh_weapons.lua" );
 include( "sh_blowout.lua" );
 include( "sh_logs.lua" );
+include( "sh_command.lua" );
+
 include( "sv_admin.lua" );
 include( "sv_business.lua" );
 include( "sv_charcreate.lua" );
@@ -83,6 +85,8 @@ AddCSLuaFile( "sh_sandbox.lua" );
 AddCSLuaFile( "sh_weapons.lua" );
 AddCSLuaFile( "sh_blowout.lua" );
 AddCSLuaFile( "sh_logs.lua" );
+AddCSLuaFile( "sh_command.lua" );
+
 AddCSLuaFile( "cl_items.lua" );
 AddCSLuaFile( "cl_admin.lua" );
 AddCSLuaFile( "cl_adminmenu.lua" );

@@ -40,6 +40,8 @@ include( "sh_sandbox.lua" );
 include( "sh_weapons.lua" );
 include( "sh_blowout.lua" );
 include( "sh_logs.lua" );
+include( "sh_command.lua" );
+
 include( "cl_admin.lua" );
 include( "cl_adminmenu.lua" );
 include( "cl_binds.lua" );

@@ -37,7 +37,15 @@ else
 		
 		if #text > 2000 then return end
 		
-		kingston.chat.process(ply, text)
+		local chat_type, message = kingston.chat.process(ply, text)
+		
+		if chat_type == "ic" then
+			if kingston.command.process(ply, text) then
+				return
+			end
+		end
+		
+		kingston.chat.run(chat_type, ply, message)
 	end)
 	
 	function nChangeRadio( ply, val )
@@ -219,10 +227,8 @@ function kingston.chat.process(ply, input)
 	if !input:find("%S") then
 		return
 	end
-
-	if SERVER then
-		kingston.chat.run(chat_type, ply, input)
-	end
+	
+	return chat_type, input
 end
 
 -- thanks to chessnut for this code, i wrote my own but it sucked. why re-invent the wheel?
@@ -742,72 +748,3 @@ for trait,info in next, kingston.chat.Languages do
 		end,
 	})
 end
-
--- thank you tanknut im a lazy fuck, ive got like 24 hours to finish this
-kingston.chat.register_type("roll", {
-	no_console_print = true,
-	chat_command = "/roll",
-	chat_filter = {CB_ALL, CB_IC},
-	chat_font = "CombineControl.ChatNormal",
-	construct_string = function(chat_type, ply, text)
-		return {Color( 200, 200, 200, 255 ), text}
-	end,
-	calculate_rf = function(chat_type, speaker, text)
-		local chat_data = kingston.chat.get(chat_type)
-		local num, sides, sign, mod
-
-		num, sides, sign, mod = string.match(text, "^ *(%d+)d(%d+) *([%+%-]?) *(%d*) *$")
-
-		num = tonumber(num)
-		sides = tonumber(sides)
-		mod = tonumber(mod)
-
-		if not (num and sides) then
-			speaker:Notify(nil, Color(200, 0, 0), "Missing arguments for roll.")
-
-			return
-		end
-
-		num = math.Clamp(num, 1, 10)
-		sides = math.Clamp(sides, 2, 20)
-
-		local results = {}
-		local total = 0
-
-		for i = 1, num do
-			local roll = math.random(sides)
-
-			total = total + roll
-
-			table.insert(results, roll)
-		end
-
-		local output
-		local str = table.concat(results, " + ")
-
-		if #sign > 0 and mod != 0 then
-			local mult = tonumber(sign .. mod)
-
-			total = total + mult
-			output = string.format("%s rolled %id%i%s%i: (%s) %s %i = %i", speaker:VisibleRPName(), num, sides, sign, mod, str, sign, mod, total)
-		else
-			output = string.format("%s rolled %id%i: (%s) = %i", speaker:VisibleRPName(), num, sides, str, total)
-		end
-		
-		local rf = {}
-		for k,v in next, player.GetAll() do
-			if speaker:GetPos():DistToSqr(v:GetPos()) <= (chat_data.chat_range * chat_data.chat_range) then
-				rf[#rf + 1] = v
-			end
-		end
-		
-		if #rf > 0 then
-			netstream.Start(rf, "nReceiveMessage", "roll", speaker, output)
-		end
-		
-		return {}
-	end,
-	can_say = function(chat_type, ply, text)
-		return true
-	end,
-})

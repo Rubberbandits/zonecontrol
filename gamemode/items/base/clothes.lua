@@ -61,7 +61,7 @@ BASE.functions.WearHelmet = {
 	OnUse = function( item )
 		local metaitem = GAMEMODE:GetItemByID( item:GetClass() );
 	
-		item:SetVar( "HelmetEquipped", true );
+		item:SetVar( "HelmetEquipped", true, nil, true );
 		
 		--engine/occlusionproxy
 		
@@ -84,7 +84,7 @@ BASE.functions.RemoveHelmet = {
 	OnUse = function( item )
 		local metaitem = GAMEMODE:GetItemByID( item:GetClass() );
 	
-		item:SetVar( "HelmetEquipped", false );
+		item:SetVar( "HelmetEquipped", false, nil, true );
 		
 		if SERVER then
 			item:Transmit()
