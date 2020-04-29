@@ -52,6 +52,7 @@ include( "sv_sockets.lua" );
 include( "sv_sql.lua" );
 include( "sv_think.lua" );
 include( "sv_blowout.lua" );
+include( "sv_pda.lua" );
 
 include( "ctp/sv_ctp.lua" );
 
@@ -111,6 +112,7 @@ AddCSLuaFile( "cl_blowout.lua" );
 AddCSLuaFile( "cl_bonemerge.lua" );
 AddCSLuaFile( "cl_geiger.lua" );
 AddCSLuaFile( "cl_logs.lua" );
+AddCSLuaFile( "cl_pda.lua" );
 
 AddCSLuaFile( "ctp/cl_ctp.lua" );
 

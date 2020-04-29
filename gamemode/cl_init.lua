@@ -64,6 +64,7 @@ include( "cl_blowout.lua" );
 include( "cl_bonemerge.lua" );
 include( "cl_geiger.lua" );
 include( "cl_logs.lua" );
+include( "cl_pda.lua" );
 
 include( "ctp/cl_ctp.lua" );
 

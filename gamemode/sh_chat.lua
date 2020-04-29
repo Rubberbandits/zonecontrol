@@ -453,6 +453,7 @@ kingston.chat.register_type("pda", {
 			if v:GetClass() == "pda" then
 				if v:GetVar("Power", false) and v:GetVar("Primary", false) then
 					pda_name = v:GetVar("Name", ply:RPName())
+					pda_id = v:GetID()
 					break
 				end
 			end
@@ -470,6 +471,7 @@ kingston.chat.register_type("pda", {
 				if v:GetClass() == "pda" then
 					if string.find( string.lower( v:GetVar("Name","") ), args[1], nil, true ) and v:GetVar("Power",false) then
 						targ_name = v:GetVar("Name",targ:RPName())
+						targ_pda_id = v:GetID()
 						break
 					end
 				end
@@ -480,6 +482,10 @@ kingston.chat.register_type("pda", {
 
 		local start = text:find(args[2])
 		body = text:sub(start, #text)
+		
+		if args[1] != "all" then
+			kingston.pda.write_chat(pda_id, targ_pda_id, body)
+		end
 		
 		return {header = header, body = body}
 	end,

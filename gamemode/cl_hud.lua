@@ -1578,7 +1578,7 @@ function GM:DrawPDANotifications()
 			surface.SetFont( "PDA.LabelHeader" )
 			local w,h = surface.GetTextSize( line )
 			
-			draw.DrawTextShadow( line, "PDA.LabelHeader", x, y_pos + lbl_y, Color( 255, 255, 255, 255 * a ), Color( 0, 0, 0, 255 * a ), 0 );
+			draw.DrawTextShadow( line, "PDA.LabelHeader", x, y_pos + lbl_y, Color( 229, 201, 98, 255 * a ), Color( 0, 0, 0, 255 * a ), 0 );
 			
 			lbl_y = lbl_y + h
 		end

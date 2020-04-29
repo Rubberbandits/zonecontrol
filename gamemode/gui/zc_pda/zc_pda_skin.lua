@@ -93,6 +93,34 @@ function SKIN:PaintButton(pnl, w, h)
 	if pnl.IsTabButton then
 		kingston.gui.FindFunc(pnl, "Paint", "PageButton", w, h)
 	end
+	
+	if pnl.CloseButton then
+		kingston.gui.FindFunc(pnl, "Paint", "CloseButton", w, h)
+	end
+	
+	if pnl.RightDateButton then
+		kingston.gui.FindFunc(pnl, "Paint", "RightButton", w, h)
+	end
+	
+	if pnl.LeftDateButton then
+		kingston.gui.FindFunc(pnl, "Paint", "LeftButton", w, h)
+	end
+end
+
+function SKIN:PaintVScrollBar(pnl, w, h)
+
+end
+
+function SKIN:PaintScrollBarGrip(pnl, w, h)
+	kingston.gui.FindFunc(pnl, "Paint", "VBar", w, h)
+end
+
+function SKIN:PaintButtonUp(pnl, w, h)
+	kingston.gui.FindFunc(pnl, "Paint", "VBarUp", w, h)
+end
+
+function SKIN:PaintButtonDown(pnl, w, h)
+	kingston.gui.FindFunc(pnl, "Paint", "VBarDown", w, h)
 end
 
 derma.DefineSkin( "zc_pda", "rusty", SKIN );
@@ -118,8 +146,8 @@ UVSKIN.ContentBackground = {
 	top_right = {
 		u0 = 0.07,
 		v0 = 0.0282,
-		u1 = 0.0935,
-		v1 = 0.047,
+		u1 = 0.0933,
+		v1 = 0.05,
 	},
 	bottom_left = {
 		u0 = -0.0005,
@@ -229,6 +257,83 @@ UVSKIN.PageButton = {
 	},
 }
 
+UVSKIN.CloseButton = {
+	hover = {
+		u0 = 0.1275,
+		v0 = 0.03,
+		u1 = 0.159,
+		v1 = 0.0609,
+	},
+	normal = {
+		u0 = 0.094,
+		v0 = 0.03,
+		u1 = 0.126,
+		v1 = 0.0609,
+	},
+}
+
+UVSKIN.VBar = {
+	up = {
+		normal = {
+			u0 = 0.238,
+			v0 = 0.209,
+			u1 = 0.255,
+			v1 = 0.2285,
+		},
+		hover = {
+			u0 = 0.2031,
+			v0 = 0.2099,
+			u1 = 0.2197,
+			v1 = 0.2275,
+		},
+	},
+	down = {
+		normal = {
+			u0 = 0.255,
+			v0 = 0.2097,
+			u1 = 0.2731,
+			v1 = 0.2369,
+		},
+		hover = {
+			u0 = 0.22,
+			v0 = 0.21,
+			u1 = 0.2379,
+			v1 = 0.2369,
+		},
+	},
+}
+
+UVSKIN.DateButton = {
+	left = {
+		normal = {
+			u0 = 0.2011,
+			v0 = 0.0947,
+			u1 = 0.2304,
+			v1 = 0.125,
+		},
+		hover = {
+			u0 = 0.2011,
+			v0 = 0.0634,
+			u1 = 0.23,
+			v1 = 0.0936,
+		},
+	},
+	right = {
+		normal = {
+			u0 = 0.232,
+			v0 = 0.0947,
+			u1 = 0.262,
+			v1 = 0.1245,
+		},
+		hover = {
+			u0 = 0.232,
+			v0 = 0.0634,
+			u1 = 0.262,
+			v1 = 0.0932,
+		},
+	},
+}
+
 function UVSKIN:PaintMain(pnl, w, h)
 	local bg = self.MainBackground.bg
 	
@@ -285,24 +390,71 @@ function UVSKIN:PaintPageButton(pnl, w, h)
 	surface.DrawTexturedRectUV(0, 0, w, h, state.u0, state.v0, state.u1, state.v1)
 end
 
-function UVSKIN:PaintVBar(pnl, w, h)
+function UVSKIN:PaintCloseButton(pnl, w, h)
+	local state = self.CloseButton.normal
+	if pnl:IsHovered() then
+		state = self.CloseButton.hover
+	end
+	
+	surface.SetDrawColor(color_white)
+	surface.SetMaterial(self.pda_mat)
+	
+	surface.DrawTexturedRectUV(0, 0, w, h, state.u0, state.v0, state.u1, state.v1)
+end
 
+function UVSKIN:PaintVBar(pnl, w, h)
+	surface.SetDrawColor(200,200,200,120)
+	surface.DrawOutlinedRect(0,0,w,h)
 end
 
 function UVSKIN:PaintVBarUp(pnl, w, h)
-
+	local state = self.VBar.up.normal
+	if pnl:IsHovered() then
+		state = self.VBar.up.hover
+	end
+	
+	surface.SetDrawColor(color_white)
+	surface.SetMaterial(self.pda_mat)
+	
+	surface.DrawTexturedRectUV(0, 0, w, h, state.u0, state.v0, state.u1, state.v1)
 end
 
 function UVSKIN:PaintVBarDown(pnl, w, h)
-
+	local state = self.VBar.down.normal
+	if pnl:IsHovered() then
+		state = self.VBar.down.hover
+	end
+	
+	surface.SetDrawColor(color_white)
+	surface.SetMaterial(self.pda_mat)
+	
+	surface.DisableClipping(true)
+	surface.DrawTexturedRectUV(-1, 0, w + 2, h + ScreenScaleH(6), state.u0, state.v0, state.u1, state.v1)
+	surface.DisableClipping(false)
 end
 
 function UVSKIN:PaintLeftButton(pnl, w, h)
-
+	local state = self.DateButton.left.normal
+	if pnl:IsHovered() then
+		state = self.DateButton.left.hover
+	end
+	
+	surface.SetDrawColor(color_white)
+	surface.SetMaterial(self.pda_mat)
+	
+	surface.DrawTexturedRectUV(0, 0, w, h, state.u0, state.v0, state.u1, state.v1)
 end
 
 function UVSKIN:PaintRightButton(pnl, w, h)
-
+	local state = self.DateButton.right.normal
+	if pnl:IsHovered() then
+		state = self.DateButton.right.hover
+	end
+	
+	surface.SetDrawColor(color_white)
+	surface.SetMaterial(self.pda_mat)
+	
+	surface.DrawTexturedRectUV(0, 0, w, h, state.u0, state.v0, state.u1, state.v1)
 end
 
 function UVSKIN:PaintTabTitle(pnl, w, h)

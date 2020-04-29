@@ -108,11 +108,11 @@ function GM:CreateHelpMenu()
 	CCP.HelpMenu = vgui.Create( "DFrame" );
 	CCP.HelpMenu:SetSize( 800, 600 );
 	CCP.HelpMenu:Center();
-	CCP.HelpMenu:SetSkin( "PDA" );
-	CCP.HelpMenu.m_bPDA = true;
-	CCP.HelpMenu:SetTitle( "" );
+	CCP.HelpMenu:SetTitle( "Help" );
 	CCP.HelpMenu.lblTitle:SetFont( "CombineControl.Window" );
 	CCP.HelpMenu:MakePopup();
+	CCP.HelpMenu.PerformLayout = CCFramePerformLayout;
+	CCP.HelpMenu:PerformLayout();
 	function CCP.HelpMenu:Think()
 	
 		if( input.IsKeyDown( KEY_F1 ) and !self.LastKeyState and self.HasOpened ) then
@@ -127,58 +127,40 @@ function GM:CreateHelpMenu()
 			self.HasOpened = true;
 			
 		end
-	
+		
 	end
-	CCP.HelpMenu.PerformLayout = CCFramePerformLayout;
-	CCP.HelpMenu:PerformLayout();
-	
-	CCP.HelpMenu.CloseButton = vgui.Create( "DButton", CCP.HelpMenu );
-	CCP.HelpMenu.CloseButton:SetPos( CCP.HelpMenu:GetWide() - 48, 20 );
-	CCP.HelpMenu.CloseButton:SetSize( 34, 34 );
-	CCP.HelpMenu.CloseButton:SetText( "" );
-	CCP.HelpMenu.CloseButton.m_bCloseButton = true;
-	CCP.HelpMenu.CloseButton:SetSkin( "PDA" );
-	function CCP.HelpMenu.CloseButton:DoClick()
-	
-		CCP.HelpMenu:Close();
-	
-	end
-	CCP.HelpMenu.CloseButton:PerformLayout();
 	
 	CCP.HelpMenu.ContentPane = vgui.Create( "DScrollPanel", CCP.HelpMenu );
-	CCP.HelpMenu.ContentPane:SetSize( 762, 490 );
-	CCP.HelpMenu.ContentPane:SetPos( 20, 70 );
-	CCP.HelpMenu.ContentPane:SetSkin( "PDA" );
+	CCP.HelpMenu.ContentPane:SetSize( 650, 556 );
+	CCP.HelpMenu.ContentPane:SetPos( 140, 34 );
+	function CCP.HelpMenu.ContentPane:Paint( w, h )
+		
+		surface.SetDrawColor( 30, 30, 30, 255 );
+		surface.DrawRect( 0, 0, w, h );
+		
+		surface.SetDrawColor( 20, 20, 20, 100 );
+		surface.DrawOutlinedRect( 0, 0, w, h );
+		
+	end
 	
 	CCP.HelpMenu.Content = vgui.Create( "CCLabel" );
-	CCP.HelpMenu.Content:SetPos( 10, 20 );
+	CCP.HelpMenu.Content:SetPos( 10, 10 );
 	CCP.HelpMenu.Content:SetSize( 630, 14 );
 	CCP.HelpMenu.Content:SetFont( "CombineControl.LabelMedium" );
 	CCP.HelpMenu.Content:SetText( "Welcome to the help menu! Press a button on the left to select a topic." );
 	CCP.HelpMenu.Content:PerformLayout();
 	CCP.HelpMenu.ContentPane:AddItem( CCP.HelpMenu.Content );
 	
-	local x = 24;
-	
-	CCP.HelpMenu.Buttons = {};
+	local y = 34;
 	
 	for _, v in pairs( self.HelpContent ) do
 		
 		local but = vgui.Create( "DButton", CCP.HelpMenu );
-		but:SetSkin( "PDA" );
-		but:SetPos( x, 44 );
-		but:SetSize( 120, 30 );
+		but:SetPos( 10, y );
+		but:SetSize( 120, 20 );
 		but:SetText( v[1] );
-		but:SetFont( "STALKER.LabelMenu" );
 		but:PerformLayout();
 		function but:DoClick()
-			
-			for k,v in next, CCP.HelpMenu.Buttons do
-			
-				v.m_bIsDown = false;
-			
-			end
-			self.m_bIsDown = true;
 			
 			CCP.HelpMenu.Content:SetText( string.gsub( v[2], "\t", "" ) );
 			
@@ -187,8 +169,7 @@ function GM:CreateHelpMenu()
 			
 		end
 		
-		table.insert( CCP.HelpMenu.Buttons, but );
-		x = x + 120;
+		y = y + 30;
 		
 	end
 	

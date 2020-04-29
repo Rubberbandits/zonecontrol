@@ -65,6 +65,22 @@ ITEM.functions.PowerOff = {
 		return item:GetVar("Power", false)
 	end,
 }
+ITEM.functions.View = {
+	SelectionName = "View",
+	OnUse = function(item)
+		if CLIENT then
+			GAMEMODE.PDAMenu = vgui.Create("zc_pda")
+			GAMEMODE.PDAMenu.pda_id = item:GetID()
+			GAMEMODE.PDAMenu:CreateTabs()
+			CCP.PlayerMenu:Close()
+		end
+		
+		return true
+	end,
+	CanRun = function(item)
+		return item:GetVar("Power", false)
+	end,
+}
 function ITEM:GetName()
 	local name = self:GetVar("Name", "")
 	if #name > 0 then
