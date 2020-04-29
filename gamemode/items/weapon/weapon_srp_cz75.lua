@@ -1,0 +1,16 @@
+ITEM.Name = "CZ 75B"
+ITEM.Desc = "A czech pistol. An upgrade from a mak or tok. Uses 9x19mm."
+ITEM.Model = "models/weapons/tfa_ins2/w_cz75b.mdl"
+ITEM.WeaponClass = "tfa_ins2_cz75"
+ITEM.Weight = 1.25
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.2
+ITEM.DegradeRate = 0.185
+ITEM.FOV 			= 10;
+ITEM.CamPos 		= Vector( 50, 50, 50 );
+ITEM.LookAt 		= Vector( 0, 0, 0 );
+ITEM.SelfRepairCondition = 75
+ITEM.AmmoType = "9x19"
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 30000

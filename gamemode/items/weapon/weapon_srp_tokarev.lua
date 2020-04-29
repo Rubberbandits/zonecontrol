@@ -1,0 +1,16 @@
+ITEM.Name = "TT-33 Tokarev"
+ITEM.Desc = "Older than the makarov but still produced in massive amounts. Uses an 'armor piercing' round albeit only compared to other pistols. 7.62x25mm."
+ITEM.Model = "models/weapons/tfa_ins2/w_tokarev.mdl"
+ITEM.WeaponClass = "tfa_ins2_tt33"
+ITEM.Weight = 1
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.12
+ITEM.DegradeRate = 0.018
+ITEM.FOV 			= 7;
+ITEM.CamPos 		= Vector( 50, 100, -8.92 );
+ITEM.LookAt 		= Vector( 1.61, 0, 0 );
+ITEM.SelfRepairCondition = 70
+ITEM.AmmoType = "762x25"
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 30000

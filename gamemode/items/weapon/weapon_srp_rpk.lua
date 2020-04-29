@@ -1,0 +1,16 @@
+ITEM.Name = "RPK"
+ITEM.Desc = "An LMG-ized AKM. Uses a heavier barrel and either larger magazines or drum magazines. Decently accurate and fairly versatile compared to other LMGs. Uses 7.62x39mm"
+ITEM.Model = "models/weapons/tfa_ins2/w_rpk.mdl"
+ITEM.WeaponClass = "tfa_ins2_rpk"
+ITEM.Weight = 5
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.07
+ITEM.DegradeRate = 0.01
+ITEM.FOV 			= 20;
+ITEM.CamPos 		= Vector( 80.36, 50, 50 );
+ITEM.LookAt 		= Vector( 11.25, 0, 0 );
+ITEM.SelfRepairCondition = 75
+ITEM.AmmoType = "762x39"
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 120000
