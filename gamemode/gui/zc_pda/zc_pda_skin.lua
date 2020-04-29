@@ -20,14 +20,14 @@ SKIN.Colours.Window.TitleInactive		= Color( 200, 200, 200, 255 );
 SKIN.Colours.Button = {}
 SKIN.Colours.Button.Normal				= Color( 200, 200, 200, 255 );
 SKIN.Colours.Button.Hover				= Color( 255, 255, 255, 255 );
-SKIN.Colours.Button.Down				= Color( 255, 0, 0, 255 );
+SKIN.Colours.Button.Down				= Color( 255, 255, 255, 255 );
 SKIN.Colours.Button.Disabled			= Color( 150, 150, 150, 255 );
 
 SKIN.Colours.Label = { }
 SKIN.Colours.Label.Default		= Color( 200, 200, 200, 255 );
 SKIN.Colours.Label.Bright		= Color( 255, 255, 255, 255 );
 SKIN.Colours.Label.Dark			= Color( 150, 150, 150, 255 );
-SKIN.Colours.Label.Highlight	= Color( 255, 0, 0, 255 );
+SKIN.Colours.Label.Highlight	= Color( 255, 255, 255, 255 );
 
 SKIN.Colours.Tab = {}
 SKIN.Colours.Tab.Active = {}
@@ -89,6 +89,12 @@ SKIN.PrintName 		= "ZoneControl PDA"
 SKIN.Author 		= "rusty"
 SKIN.DermaVersion	= 1
 
+function SKIN:PaintButton(pnl, w, h)
+	if pnl.IsTabButton then
+		kingston.gui.FindFunc(pnl, "Paint", "PageButton", w, h)
+	end
+end
+
 derma.DefineSkin( "zc_pda", "rusty", SKIN );
 
 local UVSKIN = {}
@@ -100,56 +106,127 @@ UVSKIN.MainBackground = {
 		u1 = 1,
 		v1 = 1,
 	},
-	body = {
-		top_left = {
-			u0 = 0,
-			v0 = 0,
-			u1 = 0.03,
-			v1 = 0.05,
-		},
-		top_right = {
-			u0 = 0,
-			v0 = 0,
-			u1 = 1,
-			v1 = 1,
-		},
-		bottom_left = {
-			u0 = 0,
-			v0 = 0,
-			u1 = 1,
-			v1 = 1,
-		},
-		bottom_right = {
-			u0 = 0,
-			v0 = 0,
-			u1 = 1,
-			v1 = 1,
-		},
+}
+
+UVSKIN.ContentBackground = {
+	top_left = {
+		u0 = -0.0005,
+		v0 = 0.0282,
+		u1 = 0.017,
+		v1 = 0.047,
+	},
+	top_right = {
+		u0 = 0.07,
+		v0 = 0.0282,
+		u1 = 0.0935,
+		v1 = 0.047,
+	},
+	bottom_left = {
+		u0 = -0.0005,
+		v0 = 0.046,
+		u1 = 0.017,
+		v1 = 0.0608,
+	},
+	bottom_right = {
+		u0 = 0.067,
+		v0 = 0.046,
+		u1 = 0.0935,
+		v1 = 0.0608,
+	},
+	left = {
+		u0 = -0.0005,
+		v0 = 0.043,
+		u1 = 0.017,
+		v1 = 0.04,
+	},
+	right = {
+		u0 = 0.067,
+		v0 = 0.046,
+		u1 = 0.0935,
+		v1 = 0.047,
+	},
+	top = {
+		u0 = 0.025,
+		v0 = 0.0282,
+		u1 = 0.069,
+		v1 = 0.047,
+	},
+	bottom = {
+		u0 = 0.025,
+		v0 = 0.046,
+		u1 = 0.069,
+		v1 = 0.0608,
+	},
+	mid = {
+		u0 = 0.017,
+		v0 = 0.047,
+		u1 = 0.067,
+		v1 = 0.046,
+	},
+}
+
+UVSKIN.TabTitle = {
+	left = {
 		left = {
-			u0 = 0,
+			u0 = 0.192,
 			v0 = 0,
-			u1 = 1,
-			v1 = 1,
+			u1 = 0.208,
+			v1 = 0.027,
 		},
 		right = {
-			u0 = 0,
+			u0 = 0.208,
 			v0 = 0,
-			u1 = 1,
-			v1 = 1,
+			u1 = 0.235,
+			v1 = 0.027,
 		},
 		mid = {
-			u0 = 0,
+			u0 = 0.194,
 			v0 = 0,
-			u1 = 1,
-			v1 = 1,
+			u1 = 0.208,
+			v1 = 0.027,
 		},
 	},
-	header = {
-		u0 = 0,
-		v0 = 0,
-		u1 = 1,
-		v1 = 1,
+	right = {
+		left = {
+			u0 = 0.2359,
+			v0 = 0,
+			u1 = 0.264,
+			v1 = 0.027,
+		},
+		right = {
+			u0 = 0.264,
+			v0 = 0,
+			u1 = 0.2896,
+			v1 = 0.027,
+		},
+		mid = {
+			u0 = 0.264,
+			v0 = 0,
+			u1 = 0.27,
+			v1 = 0.027,
+		},
 	}
+}
+
+UVSKIN.PageButton = {
+	hover = {
+		u0 = 0.444,
+		v0 = 0.209,
+		u1 = 0.6125,
+		v1 = 0.236,
+	},
+	normal = {
+		u0 = 0.275,
+		v0 = 0.209,
+		u1 = 0.4431,
+		v1 = 0.236,
+	},
+	active = {
+		u0 = 0.6135,
+		v0 = 0.209,
+		u1 = 0.7817,
+		v1 = 0.236,
+	},
 }
 
 function UVSKIN:PaintMain(pnl, w, h)
@@ -161,32 +238,119 @@ function UVSKIN:PaintMain(pnl, w, h)
 	surface.DrawTexturedRectUV(0, 0, w, h, bg.u0, bg.v0, bg.u1, bg.v1)
 end
 
-function UVSKIN:PaintHeader(pnl, w, h)
-	-- header
-	
-	local header_w = w
-	local header_h = h
-	local header_x = 0
-	local header_y = 0
-	
-	local corner_w = ScreenScaleH(8)
-	local corner_h = ScreenScaleH(8)
-end
-
 function UVSKIN:PaintBody(pnl, w, h)
-	local body = self.MainBackground.body
+	local body = self.ContentBackground
 	
 	surface.SetDrawColor(color_white)
 	surface.SetMaterial(self.pda_mat)
 
-	local body_w = ScreenScaleH(24)
-	local body_h = ScreenScaleH(24)
-	local body_x = 0
-	local body_y = 0
+	local corner_w = ScreenScaleH(16)
+	local corner_h = ScreenScaleH(16)
 	
-	local mid_h = pnl:GetTall() - ScreenScaleH(180)
+	surface.DrawTexturedRectUV(0, 0, corner_w, corner_h, body.top_left.u0, body.top_left.v0, body.top_left.u1, body.top_left.v1)
+	surface.DrawTexturedRectUV(pnl:GetWide() - corner_w, 0, corner_w, corner_h, body.top_right.u0, body.top_right.v0, body.top_right.u1, body.top_right.v1)
+	
+	surface.DrawTexturedRectUV(0, pnl:GetTall() - corner_h, corner_w, corner_h, body.bottom_left.u0, body.bottom_left.v0, body.bottom_left.u1, body.bottom_left.v1)
+	surface.DrawTexturedRectUV(pnl:GetWide() - corner_w, pnl:GetTall() - corner_h, corner_w, corner_h, body.bottom_right.u0, body.bottom_right.v0, body.bottom_right.u1, body.bottom_right.v1)
+	
+	local side_h = pnl:GetTall() - (corner_h * 2)
+	if side_h > 0 then
+		surface.DrawTexturedRectUV(0, corner_h, corner_w, side_h, body.left.u0, body.left.v0, body.left.u1, body.left.v1)
+		surface.DrawTexturedRectUV(pnl:GetWide() - corner_w, corner_h, corner_w, side_h, body.right.u0, body.right.v0, body.right.u1, body.right.v1)
+	end
+	
+	local mid_w = pnl:GetWide() - (corner_w * 2)
+	local mid_h = pnl:GetTall() - (corner_h * 2)
+	
+	surface.DrawTexturedRectUV(corner_w, 0, mid_w, corner_h, body.top.u0, body.top.v0, body.top.u1, body.top.v1)
+	surface.DrawTexturedRectUV(corner_w, pnl:GetTall() - corner_h, mid_w, corner_h, body.bottom.u0, body.bottom.v0, body.bottom.u1, body.bottom.v1)
+	
+	surface.DrawTexturedRectUV(corner_w, corner_h, mid_w, mid_h,  body.mid.u0, body.mid.v0, body.mid.u1, body.mid.v1)
+end
 
-	surface.DrawTexturedRectUV(body_x, body_y, body_w, body_h, body.top_left.u0, body.top_left.v0, body.top_left.u1, body.top_left.v1)
+function UVSKIN:PaintPageButton(pnl, w, h)
+	surface.SetDrawColor(color_white)
+	surface.SetMaterial(self.pda_mat)
+	
+	local state = UVSKIN.PageButton.normal
+	
+	if pnl.ActivePage then
+		state = UVSKIN.PageButton.active
+	else
+		if pnl:IsHovered() then
+			state = UVSKIN.PageButton.hover
+		end
+	end
+	
+	surface.DrawTexturedRectUV(0, 0, w, h, state.u0, state.v0, state.u1, state.v1)
+end
+
+function UVSKIN:PaintVBar(pnl, w, h)
+
+end
+
+function UVSKIN:PaintVBarUp(pnl, w, h)
+
+end
+
+function UVSKIN:PaintVBarDown(pnl, w, h)
+
+end
+
+function UVSKIN:PaintLeftButton(pnl, w, h)
+
+end
+
+function UVSKIN:PaintRightButton(pnl, w, h)
+
+end
+
+function UVSKIN:PaintTabTitle(pnl, w, h)
+	local left = self.TabTitle.left
+	local right = self.TabTitle.right
+	
+	surface.SetDrawColor(color_white)
+	surface.SetMaterial(self.pda_mat)
+	
+	local count = #pnl:GetParent().TabButtons
+	local side_w = ScreenScaleH(16)
+	
+	local left_x = ScreenScaleH(8)
+	local left_y = ScreenScaleH(12)
+	
+	local right_w = ScreenScaleH(64)
+	local right_h = ScreenScaleH(16)
+	local right_x = pnl:GetWide() - right_w - left_x - side_w
+	local right_y = ScreenScaleH(12)
+	
+	surface.DrawTexturedRectUV(right_x, right_y, side_w, right_h, right.left.u0, right.left.v0, right.left.u1, right.left.v1)
+	surface.DrawTexturedRectUV(right_x + side_w, right_y, right_w - side_w, right_h, right.mid.u0, right.mid.v0, right.mid.u1, right.mid.v1)
+	surface.DrawTexturedRectUV(right_x + right_w, right_y, side_w, right_h, right.right.u0, right.right.v0, right.right.u1, right.right.v1)
+
+	local left_w = pnl:GetWide() - right_w - left_x - side_w * 3 
+	local left_w = left_w - (count*ScreenScaleH(76)) - (count*ScreenScaleH(4+count))
+	
+	local left_h = ScreenScaleH(16)
+	
+	surface.DrawTexturedRectUV(left_x, left_y, side_w, left_h, left.left.u0, left.left.v0, left.left.u1, left.left.v1)
+	surface.DrawTexturedRectUV(left_x + side_w, left_y, left_w - side_w, left_h, left.mid.u0, left.mid.v0, left.mid.u1, left.mid.v1)
+	surface.DrawTexturedRectUV(left_x + left_w, left_y, side_w, left_h, left.right.u0, left.right.v0, left.right.u1, left.right.v1)
+	
+	surface.SetFont("CombineControl.ChatNormal")
+	
+	if pnl:GetParent().CurrentTab then
+		local text = pnl:GetParent().CurrentTab:GetText()
+		local tW, tH = surface.GetTextSize(text)
+		surface.SetTextColor(200,200,200)
+		surface.SetTextPos(left_x + ScreenScaleH(4), left_y + (left_h / 2) - (tH / 2))
+		surface.DrawText(text)
+	end
+	
+	local text = os.date("!%H:%M")
+	local tW, tH = surface.GetTextSize(text)
+	surface.SetTextColor(200,200,200)
+	surface.SetTextPos(right_x + right_w - tW - ScreenScaleH(8), right_y + (right_h / 2) - (tH / 2))
+	surface.DrawText(text)
 end
 
 kingston.gui.RegisterSkin("zc_pda", UVSKIN)
