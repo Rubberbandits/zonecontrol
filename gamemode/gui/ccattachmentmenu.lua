@@ -20,6 +20,8 @@ function PANEL:SetAttachment(attachment, id)
 		
 		local has_an_att = false
 		local stored_wep = weapons.GetStored(v.WeaponClass)
+		if !stored_wep.Attachments then continue end
+		
 		for k,v in next, stored_wep.Attachments do
 			for m,n in next, metaitem.Attachment do
 				if table.HasValue(v.atts, m) then
