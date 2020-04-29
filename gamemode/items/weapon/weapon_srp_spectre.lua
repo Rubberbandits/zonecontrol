@@ -1,0 +1,16 @@
+ITEM.Name = "M4 Spectre"
+ITEM.Desc = "A special operations SMG.  Somehow found its way into the zone through dubious means. Uses 9x19mmm."
+ITEM.Model = "models/weapons/tfa_ins2/w_spectre.mdl"
+ITEM.WeaponClass = "tfa_ins2_spectre"
+ITEM.Weight = 3
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.02
+ITEM.DegradeRate = 0.15
+ITEM.FOV 			= 20;
+ITEM.CamPos 		= Vector( 50, 50, 50 );
+ITEM.LookAt 		= Vector( 0, 0, 0 );
+ITEM.SelfRepairCondition = 85
+ITEM.AmmoType = "9x19"
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 180000

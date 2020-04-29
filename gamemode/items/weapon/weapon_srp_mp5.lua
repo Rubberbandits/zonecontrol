@@ -1,0 +1,16 @@
+ITEM.Name = "HK MP5"
+ITEM.Desc = "Classic NATO submachine gun. Very common and extremely popular. Uses 9x19mm. "
+ITEM.Model = "models/weapons/tfa_ins2/w_mp5.mdl"
+ITEM.WeaponClass = "tfa_ins2_mp5"
+ITEM.Weight = 2.5
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.02
+ITEM.DegradeRate = 0.09
+ITEM.FOV 			= 20;
+ITEM.CamPos 		= Vector( 50, 50, 50 );
+ITEM.LookAt 		= Vector( 0, 0, 0 );
+ITEM.SelfRepairCondition = 75
+ITEM.AmmoType = "9x19"
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 77000

@@ -1,0 +1,16 @@
+ITEM.Name = "AS Val"
+ITEM.Desc = "A subsonic assault rifle using special armor piercing ammunition. Also sought after due to high power and the integrated suppressor. Better suited for general tasks due to better combat ergonomics. Fires 9x39mm."
+ITEM.Model = "models/weapons/tfa_ins2/w_asval.mdl"
+ITEM.WeaponClass = "tfa_ins2_asval"
+ITEM.Weight = 3.6
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Angle(-12.4, 0, 0)
+ITEM.JamChance = 0.04
+ITEM.DegradeRate = 0.1
+ITEM.FOV 			= 20;
+ITEM.CamPos 		= Vector( 50, 50, 50 );
+ITEM.LookAt 		= Vector( 8.04, 0, 0 );
+ITEM.SelfRepairCondition = 90
+ITEM.AmmoType = "9x39"
+ITEM.License = LICENSE_BLACK;
+ITEM.BulkPrice = 300000
