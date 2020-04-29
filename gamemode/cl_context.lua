@@ -281,7 +281,6 @@ function GM:GetCCOptions( ent, dist )
 			local option = { "Examine", function()
 				
 				self:CCCreatePlayerViewer( CCSelectedEnt );
-				netstream.Start( "nCExamine" );
 				
 			end, nil, self:GetPlayerSight() };
 			
@@ -384,9 +383,7 @@ function GM:GetCCOptions( ent, dist )
 			if( string.len( GAMEMODE:GetItemByID( ent:GetItemClass() ).Desc) > 0 ) then
 				
 				local option = { "Examine", function()
-					
-					self:AddChat( { CB_ALL, CB_IC }, "CombineControl.ChatNormal", Color( 200, 200, 200, 255 ), GAMEMODE:GetItemByID( ent:GetItemClass() ).Desc );
-					
+
 					netstream.Start( "nCExamine" );
 					
 				end, nil, 100 };

@@ -671,7 +671,7 @@ for trait,info in next, kingston.chat.Languages do
 		chat_command = info[2],
 		-- any aspiring cheater could detour this and get the real text... but shh dont tell anyone
 		construct_string = function(chat_type, ply, text)
-			if LocalPlayer():HasTrait(trait) then
+			if CLIENT and LocalPlayer():HasTrait(trait) then
 				return {Color(255, 167, 73), Format("[%s] ", info[1]), ply, ": ", text}
 			end
 			
@@ -699,7 +699,7 @@ for trait,info in next, kingston.chat.Languages do
 		chat_range = 1000,
 		-- any aspiring cheater could detour this and get the real text... but shh dont tell anyone
 		construct_string = function(chat_type, ply, text)
-			if LocalPlayer():HasTrait(trait) then
+			if CLIENT and LocalPlayer():HasTrait(trait) then
 				return {Color( 255, 167, 73, 255 ), Format("[%s - Yell] ", info[1]), ply, ": ", text}
 			end
 			
@@ -727,7 +727,7 @@ for trait,info in next, kingston.chat.Languages do
 		chat_range = 150,
 		-- any aspiring cheater could detour this and get the real text... but shh dont tell anyone
 		construct_string = function(chat_type, ply, text)
-			if LocalPlayer():HasTrait(trait) then
+			if CLIENT and LocalPlayer():HasTrait(trait) then
 				return {Color( 255, 167, 73, 255 ), Format("[%s - Whisper] ", info[1]), ply, ": ", text}
 			end
 			
