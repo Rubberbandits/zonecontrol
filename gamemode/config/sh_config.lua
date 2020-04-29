@@ -53,8 +53,6 @@ GM.MaxCharacters = 10;
 GM.CitizenModels = {
 	"models/tnb/techcom/male_01.mdl",
 	"models/tnb/techcom/male_02.mdl",
-	"models/tnb/techcom/male_01.mdl"
-	"models/tnb/techcom/male_02.mdl",
 	"models/tnb/techcom/male_03.mdl",
 	"models/tnb/techcom/male_04.mdl",
 	"models/tnb/techcom/male_06.mdl",
