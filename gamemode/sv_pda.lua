@@ -18,12 +18,12 @@ kingston.pda.journal_db_struct = {
 }
 
 kingston.pda.chat_insert_str = [[
-	INSERT INTO cc_pda_chat (Date, Sender, Receiver, SenderName, ReceiverName, Message) VALUES (?, ?, ?, ?, ?, ?);
+	INSERT INTO cc_pda_chat (Date, Sender, Receiver, SenderName, ReceiverName, Message) VALUES (UNIX_TIMESTAMP(), ?, ?, ?, ?, ?);
 ]]
 kingston.pda.journal_insert_str = [[
-	INSERT INTO cc_pda_journal (Date, Owner, Title, Message) VALUES (?, ?, ?, ?);
+	INSERT INTO cc_pda_journal (Date, Owner, Title, Message) VALUES (UNIX_TIMESTAMP(), ?, ?, ?);
 ]]
-kingston.pda.search_chat_str = [[SELECT * FROM cc_pda_chat WHERE Date LIKE '%%%s%%' AND (Sender = %d OR Receiver = %d);]]
+kingston.pda.search_chat_str = [[SELECT * FROM cc_pda_chat WHERE Date >= UNIX_TIMESTAMP('%s') AND Date <= (UNIX_TIMESTAMP('%s') + 86400) AND (Sender = %d OR Receiver = %d);]]
 kingston.pda.search_journal_str = [[SELECT * FROM cc_pda_journal WHERE Owner = %d;]]
 
 local function init_log_pda_tbl(db)
@@ -42,7 +42,7 @@ function kingston.pda.grab_chat(id, date, cb)
 		cb(q, data)
 	end
 
-	mysqloo.Query(Format(kingston.pda.search_chat_str, mysqloo.Escape(date), id, id), onSuccess)
+	mysqloo.Query(Format(kingston.pda.search_chat_str, mysqloo.Escape(date), mysqloo.Escape(date), id, id), onSuccess)
 end
 
 function kingston.pda.grab_journal(id, cb)
@@ -62,12 +62,11 @@ function kingston.pda.write_chat(sender_id, receiver_id, message)
 	if !sender_pda or !receiver_pda then return end
 
 	kingston.pda.chat_insert:clearParameters()
-		kingston.pda.chat_insert:setString(1, os.date("!%x %X"))
-		kingston.pda.chat_insert:setNumber(2, sender_id)
-		kingston.pda.chat_insert:setNumber(3, receiver_id)
-		kingston.pda.chat_insert:setString(4, sender_pda:GetVar("Name", "UNKNOWN"))
-		kingston.pda.chat_insert:setString(5, receiver_pda:GetVar("Name", "UNKNOWN"))
-		kingston.pda.chat_insert:setString(6, message)
+		kingston.pda.chat_insert:setNumber(1, sender_id)
+		kingston.pda.chat_insert:setNumber(2, receiver_id)
+		kingston.pda.chat_insert:setString(3, sender_pda:GetVar("Name", "UNKNOWN"))
+		kingston.pda.chat_insert:setString(4, receiver_pda:GetVar("Name", "UNKNOWN"))
+		kingston.pda.chat_insert:setString(5, message)
 	kingston.pda.chat_insert:start()
 end
 
@@ -80,10 +79,9 @@ function kingston.pda.write_journal(pda, title, message)
 	end
 
 	kingston.pda.journal_insert:clearParameters()
-		kingston.pda.journal_insert:setString(1, os.date("!%x %X"))
-		kingston.pda.journal_insert:setNumber(2, pda)
-		kingston.pda.journal_insert:setString(3, title)
-		kingston.pda.journal_insert:setString(4, message)
+		kingston.pda.journal_insert:setNumber(1, pda)
+		kingston.pda.journal_insert:setString(2, title)
+		kingston.pda.journal_insert:setString(3, message)
 	kingston.pda.journal_insert:start()
 end
 

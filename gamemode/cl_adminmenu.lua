@@ -1551,13 +1551,13 @@ function GM:AdminCreateLogsMenu()
 	CCP.AdminMenu.LogList = vgui.Create( "DListView", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.LogList:SetPos( 120, 10 );
 	CCP.AdminMenu.LogList:SetSize( 670, 406 );
-	CCP.AdminMenu.LogList:AddColumn( "Date" ):SetFixedWidth(100)
+	CCP.AdminMenu.LogList:AddColumn( "Date" ):SetFixedWidth(128)
 	CCP.AdminMenu.LogList:AddColumn( "Category" ):SetFixedWidth(64)
 	CCP.AdminMenu.LogList:AddColumn( "Log" );
 	CCP.AdminMenu.LogList:AddLine( "No logs to display." );
 	CCP.AdminMenu.LogList.Position = 0
 	CCP.AdminMenu.LogList.Category = "chat"
-	CCP.AdminMenu.LogList.Date = os.date("!%x")
+	CCP.AdminMenu.LogList.Date = os.date("!%Y-%m-%d")
 	CCP.AdminMenu.LogList.Content = ""
 	
 	function CCP.AdminMenu.LogList:DoDoubleClick( lineID, line )
@@ -1613,7 +1613,7 @@ function GM:AdminCreateLogsMenu()
 	CCP.AdminMenu.LogDate:SetFont( "CombineControl.LabelMedium" );
 	CCP.AdminMenu.LogDate:SetPos( 10, 60 );
 	CCP.AdminMenu.LogDate:SetSize( 100, 20 );
-	CCP.AdminMenu.LogDate:SetValue( os.date( "!%x" ) );
+	CCP.AdminMenu.LogDate:SetValue( os.date("!%Y-%m-%d") );
 	CCP.AdminMenu.LogDate:PerformLayout();
 	function CCP.AdminMenu.LogDate:OnChange()
 		CCP.AdminMenu.LogList.Date = self:GetValue()
@@ -1643,7 +1643,7 @@ function GM:PopulateAdminLogs(tbl)
 		end
 		
 		for _,log in next, tbl do
-			CCP.AdminMenu.LogList:AddLine(log.Date, log.Category, log.Log)
+			CCP.AdminMenu.LogList:AddLine(os.date("!%Y-%m-%d %X", log.Date), log.Category, log.Log)
 		end
 		
 		if #tbl == 50 then

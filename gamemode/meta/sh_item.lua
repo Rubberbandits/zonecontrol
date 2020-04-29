@@ -253,6 +253,9 @@ function item:DropItem(network)
 		if network then
 			netstream.Start(self:Owner(), "DropItem", self:GetID())
 		end
+		
+		kingston.log.write("items", "[%s (%s)(%s)] dropped item %s [ID: %d]", self:Owner():RPName(), self:Owner():Nick(), self:Owner():SteamID(), self:GetName(), self:GetID())
+		
 		local ent = GAMEMODE:DropItem( self );
 		return ent
 		

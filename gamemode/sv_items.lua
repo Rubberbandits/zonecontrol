@@ -128,6 +128,8 @@ function GM:ItemPickedUp( ply, item )
 				ply:SetRunSpeed( ply:GetWalkSpeed() );
 			end
 			
+			kingston.log.write("items", "[%s (%s)(%s)] picked up item %s [ID: %d]", ply:RPName(), ply:Nick(), ply:SteamID(), item:GetName(), item:GetID())
+			
 			ply.LastWeight = ply:InventoryWeight()
 		end
 	end

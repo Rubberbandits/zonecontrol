@@ -16,9 +16,9 @@ kingston.log.should_log = {
 }
 
 kingston.log.query_str = [[
-	INSERT INTO cc_logs (Date, Category, Log) VALUES (?, ?, ?);
+	INSERT INTO cc_logs (Date, Category, Log) VALUES (UNIX_TIMESTAMP(), ?, ?);
 ]]
-kingston.log.search_str = [[SELECT * FROM cc_logs WHERE Date LIKE '%%%s%%' AND Category = '%s' AND Log LIKE '%%%s%%' LIMIT %d, %d;]]
+kingston.log.search_str = [[SELECT * FROM cc_logs WHERE Date >= UNIX_TIMESTAMP('%s') AND Date <= (UNIX_TIMESTAMP('%s') + 86400) AND Category = '%s' AND Log LIKE '%%%s%%' LIMIT %d, %d;]]
 
 local function init_log_db_tbl(db)
 	mysqloo.Query("CREATE TABLE IF NOT EXISTS cc_logs ( id INT NOT NULL auto_increment, PRIMARY KEY ( id ) );")
@@ -32,9 +32,8 @@ function kingston.log.db_write(category, text, ...)
 	local str = Format(text, ...)
 
 	kingston.log.query:clearParameters()
-		kingston.log.query:setString(1, os.date("!%x %X"))
-		kingston.log.query:setString(2, category)
-		kingston.log.query:setString(3, str)
+		kingston.log.query:setString(1, category)
+		kingston.log.query:setString(2, str)
 	kingston.log.query:start()
 	
 	if kingston.log.console_log or kingston.log.should_log[category] then
@@ -48,8 +47,8 @@ function kingston.log.search(date_str, category, content, limit, offset, cb)
 	local function onSuccess(data, q)
 		cb(q, data)
 	end
-	
-	mysqloo.Query(Format(kingston.log.search_str, mysqloo.Escape(date_str), mysqloo.Escape(category), mysqloo.Escape(content), offset, limit), onSuccess)
+
+	mysqloo.Query(Format(kingston.log.search_str, mysqloo.Escape(date_str), mysqloo.Escape(date_str), mysqloo.Escape(category), mysqloo.Escape(content), offset, limit), onSuccess, onError)
 end
 
 /* aliases for logging systems */

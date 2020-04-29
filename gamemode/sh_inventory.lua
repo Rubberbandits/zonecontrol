@@ -60,8 +60,6 @@ else
 		
 		if( !k ) then return end
 		if( !item:CanDrop() ) then return end
-		
-		GAMEMODE:LogItems( "[D] " .. ply:VisibleRPName() .. " dropped item " .. item:GetName() .. ".", ply );
 
 		item:DropItem()
 		

@@ -24,19 +24,19 @@ kingston.pda.tabs = {
 			end
 			
 			local date_select = vgui.Create("DLabel", pnl)
-			date_select:SetSize(ScreenScaleH(48), ScreenScaleH(16))
-			date_select:SetPos(pnl:GetWide() - ScreenScaleH(64) - ScreenScaleH(16), ScreenScaleH(4))
+			date_select:SetSize(ScreenScaleH(64), ScreenScaleH(16))
+			date_select:SetPos(pnl:GetWide() - ScreenScaleH(72) - ScreenScaleH(16), ScreenScaleH(4))
 			date_select:SetFont("CombineControl.ChatBig")
-			date_select:SetText(os.date("!%x"))
+			date_select:SetText(os.date("!%Y-%m-%d"))
 			date_select.cur_ostime = os.time()
 			
 			date_select_left = vgui.Create("DButton", pnl)
 			date_select_left:SetSize(ScreenScaleH(16), ScreenScaleH(16))
-			date_select_left:SetPos(pnl:GetWide() - ScreenScaleH(64) - ScreenScaleH(16) - ScreenScaleH(24), ScreenScaleH(4))
+			date_select_left:SetPos(pnl:GetWide() - ScreenScaleH(72) - ScreenScaleH(16) - ScreenScaleH(24), ScreenScaleH(4))
 			date_select_left:SetText("")
 			date_select_left.LeftDateButton = true
 			date_select_left.DoClick = function(btn)
-				date_select:SetText(os.date("!%x", (date_select.cur_ostime or os.time()) - 86000))
+				date_select:SetText(os.date("!%Y-%m-%d", (date_select.cur_ostime or os.time()) - 86000))
 				date_select.cur_ostime = date_select.cur_ostime - 86000
 				
 				netstream.Start("PDAGrabChat", pnl:GetParent().pda_id, date_select:GetText())
@@ -48,7 +48,7 @@ kingston.pda.tabs = {
 			date_select_right:SetText("")
 			date_select_right.RightDateButton = true
 			date_select_right.DoClick = function(btn)
-				date_select:SetText(os.date("!%x", (date_select.cur_ostime or os.time()) + 86000))
+				date_select:SetText(os.date("!%Y-%m-%d", (date_select.cur_ostime or os.time()) + 86000))
 				date_select.cur_ostime = date_select.cur_ostime + 86000
 				
 				netstream.Start("PDAGrabChat", pnl:GetParent().pda_id, date_select:GetText())
@@ -131,30 +131,31 @@ function PANEL:PopulateMessages(data)
 	scroll:Clear()
 	
 	if #data > 0 then
-		local cur_y = ScreenScaleH(2)
 		for _,entry in next, data do
 			local panel = self:CreateMessageEntry(entry.Date, entry.SenderName, entry.ReceiverName, entry.Message)
-			panel:SetPos(ScreenScaleH(2), cur_y)
-			scroll:AddItem(panel)
+			panel:DockMargin(0,4,0,0)
+			panel:Dock(TOP)
 			
-			cur_y = cur_y + panel:GetTall() + ScreenScaleH(2)
+			scroll:AddItem(panel)
 		end
 	else
 		local text = vgui.Create("DLabel", scroll)
 		text:Dock(TOP)
 		text:SetFont("CombineControl.ChatHuge")
 		text:SetText("No logs found for this date.")
+		text:SizeToContents()
 	end
 end
 
 function PANEL:CreateMessageEntry(date, sender, receiver, message)
-	local panel = vgui.Create("DPanel")
-	panel:SetSize(ScreenScaleH(256), ScreenScale(32))
-	panel.Paint = function() end
+	local panel = vgui.Create("DSizeToContents")
+	panel:SetSize(ScreenScaleH(256), ScreenScaleH(32))
+	panel.Paint = function(pnl, w, h)
+	end
 	
 	local date_text = vgui.Create("DLabel", panel)
 	date_text:SetFont("CombineControl.ChatNormal")
-	date_text:SetText(date)
+	date_text:SetText(os.date("!%Y-%m-%d %X", date))
 	date_text:SetTextColor(Color(120,120,120))
 	date_text:SizeToContents()
 	date_text:SetPos(ScreenScaleH(2), ScreenScaleH(2))
@@ -167,21 +168,22 @@ function PANEL:CreateMessageEntry(date, sender, receiver, message)
 	participants_text:SetPos(ScreenScaleH(10) + date_text:GetWide(), ScreenScaleH(2))
 	
 	-- 229, 201, 98
-	local lbl_y = ScreenScaleH(8) + date_text:GetTall()
-	local lines_body = string.Explode( "\n", GAMEMODE:FormatLine( message or "", "CombineControl.ChatNormal", ScrW() / 3 ) );
-	for _,line in next, lines_body do
-		local text = vgui.Create("DLabel", panel)
-		text:SetFont("CombineControl.ChatNormal")
-		text:SetTextColor(Color(229, 201, 98))
-		text:SetText(line)
-		text:SetPos(ScreenScaleH(4), lbl_y)
-		text:SizeToContents()
-		
-		lbl_y = lbl_y + text:GetTall()
+	local lbl_y = ScreenScaleH(4) + date_text:GetTall()
+	local text = vgui.Create("DLabel", panel)
+	text:SetWide(ScreenScaleH(248))
+	text:SetPos(ScreenScaleH(8), lbl_y)
+	text:SetFont("CombineControl.ChatNormal")
+	text:SetTextColor(Color(229, 201, 98))
+	text:SetWrap(true)
+	text:SetText(message)
+	text:SetAutoStretchVertical(true)
+	
+	function panel:PerformLayout(w,h)
+		text:SizeToContentsY()
+		self:SizeToChildren(false, true)
 	end
 	
-	panel:SizeToContents()
-	
+	panel:InvalidateLayout(true)
 	
 	return panel
 end
