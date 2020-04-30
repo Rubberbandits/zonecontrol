@@ -53,7 +53,7 @@ function GM:InitSQL()
 		
 		mysqloo.Query( "SET interactive_timeout = 28800" );
 		mysqloo.Query( "SET wait_timeout = 28800" );
-		mysqloo.Query("DELETE FROM cc_logs WHERE Date < (UNIX_TIMESTAMP() - 1209600);")
+		mysqloo.Query("DELETE FROM cc_logs WHERE Date < (UNIX_TIMESTAMP(NOW()) - 1209600);")
 		
 	end
 
