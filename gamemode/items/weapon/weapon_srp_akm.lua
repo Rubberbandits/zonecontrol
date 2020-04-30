@@ -1,6 +1,6 @@
 ITEM.Name = "AKM"
 ITEM.Desc = "The classic Russian assault rifle. Tried and true, used all across the world. Uses 7.62x39mm"
-ITEM.Model = "models/weapons/tfa_cod/mwr/w_ak47.mdl"
+ITEM.Model = "models/weapons/tfa_ins2/w_akm.mdl"
 ITEM.WeaponClass = "tfa_ins2_akm"
 ITEM.Weight = 3
 ITEM.SafetyPos = Vector(0,0,0)

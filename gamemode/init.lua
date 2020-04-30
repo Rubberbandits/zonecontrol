@@ -134,7 +134,7 @@ function GM:Initialize()
 	game.ConsoleCommand( "mp_falldamage 1\n" );
 	game.ConsoleCommand( "sv_tfa_cmenu 0\n" );
 	game.ConsoleCommand( "sv_tfa_default_clip 0\n" );
-	game.ConsoleCommand( "sv_tfa_jamming_factor_inc 0\n" ); -- since we are doing it via the durability of the item
+	game.ConsoleCommand( "sv_tfa_jamming_factor_inc 100\n" ); -- since we are doing it via the durability of the item
 	
 	if( game.IsDedicated() and !self.PrivateMode ) then
 		

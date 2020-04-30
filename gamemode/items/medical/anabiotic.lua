@@ -16,6 +16,7 @@ ITEM.FunctionHooks.PostUse = function(item)
 	if CLIENT then
 		GAMEMODE:DrugEffectBreen();	
 	else
-		timer.Simple( 5, function() item:Owner():TakeCDamage( 100 ) end )	
+		local ply = item.owner -- have to cache because item gets removed!!
+		timer.Simple( 5, function() ply:TakeCDamage( 100 ) end )	
 	end
 end

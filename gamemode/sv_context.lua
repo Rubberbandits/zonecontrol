@@ -149,8 +149,17 @@ function nCGiveCredits( ply, amt, targ )
 end
 netstream.Hook( "nCGiveCredits", nCGiveCredits );
 
-function nCExamine( len, ply )
+function nCExamine( ply )
+	local ent = ply:GetEyeTrace().Entity
+	if ent:GetClass() != "cc_item" then return end
 	
+	local metaitem = GAMEMODE:GetItemByID(ent:GetItemClass())
+	local text = metaitem.Desc
+	if ent:GetItemObject() then
+		text = ent:GetItemObject():GetDesc()
+	end
+	
+	ply:Notify(nil, COLOR_NOTIF, "%s", text)
 end
 netstream.Hook( "nCExamine", nCExamine );
 

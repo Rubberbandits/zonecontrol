@@ -14,3 +14,30 @@ ITEM.SelfRepairCondition = 70
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 5000
 ITEM.Slot = 2
+ITEM.Throwable = true
+ITEM.UseDurability = false
+ITEM.Vars = {
+	Equipped = false,
+	CurrentAttachments = {},
+	Upgrades = {},
+	Clip1 = 1,
+}
+
+function ITEM:GetDesc()
+	return self.Desc
+end
+
+function ITEM:CanUpgrade()
+	return false
+end
+
+function ITEM:OnThrow(weapon)
+	if SERVER then
+		local ply = self:Owner()
+		timer.Simple(0.15, function()
+			ply:StripWeapon(weapon:GetClass())
+		end)
+	end
+	self:Owner().EquippedWeapons[self.WeaponClass] = nil
+	self:RemoveItem()
+end

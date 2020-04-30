@@ -285,7 +285,7 @@ PANEL.HandleSpecificKey = {
 		end
 		
 		for k,v in next, GAMEMODE.Upgrades do
-			if v.Item == panel.CurrentItem:GetClass() and !panel.data.Upgrades[k] then
+			if v.Item[panel.CurrentItem:GetClass()] and !panel.data.Upgrades[k] then
 				parent.PossibleUpgrades:AddLine(k, v.Name)
 			end
 		end

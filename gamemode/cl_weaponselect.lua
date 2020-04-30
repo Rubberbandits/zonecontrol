@@ -64,29 +64,6 @@ GM.WeaponSelectEngineNames["weapon_physgun"] = "Physics Gun";
 GM.WeaponSelectEngineNames["weapon_physcannon"] = "Gravity Gun";
 GM.WeaponSelectEngineNames["gmod_tool"] = "Toolgun";
 
-GM.OverrideSlots = { };
-GM.OverrideSlots["weapon_physgun"] = { 3, 1 };
-GM.OverrideSlots["weapon_physcannon"] = { 3, 2 };
-GM.OverrideSlots["gmod_tool"] = { 3, 3 };
-GM.OverrideSlots["weapon_cc_hands"] = {1, 1};
-GM.OverrideSlots["weapon_cc_bolt"] = {1, 2};
-GM.OverrideSlots["weapon_cc_knife"] = {1, 3};
-
-local current_index = 1
-
-for _,weapon in next, weapons.GetList() do
-	if GM.OverrideSlots[weapon.ClassName] then continue end
-	local slot = 2
-	local stored_wep = weapons.GetStored(weapon.ClassName)
-	if stored_wep.Base == "tfa_nmrimelee_base" then
-		slot = 1
-	end
-	
-	stored_wep.Slot = slot
-	stored_wep.SlotPos = current_index
-	current_index = current_index + 1
-end
-
 function GM:WeaponSelectGetPrintName( wep )
 	
 	if !wep.IsTFAWeapon then
@@ -103,12 +80,7 @@ end
 function GM:WeaponSelectGetSlot( wep )
 	
 	if( self.OverrideSlots[wep:GetClass()] ) then return self.OverrideSlots[wep:GetClass()][1] end
-	
-	if !wep.IsTFAWeapon then
-		if( wep.Slot ) then return wep.Slot end
-	else
-		return wep:GetStat("Slot")
-	end
+	if( wep.Slot ) then return wep.Slot end
 	
 	return 3;
 	
@@ -117,12 +89,7 @@ end
 function GM:WeaponSelectGetSlotPos( wep )
 	
 	if( self.OverrideSlots[wep:GetClass()] ) then return self.OverrideSlots[wep:GetClass()][2] end
-	
-	if !wep.IsTFAWeapon then
-		if( wep.SlotPos ) then return wep.SlotPos end
-	else
-		return wep:GetStat("SlotPos")
-	end
+	if( wep.SlotPos ) then return wep.SlotPos end
 	
 	return 1;
 	

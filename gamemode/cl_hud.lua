@@ -857,7 +857,7 @@ GM.NPCDrawBlacklist = {
 
 function GM:DrawEntities()
 	
-	if( self.SeeAll and ( !LocalPlayer():IsAdmin() and !LocalPlayer():HasCharFlag( "G" ) ) ) then
+	if( self.SeeAll and ( !LocalPlayer():IsAdmin() and !LocalPlayer():IsEventCoordinator() ) ) then
 		
 		self.SeeAll = false;
 		

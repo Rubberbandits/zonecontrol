@@ -184,8 +184,6 @@ function GM:PlayerLoadout( ply )
 		
 	end
 	
-	--ply:Give( "weapon_physcannon" );
-	
 	if( ply:ToolTrust() > 0 or ply:IsAdmin() ) then
 		
 		ply:Give( "gmod_tool" );
@@ -194,7 +192,6 @@ function GM:PlayerLoadout( ply )
 	
 	ply:Give( "weapon_cc_hands" );
 	ply:Give( "weapon_cc_bolt" );
-	ply:Give( "weapon_cc_knife" );
 	
 end
 
