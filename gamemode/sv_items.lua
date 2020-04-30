@@ -104,10 +104,6 @@ function GM:CreateItemEntity( ItemObj, pos, ang )
 end
 
 function GM:ItemPickedUp( ply, item )
-	if !ply.LastMaxWeight then
-		ply.LastMaxWeight = ply:InventoryMaxWeight()
-	end
-
 	if (ply.LastWeight or 0) <= ply:InventoryMaxWeight() then
 		local weight = ply:InventoryWeight()
 		if isstring(item) then
@@ -122,7 +118,7 @@ function GM:ItemPickedUp( ply, item )
 				ply:SetRunSpeed(ply:GetWalkSpeed())
 			end
 			
-			if weight > ply.LastMaxWeight then
+			if weight > (ply.LastMaxWeight or 0) then
 				local walk, run, jump, crouch = ply:GetSpeeds()
 				ply:SetRunSpeed(run)
 				ply:Notify(nil, Color(255,100,0), "You're no longer over-encumbered.")
@@ -139,7 +135,7 @@ function GM:ItemPickedUp( ply, item )
 				ply:SetRunSpeed(ply:GetWalkSpeed())
 			end
 			
-			if weight > ply.LastMaxWeight and ply.LastMaxWeight < ply:InventoryMaxWeight() then
+			if weight > (ply.LastMaxWeight or 0) and (ply.LastMaxWeight or 0) < ply:InventoryMaxWeight() then
 				local walk, run, jump, crouch = ply:GetSpeeds()
 				ply:SetRunSpeed(run)
 				ply:Notify(nil, Color(255,100,0), "You're no longer over-encumbered.")

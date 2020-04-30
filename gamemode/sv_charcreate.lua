@@ -73,7 +73,7 @@ function nChangePDAName( ply, name, id )
 			mysqloo.Query("SELECT Vars FROM cc_items WHERE ItemClass = 'pda'", function(ret)
 				for k,v in next, ret do
 					local vars = util.JSONToTable(v.Vars)
-					if string.Trim(vars["Name"]) == string.Trim(name) then
+					if string.Trim(vars["Name"] or "") == string.Trim(name) then
 						netstream.Start( ply, "nPDANameTaken" );
 						
 						break
