@@ -515,7 +515,7 @@ hook.Add("TFA_CompleteReload", "STALKER.Durability", function(weapon)
 		local amounttoreplace = math.min(maxclip - curclip, weapon:Ammo1())
 
 		item:SetVar("Clip1", curclip + amounttoreplace)
-		weapon:SetJamFactor(math.Clamp(item.StartDurability - new_durability, 0.04, 100))
+		weapon:SetJamFactor((new_durability / item.StartDurability) / 100)
 	end
 	
 	weapon:SetNW2Int("TimesFired", 0)
