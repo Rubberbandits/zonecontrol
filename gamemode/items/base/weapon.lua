@@ -82,12 +82,12 @@ BASE.functions.Unequip = {
 		local MetaItem = GAMEMODE:GetItemByID( item:GetClass() );
 		local weapon = item:Owner():GetWeapon( item.WeaponClass );
 		
-		if !weapon then return end
-		
-		local new_durability = math.Clamp(item:GetVar("Durability",100) - (item.DegradeRate * weapon:GetNW2Int("TimesFired", 0)), 0, item:GetVar("Durability",100)) 
-		item:SetVar("Durability", new_durability)
-		
-		item:SetVar("Clip1", weapon:Clip1())
+		if weapon and weapon:IsValid() then
+			local new_durability = math.Clamp(item:GetVar("Durability",100) - (item.DegradeRate * weapon:GetNW2Int("TimesFired", 0)), 0, item:GetVar("Durability",100)) 
+			item:SetVar("Durability", new_durability)
+			
+			item:SetVar("Clip1", weapon:Clip1())
+		end
 		
 		if( IsValid( weapon ) ) then
 		
@@ -136,7 +136,7 @@ BASE.functions.Upgrade = {
 		return true
 	end,
 	CanRun = function(item)
-		return !item:GetVar("Equipped",false) and item:Owner():HasCharFlag("T") -- in range of tbl
+		return item:CanUpgrade() -- in range of tbl
 	end,
 }
 BASE.functions.Detach = {
@@ -193,7 +193,7 @@ function BASE:CanDrop()
 end
 function BASE:CanUpgrade()
 
-	return !self:GetVar( "Equipped", false );
+	return !self:GetVar("Equipped",false) and self:Owner():HasCharFlag("T")
 	
 end
 function BASE:OnGamemodeLoaded()

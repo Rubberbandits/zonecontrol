@@ -72,6 +72,14 @@ GM.HandsWeapons = {
 	"weapon_cc_vortbroom_diss",
 };
 
+GM.OverrideSlots = { };
+GM.OverrideSlots["weapon_physgun"] = { 3, 1 };
+GM.OverrideSlots["weapon_physcannon"] = { 3, 2 };
+GM.OverrideSlots["gmod_tool"] = { 3, 3 };
+GM.OverrideSlots["weapon_cc_hands"] = {1, 1};
+GM.OverrideSlots["weapon_cc_bolt"] = {1, 2};
+GM.OverrideSlots["weapon_cc_knife"] = {1, 3};
+
 function GM:PlayerSwitchWeapon( ply, old, new )
 
 	if (new.IsTFAWeapon) then
@@ -387,6 +395,11 @@ GM.WeaponStatistics["Primary.Damage"] = function(weapon, value)
 		end
 	end
 end
+GM.WeaponStatistics["Secondary.CanBash"] = function(weapon, value)
+	if weapon:GetOwner():Holstered() then
+		return false
+	end
+end
 
 hook.Add( "TFA_GetStat", "STALKER.Statistics", function( weapon, stat, value )
 
@@ -408,7 +421,11 @@ hook.Add("TFA_PreCanPrimaryAttack", "STALKER.PreventFire", function(weapon)
 		return false
 	end
 end)
-
+hook.Add("TFA_CanPrimaryAttack", "STALKER.PreventFire", function(weapon)
+	if (weapon:GetOwner():Holstered()) then
+		return false
+	end
+end)
 hook.Add("TFA_SecondaryAttack", "STALKER.PreventADS", function(weapon)
 	if (weapon:GetOwner():Holstered()) then
 		return true
@@ -464,15 +481,21 @@ hook.Add("TFA_PostPrimaryAttack", "STALKER.Durability", function(weapon)
 	weapon:SetNW2Int("TimesFired", weapon:GetNW2Int("TimesFired", 0) + 1)
 	
 	local item = GAMEMODE.g_ItemTable[weapon:GetOwner().EquippedWeapons[weapon:GetClass()]]
-	if item and item.UseDurability then
-		if item:GetVar("Durability", 100) - (item.DegradeRate * weapon:GetNW2Int("TimesFired",0)) <= 0 then
-			item:SetVar("Durability", 0)
-			
-			if SERVER then
-				weapon:GetOwner():Notify( Color(255,255,255), "This weapon is broken." );
+	if item then
+		if item.UseDurability then
+			if item:GetVar("Durability", 100) - (item.DegradeRate * weapon:GetNW2Int("TimesFired",0)) <= 0 then
+				item:SetVar("Durability", 0)
+				
+				if SERVER then
+					weapon:GetOwner():Notify( Color(255,255,255), "This weapon is broken." );
+				end
+				
+				item:CallFunction("Unequip")
 			end
-			
-			item:CallFunction("Unequip")
+		end
+		
+		if item.PostPrimaryAttack then
+			item:PostPrimaryAttack(weapon)
 		end
 	end
 end)

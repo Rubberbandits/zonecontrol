@@ -214,14 +214,15 @@ function item:CallFunction( szKey, bNetwork )
 				end
 			
 				local ret = self.functions[szKey].OnUse( self );
+				
+				if( self.FunctionHooks and self.FunctionHooks["Post"..szKey] ) then
+					self.FunctionHooks["Post"..szKey]( self );
+				end
+				
 				if( self.functions[szKey].RemoveOnUse and ret ) then
 
 					self:RemoveItem();
 					
-				end
-				
-				if( self.FunctionHooks and self.FunctionHooks["Post"..szKey] ) then
-					self.FunctionHooks["Post"..szKey]( self );
 				end
 				
 				return ret;
@@ -275,7 +276,6 @@ function item:RemoveItem(network)
 	GAMEMODE.g_ItemTable[self:GetID()] = nil;
 	
 	if self:Owner() and self:Owner():IsValid() and self:Owner():IsPlayer() then
-		print(self:Owner())
 		self:Owner().Inventory[self:GetID()] = nil;
 		
 		hook.Run("ItemDropped", self:Owner(), self)

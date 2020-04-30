@@ -148,7 +148,7 @@ function meta:InventoryMaxWeight()
 		for k,v in next, self.Inventory do
 			local metaitem = GAMEMODE:GetItemByID(v:GetClass())
 			if metaitem.GetCarryWeight then
-				if !metaitem.Stackable and classes[v:GetClass()] then continue end
+				if !metaitem.StackCarryWeight and classes[v:GetClass()] then continue end
 				
 				w = w + v:GetCarryWeight()
 				

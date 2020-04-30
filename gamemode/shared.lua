@@ -845,6 +845,49 @@ function GM:OnGamemodeLoaded()
 		base_class.CanJam = true
 	end
 	
+	local base_class_melee = weapons.GetStored("tfa_nmrimelee_base")
+	if base_class_melee then
+		self.nmrih = self.nmrih or {}
+		self.nmrih.old_primaryattack = self.nmrih.old_primaryattack or base_class_melee.PrimaryAttack
+		
+		base_class_melee.PrimaryAttack = function(wep, release, docharge)
+			if wep:IsSafety() then return end
+			
+			self.nmrih.old_primaryattack(wep, release, docharge)
+		end
+	end
+	
+	local base_class_nade = weapons.GetStored("tfa_ins2_nade_base")
+	if base_class_nade then
+		self.ins2 = self.ins2 or {}
+		self.ins2.old_shootbullet = self.ins2.old_shootbullet or base_class_nade.ShootBullet
+
+		base_class_nade.DoAmmoCheck = function() end
+		
+		base_class_nade.ShootBullet = function(wep, damage, recoil, num_bullets, aimcone, disablericochet, bulletoverride)
+			self.ins2.old_shootbullet(wep, damage, recoil, num_bullets, aimcone, disablericochet, bulletoverride)
+			
+			if not IsFirstTimePredicted() and not game.SinglePlayer() then return end
+			
+			local item = wep:GetOwner().Inventory[wep:GetOwner().EquippedWeapons[wep:GetClass()]]
+			if item and item.OnThrow then
+				item:OnThrow(wep)
+			end
+		end
+	end
+	
+	local current_index = 3
+	for _,weapon in next, weapons.GetList() do
+		if self.OverrideSlots[weapon.ClassName] then continue end
+		local slot = 2
+		local stored_wep = weapons.GetStored(weapon.ClassName)
+		if stored_wep.Base == "tfa_nmrimelee_base" then
+			slot = 1
+		end
+		
+		self.OverrideSlots[weapon.ClassName] = {slot, current_index}
+	end
+	
 	for k,v in next, self.Items do
 		if v.OnGamemodeLoaded then
 			v:OnGamemodeLoaded()

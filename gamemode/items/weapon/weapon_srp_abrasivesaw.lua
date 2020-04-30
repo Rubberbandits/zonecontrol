@@ -14,3 +14,4 @@ ITEM.SelfRepairCondition = 70
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 75000
 ITEM.Slot = 1
+ITEM.AmmoType = "gas"
