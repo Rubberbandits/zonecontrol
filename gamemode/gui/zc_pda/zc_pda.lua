@@ -3,24 +3,111 @@ kingston.pda = kingston.pda or {}
 kingston.pda.tabs = {
 	Journal = {
 		order = 3,
+		default = true,
 		func = function(pnl)
-		
+			pnl.select_journal = vgui.Create("DScrollPanel", pnl)
+			pnl.select_journal:SetSize(pnl:GetWide() / 4, pnl:GetTall() - ScreenScaleH(24))
+			pnl.select_journal:SetPos(ScreenScaleH(8), ScreenScaleH(12))
+			pnl.select_journal:DockPadding(20, 4, 4, 4)
+			pnl.select_journal.Paint = function(scroll, w, h)
+				surface.SetDrawColor(200,200,200,120)
+				surface.DrawOutlinedRect(0,0,w,h)
+			end
+			
+			pnl.journal_title = vgui.Create("DTextEntry", pnl)
+			pnl.journal_title:SetSize(pnl:GetWide() - (pnl:GetWide() / 4) - ScreenScaleH(20), ScreenScaleH(12))
+			pnl.journal_title:SetPos(pnl:GetWide() / 4 + ScreenScaleH(12), ScreenScaleH(12))
+			pnl.journal_title:SetFont("CombineControl.ChatNormal")
+			pnl.journal_title:SetText("Journal")
+			pnl.journal_title:SetTextColor(Color(200,200,200))
+			pnl.journal_title:SetEditable(false)
+			
+			pnl.journal_entry = vgui.Create("DTextEntry", pnl)
+			pnl.journal_entry:SetSize(pnl:GetWide() - (pnl:GetWide() / 4) - ScreenScaleH(20), pnl:GetTall() - ScreenScaleH(28) - pnl.journal_title:GetTall())
+			pnl.journal_entry:SetPos(pnl:GetWide() / 4 + ScreenScaleH(12), ScreenScaleH(16) + pnl.journal_title:GetTall())
+			pnl.journal_entry:SetFont("CombineControl.ChatNormal")
+			pnl.journal_entry:SetText("No journal selected.")
+			pnl.journal_entry:SetTextColor(Color(200,200,200))
+			pnl.journal_entry:SetMultiline(true)
+			pnl.journal_entry:SetVerticalScrollbarEnabled(true)
+			pnl.journal_entry:SetEditable(false)
+			
+			local x,y,w,h = pnl.journal_entry:GetBounds()
+			
+			pnl.save_journal = vgui.Create("DButton", pnl)
+			pnl.save_journal:SetSize(ScreenScaleH(32), ScreenScaleH(12))
+			pnl.save_journal:SetPos(x, y + h)
+			pnl.save_journal:SetTextColor(Color(32,200,32))
+			pnl.save_journal:SetFont("CombineControl.ChatNormal")
+			pnl.save_journal:SetText("")
+			pnl.save_journal:SetContentAlignment(4)
+			pnl.save_journal.DoClick = function(btn)
+				local title = pnl.journal_title:GetText()
+				local entry = pnl.journal_entry:GetText()
+				
+				if #title > 128 then
+					pnl.notify:SetText("Title is too long, limit is 128 characters!")
+					pnl.notify:SizeToContents()
+					pnl.notify:InvalidateLayout(true)
+					
+					pnl.notify:SetPos((x + w) - pnl.notify:GetWide() - ScreenScaleH(4), y + h)
+					
+					return
+				elseif #entry > 2048 then
+					pnl.notify:SetText("Entry is too long, limit is 2048 characters!")
+					pnl.notify:SizeToContents()
+					pnl.notify:InvalidateLayout(true)
+					
+					pnl.notify:SetPos((x + w) - pnl.notify:GetWide() - ScreenScaleH(4), y + h)
+					
+					return
+				end
+				
+				pnl.journal_title:SetEditable(false)
+				pnl.journal_entry:SetEditable(false)
+				
+				pnl.notify:SetText("")
+				
+				btn:SetText("")
+				btn:SetDisabled(true)
+			
+				netstream.Start("PDAWriteJournal", pnl:GetParent().pda_id, title, entry, true)
+			end
+			pnl.save_journal:SetDisabled(true)
+			
+			pnl.notify = vgui.Create("DLabel", pnl)
+			pnl.notify:SetText("")
+			pnl.notify:SetSize(ScreenScaleH(256), ScreenScaleH(12))
+			pnl.notify:SetFont("CombineControl.ChatNormal")
+			pnl.notify:SetTextColor(Color(200,0,0))
+			pnl.notify:SetPos((x + w) - pnl.notify:GetWide(), y + h)
+			
+			netstream.Start("PDAGrabJournal", pnl:GetParent().pda_id)
 		end
 	},
 	Contacts = {
 		order = 2,
 		func = function(pnl)
-		
+			pnl.contacts = vgui.Create("DScrollPanel", pnl)
+			pnl.contacts:SetSize(pnl:GetWide() - ScreenScaleH(16), pnl:GetTall() - ScreenScaleH(24))
+			pnl.contacts:SetPos(ScreenScaleH(8), ScreenScaleH(12))
+			pnl.contacts.Paint = function(scroll, w, h)
+				surface.SetDrawColor(200,200,200,120)
+				surface.DrawOutlinedRect(0,0,w,h)
+			end
+			
+			netstream.Start("PDAGrabContacts")
 		end
 	},
 	Messages = {
 		order = 1,
-		default = true,
 		func = function(pnl)
 			pnl.message_container = vgui.Create("DScrollPanel", pnl)
-			pnl.message_container:SetSize(pnl:GetWide() - ScreenScaleH(16), pnl:GetTall() - ScreenScaleH(32))
-			pnl.message_container:SetPos(ScreenScale(8), ScreenScale(16))
+			pnl.message_container:SetSize(pnl:GetWide() - ScreenScaleH(16), pnl:GetTall() - ScreenScaleH(40))
+			pnl.message_container:SetPos(ScreenScaleH(8), ScreenScaleH(24))
 			pnl.message_container.Paint = function(scroll, w, h)
+				surface.SetDrawColor(200,200,200,120)
+				surface.DrawOutlinedRect(0,0,w,h)
 			end
 			
 			local date_select = vgui.Create("DLabel", pnl)
@@ -133,13 +220,14 @@ function PANEL:PopulateMessages(data)
 	if #data > 0 then
 		for _,entry in next, data do
 			local panel = self:CreateMessageEntry(entry.Date, entry.SenderName, entry.ReceiverName, entry.Message)
-			panel:DockMargin(0,4,0,0)
+			panel:DockMargin(10,4,0,0)
 			panel:Dock(TOP)
 			
 			scroll:AddItem(panel)
 		end
 	else
 		local text = vgui.Create("DLabel", scroll)
+		text:DockMargin(10, 4, 0, 0)
 		text:Dock(TOP)
 		text:SetFont("CombineControl.ChatHuge")
 		text:SetText("No logs found for this date.")
@@ -167,7 +255,6 @@ function PANEL:CreateMessageEntry(date, sender, receiver, message)
 	participants_text:SizeToContents()
 	participants_text:SetPos(ScreenScaleH(10) + date_text:GetWide(), ScreenScaleH(2))
 	
-	-- 229, 201, 98
 	local lbl_y = ScreenScaleH(4) + date_text:GetTall()
 	local text = vgui.Create("DLabel", panel)
 	text:SetWide(ScreenScaleH(248))
@@ -180,6 +267,113 @@ function PANEL:CreateMessageEntry(date, sender, receiver, message)
 	
 	function panel:PerformLayout(w,h)
 		text:SizeToContentsY()
+		self:SizeToChildren(false, true)
+	end
+	
+	panel:InvalidateLayout(true)
+	
+	return panel
+end
+
+function PANEL:PopulateJournal(data)
+	self.Body.select_journal:Clear()
+
+	for _,entry in next, data do
+		local btn = vgui.Create("DButton", self.Body.select_journal)
+		btn:DockMargin(10, 10, 10, 10)
+		btn:Dock(TOP)
+		btn:SetTextColor(Color(32,200,32))
+		btn:SetFont("CombineControl.ChatNormal")
+		btn:SetText(entry.Title)
+		btn:SetContentAlignment(4)
+		btn.DoClick = function()
+			self.Body.journal_title:SetText(entry.Title)
+			self.Body.journal_entry:SetText(entry.Message)
+		end
+		function btn:Paint()
+			if self:IsHovered() and !self.LastHovered then
+				self:SetTextColor(Color(128,255,128))
+			elseif !self:IsHovered() and self.LastHovered then
+				self:SetTextColor(Color(32,200,32))
+			end
+			
+			self.LastHovered = self:IsHovered()
+		end
+		btn:SizeToContents()
+	end
+	
+	local btn = vgui.Create("DButton", self.Body.select_journal)
+	btn:DockMargin(10, 10, 10, 10)
+	btn:Dock(TOP)
+	btn:SetTextColor(Color(32,200,32))
+	btn:SetFont("CombineControl.ChatNormal")
+	btn:SetText("+ New")
+	btn:SetContentAlignment(4)
+	btn.DoClick = function()
+		local pnl = self.Body
+		
+		pnl.save_journal:SetDisabled(false)
+		pnl.save_journal:SetText("Save")
+		
+		pnl.journal_title:SetEditable(true)
+		pnl.journal_title:SetText("Title")
+		
+		pnl.journal_entry:SetEditable(true)
+		pnl.journal_entry:SetText("Entry")
+	end
+	function btn:Paint()
+		if self:IsHovered() and !self.LastHovered then
+			self:SetTextColor(Color(128,255,128))
+		elseif !self:IsHovered() and self.LastHovered then
+			self:SetTextColor(Color(32,200,32))
+		end
+		
+		self.LastHovered = self:IsHovered()
+	end
+	btn:SizeToContents()
+end
+
+function PANEL:PopulateContacts(data)
+	local scroll = self.Body.contacts
+	scroll:Clear()
+	
+	for _,contact in next, data do
+		local panel = self:CreateContact(contact)
+		panel:DockMargin(10,4,0,0)
+		panel:Dock(TOP)
+		
+		scroll:AddItem(panel)
+	end
+end
+
+local rand_devices = {
+	"HP_iPAQ_H1940",
+	"SAMSUNG_SGH-i700",
+	"SAMSUNG_F700",
+}
+
+function PANEL:CreateContact(data)
+	local panel = vgui.Create("DSizeToContents")
+	panel:SetSize(ScreenScaleH(256), ScreenScaleH(32))
+	panel.Paint = function(pnl, w, h)
+	end
+	
+	local contact_name = vgui.Create("DLabel", panel)
+	contact_name:SetFont("CombineControl.ChatNormal")
+	contact_name:SetText("USERNAME: "..data.name)
+	contact_name:SetTextColor(Color(229, 201, 98))
+	contact_name:SizeToContents()
+	contact_name:SetPos(ScreenScaleH(2), ScreenScaleH(2))
+	
+	local placeholder = vgui.Create("DLabel", panel)
+	placeholder:SetFont("CombineControl.ChatNormal")
+	placeholder:SetText("ACTIVE_DEVICE: "..table.Random(rand_devices))
+	placeholder:SetTextColor(Color(120,120,120))
+	placeholder:SizeToContents()
+	placeholder:SetPos(ScreenScaleH(4), ScreenScaleH(2) + contact_name:GetTall())
+	
+	function panel:PerformLayout(w,h)
+		contact_name:SizeToContentsY()
 		self:SizeToChildren(false, true)
 	end
 	

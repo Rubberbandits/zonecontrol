@@ -53,7 +53,16 @@ function kingston.pda.grab_journal(id, cb)
 end
 
 function kingston.pda.find_contacts()
-
+	local rf = {}
+	for k,v in next, GAMEMODE.g_ItemTable do
+		if v:GetClass() == "pda" then
+			if !v:GetVar("Power", false) then continue end
+			
+			rf[#rf + 1] = {name = v:GetVar("Name", "UNKNOWN_USER")}
+		end
+	end
+	
+	return rf
 end
 
 function kingston.pda.write_chat(sender_id, receiver_id, message)
@@ -64,16 +73,24 @@ function kingston.pda.write_chat(sender_id, receiver_id, message)
 	kingston.pda.chat_insert:clearParameters()
 		kingston.pda.chat_insert:setNumber(1, sender_id)
 		kingston.pda.chat_insert:setNumber(2, receiver_id)
-		kingston.pda.chat_insert:setString(3, sender_pda:GetVar("Name", "UNKNOWN"))
-		kingston.pda.chat_insert:setString(4, receiver_pda:GetVar("Name", "UNKNOWN"))
+		kingston.pda.chat_insert:setString(3, sender_pda:GetVar("Name", "UNKNOWN_USER"))
+		kingston.pda.chat_insert:setString(4, receiver_pda:GetVar("Name", "UNKNOWN_USER"))
 		kingston.pda.chat_insert:setString(5, message)
 	kingston.pda.chat_insert:start()
 end
 
-function kingston.pda.write_journal(pda, title, message)
+function kingston.pda.write_journal(pda, title, message, update)
 	local item = GAMEMODE.g_ItemTable[pda]
 	if !item then return end
 
+	kingston.pda.journal_insert.onSuccess = function(q, data)
+		if update then
+			kingston.pda.grab_journal(pda, function(q, data)
+				netstream.Start(item:Owner(), "PDAGrabJournal", data)
+			end)
+		end
+	end
+	
 	kingston.pda.journal_insert.onError = function(q, err)
 		print(err)
 	end
@@ -107,10 +124,18 @@ local function PDAGrabJournal(ply, id)
 end
 netstream.Hook("PDAGrabJournal", PDAGrabJournal)
 
-local function PDAWriteJournal(ply, id, title, message)
+local function PDAGrabContacts(ply)
+	netstream.Start(ply, "PDAGrabContacts", kingston.pda.find_contacts())
+end
+netstream.Hook("PDAGrabContacts", PDAGrabContacts)
+
+local function PDAWriteJournal(ply, id, title, message, update)
+	if #title > 128 then return end
+	if #message > 2048 then return end
+	
 	local item = ply.Inventory[id]
 	if item and item:GetClass() == "pda" and item:GetVar("Power", false) then
-		kingston.pda.write_journal(id, title, message)
+		kingston.pda.write_journal(id, title, message, update)
 	end
 end
 netstream.Hook("PDAWriteJournal", PDAWriteJournal)

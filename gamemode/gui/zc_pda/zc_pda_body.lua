@@ -8,4 +8,4 @@ function PANEL:Paint(w, h)
 	kingston.gui.FindFunc(self, "Paint", "Body", w, h)
 end
 
-vgui.Register("zc_pda_body", PANEL, "DPanel")
+vgui.Register("zc_pda_body", PANEL, "EditablePanel")

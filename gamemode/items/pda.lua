@@ -10,11 +10,10 @@ ITEM.BulkPrice =  20000;
 ITEM.Vars = {
 	Primary = false,
 	Power = true,
-	Name = "",
 }
 ITEM.functions = {}
-ITEM.functions.ChangeName = {
-	SelectionName = "Change Name",
+ITEM.functions.SetName = {
+	SelectionName = "Register",
 	OnUse = function(item)
 		if CLIENT then
 			GAMEMODE:PMCreatePDANameEdit( item );
@@ -23,7 +22,7 @@ ITEM.functions.ChangeName = {
 		return true
 	end,
 	CanRun = function(item)
-		return true
+		return !item:GetVar("Name")
 	end,
 }
 ITEM.functions.MakePrimary = {
@@ -88,4 +87,10 @@ function ITEM:GetName()
 	end
 	
 	return self.Name
+end
+
+function ITEM:OnDeleted()
+	local function onSuccess()
+	end
+	mysqloo.Query( Format( "DELETE FROM cc_pda_journal WHERE Owner = '%d'", self:GetID() ), onSuccess );
 end

@@ -16,3 +16,10 @@ local function PDAGrabJournal(data)
 	end
 end
 netstream.Hook("PDAGrabJournal", PDAGrabJournal)
+
+local function PDAGrabContacts(data)
+	if GAMEMODE.PDAMenu then
+		GAMEMODE.PDAMenu:PopulateContacts(data)
+	end
+end
+netstream.Hook("PDAGrabContacts", PDAGrabContacts)

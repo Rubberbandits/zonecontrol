@@ -448,11 +448,11 @@ kingston.chat.register_type("pda", {
 		local args = kingston.chat.parse_arguments(text)
 		local header = ""
 		local body = ""
-		local pda_name = ply:RPName()
+		local pda_name
 		for k,v in next, ply.Inventory do
 			if v:GetClass() == "pda" then
 				if v:GetVar("Power", false) and v:GetVar("Primary", false) then
-					pda_name = v:GetVar("Name", ply:RPName())
+					pda_name = v:GetVar("Name", "")
 					pda_id = v:GetID()
 					break
 				end
@@ -460,21 +460,30 @@ kingston.chat.register_type("pda", {
 		end
 		
 		if !args[2] then return end
+		if !pda_name or #pda_name == 0 then 
+			ply:PDANotify("STALKER.net", "You must register your PDA first before using STALKER.net!", 2, 12)
+			return {}
+		end
 		
 		if args[1] == "all" then
 			header = pda_name.." -> all"
 		else
 			local targ = rf[1]
-			local targ_name = targ:RPName()
+			local targ_name
 			
 			for k,v in next, targ.Inventory do
 				if v:GetClass() == "pda" then
 					if string.find( string.lower( v:GetVar("Name","") ), args[1], nil, true ) and v:GetVar("Power",false) then
-						targ_name = v:GetVar("Name",targ:RPName())
+						targ_name = v:GetVar("Name","")
 						targ_pda_id = v:GetID()
 						break
 					end
 				end
+			end
+			
+			if !targ_name or #targ_name == 0 then 
+				ply:PDANotify("STALKER.net", "Recipient could not be found, or is offline. Try again later.", 3, 12)
+				return {}
 			end
 			
 			header = pda_name.." -> "..targ_name
@@ -493,8 +502,22 @@ kingston.chat.register_type("pda", {
 		local chat_data = kingston.chat.types[chat_type]
 		local rf = {}
 		local args = kingston.chat.parse_arguments(text)
+
+		local pda_name
+		for k,v in next, speaker.Inventory do
+			if v:GetClass() == "pda" then
+				if v:GetVar("Power", false) and v:GetVar("Primary", false) then
+					pda_name = v:GetVar("Name")
+					break
+				end
+			end
+		end
 		
 		if !args[2] then return end
+		if !pda_name or #pda_name == 0 then 
+			speaker:PDANotify("STALKER.net", "You must register your PDA first before using STALKER.net!", 2, 12)
+			return {}
+		end
 		
 		if args[1] == "all" then
 			for k,v in next, player.GetAll() do

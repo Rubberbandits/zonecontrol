@@ -275,6 +275,10 @@ function item:RemoveItem(network)
 		end
 		
 	end
+	
+	if self.OnDeleted then
+		self:OnDeleted()
+	end
 
 	GAMEMODE.g_ItemTable[self:GetID()] = nil;
 	

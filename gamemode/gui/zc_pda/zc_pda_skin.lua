@@ -123,6 +123,13 @@ function SKIN:PaintButtonDown(pnl, w, h)
 	kingston.gui.FindFunc(pnl, "Paint", "VBarDown", w, h)
 end
 
+function SKIN:PaintTextEntry(pnl, w, h)
+	surface.SetDrawColor(200,200,200,120)
+	surface.DrawOutlinedRect(0,0,w,h)
+	
+	pnl:DrawTextEntryText(pnl:GetTextColor(), pnl:GetHighlightColor(), pnl:GetCursorColor())
+end
+
 derma.DefineSkin( "zc_pda", "rusty", SKIN );
 
 local UVSKIN = {}

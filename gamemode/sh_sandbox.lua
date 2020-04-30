@@ -525,7 +525,7 @@ function GM:CanTool( ply, tr, tool )
 			
 			if( tool == "remover" and tr.Entity and tr.Entity:IsValid() and tr.Entity:GetClass() == "cc_item" ) then
 				if tr.Entity:GetItemObject() then
-					tr.Entity:GetItemObject():DeleteItem()
+					tr.Entity:GetItemObject():RemoveItem()
 				end
 			end
 			
