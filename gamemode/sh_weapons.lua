@@ -400,6 +400,11 @@ GM.WeaponStatistics["Secondary.CanBash"] = function(weapon, value)
 		return false
 	end
 end
+GM.WeaponStatistics["FireModes"] = function(weapon, value)
+	if weapon:GetOwner():Holstered() then
+		return {"safe"}
+	end
+end
 
 hook.Add( "TFA_GetStat", "STALKER.Statistics", function( weapon, stat, value )
 

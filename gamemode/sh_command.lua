@@ -32,9 +32,15 @@ if SERVER then
 	end
 
 	function kingston.command.process(ply, text, arguments)
-		if text:sub(1, 1) == kingston.command.prefix then
+		if string.utf8sub(text, 1, 1) == kingston.command.prefix then
 
 			local match = text:lower():match(kingston.command.prefix.."([_%w]+)")
+			if !match then
+				local post = string.Explode(" ", text)
+				local len = string.len(post[1])
+
+				match = string.utf8sub(post[1], 2, len)
+			end
 
 			local command = kingston.command.types[match]
 			if command then
@@ -86,8 +92,9 @@ function kingston.command.register(id, data)
 	
 	local old_onrun = data.on_run
 	data.on_run = function(ply, arguments, raw)
-		if !data.can_run(ply, arguments) then
-			return COLOR_ERROR, "You don't have the permissions to run this command."
+		local can_run, reason = data.can_run(ply, arguments)
+		if !can_run then
+			return COLOR_ERROR, reason or "You don't have the permissions to run this command."
 		else
 			return old_onrun(ply, arguments, raw)
 		end
@@ -98,7 +105,7 @@ end
 
 kingston.command.register("mask", {
 	can_run = function(ply, args)
-		return ply:Alive()
+		return ply:Alive(), "You need to be alive to change your mask!"
 	end,
 	on_run = function(ply, args)
 		local changed = false
@@ -174,5 +181,130 @@ kingston.command.register("roll", {
 		if #rf > 0 then
 			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, output)
 		end
+	end
+})
+
+kingston.command.register("pda", {
+	can_run = function(ply, args)
+		if !ply:Alive() then
+			return false, "You can't use a PDA, you're dead."
+		end
+		
+		if ply:PassedOut() then
+			return false, "You can't use a PDA, you're passed out."
+		end
+	
+		local item = ply:HasItem("pda")
+		local selected_pda
+		if !item then 
+			return false, "You don't have a PDA!"
+		end
+		for k,v in next, ply.Inventory do
+			if v:GetClass() == "pda" then
+				if v:GetVar("Power", false) and v:GetVar("Primary", false) then
+					selected_pda = v
+					break
+				end
+			end
+		end
+		if !selected_pda then
+			return false, "Your PDA isn't powered on, or there is no primary PDA!"
+		end
+		
+		return true
+	end,
+	on_run = function(ply, args, raw)
+		local rf = {}
+		local pda_name
+		local pda_id
+		local header
+		local text = string.PatternSafe(raw)
+		for k,v in next, ply.Inventory do
+			if v:GetClass() == "pda" then
+				if v:GetVar("Power", false) and v:GetVar("Primary", false) then
+					pda_name = v:GetVar("Name")
+					pda_id = v:GetID()
+					break
+				end
+			end
+		end
+		
+		if !args[2] then return end
+		if !pda_name or #pda_name == 0 then 
+			ply:PDANotify("STALKER.net", "You must register your PDA first before using STALKER.net!", 2, 12)
+			
+			return
+		end
+		
+		local start, finish = text:find(string.PatternSafe(args[1]))
+		local body = string.Replace(text:sub(finish + 2, #text), "%", "")
+		
+		if args[1] == "all" then
+			header = pda_name.." -> all"
+			
+			for _,targ in next, player.GetAll() do
+				for id,item in next, targ.Inventory do
+					if item:GetClass() == "pda" then
+						if item:GetVar("Power", false) then
+							rf[#rf + 1] = targ
+							break
+						end
+					end
+				end
+			end
+		else
+			local target = GAMEMODE:FindPlayer(args[1], ply, true)
+			if !target then
+				ply:PDANotify("STALKER.net", "Recipient could not be found, or is offline. Try again later.", 3, 12)
+				return
+			end
+			local targ_name
+			local targ_pda_id
+			
+			for k,v in next, target.Inventory do
+				if v:GetClass() == "pda" then
+					if string.find( string.lower( v:GetVar("Name","") ), args[1], nil, true ) and v:GetVar("Power",false) then
+						targ_name = v:GetVar("Name")
+						targ_pda_id = v:GetID()
+						break
+					end
+				end
+			end
+			
+			if !targ_name or #targ_name == 0 then 
+				ply:PDANotify("STALKER.net", "Recipient could not be found, or is offline. Try again later.", 3, 12)
+				return
+			end
+			
+			header = pda_name.." -> "..targ_name
+			kingston.pda.write_chat(pda_id, targ_pda_id, body)
+			
+			rf = {target, ply}
+		end
+		
+		if args[1] == "all" then
+			netstream.Start(rf, "nAddPDANotif", header, body, 2, 5)
+		else
+			netstream.Start(rf, "nAddPDANotif", header, body, 6, 3)
+		end
+	end
+})
+
+kingston.command.register("pm", {
+	can_run = function(ply, args)
+		return true
+	end,
+	on_run = function(ply, args, raw)
+		local target = GAMEMODE:FindPlayer(args[1], ply)
+		if !target then
+			return COLOR_ERR, "Specified player not found."
+		end
+
+		local text = string.PatternSafe(raw)
+		local start, finish = text:find(string.PatternSafe(args[1]))
+		local body = string.Replace(text:sub(finish + 2, #text), "%", "")
+
+		ply:Notify(nil, Color(160, 255, 160), "[PM to %s]: %s", target:RPName(), body)
+		target:Notify(nil, Color(160, 255, 160), "[PM from %s]: %s", ply:RPName(), body)
 	end
 })

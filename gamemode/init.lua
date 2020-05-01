@@ -9,6 +9,7 @@ include( "config/sv_config.lua" );
 include( "config/sh_config.lua" );
 
 include( "pon.lua" );
+include( "utf8.lua" );
 include( "netstream2.lua" );
 include( "shared.lua" );
 
