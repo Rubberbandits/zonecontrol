@@ -47,7 +47,7 @@ function s_Meta:CreateNewBonemerge(szModel, iBoneScale)
 				
 				if ply:CharID() != self.nLastCharID then
 					GAMEMODE.BonemergeEntities[self] = nil
-					ply.BodyHidden = false
+					GAMEMODE:RemoveBonemergedItemCache(ply)
 					self:Remove()
 				end
 			else
@@ -59,13 +59,13 @@ function s_Meta:CreateNewBonemerge(szModel, iBoneScale)
 				
 				if self.LastParent:CharID() != self.nLastCharID then
 					GAMEMODE.BonemergeEntities[self] = nil
-					ply.BodyHidden = false
+					GAMEMODE:RemoveBonemergedItemCache(ply)
 					self:Remove()
 				end
 			end
 		else
 			if !IsValid(self.LastParent) then
-				GAMEMODE.BonemergeEntities[self] = nil
+				GAMEMODE:RemoveBonemergedItemCache(ply)
 				self:Remove()
 			else
 				self:SetParent(self.LastParent)
@@ -105,12 +105,17 @@ GM.BonemergeBodies = GM.BonemergeBodies or {}
 
 function GM:OnReceiveDummyItem(s_iID, s_DummyItem)
 	local metaitem = GAMEMODE:GetItemByID(s_DummyItem.szClass)
-	GAMEMODE.BonemergeItems[s_iID] = {
-		Owner = s_DummyItem.Owner,
-		szClass = s_DummyItem.szClass,
-		Vars = s_DummyItem.Vars,
-		CharID = s_DummyItem.CharID,
-	}
+	if !self.BonemergeItems[s_iID] then
+		self.BonemergeItems[s_iID] = {
+			Owner = s_DummyItem.Owner,
+			szClass = s_DummyItem.szClass,
+			Vars = s_DummyItem.Vars,
+			CharID = s_DummyItem.CharID,
+			ID = s_iID,
+		}
+	else
+		self.BonemergeItems[s_iID].Vars = s_DummyItem.Vars
+	end
 
 	if s_DummyItem.Vars["Equipped"] then
 		if metaitem.RemoveBody then
@@ -121,10 +126,10 @@ function GM:OnReceiveDummyItem(s_iID, s_DummyItem)
 			end
 		end
 	elseif !s_DummyItem.Vars["Equipped"] then
-		local owner = GAMEMODE.BonemergeItems[s_iID]["Owner"]
-		if owner[s_DummyItem.szClass] then
-			owner[s_DummyItem.szClass]:Remove()
-			owner[s_DummyItem.szClass] = nil
+		local owner = self.BonemergeItems[s_iID]["Owner"]
+		if self.BonemergeItems[s_iID].BonemergedEntity then
+			self.BonemergeItems[s_iID].BonemergedEntity:Remove()
+			self.BonemergeItems[s_iID].BonemergedEntity = nil
 		end
 		
 		if metaitem.RemoveBody and !self.BonemergeBodies[s_DummyItem.Owner] then
@@ -138,7 +143,24 @@ function GM:OnReceiveDummyItem(s_iID, s_DummyItem)
 	
 	-- cant use full item info
 	if metaitem.DummyItemUpdate then
-		metaitem.DummyItemUpdate(s_DummyItem)
+		metaitem.DummyItemUpdate(s_DummyItem, self.BonemergeItems[s_iID].BonemergedEntity)
+	end
+end
+
+function GM:RemoveBonemergedItemCache(ply)
+	ply.BodyHidden = false
+	if self.BonemergeBodies[ply] and self.BonemergeBodies[ply]:IsValid() then
+		self.BonemergeBodies[ply]:Remove()
+		self.BonemergeBodies[ply] = nil
+	end
+	
+	for k,v in next, self.BonemergeItems do
+		if v.Owner == ply then
+			if v.BonemergedEntity then
+				v.BonemergedEntity:Remove()
+				v.BonemergedEntity = nil
+			end
+		end
 	end
 end
 
@@ -160,17 +182,16 @@ local function BonemergeThink()
 		
 		for m,n in next, GAMEMODE.BonemergeItems do
 			if n.Owner == v and n.CharID != v:CharID() then
-				if v[n.szClass] then
-					v[n.szClass]:Remove()
+				if n.BonemergedEntity then
+					n.BonemergedEntity:Remove()
 				end
-				v[n.szClass] = nil
+				n.BonemergedEntity = nil
 				GAMEMODE.BonemergeItems[m] = nil
-				GAMEMODE.DummyItems[m] = nil
 				
 				continue
 			end
 			
-			if n.Owner == v and (!v[n.szClass] or !IsValid(v[n.szClass])) and n.Vars["Equipped"] then
+			if n.Owner == v and (!n.BonemergedEntity or !IsValid(n.BonemergedEntity)) and n.Vars["Equipped"] then
 				local metaitem = GAMEMODE:GetItemByID(n.szClass)
 				if metaitem.Bonemerge then
 					local mdl = metaitem.Bonemerge
@@ -184,11 +205,12 @@ local function BonemergeThink()
 						scale = metaitem.ScaleForGender
 					end
 			
-					v[n.szClass] = v:CreateNewBonemerge(mdl, scale)
-					if !v[n.szClass] or !IsValid(v[n.szClass]) then
+					n.BonemergedEntity = v:CreateNewBonemerge(mdl, scale)
+					
+					if !n.BonemergedEntity or !IsValid(n.BonemergedEntity) then
 						continue -- outside of pvs? creation failed.
 					end
-					
+
 					if metaitem.RemoveBody and GAMEMODE.BonemergeBodies[v] then
 						GAMEMODE.BonemergeBodies[v]:Remove()
 						GAMEMODE.BonemergeBodies[v] = nil
@@ -199,13 +221,13 @@ local function BonemergeThink()
 							-- first key in bodygroup is bodygroup index
 							-- second key in bodygroup is bodygroup value
 							
-							v[n.szClass]:SetBodygroup(bodygroup[1], bodygroup[2])
+							n.BonemergedEntity:SetBodygroup(bodygroup[1], bodygroup[2])
 						end
 					end
 					
 					if metaitem.Submaterials then
 						for _,submaterial in next, metaitem.Submaterials do
-							v[n.szClass]:SetSubMaterial(submaterial[1], submaterial[2])
+							n.BonemergedEntity:SetSubMaterial(submaterial[1], submaterial[2])
 						end
 					end
 					
@@ -213,18 +235,18 @@ local function BonemergeThink()
 						local suit = GAMEMODE.SuitVariants[n.Vars["SuitClass"]]
 						if suit.Submaterial then
 							for _,submaterial in next, suit.Submaterial do
-								v[n.szClass]:SetSubMaterial(submaterial[1], submaterial[2])
+								n.BonemergedEntity:SetSubMaterial(submaterial[1], submaterial[2])
 							end
 						end
 					end
 					
 					if metaitem.DummyItemUpdate then
-						metaitem.DummyItemUpdate(n)
+						metaitem.DummyItemUpdate(n, n.BonemergedEntity)
 					end
 				end
-			elseif !n.Vars["Equipped"] and v[n.szClass] then
-				v[n.szClass]:Remove()
-				v[n.szClass] = nil
+			elseif !n.Vars["Equipped"] and n.BonemergedEntity then
+				n.BonemergedEntity:Remove()
+				n.BonemergedEntity = nil
 			end
 		end
 	end
@@ -239,8 +261,8 @@ local function DrawBonemergedShadows(ply)
 	end
 	
 	for m,n in next, GAMEMODE.BonemergeItems do
-		if n.Owner == ply and IsValid(ply[n.szClass]) and n.Vars["Equipped"] then
-			ply[n.szClass]:CreateShadow()
+		if n.Owner == ply and IsValid(n.BonemergedEntity) and n.Vars["Equipped"] then
+			n.BonemergedEntity:CreateShadow()
 		end
 	end
 end

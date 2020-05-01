@@ -328,7 +328,7 @@ kingston.chat.register_type("me", {
 	no_console_print = true,
 	while_dead = true,
 	construct_string = function(chat_type, ply, text)
-		return {Color(131, 196, 251), "** ", ply, " ", text}
+		return {Color(131, 196, 251), "** ", ply, (text[1] == "'" and "" or " "), text}
 	end,
 })
 
@@ -339,7 +339,7 @@ kingston.chat.register_type("lme", {
 	no_console_print = true,
 	while_dead = true,
 	construct_string = function(chat_type, ply, text)
-		return {Color(131, 196, 251), "** ", ply, " ", text}
+		return {Color(131, 196, 251), "** ", ply, (text[1] == "'" and "" or " "), text}
 	end,
 })
 

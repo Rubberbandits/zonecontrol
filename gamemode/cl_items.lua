@@ -39,7 +39,7 @@ end );
 
 netstream.Hook( "ReceiveDummyItem", function( s_iID, s_szClass, s_Vars, s_Owner, s_CharID )
 
-	GAMEMODE.DummyItems[s_iID] = {
+	local tbl = {
 	
 		szClass = s_szClass,
 		Vars = s_Vars,
@@ -48,7 +48,7 @@ netstream.Hook( "ReceiveDummyItem", function( s_iID, s_szClass, s_Vars, s_Owner,
 		
 	};
 
-	hook.Run( "OnReceiveDummyItem", s_iID, GAMEMODE.DummyItems[s_iID] );
+	hook.Run( "OnReceiveDummyItem", s_iID, tbl );
 	
 end );
 
