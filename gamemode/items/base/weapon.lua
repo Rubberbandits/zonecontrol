@@ -18,11 +18,11 @@ BASE.functions.Equip = {
 		local MetaItem = GAMEMODE:GetItemByID( item:GetClass() );
 		local weapon;
 		
-		if( item:GetVar( "Durability", 0 ) < 1 ) then
+		if( item.UseDurability and item:GetVar( "Durability", 0 ) < 1 ) then
 		
 			if( SERVER ) then
 			
-				item:Owner():Notify( Color(255,255,255), "This weapon is broken." );
+				item:Owner():Notify( nil,Color(255,255,255), "This weapon is broken." );
 				
 			end
 			

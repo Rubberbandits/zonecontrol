@@ -229,12 +229,12 @@ GM.GearSelection = {
     ["weapon_srp_sawnoff"] = 3500,
     ["12ga"] = 200,
     ["weapon_srp_toz"] = 6500,
-    ["weapon_srp_m500"] = 12000,
-    ["weapon_srp_ak74u"] = 13000,
+    ["weapon_srp_m500"] = 7500,
+    ["weapon_srp_ak74u"] = 9000,
     ["545x39"] = 450,
     ["weapon_srp_hammerless"] = 1500,
     ["32acp"] = 100,
-    ["weapon_srp_mosin"] = 9500,
+    ["weapon_srp_mosin"] = 7000,
     ["762x54r"] = 500,
     ["weapon_srp_kitchenknife"] = 500,
     ["weapon_srp_kabar"] = 2500,
@@ -245,7 +245,7 @@ GM.GearSelection = {
 
 GM.DefaultSelfRepairCond = 90
 
-GM.RubleBudget = 13500;
+GM.RubleBudget = 9500;
 GM.SellPercentage = 70;
 
 GM.StalkerCursorEnabled = false
