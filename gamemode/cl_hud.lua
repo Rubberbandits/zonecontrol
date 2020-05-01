@@ -676,11 +676,10 @@ end
 local function setup_ammo_display(mdl)
 	if GAMEMODE.ammo_display and IsValid(GAMEMODE.ammo_display) then return end
 	
-	GAMEMODE.ammo_display = vgui.Create( "DModelPanel" )
-	GAMEMODE.ammo_display:SetSize( ScrW() / 8, ScrH() / 8 )
-	GAMEMODE.ammo_display:SetPos(ScrW() - ( ScrW() / 7 ), ScrH() - ( ScrH() / 7 ))
-	GAMEMODE.ammo_display:SetModel( mdl )
-	GAMEMODE.ammo_display:Hide()
+	GAMEMODE.ammo_display = ClientsideModel(mdl, RENDERGROUP_OTHER)
+	if !IsValid(GAMEMODE.ammo_display) then return end
+	
+	GAMEMODE.ammo_display:SetNoDraw(true)
 end
 
 function GM:DrawPlayerInfo()
@@ -700,20 +699,74 @@ function GM:DrawPlayerInfo()
 	surface.SetDrawColor( 255, 255, 255, 255 );
 	surface.DrawTexturedRectUV( ScrW() - ( ScrW() / 7 ), ScrH() - ( ScrH() / 7 ), ScrW() / 8, ScrH() / 8, 0.843, 0.04, 0.98, 0.137 );
 	
-	/*
 	local weapon = LocalPlayer():GetActiveWeapon()
 	if weapon and weapon:IsValid() then
 		local metaitem = GAMEMODE:GetItemByID(weapon:GetPrimaryAmmoType())
 		if metaitem then
-			local pnl = GAMEMODE.ammo_display
-			if !pnl or !IsValid(pnl) then
+			local ent = GAMEMODE.ammo_display
+			if !ent or !IsValid(ent) then
 				setup_ammo_display(metaitem.Model)
 			else
-				GAMEMODE.ammo_display:Paint(ScrW() / 8, ScrH() / 8)
+				
+				local fov
+				local cam_pos
+				local lookat
+				if metaitem.LookAt then
+					fov = metaitem.FOV
+					cam_pos = metaitem.CamPos
+					lookat = metaitem.LookAt
+				else
+					local a, b = ent:GetModelBounds();
+					fov = 15
+					cam_pos = Vector(math.abs(a.x), math.abs(a.y), math.abs(a.z)) * 5
+					lookat = ( a + b ) / 2
+				end
+				local ang = (lookat - cam_pos):Angle()
+				
+				local width = ScreenScaleH(48)
+				local height = ScreenScaleH(24)
+				local pos_x = (ScrW() - (ScrW() / 17)) - (width / 2)
+				local pos_y = (ScrH() - (ScrH() / 19)) - (height / 2)
+				local endpos_x = pos_x + width
+				local endpos_y = pos_y + height
+			
+				cam.Start3D(cam_pos, ang, fov, pos_x, pos_y, width, height, 5, 4096)
+					render.SuppressEngineLighting(true)
+					render.SetLightingOrigin(ent:GetPos())
+					render.ResetModelLighting(1, 1, 1)
+					render.SetColorModulation(1, 1, 1)
+					render.SetBlend(1)
+
+					render.SetScissorRect( pos_x, pos_y, endpos_x, endpos_y, true )
+						ent:DrawModel()
+					render.SetScissorRect( 0, 0, 0, 0, false )
+
+					render.SuppressEngineLighting( false )
+				cam.End3D()
 			end
 		end
+		
+		if weapon.IsTFAWeapon then
+			local mode = weapon:GetFireModeName()[1]
+			surface.SetTextColor(220, 220, 220)
+			surface.SetFont("CombineControl.ChatBig")
+			surface.SetTextPos(ScrW() - (ScrW() / 8.63), ScrH() - (ScrH() / 13.5))
+			surface.DrawText(mode)
+			
+			local mag = weapon:Clip1()
+			surface.SetTextColor(193, 170, 140)
+			surface.SetFont("CombineControl.ChatBig")
+			surface.SetTextPos(ScrW() - (ScrW() / 11.5), ScrH() - (ScrH() / 10))
+			surface.DrawText(mag)
+			
+			local total = weapon:GetOwner():GetAmmoCount(weapon:GetPrimaryAmmoType())
+			surface.SetTextColor(198, 160, 99)
+			surface.SetFont("CombineControl.ChatBig")
+			surface.SetTextPos(ScrW() - (ScrW() / 24), ScrH() - (ScrH() / 10))
+			surface.DrawText(total)
+		end
+		
 	end
-	*/
 
 end
 

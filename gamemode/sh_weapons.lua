@@ -542,6 +542,10 @@ hook.Add("TFA_CanAttach", "STALKER.Attachments", function(weapon, attachment)
 	end
 end)
 
+hook.Add("TFA_DrawHUDAmmo", "STALKER.Remove3D2DAmmoHUD", function()
+	return false
+end)
+
 local weapon_meta = FindMetaTable("Weapon")
 local player_meta = FindMetaTable("Player")
 local old_GetAmmoCount = old_GetAmmoCount or player_meta.GetAmmoCount
