@@ -7,6 +7,7 @@ function PANEL:Init()
 	self:SetDraggable(true)
 	self:Center()
 	self:MakePopup()
+	self.data = {}
 	
 	self.ModelDisplay = vgui.Create("DModelPanel", self)
 	self.ModelDisplay:SetPos( self:GetWide() - 256, 24 );
