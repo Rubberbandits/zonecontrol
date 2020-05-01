@@ -53,7 +53,7 @@ function GM:InitSQL()
 		
 		mysqloo.Query( "SET interactive_timeout = 28800" );
 		mysqloo.Query( "SET wait_timeout = 28800" );
-		mysqloo.Query("DELETE FROM cc_logs WHERE Date < (UNIX_TIMESTAMP(NOW()) - 1209600);")
+		mysqloo.Query("DELETE FROM cc_logs WHERE CAST(Date AS SIGNED) < (UNIX_TIMESTAMP(NOW()) - 1209600);")
 		
 	end
 
@@ -182,8 +182,8 @@ local CharTable = {
 	{ "Model", "VARCHAR(100)" },
 	{ "Body", "VARCHAR(100)" },
 	{ "Title", "VARCHAR(8192)", "" },
-	{ "TitleOne", "VARCHAR(128)", "" },
-	{ "TitleTwo", "VARCHAR(128)", "" },
+	{ "TitleOne", "VARCHAR(160)", "" },
+	{ "TitleTwo", "VARCHAR(160)", "" },
 	{ "Money", "INT", "0" },
 	{ "Trait", "INT", TRAIT_NONE },
 	{ "Skingroup", "INT", "0" },

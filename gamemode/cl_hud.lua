@@ -1012,13 +1012,6 @@ function GM:DrawEntities()
 					pos.y = pos.y + 20;
 					
 				end
-				
-				if( v:NewbieStatus() == NEWBIE_STATUS_NEW ) then
-					
-					draw.DrawTextShadow( "Inexperienced Roleplayer", "CombineControl.LabelSmall", pos.x, pos.y, Color( 200, 200, 200, v.TitleAlpha * 255 ), Color( 0, 0, 0, v.TitleAlpha * 255 ), 1 );
-					pos.y = pos.y + 20;
-					
-				end
 			
 			end
 			

@@ -164,6 +164,97 @@ function GM:RemoveBonemergedItemCache(ply)
 	end
 end
 
+local function ProcessBonemergeItems(ply)
+	local ent_found
+	for m,n in next, GAMEMODE.BonemergeItems do
+		if n.Owner == ply and n.CharID != ply:CharID() then
+			if n.BonemergedEntity then
+				n.BonemergedEntity:Remove()
+			end
+			n.BonemergedEntity = nil
+			GAMEMODE.BonemergeItems[m] = nil
+			
+			continue
+		end
+		
+		if n.Owner == ply and (!n.BonemergedEntity or !IsValid(n.BonemergedEntity)) and n.Vars["Equipped"] then
+			local metaitem = GAMEMODE:GetItemByID(n.szClass)
+			if metaitem.Bonemerge then
+				local mdl = metaitem.Bonemerge
+				local scale
+				
+				if metaitem.AllowGender then
+					if ply:Gender() == GENDER_FEMALE then
+						mdl = string.StripExtension(mdl).."_f.mdl"
+					end
+				elseif metaitem.ScaleForGender and ply:Gender() == GENDER_FEMALE then
+					scale = metaitem.ScaleForGender
+				end
+		
+				n.BonemergedEntity = ply:CreateNewBonemerge(mdl, scale)
+				if n.BonemergedEntity then
+					ent_found = true
+				end
+				
+				if !n.BonemergedEntity or !IsValid(n.BonemergedEntity) then
+					continue -- outside of pvs? creation failed.
+				end
+
+				if metaitem.RemoveBody and GAMEMODE.BonemergeBodies[ply] then
+					GAMEMODE.BonemergeBodies[ply]:Remove()
+					GAMEMODE.BonemergeBodies[ply] = nil
+				end
+			
+				if metaitem.Bodygroups then
+					for _,bodygroup in next, metaitem.Bodygroups do
+						-- first key in bodygroup is bodygroup index
+						-- second key in bodygroup is bodygroup value
+						
+						n.BonemergedEntity:SetBodygroup(bodygroup[1], bodygroup[2])
+					end
+				end
+				
+				if metaitem.Submaterials then
+					for _,submaterial in next, metaitem.Submaterials do
+						n.BonemergedEntity:SetSubMaterial(submaterial[1], submaterial[2])
+					end
+				end
+				
+				if n.Vars["SuitClass"] and GAMEMODE.SuitVariants[n.Vars["SuitClass"]] then
+					local suit = GAMEMODE.SuitVariants[n.Vars["SuitClass"]]
+					if suit.Submaterial then
+						for _,submaterial in next, suit.Submaterial do
+							n.BonemergedEntity:SetSubMaterial(submaterial[1], submaterial[2])
+						end
+					end
+				end
+				
+				if metaitem.DummyItemUpdate then
+					metaitem.DummyItemUpdate(n, n.BonemergedEntity)
+				end
+			end
+		elseif !n.Vars["Equipped"] and n.BonemergedEntity then
+			n.BonemergedEntity:Remove()
+			n.BonemergedEntity = nil
+		elseif n.BonemergedEntity then
+			ent_found = true
+		end
+	end
+	
+	if !ent_found and !IsValid(GAMEMODE.BonemergeBodies[ply]) then
+		ProcessBonemergeItems(ply)
+	end
+end
+
+local function ProcessBody(ply)
+	if !ply.BodyHidden and !IsValid(GAMEMODE.BonemergeBodies[ply]) then
+		GAMEMODE.BonemergeBodies[ply] = ply:CreateNewBonemerge(ply:Body())
+	elseif ply.BodyHidden and IsValid(GAMEMODE.BonemergeBodies[ply]) then
+		GAMEMODE.BonemergeBodies[ply]:Remove()
+		GAMEMODE.BonemergeBodies[ply] = nil
+	end
+end
+
 local function BonemergeThink()
 	for k,v in next, player.GetAll() do
 		if !IsValid(v) then continue end
@@ -173,82 +264,8 @@ local function BonemergeThink()
 		if !GAMEMODE.EfficientModelCheck[v:GetModel()] then continue end
 		if v:GetNoDraw() then continue end
 		
-		if !v.BodyHidden and !IsValid(GAMEMODE.BonemergeBodies[v]) then
-			GAMEMODE.BonemergeBodies[v] = v:CreateNewBonemerge(v:Body())
-		elseif v.BodyHidden and IsValid(GAMEMODE.BonemergeBodies[v]) then
-			GAMEMODE.BonemergeBodies[v]:Remove()
-			GAMEMODE.BonemergeBodies[v] = nil
-		end
-		
-		for m,n in next, GAMEMODE.BonemergeItems do
-			if n.Owner == v and n.CharID != v:CharID() then
-				if n.BonemergedEntity then
-					n.BonemergedEntity:Remove()
-				end
-				n.BonemergedEntity = nil
-				GAMEMODE.BonemergeItems[m] = nil
-				
-				continue
-			end
-			
-			if n.Owner == v and (!n.BonemergedEntity or !IsValid(n.BonemergedEntity)) and n.Vars["Equipped"] then
-				local metaitem = GAMEMODE:GetItemByID(n.szClass)
-				if metaitem.Bonemerge then
-					local mdl = metaitem.Bonemerge
-					local scale
-					
-					if metaitem.AllowGender then
-						if v:Gender() == GENDER_FEMALE then
-							mdl = string.StripExtension(mdl).."_f.mdl"
-						end
-					elseif metaitem.ScaleForGender and v:Gender() == GENDER_FEMALE then
-						scale = metaitem.ScaleForGender
-					end
-			
-					n.BonemergedEntity = v:CreateNewBonemerge(mdl, scale)
-					
-					if !n.BonemergedEntity or !IsValid(n.BonemergedEntity) then
-						continue -- outside of pvs? creation failed.
-					end
-
-					if metaitem.RemoveBody and GAMEMODE.BonemergeBodies[v] then
-						GAMEMODE.BonemergeBodies[v]:Remove()
-						GAMEMODE.BonemergeBodies[v] = nil
-					end
-				
-					if metaitem.Bodygroups then
-						for _,bodygroup in next, metaitem.Bodygroups do
-							-- first key in bodygroup is bodygroup index
-							-- second key in bodygroup is bodygroup value
-							
-							n.BonemergedEntity:SetBodygroup(bodygroup[1], bodygroup[2])
-						end
-					end
-					
-					if metaitem.Submaterials then
-						for _,submaterial in next, metaitem.Submaterials do
-							n.BonemergedEntity:SetSubMaterial(submaterial[1], submaterial[2])
-						end
-					end
-					
-					if n.Vars["SuitClass"] and GAMEMODE.SuitVariants[n.Vars["SuitClass"]] then
-						local suit = GAMEMODE.SuitVariants[n.Vars["SuitClass"]]
-						if suit.Submaterial then
-							for _,submaterial in next, suit.Submaterial do
-								n.BonemergedEntity:SetSubMaterial(submaterial[1], submaterial[2])
-							end
-						end
-					end
-					
-					if metaitem.DummyItemUpdate then
-						metaitem.DummyItemUpdate(n, n.BonemergedEntity)
-					end
-				end
-			elseif !n.Vars["Equipped"] and n.BonemergedEntity then
-				n.BonemergedEntity:Remove()
-				n.BonemergedEntity = nil
-			end
-		end
+		ProcessBody(v)
+		ProcessBonemergeItems(v)
 	end
 end
 hook.Add("Think", "STALKER.BonemergeThink", BonemergeThink)

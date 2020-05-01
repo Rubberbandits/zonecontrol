@@ -402,7 +402,12 @@ GM.WeaponStatistics["Secondary.CanBash"] = function(weapon, value)
 end
 GM.WeaponStatistics["FireModes"] = function(weapon, value)
 	if weapon:GetOwner():Holstered() then
-		return {"Safe", "Safe", "Safe"}
+		local tbl = {}
+		for i = 1, #value do
+			tbl[i] = "Safe"
+		end
+		
+		return tbl
 	end
 end
 

@@ -525,13 +525,10 @@ function GM:CanTool( ply, tr, tool )
 			
 			if( tool == "remover" and tr.Entity and tr.Entity:IsValid() and tr.Entity:GetClass() == "cc_item" ) then
 				if tr.Entity:GetItemObject() then
+					kingston.log.write("items", "[%s] removed item %s [ID: %d]", ply:Nick(), tr.Entity:GetItemObject():GetName(), tr.Entity:GetItemObject():GetID())
 					tr.Entity:GetItemObject():RemoveItem()
 				end
 			end
-			
-			if( self:NoToolLog( ply, tr, tool ) ) then return true end
-			
-			self:LogSandbox( "[T] " .. ply:VisibleRPName() .. " used tool " .. tool .. " on " .. tr.Entity:GetClass() .. ".", ply );
 			
 		end
 		
@@ -579,8 +576,6 @@ function GM:CanTool( ply, tr, tool )
 		if( SERVER ) then
 			
 			if( self:NoToolLog( ply, tr, tool ) ) then return true end
-			
-			self:LogSandbox( "[T] " .. ply:VisibleRPName() .. " used tool " .. tool .. " on " .. tr.Entity:GetClass() .. ".", ply );
 			
 		end
 		

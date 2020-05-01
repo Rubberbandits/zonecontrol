@@ -88,8 +88,8 @@ BASE.functions.RemoveHelmet = {
 		
 		if SERVER then
 			item:Transmit()
-			item:Owner():SetSkin(item:Owner():GetCharFromID( item:Owner():CharID() ).Skingroup)
 			item:Owner():SetSubMaterial()
+			item:Owner():SetSkin(item:Owner():GetCharFromID( item:Owner():CharID() ).Skingroup)
 		end
 		
 		return true
@@ -109,11 +109,12 @@ BASE.functions.Unequip = {
 			if item.WearModel then
 				item:Owner():SetModelCC( item:Owner().CharModel );
 				item:Owner().Uniform = nil;
-				item:Owner():SetSkin( item:Owner():GetCharFromID( item:Owner():CharID() ).Skingroup );
 				item:Owner():SetBody( item:Owner():GetCharFromID( item:Owner():CharID() ).Body );
 			elseif metaitem.Bonemerge then
 				item:Transmit()
 			end
+			
+			item:Owner():SetSkin( item:Owner():GetCharFromID( item:Owner():CharID() ).Skingroup );
 			
 			if item:GetVar( "Durability", 0 ) < 1 then
 				item:Owner():Notify(nil, Color(255,255,255), "Your suit has broken.")
