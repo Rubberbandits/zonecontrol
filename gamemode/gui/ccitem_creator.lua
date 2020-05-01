@@ -312,8 +312,6 @@ function PANEL:SetItem(item)
 	end
 end
 
-PANEL.data = {}
-
 function PANEL:SaveCurrentItem()
 	if !self.CurrentItem then return end
 	local data = self.data or {}
