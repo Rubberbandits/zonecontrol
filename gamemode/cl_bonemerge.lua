@@ -149,7 +149,7 @@ function GM:OnReceiveDummyItem(s_iID, s_DummyItem)
 end
 
 function GM:RemoveBonemergedItemCache(ply)
-	self.BodyHidden[s_DummyItem.Owner] = false
+	self.BodyHidden[ply] = false
 	if self.BonemergeBodies[ply] and self.BonemergeBodies[ply]:IsValid() then
 		self.BonemergeBodies[ply]:Remove()
 		self.BonemergeBodies[ply] = nil
