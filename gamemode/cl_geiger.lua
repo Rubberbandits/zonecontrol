@@ -10,7 +10,14 @@ function meta:GetExposureRate()
 			calc_amt = calc_amt + math.Clamp(math.Round((v:GetSourceIntensity() * v:GetSourceSize()^2) / dist, 2), 0, v:GetSourceIntensity())
 		end
 	end
-	
+	for k,v in next, player.GetAll() do
+		local pos = v:GetPos()
+		local dist = self:GetPos():DistToSqr(Vector(pos.x + math.random(0,30), pos.y + math.random(0,30), pos.z + math.random(0,30)))
+		if dist < (512*512) and v:Radiation() > 0 then
+			calc_amt = calc_amt + math.Clamp(math.Round(((v:Radiation() + math.random(-10,10)) * 20^2) / dist, 2), 0, v:Radiation())
+		end
+	end
+
 	return calc_amt
 end
 
@@ -56,8 +63,8 @@ function kingston.geiger.render()
 	local last_angle = GAMEMODE.LastGeigerAngle
 	local next_angle = kingston.geiger.calculate_angle(rate)
 	
-	if rate > 0 and CurTime() - GAMEMODE.LastRandomMovement > (18 / rate) then
-		local rand = math.random(-4, 4)
+	if rate > 0 and CurTime() - GAMEMODE.LastRandomMovement > (30 / rate) then
+		local rand = math.random(-2, 2)
 		
 		next_angle = next_angle + rand
 		

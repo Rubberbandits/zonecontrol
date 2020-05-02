@@ -32,7 +32,7 @@ function ENT:Think()
 			local intensity = self:GetSourceIntensity()
 			local calc_amt = math.Clamp(math.Round((intensity * self:GetSourceSize()^2) / dist, 2), 0, intensity) * v:GetRadiationResistance()
 			if calc_amt > 0 then
-				v:ApplyRadiation(calc_amt / 3600)
+				v:ApplyRadiation(math.Round(calc_amt / 3600, 4))
 			end
 		end
 		
