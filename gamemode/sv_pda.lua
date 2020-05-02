@@ -15,6 +15,7 @@ kingston.pda.journal_db_struct = {
 	{ "Owner", "INT" },
 	{ "Title", "VARCHAR(256)" },
 	{ "Message", "VARCHAR(8192)" },
+	{ "DeletionDate", "BIGINT UNSIGNED" },
 }
 
 kingston.pda.chat_insert_str = [[
@@ -24,7 +25,7 @@ kingston.pda.journal_insert_str = [[
 	INSERT INTO cc_pda_journal (Date, Owner, Title, Message) VALUES (UNIX_TIMESTAMP(), ?, ?, ?);
 ]]
 kingston.pda.search_chat_str = [[SELECT * FROM cc_pda_chat WHERE Date >= UNIX_TIMESTAMP('%s') AND Date <= (UNIX_TIMESTAMP('%s') + 86400) AND (Sender = %d OR Receiver = %d);]]
-kingston.pda.search_journal_str = [[SELECT * FROM cc_pda_journal WHERE Owner = %d;]]
+kingston.pda.search_journal_str = [[SELECT * FROM cc_pda_journal WHERE Owner = %d AND DeletionDate IS NOT NULL;]]
 
 local function init_log_pda_tbl(db)
 	mysqloo.Query("CREATE TABLE IF NOT EXISTS cc_pda_chat ( id INT NOT NULL auto_increment, PRIMARY KEY ( id ) );")
@@ -100,6 +101,10 @@ function kingston.pda.write_journal(pda, title, message, update)
 		kingston.pda.journal_insert:setString(2, title)
 		kingston.pda.journal_insert:setString(3, message)
 	kingston.pda.journal_insert:start()
+end
+
+function kingston.pda.delete_journal(pda, id)
+	
 end
 
 /* Networking */

@@ -243,6 +243,7 @@ kingston.command.register("pda", {
 			header = pda_name.." -> all"
 			
 			for _,targ in next, player.GetAll() do
+				if !targ.Inventory then continue end
 				for id,item in next, targ.Inventory do
 					if item:GetClass() == "pda" then
 						if item:GetVar("Power", false) then

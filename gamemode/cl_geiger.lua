@@ -102,7 +102,7 @@ function kingston.geiger.render_dosimeter()
 	local dose = GAMEMODE.ReadingDosimeter:GetVar("Radiation", 0)
 	local start_pos = ScrW() / 3.38
 	local end_pos = ScrW() / 1.423
-	local cur_pos = math.Clamp(start_pos + (dose * (ScrW() / 480)), start_pos, end_pos)
+	local cur_pos = math.Clamp(start_pos + (dose * (ScrW() / 60)), start_pos, end_pos)
 	
 	surface.SetDrawColor(Color(0,0,0))
 	surface.DrawRect(cur_pos, 0, 2, ScrH())

@@ -1016,12 +1016,12 @@ local function handle_dosi(ply, amt)
 		if istable(items) and !items.IsItem then
 			for k,v in next, items do
 				if v:GetVar("Activated", false) then
-					v:SetVar("Radiation", math.Clamp(v:GetVar("Radiation", 0) + amt, 0, 200), false, true)
+					v:SetVar("Radiation", math.Clamp(v:GetVar("Radiation", 0) + amt, 0, 25), false, true)
 				end
 			end
 		elseif istable(items) then
 			if items:GetVar("Activated", false) then
-				items:SetVar("Radiation", math.Clamp(items:GetVar("Radiation", 0) + amt, 0, 200), false, true)
+				items:SetVar("Radiation", math.Clamp(items:GetVar("Radiation", 0) + amt, 0, 25), false, true)
 			end
 		end
 	end

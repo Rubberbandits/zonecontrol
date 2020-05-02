@@ -241,9 +241,7 @@ local function ProcessBonemergeItems(ply)
 		end
 	end
 	
-	if !ent_found and !IsValid(GAMEMODE.BonemergeBodies[ply]) then
-		ProcessBonemergeItems(ply)
-	end
+	return ent_found
 end
 
 local function ProcessBody(ply)
@@ -265,7 +263,17 @@ local function BonemergeThink()
 		if v:GetNoDraw() then continue end
 		
 		ProcessBody(v)
-		ProcessBonemergeItems(v)
+		local ent_found = ProcessBonemergeItems(v)
+		
+		if (!GAMEMODE.BonemergeBodies[v] or !IsValid(GAMEMODE.BonemergeBodies[v])) and !ent_found then
+			print("unhide body and process")
+			v.BodyHidden = false
+			ProcessBody(v)
+		elseif GAMEMODE.BonemergeBodies[v] and IsValid(GAMEMODE.BonemergeBodies[v]) and ent_found and !v.BodyHidden then
+			print("hide body and process")
+			v.BodyHidden = true
+			ProcessBody(v)
+		end
 	end
 end
 hook.Add("Think", "STALKER.BonemergeThink", BonemergeThink)

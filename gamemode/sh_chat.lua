@@ -413,7 +413,7 @@ kingston.chat.register_type("admin", {
 	chat_command = {"/a", "/admin"},
 	chat_filter = {CB_ALL, CB_OOC},
 	construct_string = function(chat_type, ply, text)
-		if ply:IsAdmin() or ply:IsEventCoordinator() then
+		if ply.IsAdmin and ply:IsAdmin() or ply:IsEventCoordinator() then
 			return {Color(255, 107, 218), "[ADMIN] ", Color(255, 156, 230), ply, ": ", text}
 		else
 			return {Color(255, 107, 218), "[ADMIN - Request] ", Color(255, 156, 230), ply, ": ", text}
