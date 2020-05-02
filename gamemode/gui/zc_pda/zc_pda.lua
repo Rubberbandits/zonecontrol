@@ -335,6 +335,7 @@ end
 
 function PANEL:PopulateContacts(data)
 	local scroll = self.Body.contacts
+	if !scroll or !scroll:IsValid() then return end
 	scroll:Clear()
 	
 	for _,contact in next, data do

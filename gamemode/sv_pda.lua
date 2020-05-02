@@ -15,7 +15,7 @@ kingston.pda.journal_db_struct = {
 	{ "Owner", "INT" },
 	{ "Title", "VARCHAR(256)" },
 	{ "Message", "VARCHAR(8192)" },
-	{ "DeletionDate", "BIGINT UNSIGNED" },
+	--{ "DeletionDate", "BIGINT UNSIGNED" },
 }
 
 kingston.pda.chat_insert_str = [[
