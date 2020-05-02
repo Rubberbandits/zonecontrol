@@ -229,6 +229,8 @@ netstream.Hook("ChangeItemData", function(ply, id, data)
 	-- need to do minmax checking and auth
 	
 	for k,v in next, data do
+		if k == "PrivateVars" then continue end
+		
 		item:SetVar(k, v, nil, true)
 	end
 end)

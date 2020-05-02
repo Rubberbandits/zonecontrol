@@ -115,14 +115,13 @@ function item:Owner()
 	
 end
 
-function item:GetVars()
-
-	if( self.Vars ) then
-	
-		return self.Vars;
-		
+function item:GetVars(private)
+	local tbl = table.Copy(self.Vars) or {}
+	if !private then
+		tbl["PrivateVars"] = nil
 	end
 	
+	return tbl
 end
 
 function item:CanSell()
@@ -351,7 +350,7 @@ if( SERVER ) then
 			end
 
 		end
-		mysqloo.Query( Format( "INSERT INTO cc_items ( Owner, ItemClass, Vars ) VALUES ( '%d', '%s', '%s' )", self:Owner():CharID(), self:GetClass(), util.TableToJSON( self:GetVars() or {} ) ), onSuccess );
+		mysqloo.Query( Format( "INSERT INTO cc_items ( Owner, ItemClass, Vars ) VALUES ( '%d', '%s', '%s' )", self:Owner():CharID(), self:GetClass(), util.TableToJSON( self:GetVars(true) or {} ) ), onSuccess );
 	
 	end
 	
@@ -367,7 +366,7 @@ if( SERVER ) then
 		
 		end
 		query:setNumber( 1, self:GetCharID() );
-		query:setString( 2, util.TableToJSON( self:GetVars() or {} ) );
+		query:setString( 2, util.TableToJSON( self:GetVars(true) or {} ) );
 		query:setNumber( 3, self:StockpileID() );
 		query:setNumber( 4, self:GetID() );
 		query:start();

@@ -1,4 +1,3 @@
-
 ITEM.Name =  "PDA";
 ITEM.Desc =  "A run of the mill PDA common all through-out the Zone. Its usefulness has every stalker carrying one from here to the CNPP.";
 ITEM.Model =  "models/kali/miscstuff/stalker/pda.mdl";
@@ -7,10 +6,20 @@ ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  20000;
+-- explanation of PrivateVars key
+-- this is built into the metaobject of items. the key PrivateVars is not transmitted normally
+-- this is for data that needs to stay on the server and shouldnt be exposed to the client owner
 ITEM.Vars = {
 	Primary = false,
 	Power = true,
+	Encrypted = false,
+	HasPassword = false,
 }
+if SERVER then
+	ITEM.Vars.PrivateVars = {
+		Password = "",
+	}
+end
 ITEM.functions = {}
 ITEM.functions.SetName = {
 	SelectionName = "Register",
@@ -78,6 +87,73 @@ ITEM.functions.View = {
 	end,
 	CanRun = function(item)
 		return item:GetVar("Power", false)
+	end,
+}
+ITEM.functions.SetPassword = {
+	SelectionName = "Set Password",
+	OnUse = function(item)
+		if CLIENT then
+		
+		end
+		
+		return true
+	end,
+	CanRun = function(item)
+		return item:GetVar("Encrypted", false) and !item:GetVar("HasPassword", false)
+	end,
+}
+ITEM.functions.Encrypt = {
+	SelectionName = "Encrypt",
+	OnUse = function(item)
+		if CLIENT then
+		
+		end
+		
+		return true
+	end,
+	CanRun = function(item)
+		return (
+			!item:GetVar("Encrypted", false) and 
+			!item:GetVar("HasPassword", false) and 
+			item:Owner():HasCharFlag("T") and
+			item:Owner():HasItem("pda_encryption")
+		)
+	end,
+}
+ITEM.functions.Decrypt = {
+	SelectionName = "Decrypt",
+	OnUse = function(item)
+		if CLIENT then
+		
+		end
+		
+		return true
+	end,
+	CanRun = function(item)
+		return (
+			item:GetVar("Encrypted", false) and 
+			item:GetVar("HasPassword", false) and 
+			item:Owner():HasCharFlag("T") and
+			item:Owner():HasItem("pda_decryption")
+		)
+	end,
+}
+ITEM.functions.RecoverJournal = {
+	SelectionName = "Recover",
+	OnUse = function(item)
+		if CLIENT then
+		
+		end
+		
+		return true
+	end,
+	CanRun = function(item)
+		return (
+			!item:GetVar("Encrypted", false) and 
+			!item:GetVar("HasPassword", false) and 
+			item:Owner():HasCharFlag("T") and
+			item:Owner():HasItem("pda_recover")
+		)
 	end,
 }
 function ITEM:GetName()

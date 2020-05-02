@@ -303,7 +303,7 @@ function PANEL:SetItem(item)
 	self.ModelDisplay:SetModel(item:GetModel())
 	self.CurrentItem = item
 	
-	for k,v in next, item.Vars do
+	for k,v in next, item:GetVars() do
 		if blacklist[k] then continue end
 		local value = v
 		if istable(v) then value = "(table)" end

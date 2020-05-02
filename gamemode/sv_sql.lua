@@ -53,7 +53,8 @@ function GM:InitSQL()
 		
 		mysqloo.Query( "SET interactive_timeout = 28800" );
 		mysqloo.Query( "SET wait_timeout = 28800" );
-		mysqloo.Query("DELETE FROM cc_logs WHERE CAST(Date AS SIGNED) < (UNIX_TIMESTAMP(NOW()) - 1209600);")
+		mysqloo.Query("DELETE FROM cc_logs WHERE CAST(Date AS UNSIGNED) < (UNIX_TIMESTAMP() - 1209600);")
+		mysqloo.Query("DELETE FROM cc_pda_journal WHERE DeletionDate < (UNIX_TIMESTAMP() - 259200);")
 		
 	end
 
@@ -246,7 +247,7 @@ function GM:InitSQLTable( tab, dtab )
 				
 				self:LogSQL( "Column \"" .. v[1] .. "\" does not exist in table " .. dtab .. ", creating..." );
 				
-				local q = "ALTER TABLE " .. dtab .. " ADD COLUMN " .. v[1] .. " " .. v[2] .. " NOT NULL";
+				local q = "ALTER TABLE " .. dtab .. " ADD COLUMN " .. v[1] .. " " .. v[2];
 				
 				if( v[3] ) then
 					
