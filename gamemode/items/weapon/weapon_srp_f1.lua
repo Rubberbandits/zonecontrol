@@ -1,11 +1,11 @@
 ITEM.Name = "F1 Grenade"
-ITEM.Desc = "A Russian offensive fragmentation grenade."
+ITEM.Desc = "A Russian defensive fragmentation grenade. Spiky."
 ITEM.Model = "models/weapons/tfa_ins2/w_f1.mdl"
 ITEM.WeaponClass = "tfa_ins2_f1"
 ITEM.Weight = 2
 ITEM.SafetyPos = Vector(0,0,0)
 ITEM.SafetyAng = Angle(-12.4, 0, 0)
-ITEM.JamChance = 0.02
+ITEM.JamChance = 0
 ITEM.DegradeRate = 0.05
 ITEM.FOV 			= 46
 ITEM.CamPos 		= Vector( 50, 4.47, 0.9 )
