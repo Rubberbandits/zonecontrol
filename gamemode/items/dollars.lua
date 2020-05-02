@@ -6,7 +6,9 @@ ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  300;
-ITEM.Vars = {}
+ITEM.Vars = {
+	Stacked = 1,
+}
 
 function ITEM:OnStack(item)
 	self:SetVar("Stacked", self:GetVar("Stacked", 0) + item:GetVar("Stacked", 0), nil, true)
@@ -23,7 +25,7 @@ end
 
 function ITEM:GetWeight()
 	local meta = GAMEMODE:GetItemByID(self.Class)
-	local start_amount = meta.Vars.Stacked
+	local start_amount = meta.Vars.Stacked or 1
 	local start_weight = meta.Weight
 	
 	return math.Round(start_weight * (self:GetVar("Stacked", 0) / start_amount), 2)
