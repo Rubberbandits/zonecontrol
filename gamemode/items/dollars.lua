@@ -1,4 +1,3 @@
-
 ITEM.Name =  "US Dollars";
 ITEM.Desc =  "A fistful of dollars. Nobody will accept this around here.";
 ITEM.Model =  "models/props/cs_assault/Dollar.mdl";
@@ -7,6 +6,7 @@ ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  300;
+ITEM.Vars = {}
 
 function ITEM:OnStack(item)
 	self:SetVar("Stacked", self:GetVar("Stacked", 0) + item:GetVar("Stacked", 0), nil, true)

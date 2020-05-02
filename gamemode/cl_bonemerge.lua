@@ -102,6 +102,7 @@ end
 GM.BonemergeItems = GM.BonemergeItems or {}
 GM.BonemergeEntities = GM.BonemergeEntities or {}
 GM.BonemergeBodies = GM.BonemergeBodies or {}
+GM.BodyHidden = GM.BodyHidden or {}
 
 function GM:OnReceiveDummyItem(s_iID, s_DummyItem)
 	local metaitem = GAMEMODE:GetItemByID(s_DummyItem.szClass)
@@ -119,7 +120,7 @@ function GM:OnReceiveDummyItem(s_iID, s_DummyItem)
 
 	if s_DummyItem.Vars["Equipped"] then
 		if metaitem.RemoveBody then
-			s_DummyItem.Owner.BodyHidden = true
+			self.BodyHidden[s_DummyItem.Owner] = true
 			if self.BonemergeBodies[s_DummyItem.Owner] then
 				self.BonemergeBodies[s_DummyItem.Owner]:Remove()
 				self.BonemergeBodies[s_DummyItem.Owner] = nil
@@ -133,8 +134,8 @@ function GM:OnReceiveDummyItem(s_iID, s_DummyItem)
 		end
 		
 		if metaitem.RemoveBody and !self.BonemergeBodies[s_DummyItem.Owner] then
-			s_DummyItem.Owner.BodyHidden = false
-			
+			self.BodyHidden[s_DummyItem.Owner] = false
+
 			if s_DummyItem.Owner.Body then
 				self.BonemergeBodies[s_DummyItem.Owner] = s_DummyItem.Owner:CreateNewBonemerge(s_DummyItem.Owner:Body())
 			end
@@ -148,7 +149,7 @@ function GM:OnReceiveDummyItem(s_iID, s_DummyItem)
 end
 
 function GM:RemoveBonemergedItemCache(ply)
-	ply.BodyHidden = false
+	self.BodyHidden[s_DummyItem.Owner] = false
 	if self.BonemergeBodies[ply] and self.BonemergeBodies[ply]:IsValid() then
 		self.BonemergeBodies[ply]:Remove()
 		self.BonemergeBodies[ply] = nil
@@ -236,7 +237,7 @@ local function ProcessBonemergeItems(ply)
 		elseif !n.Vars["Equipped"] and n.BonemergedEntity then
 			n.BonemergedEntity:Remove()
 			n.BonemergedEntity = nil
-		elseif n.BonemergedEntity then
+		elseif n.Owner == ply and n.BonemergedEntity then
 			ent_found = true
 		end
 	end
@@ -245,9 +246,9 @@ local function ProcessBonemergeItems(ply)
 end
 
 local function ProcessBody(ply)
-	if !ply.BodyHidden and !IsValid(GAMEMODE.BonemergeBodies[ply]) then
+	if !GAMEMODE.BodyHidden[ply] and !IsValid(GAMEMODE.BonemergeBodies[ply]) then
 		GAMEMODE.BonemergeBodies[ply] = ply:CreateNewBonemerge(ply:Body())
-	elseif ply.BodyHidden and IsValid(GAMEMODE.BonemergeBodies[ply]) then
+	elseif GAMEMODE.BodyHidden[ply] and IsValid(GAMEMODE.BonemergeBodies[ply]) then
 		GAMEMODE.BonemergeBodies[ply]:Remove()
 		GAMEMODE.BonemergeBodies[ply] = nil
 	end
@@ -267,11 +268,11 @@ local function BonemergeThink()
 		
 		if (!GAMEMODE.BonemergeBodies[v] or !IsValid(GAMEMODE.BonemergeBodies[v])) and !ent_found then
 			print("unhide body and process")
-			v.BodyHidden = false
+			GAMEMODE.BodyHidden[v] = false
 			ProcessBody(v)
-		elseif GAMEMODE.BonemergeBodies[v] and IsValid(GAMEMODE.BonemergeBodies[v]) and ent_found and !v.BodyHidden then
+		elseif GAMEMODE.BonemergeBodies[v] and IsValid(GAMEMODE.BonemergeBodies[v]) and ent_found and !GAMEMODE.BodyHidden[v] then
 			print("hide body and process")
-			v.BodyHidden = true
+			GAMEMODE.BodyHidden[v] = true
 			ProcessBody(v)
 		end
 	end
