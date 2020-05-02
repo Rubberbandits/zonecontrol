@@ -6,6 +6,7 @@ ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  300;
+ITEM.Stackable = true
 ITEM.Vars = {
 	Stacked = 1,
 }
