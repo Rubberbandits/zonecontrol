@@ -147,7 +147,6 @@ function GM:PlayerSpawn( ply )
 			data.BusinessLicenses = 0;
 			data.CriminalRecord = "";
 			data.Hunger = 0;
-			data.Body = "models/stalker_2019/anorak.mdl"
 			
 			data.Title = "This bot, named " .. ply:Nick() .. ", was born today out of a Xen portal anomaly. They don't remember much, as they have no memories, and their motor functions are extremely hindered by the fact that they have no brain. They cannot speak, simply existing as a shell, forever doomed to wander around Garry's Mod roleplay servers, fruitlessly.";
 			data.TitleOne = "[]"
@@ -257,9 +256,6 @@ function meta:LoadCharacter( data )
 	self:SetPDAName( data.PDAName or "" );
 	
 	self.CharModel = data.Model;
-	if self:IsBot() then
-		self:SetModelCC(data.Model)
-	end
 	
 	if table.HasValue(GAMEMODE.CitizenModels, data.Model) then
 		self:SetBody(data.Body)

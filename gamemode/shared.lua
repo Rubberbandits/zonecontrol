@@ -810,20 +810,12 @@ if (SERVER and game.IsDedicated()) then
 
 			for k, v in ipairs(player.GetAll()) do
 				if (v:IsAdmin()) then
-					v:Notify(nil, COLOR_ERR, message)
+					v:ChatPrint(message)
 				end
 			end
 
 			MsgC(Color(255, 255, 0), message.."\n")
 			client.nutNextWarn = CurTime() + 60
-		end
-	end)
-	
-	net.Receive("ArmDupe", function(len, ply)
-		for k, v in next, player.GetAll() do
-			if (v:IsAdmin()) then
-				v:Notify(nil, COLOR_ERR, "%s (%s) is using the ArmDupe exploit!", ply:Nick(), ply:SteamID())
-			end
 		end
 	end)
 end

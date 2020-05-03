@@ -707,9 +707,7 @@ function GM:DrawPlayerInfo()
 			if !ent or !IsValid(ent) then
 				setup_ammo_display(metaitem.Model)
 			else
-				if metaitem.Model != ent:GetModel() then
-					ent:SetModel(metaitem.Model)
-				end
+				
 				local fov
 				local cam_pos
 				local lookat
@@ -1121,8 +1119,13 @@ function GM:DrawEntities()
 			end
 			
 			local metaitem = GAMEMODE:GetItemByID(v:GetItemClass())
-			local name = v:GetItemName() or metaitem.Name
-			local weight = v:GetItemWeight() or metaitem.Weight
+			if !v:GetItemObject() then	
+				name = metaitem.Name
+				weight = metaitem.Weight
+			else
+				name = v:GetItemObject():GetName()
+				weight = v:GetItemObject():GetWeight()
+			end
 			
 			draw.DrawTextShadow( name, "CombineControl.PlayerFont", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
 			pos.y = pos.y + 20;

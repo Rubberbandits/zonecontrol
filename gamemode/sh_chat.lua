@@ -451,7 +451,7 @@ kingston.chat.register_type("radio", {
 			if ply != v and ply:GetPos():DistToSqr(v:GetPos()) <= (chat_data.chat_range * chat_data.chat_range) then
 				special_rf[#special_rf + 1] = v
 			end
-			if !v:HasItem("radio") or (v:RadioFreq() != ply:RadioFreq()) then continue end
+			if v:RadioFreq() != ply:RadioFreq() then continue end
 			
 			rf[#rf + 1] = v
 		end

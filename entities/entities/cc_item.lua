@@ -22,8 +22,6 @@ end
 function ENT:SetupDataTables()
 	self:NetworkVar( "String", 0, "ItemClass" );
 	self:NetworkVar( "String", 1, "VarString" );
-	self:NetworkVar( "String", 2, "ItemName" );
-	self:NetworkVar( "String", 3, "ItemWeight" );
 	
 	if( CLIENT ) then return end
 	
@@ -34,15 +32,11 @@ function ENT:SetupDataTables()
 		if !self.ItemObj then
 			self:SetModel( metaitem.Model );
 			self:SetBodygroup( metaitem.BodygroupCategory or 1, metaitem.Bodygroup or 0 );
-			self:SetItemName( metaitem.Name );
-			self:SetItemWeight( metaitem.Weight );
 		else
 			self:SetModel( self.ItemObj:GetModel() );
 			if self.ItemObj.GetBodygroup then
 				self:SetBodygroup( self.ItemObj:GetBodygroupCategory(), self.ItemObj:GetBodygroup() );
 			end
-			self:SetItemName( self.ItemObj:GetName() );
-			self:SetItemWeight( self.ItemObj:GetWeight() );
 		end
 		
 		if metaitem.Base == "clothes" then
