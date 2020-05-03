@@ -221,6 +221,7 @@ function BASE:GetArmorValues()
 	for class,_ in next, self:GetVar("Upgrades", {}) do
 		local upgrade = GAMEMODE.Upgrades[class]
 		if !upgrade then continue end
+		if !upgrade.ArmorValues then continue end
 		
 		for index,mult in next, upgrade.ArmorValues do
 			local num = base_tbl[index] or 1
