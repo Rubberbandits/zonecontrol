@@ -1071,6 +1071,7 @@ local function SetTied( ply, args )
 	if( targ and targ:IsValid() ) then
 		
 		targ:SetTiedUp( val == 1 );
+		GAMEMODE:LogAdmin( "[F] " .. ply:Nick() .. " tied player " .. targ:RPName() .. ".", ply );
 		
 	else
 		
