@@ -1604,6 +1604,7 @@ function GM:AdminCreateLogsMenu()
 	CCP.AdminMenu.LogCategory:AddChoice( "chat" );
 	CCP.AdminMenu.LogCategory:AddChoice( "sandbox" );
 	CCP.AdminMenu.LogCategory:AddChoice( "items" );
+	CCP.AdminMenu.LogCategory:AddChoice( "command" );
 	CCP.AdminMenu.LogCategory:PerformLayout();
 	function CCP.AdminMenu.LogCategory:OnSelect( index, val )
 		CCP.AdminMenu.LogList.Category = val
