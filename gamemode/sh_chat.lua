@@ -335,7 +335,7 @@ kingston.chat.register_type("me", {
 kingston.chat.register_type("lme", {
 	chat_command = {"/lme"},
 	no_space = true,
-	chat_range = 1000,
+	chat_range = 2000,
 	no_console_print = true,
 	while_dead = true,
 	construct_string = function(chat_type, ply, text)

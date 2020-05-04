@@ -125,7 +125,6 @@ local buttons = {
 }
 
 function GM:Initialize()
-	
 	game.ConsoleCommand( "net_maxfilesize 64\n" );
 	game.ConsoleCommand( "sv_kickerrornum 0\n" );
 	
