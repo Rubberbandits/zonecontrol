@@ -27,6 +27,9 @@ kingston.pda.journal_insert_str = [[
 kingston.pda.search_chat_str = [[SELECT * FROM cc_pda_chat WHERE Date >= UNIX_TIMESTAMP('%s') AND Date <= (UNIX_TIMESTAMP('%s') + 86400) AND (Sender = %d OR Receiver = %d);]]
 kingston.pda.search_journal_str = [[SELECT * FROM cc_pda_journal WHERE Owner = %d AND DeletionDate IS NULL;]]
 
+kingston.pda.delete_journal_str = [[UPDATE cc_pda_journal SET DeletionDate = UNIX_TIMESTAMP() WHERE id = ?;]]
+kingston.pda.recover_journals_str = [[UPDATE cc_pda_journal SET DeletionDate = NULL WHERE id = ?;]]
+
 local function init_log_pda_tbl(db)
 	mysqloo.Query("CREATE TABLE IF NOT EXISTS cc_pda_chat ( id INT NOT NULL auto_increment, PRIMARY KEY ( id ) );")
 	mysqloo.Query("CREATE TABLE IF NOT EXISTS cc_pda_journal ( id INT NOT NULL auto_increment, PRIMARY KEY ( id ) );")
@@ -34,7 +37,10 @@ local function init_log_pda_tbl(db)
 	GAMEMODE:InitSQLTable(kingston.pda.journal_db_struct, "cc_pda_journal")
 	
 	kingston.pda.chat_insert = db:prepare(kingston.pda.chat_insert_str)
+	
 	kingston.pda.journal_insert = db:prepare(kingston.pda.journal_insert_str)
+	kingston.pda.journal_delete = db:prepare(kingston.pda.delete_journal_str)
+	kingston.pda.journal_recover = db:prepare(kingston.pda.recover_journals_str)
 end
 hook.Add("InitSQLTables", "STALKER.InitPDADBTable", init_log_pda_tbl)
 
@@ -103,11 +109,16 @@ function kingston.pda.write_journal(pda, title, message, update)
 	kingston.pda.journal_insert:start()
 end
 
-function kingston.pda.delete_journal(pda, id)
-	local item = GAMEMODE.g_ItemTable[pda]
-	if !item then return end
-	
-	mysqloo.Query(Format("UPDATE cc_pda_journal SET DeletionDate = UNIX_TIMESTAMP() WHERE id = %d;", id))
+function kingston.pda.delete_journal(id)
+	kingston.pda.journal_delete:clearParameters()
+		kingston.pda.journal_delete:setNumber(1, id)
+	kingston.pda.journal_delete:start()
+end
+
+function kingston.pda.recover_journals(pda)
+	kingston.pda.journal_recover:clearParameters()
+		kingston.pda.journal_recover:setNumber(1, pda)
+	kingston.pda.journal_recover:start()
 end
 
 /* Networking */
@@ -147,3 +158,21 @@ local function PDAWriteJournal(ply, id, title, message, update)
 	end
 end
 netstream.Hook("PDAWriteJournal", PDAWriteJournal)
+
+local function PDADeleteJournal(ply, pda, id)
+	local item = ply.Inventory[pda]
+	if !item then return end
+	
+	kingston.pda.delete_journal(id)
+end
+netstream.Hook("PDADeleteJournal", PDADeleteJournal)
+
+local function PDARecoverJournals(ply, pda)
+	local item = ply.Inventory[pda]
+	if !item then return end
+	if !ply:HasCharFlag("T") or !ply:HasItem("pda_recover") then return end
+	if ply.StartPDARecover + 119 > CurTime() then return end
+	
+	kingston.pda.recover_journals(pda)
+end
+netstream.Hook("PDARecoverJournals", PDARecoverJournals)

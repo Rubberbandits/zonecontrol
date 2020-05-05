@@ -89,6 +89,7 @@ ITEM.functions.View = {
 		return item:GetVar("Power", false)
 	end,
 }
+/*
 ITEM.functions.SetPassword = {
 	SelectionName = "Set Password",
 	OnUse = function(item)
@@ -138,12 +139,17 @@ ITEM.functions.Decrypt = {
 		)
 	end,
 }
+*/
 ITEM.functions.RecoverJournal = {
 	SelectionName = "Recover",
 	OnUse = function(item)
 		if CLIENT then
-		
+			GAMEMODE:CreateTimedProgressBar(120, "Recovering Journals...", LocalPlayer(), function()
+				netstream.Start("PDARecoverJournals", item:GetID())
+			end)
 		end
+		
+		item:Owner().StartPDARecover = CurTime()
 		
 		return true
 	end,

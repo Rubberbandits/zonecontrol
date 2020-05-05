@@ -1,0 +1,9 @@
+ITEM.Name =  "PDA Journal Recovery System";
+ITEM.Desc =  "A device loaded with software designed to recover deleted journals from PDAs. Requires some specialist knowledge.";
+ITEM.Model =  "models/stalker/item/handhelds/pda.mdl";
+ITEM.Weight =  .5;
+ITEM.FOV =  12;
+ITEM.CamPos =  Vector( 50, 50, 50 );
+ITEM.LookAt =  Vector( 0, 0, 0 );
+ITEM.PhysicalMass	= 1;
+ITEM.BulkPrice =  120000;
