@@ -1,6 +1,6 @@
-ITEM.Name =  "PDA Journal Recovery System";
-ITEM.Desc =  "A device loaded with software designed to recover deleted journals from PDAs. Requires some specialist knowledge.";
-ITEM.Model =  "models/stalker/item/handhelds/pda.mdl";
+ITEM.Name =  "Journal Recovery System";
+ITEM.Desc =  "A disposable security spike with an on-board CPU that has a high chance of failure under load, used to recover PDA journals. Requires some specialist knowledge.";
+ITEM.Model =  "models/stalker/item/handhelds/mini_pda.mdl";
 ITEM.Weight =  .5;
 ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );

@@ -28,7 +28,7 @@ kingston.pda.search_chat_str = [[SELECT * FROM cc_pda_chat WHERE Date >= UNIX_TI
 kingston.pda.search_journal_str = [[SELECT * FROM cc_pda_journal WHERE Owner = %d AND DeletionDate IS NULL;]]
 
 kingston.pda.delete_journal_str = [[UPDATE cc_pda_journal SET DeletionDate = UNIX_TIMESTAMP() WHERE id = ?;]]
-kingston.pda.recover_journals_str = [[UPDATE cc_pda_journal SET DeletionDate = NULL WHERE id = ?;]]
+kingston.pda.recover_journals_str = [[UPDATE cc_pda_journal SET DeletionDate = NULL WHERE Owner = ?;]]
 
 local function init_log_pda_tbl(db)
 	mysqloo.Query("CREATE TABLE IF NOT EXISTS cc_pda_chat ( id INT NOT NULL auto_increment, PRIMARY KEY ( id ) );")
@@ -109,7 +109,13 @@ function kingston.pda.write_journal(pda, title, message, update)
 	kingston.pda.journal_insert:start()
 end
 
-function kingston.pda.delete_journal(id)
+function kingston.pda.delete_journal(id, cb)
+	kingston.pda.journal_delete.onSuccess = function(q, data)
+		if cb then
+			cb()
+		end
+	end
+
 	kingston.pda.journal_delete:clearParameters()
 		kingston.pda.journal_delete:setNumber(1, id)
 	kingston.pda.journal_delete:start()
@@ -163,7 +169,11 @@ local function PDADeleteJournal(ply, pda, id)
 	local item = ply.Inventory[pda]
 	if !item then return end
 	
-	kingston.pda.delete_journal(id)
+	kingston.pda.delete_journal(id, function()
+		kingston.pda.grab_journal(pda, function(q, data)
+			netstream.Start(ply, "PDAGrabJournal", data)
+		end)
+	end)
 end
 netstream.Hook("PDADeleteJournal", PDADeleteJournal)
 
@@ -172,6 +182,15 @@ local function PDARecoverJournals(ply, pda)
 	if !item then return end
 	if !ply:HasCharFlag("T") or !ply:HasItem("pda_recover") then return end
 	if ply.StartPDARecover + 119 > CurTime() then return end
+	
+	local items = ply:HasItem("pda_recover")
+	if istable(items) and !items.IsItem then
+		items = items[1]
+	end
+	
+	if math.random(1,3) > 1 then
+		items:RemoveItem(true)
+	end
 	
 	kingston.pda.recover_journals(pda)
 end

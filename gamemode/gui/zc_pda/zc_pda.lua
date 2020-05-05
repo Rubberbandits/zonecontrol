@@ -75,6 +75,27 @@ kingston.pda.tabs = {
 			end
 			pnl.save_journal:SetDisabled(true)
 			
+			pnl.delete_journal = vgui.Create("DButton", pnl)
+			pnl.delete_journal:SetSize(ScreenScaleH(32), ScreenScaleH(12))
+			pnl.delete_journal:SetPos(x + pnl.save_journal:GetWide(), y + h)
+			pnl.delete_journal:SetTextColor(Color(200,32,32))
+			pnl.delete_journal:SetFont("CombineControl.ChatNormal")
+			pnl.delete_journal:SetText("")
+			pnl.delete_journal:SetContentAlignment(4)
+			pnl.delete_journal.DoClick = function(btn)
+				netstream.Start("PDADeleteJournal", pnl:GetParent().pda_id, pnl.selected_journal)
+				
+				pnl.journal_title:SetEditable(false)
+				pnl.journal_title:SetText("Title")
+				
+				pnl.journal_entry:SetEditable(false)
+				pnl.journal_entry:SetText("Entry")
+				
+				pnl.delete_journal:SetDisabled(true)
+				pnl.delete_journal:SetText("")
+			end
+			pnl.delete_journal:SetDisabled(true)
+			
 			pnl.notify = vgui.Create("DLabel", pnl)
 			pnl.notify:SetText("")
 			pnl.notify:SetSize(ScreenScaleH(256), ScreenScaleH(12))
@@ -289,6 +310,13 @@ function PANEL:PopulateJournal(data)
 		btn.DoClick = function()
 			self.Body.journal_title:SetText(entry.Title)
 			self.Body.journal_entry:SetText(entry.Message)
+			self.Body.selected_journal = entry.id
+			
+			self.Body.delete_journal:SetText("Delete")
+			self.Body.delete_journal:SetDisabled(false)
+			
+			self.Body.save_journal:SetDisabled(true)
+			self.Body.save_journal:SetText("")
 		end
 		function btn:Paint()
 			if self:IsHovered() and !self.LastHovered then
@@ -314,6 +342,9 @@ function PANEL:PopulateJournal(data)
 		
 		pnl.save_journal:SetDisabled(false)
 		pnl.save_journal:SetText("Save")
+		
+		pnl.delete_journal:SetText("")
+		pnl.delete_journal:SetDisabled(true)
 		
 		pnl.journal_title:SetEditable(true)
 		pnl.journal_title:SetText("Title")
