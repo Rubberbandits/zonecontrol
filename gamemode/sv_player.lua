@@ -107,6 +107,8 @@ function GM:PlayerSpawn( ply )
 	
 	ply:SetMaxHealth(100)
 	ply:SetHealth(100)
+	ply.LastRadiation = 0
+	ply:SetRadiation(0)
 	
 	ply:SetLastLegShot( -20 );
 	
@@ -999,14 +1001,25 @@ function meta:ApplyRadiation(amt)
 end
 
 local function handle_rads(ply, amt)
-	local cur_health = ply:Health()
-	local cur_max = ply:GetMaxHealth()
-	local next_max = math.Clamp(ply:GetMaxHealth() - (amt * GAMEMODE.RadHealthReductionRate), 1, 100)
-	if cur_health > next_max then
-		ply:SetHealth(next_max)
+	ply:SetRadiation(ply:Radiation() + amt)
+	
+	if !ply.LastRadiation then
+		ply.LastRadiation = ply:Radiation()
 	end
 
-	ply:SetMaxHealth(next_max)
+	if ply:Radiation() - ply.LastRadiation >= 1 then
+		local cur_health = ply:Health()
+		local cur_max = ply:GetMaxHealth()
+		local next_max = math.Clamp(ply:GetMaxHealth() - (ply:Radiation() - ply.LastRadiation), 1, 100)
+
+		if cur_health > next_max then
+			ply:SetHealth(math.Round(next_max))
+		end
+
+		ply:SetMaxHealth(math.Round(next_max))
+
+		ply.LastRadiation = ply:Radiation()
+	end
 end
 hook.Add("PlayerRadiationApplied", "STALKER.ApplyRadiationDamage", handle_rads)
 

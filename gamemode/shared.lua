@@ -803,14 +803,12 @@ if (SERVER and game.IsDedicated()) then
 	concommand.Remove("gm_save")
 	
 	concommand.Add("gm_save", function(client, command, arguments)
-		client:ChatPrint("You are not allowed to do that, administrators have been notified.")
-
 		if ((client.nutNextWarn or 0) < CurTime()) then
-			local message = client:Name().." ["..client:SteamID().."] has possibly attempted to crash the server with 'gm_save'"
+			local message = client:Nick().." ["..client:SteamID().."] has possibly attempted to crash the server with 'gm_save'"
 
 			for k, v in ipairs(player.GetAll()) do
 				if (v:IsAdmin()) then
-					v:ChatPrint(message)
+					v:Notify(nil, COLOR_ERR, "%s [%s] has possibly attempted to crash the server with gm_save", client:Nick(), client:SteamID())
 				end
 			end
 
@@ -895,6 +893,14 @@ function GM:OnGamemodeLoaded()
 			v:OnGamemodeLoaded()
 		end
 	end
+	
+	net.Receive("ArmDupe", function(len, ply)
+		for k, v in next, player.GetAll() do
+			if (v:IsAdmin()) then
+				v:Notify(nil, COLOR_ERR, "%s (%s) is using the ArmDupe exploit!", ply:Nick(), ply:SteamID())
+			end
+		end
+	end)
 end
 
 function player.GetAllLoaded()

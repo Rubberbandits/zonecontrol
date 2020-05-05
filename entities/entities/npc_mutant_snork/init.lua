@@ -48,8 +48,8 @@ ENT.die2 = Sound("")
 ENT.die3 = Sound("")
 ENT.dead = false
 
-ENT.model1 = "models/tnb/stalker/snork1.mdl"
-ENT.model2 = "models/tnb/stalker/snork1.mdl"
+ENT.model1 = "models/spenser/ssk/new_snork_spen.mdl"
+ENT.model2 = "models/spenser/ssk/new_snork_spen.mdl"
 
 local schedJump = ai_schedule.New( "Jump" ) 
 schedJump:EngTask( "TASK_PLAY_SEQUENCE", ACT_JUMP )

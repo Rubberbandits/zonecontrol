@@ -239,6 +239,8 @@ local function ProcessBonemergeItems(ply)
 			n.BonemergedEntity = nil
 		elseif n.Owner == ply and n.BonemergedEntity then
 			ent_found = true
+		elseif !IsValid(n.Owner) and n.CharID == ply:CharID() then
+			n.Owner = ply
 		end
 	end
 	

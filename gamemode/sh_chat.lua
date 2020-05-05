@@ -335,7 +335,7 @@ kingston.chat.register_type("me", {
 kingston.chat.register_type("lme", {
 	chat_command = {"/lme"},
 	no_space = true,
-	chat_range = 1000,
+	chat_range = 2000,
 	no_console_print = true,
 	while_dead = true,
 	construct_string = function(chat_type, ply, text)
@@ -451,7 +451,7 @@ kingston.chat.register_type("radio", {
 			if ply != v and ply:GetPos():DistToSqr(v:GetPos()) <= (chat_data.chat_range * chat_data.chat_range) then
 				special_rf[#special_rf + 1] = v
 			end
-			if v:RadioFreq() != ply:RadioFreq() then continue end
+			if !v:HasItem("radio") or (v:RadioFreq() != ply:RadioFreq()) then continue end
 			
 			rf[#rf + 1] = v
 		end
