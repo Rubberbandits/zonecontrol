@@ -1453,16 +1453,26 @@ function nARemoveItem( ply, targ, k )
 	local item = targ.Inventory[k]
 	
 	if item then
-		GAMEMODE:LogAdmin( "[I] " .. ply:Nick() .. " removed character " .. targ:RPName() .. "'s item \"" .. targ.Inventory[k]:GetName() .. "\".", ply );
-		GAMEMODE:LogItems( "[R] " .. targ:VisibleRPName() .. "'s item " .. targ.Inventory[k]:GetName() .. " was removed by " .. ply:Nick() .. ".", ply );
+		GAMEMODE:LogAdmin( "[I] " .. ply:Nick() .. " took character " .. targ:RPName() .. "'s item \"" .. targ.Inventory[k]:GetName() .. "\".", ply );
+		GAMEMODE:LogItems( "[R] " .. targ:VisibleRPName() .. "'s item " .. targ.Inventory[k]:GetName() .. " was taken by " .. ply:Nick() .. ".", ply );
 		
-		targ:Notify(nil, COLOR_NOTIF, "%s has removed your %s (%s)!", ply:Nick(), item:GetName(), item:GetClass())
+		targ:Notify(nil, COLOR_NOTIF, "%s has taken your %s (%s)!", ply:Nick(), item:GetName(), item:GetClass())
 		
 		if item:GetVar("Equipped", false) then
 			item:CallFunction("Unequip", true)
 		end
 		
-		item:RemoveItem(true)
+		netstream.Start(targ, "RemoveItem", k)
+		
+		item.owner = ply;
+		item:SetCharID( ply:CharID() )
+		item:UpdateSave();
+		item:TransmitToOwner();
+		targ.Inventory[k] = nil
+		ply.Inventory[k] = item
+		
+		hook.Run("ItemDropped", targ, item)
+		hook.Run("ItemPickedUp", ply, item)
 		
 		local inv = {}
 		for k,v in next, targ.Inventory do
@@ -2184,3 +2194,29 @@ local function set_rank(ply, _, args)
 	end
 end
 concommand.Add( "rpa_serversetrank", set_rank );
+
+local function SetWatched( ply, args )
+
+	if( #args == 0 ) then
+		
+		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
+		return;
+		
+	end
+	
+	local targ = GAMEMODE:FindPlayer( args[1], ply );
+	
+	if( targ and targ:IsValid() ) then
+	
+		targ:SetWatched(!targ:Watched())
+		targ:UpdatePlayerField( "Watched", targ:Watched() and "1" or "0" )
+		ply:Notify(nil, COLOR_NOTIF, targ:Watched() and "%s is now being watched." or "%s is no longer being watched.", targ:Nick())
+		
+	else
+		
+		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
+		
+	end
+	
+end
+concommand.AddAdmin( "rpa_togglewatched", SetWatched );

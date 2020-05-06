@@ -1,6 +1,6 @@
 local meta = FindMetaTable( "Player" );
 
-GM.PlayerAccessors = { -- these third values dont matter anymorre
+GM.PlayerAccessors = { -- these third values dont matter anymore
 	{ "ToolTrust", 			false, 	"UInt", 	0, 3 },
 	{ "PhysTrust", 			false, 	"UInt", 	1, 1 },
 	{ "PropTrust", 			false, 	"UInt", 	1, 1 },
@@ -12,17 +12,10 @@ GM.PlayerAccessors = { -- these third values dont matter anymorre
 	{ "TitleOne",			false,	"String",	"..." },
 	{ "TitleTwo",			false,	"String",	"..." },
 	{ "Description",		false, 	"String", 	"" },
-	{ "PDAName",			false,	"String",	"" },
 	{ "Holstered", 			false, 	"Bit", 		true },
-	{ "CID", 				false, 	"UInt", 	0, 17 },
 	{ "Money", 				true, 	"UInt", 	0, 32 },
 	{ "Trait", 				false, 	"UInt", 	TRAIT_NONE, 32 },
-	{ "CombineFlag", 		false, 	"String", 	"" },
-	{ "CombineSquad",		false,	"String",	"" },
-	{ "CombineSquadID",		false,	"UInt",		0, 8 },
-	{ "ActiveFlag", 		false, 	"String", 	"" },
 	{ "CharFlags", 			false, 	"String", 	"" },
-	{ "Loan", 				false, 	"UInt", 	0, 32 },
 	{ "Consciousness", 		true, 	"Float", 	100 },
 	{ "PassedOut", 			false, 	"Bit", 		false },
 	{ "RadioFreq", 			true, 	"Float", 	0 },
@@ -38,30 +31,24 @@ GM.PlayerAccessors = { -- these third values dont matter anymorre
 	{ "InAttack2",			false,	"Bit",		false },
 	{ "BusinessLicenses",	false,	"Float",	0 },
 	{ "Typing",				false,	"UInt",		0, 3 },
-	{ "CombineAppStatus",	true,	"UInt",		CPAPP_NONE, 3 },
-	{ "CombineAppDate",		true,	"String",	"" },
 	{ "MountedGun",			false,	"Entity",	NULL },
 	{ "ScoreboardTitle",	false,	"String",	"" },
 	{ "ScoreboardTitleC",	false,	"Vector",	Vector( 200, 200, 200 ) },
 	{ "ScoreboardBadges",	false,	"Float",	0 },
 	{ "DonationAmount",		false,	"Float",	0 },
-	{ "CriminalRecord",		false,	"String",	"" },
-	{ "PrisonReleaseTime",	false,	"Float",	0 },
-	{ "PrisonReason",		false,	"String",	"" },
-	{ "PrisonNotified",		false,	"Float",	0 },
-	{ "Arrester",			false,	"String",	"" },
 	{ "PropProtection",		true,	"Table",	{ } },
 	{ "Bottify",			false,	"Bit",		false },
 	{ "RagdollIndex",		false,	"Int",		-1, 16 },
 	{ "HideAdmin",			false,	"Bit",		false },
 	{ "Hidden",				false,	"Bit",		false },
 	{ "Hunger",				false,	"Float",	0 },
-	{ "CPRationDate",		true,	"String",	"" },
 	{ "APC",				true,	"Entity",	NULL },
 	{ "InDeathState",		false,	"Bool", 	false },
 	{ "IsWounded", 			false, 	"Bool",		false },
 	{ "Radiation",			false,	"Float",	0 },
 	{ "Body", 				false, 	"String",	"" },
+	{ "BodySubMat",			false,	"String",	"models/kingstonstalker/bandit/bandit1" },
+	{ "Watched",			false,	"Bool",		false },
 };
 
 for k, v in pairs( GM.PlayerAccessors ) do
@@ -134,6 +121,8 @@ for k, v in pairs( GM.PlayerAccessors ) do
 				ply[v[1] .. "Val"] = val;
 				
 			end
+			
+			hook.Run("PlayerAccessorChanged", ply, v[1], val)
 			
 		end
 		netstream.Hook( "nSet" .. v[1], nRecvData );
@@ -218,43 +207,6 @@ function nRequestAllPlayerData( ply )
 	
 end
 netstream.Hook( "nRequestAllPlayerData", nRequestAllPlayerData );
-
-function GM:FormatCID( cid )
-	
-	local l = string.len( cid );
-	
-	if( l <= 0 ) then
-		
-		return "00000";
-		
-	elseif( l == 1 ) then
-		
-		return "0000" .. cid;
-		
-	elseif( l == 2 ) then
-		
-		return "000" .. cid;
-		
-	elseif( l == 3 ) then
-		
-		return "00" .. cid;
-		
-	elseif( l == 4 ) then
-		
-		return "0" .. cid;
-		
-	end
-	
-	return cid;
-	
-end
-
-function meta:FormattedCID()
-	
-	local cid = tostring( self:CID() );
-	return GAMEMODE:FormatCID( cid );
-	
-end
 
 function meta:AddMoney( money )
 	
@@ -926,7 +878,7 @@ if( CLIENT ) then
 
 	netstream.Hook( "NotifyPlayer", function( font, color, text, varargs )
 		
-		LocalPlayer():Notify( font, color, text, unpack( varargs ) );
+		GAMEMODE:AddChat( { CB_ALL, CB_OOC }, font or "CombineControl.ChatNormal", color, Format( text, unpack(varargs) ) );
 	
 	end );
 	

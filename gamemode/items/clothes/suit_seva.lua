@@ -9,6 +9,7 @@ ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  400000;
 ITEM.License =  LICENSE_BLACK;
 ITEM.Bonemerge = "models/tnb/stalker_2019/seva.mdl";
+ITEM.DegradationProtection = 80
 ITEM.Bodygroups = {
 	{1, 0}
 }

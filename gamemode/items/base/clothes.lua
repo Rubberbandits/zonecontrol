@@ -35,10 +35,9 @@ BASE.functions.Equip = {
 			if metaitem.WearModel then
 				item:Owner():SetModelCC( item:GetWearModel() );
 				item:Owner().Uniform = item:GetWearModel();
-				item:Owner():SetBody("")
-			elseif metaitem.Bonemerge then
-				item:Transmit()
 			end
+			
+			item:Transmit()
 			
 			GAMEMODE:SpeedThink( item:Owner() )
 		end

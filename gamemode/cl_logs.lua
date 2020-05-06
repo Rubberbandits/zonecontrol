@@ -10,3 +10,8 @@ local function RequestLogSearch(tbl)
 	GAMEMODE:PopulateAdminLogs(tbl)
 end
 netstream.Hook("RequestLogSearch", RequestLogSearch)
+
+local function ConsoleNotify(text, ...)
+	MsgC(Color(204, 204, 0), Format(text.."\n", ...))
+end
+netstream.Hook("ConsoleNotify", ConsoleNotify)

@@ -138,6 +138,7 @@ function GM:OnReceiveDummyItem(s_iID, s_DummyItem)
 
 			if s_DummyItem.Owner.Body then
 				self.BonemergeBodies[s_DummyItem.Owner] = s_DummyItem.Owner:CreateNewBonemerge(s_DummyItem.Owner:Body())
+				self.BonemergeBodies[s_DummyItem.Owner]:SetSubMaterial(0, s_DummyItem.Owner:BodySubMat())
 			end
 		end
 	end
@@ -250,6 +251,7 @@ end
 local function ProcessBody(ply)
 	if !GAMEMODE.BodyHidden[ply] and !IsValid(GAMEMODE.BonemergeBodies[ply]) then
 		GAMEMODE.BonemergeBodies[ply] = ply:CreateNewBonemerge(ply:Body())
+		GAMEMODE.BonemergeBodies[ply]:SetSubMaterial(0, ply:BodySubMat())
 	elseif GAMEMODE.BodyHidden[ply] and IsValid(GAMEMODE.BonemergeBodies[ply]) then
 		GAMEMODE.BonemergeBodies[ply]:Remove()
 		GAMEMODE.BonemergeBodies[ply] = nil
@@ -269,17 +271,24 @@ local function BonemergeThink()
 		local ent_found = ProcessBonemergeItems(v)
 		
 		if (!GAMEMODE.BonemergeBodies[v] or !IsValid(GAMEMODE.BonemergeBodies[v])) and !ent_found then
-			print("unhide body and process")
 			GAMEMODE.BodyHidden[v] = false
 			ProcessBody(v)
 		elseif GAMEMODE.BonemergeBodies[v] and IsValid(GAMEMODE.BonemergeBodies[v]) and ent_found and !GAMEMODE.BodyHidden[v] then
-			print("hide body and process")
 			GAMEMODE.BodyHidden[v] = true
 			ProcessBody(v)
 		end
 	end
 end
 hook.Add("Think", "STALKER.BonemergeThink", BonemergeThink)
+
+local function HandleBodySubMatChange(ply, key, value)
+	if key == "BodySubMat" then
+		if IsValid(GAMEMODE.BonemergeBodies[ply]) then
+			GAMEMODE.BonemergeBodies[ply]:SetSubMaterial(0, value)
+		end
+	end
+end
+hook.Add("PlayerAccessorChanged", "STALKER.HandleBodySubMatChange", HandleBodySubMatChange)
 
 local function DrawBonemergedShadows(ply)
 	if !IsValid(ply) or !ply:Alive() then return end

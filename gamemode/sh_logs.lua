@@ -10,6 +10,8 @@ function kingston.log.write(category, text, ...)
 	else
 		kingston.log.fs_write(category, text, ...)
 	end
+	
+	hook.Run("LogWritten", category, Format(text, ...))
 end
 
 function kingston.log.fs_write(category, text, ...)

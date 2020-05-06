@@ -116,8 +116,6 @@ GM.UseHunger = false;
 GM.FistsHaveEffectOnPlayers = false;
 GM.DoorRammingEnabled = true;
 
-GM.MaxLoan = 1000;
-
 GM.StatsAvailable = 40;
 
 GM.UntieOnDeath = false;

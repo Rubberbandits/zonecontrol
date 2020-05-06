@@ -136,16 +136,10 @@ function GM:PlayerSpawn( ply )
 			data.Date = os.date( "!%m/%d/%y %H:%M:%S" );
 			data.RPName = ply:Nick();
 			data.Model = table.Random( self.CitizenModels );
-			data.CID = math.random( 1, 99999 );
 			data.Money = 200;
-			data.Loan = 500;
-			data.CombineFlag = "";
 			data.CharFlags = "";
-			data.CombineSquad = "";
-			data.CombineSquadID = 0;
 			data.Inventory = "backpack:1";
 			data.BusinessLicenses = 0;
-			data.CriminalRecord = "";
 			data.Hunger = 0;
 			
 			data.Title = "This bot, named " .. ply:Nick() .. ", was born today out of a Xen portal anomaly. They don't remember much, as they have no memories, and their motor functions are extremely hindered by the fact that they have no brain. They cannot speak, simply existing as a shell, forever doomed to wander around Garry's Mod roleplay servers, fruitlessly.";
@@ -213,6 +207,11 @@ function meta:LoadPlayer( data )
 	self:SetDonationAmount( tonumber( data.DonationAmount ), true );
 	
 	self:SetUserGroup(data.Rank)
+	self:SetWatched(tobool(data.Watched), true)
+	
+	if self:Watched() then
+		GAMEMODE:Notify(player.GetAdmins(), nil, COLOR_ERROR, "Watched player %s has joined the server.", self:Nick())
+	end
 	
 end
 
@@ -239,7 +238,6 @@ function meta:LoadCharacter( data )
 	self:ClearDrug();
 	
 	self:SetTeam( TEAM_CITIZEN );
-	self:SetActiveFlag( "" );
 	
 	self:SetCharCreationDate( data.Date );
 	
@@ -253,7 +251,6 @@ function meta:LoadCharacter( data )
 	self:SetDescription( DescTab["offduty"] or "" );
 	self:SetTitleOne( TitleOneTab["offduty"] or "" );
 	self:SetTitleTwo( TitleTwoTab["offduty"] or "" );
-	self:SetPDAName( data.PDAName or "" );
 	
 	self.CharModel = data.Model;
 	
@@ -265,24 +262,14 @@ function meta:LoadCharacter( data )
 	
 	self:SetTrait( tonumber( data.Trait ) );
 	
-	self:SetCID( data.CID );
 	self:SetMoney( tonumber( data.Money ) );
 	
-	self:SetCombineFlag( data.CombineFlag );
 	self:SetCharFlags( data.CharFlags );
-	
-	self:SetCombineSquad( data.CombineSquad );
-	self:SetCombineSquadID( tonumber( data.CombineSquadID ) );
-	
-	self:SetLoan( tonumber( data.Loan ) );
 	
 	self:SetBusinessLicenses( tonumber( data.BusinessLicenses ) );
 	
-	self:SetCriminalRecord( data.CriminalRecord );
-	
 	self:SetHunger( tonumber( data.Hunger ) );
-	self:SetCPRationDate( data.CPRationDate );
-	
+
 	self.EntryPort = tonumber( data.EntryPort );
 	
 	self:UpdateCharacterField( "LastOnline", os.date( "!%m/%d/%y %H:%M:%S" ) );
@@ -324,6 +311,8 @@ function meta:LoadCharacter( data )
 	
 	end
 	mysqloo.Query( Format( "SELECT * FROM cc_items WHERE Owner = '%d' AND Stockpile = 0", self:CharID() ), onSuccess );
+	
+	GAMEMODE:LogSQL( "Player " .. self:Nick() .. " loaded character " .. data.RPName .. "." );
 	
 end
 

@@ -50,58 +50,29 @@ netstream.Hook( "nGetLogList", nGetLogList );
 function nGetRosterList( ply, id )
 	
 	if( !ply:IsAdmin() ) then return end
-
-	if( id == 0 ) then
 		
-		local function qS( ret )
+	local function qS( ret )
+		
+		local tab = { };
+		
+		for _, v in pairs( ret ) do
 			
-			local tab = { };
+			local sid = v.SteamID;
+			local rpname = v.RPName;
+			local charflag = v.CharFlags;
+			local laston = v.LastOnline;
 			
-			for _, v in pairs( ret ) do
-				
-				local sid = v.SteamID;
-				local rpname = v.RPName;
-				local cpflag = v.CombineFlag;
-				local laston = v.LastOnline;
-				
-				table.insert( tab, { sid, rpname, cpflag, laston } );
-				
-			end
-			
-			netstream.Start( ply, "nRosterList", tab );
-			
-			GAMEMODE:LogSQL( "Player " .. ply:Nick() .. " retrieved combine roster." );
+			table.insert( tab, { sid, rpname, charflag, laston } );
 			
 		end
-		
-		mysqloo.Query( "SELECT SteamID, RPName, CombineFlag, LastOnline FROM cc_chars WHERE CombineFlag != ''", qS, qF );
-		
-	else
-		
-		local function qS( ret )
-			
-			local tab = { };
-			
-			for _, v in pairs( ret ) do
-				
-				local sid = v.SteamID;
-				local rpname = v.RPName;
-				local charflag = v.CharFlags;
-				local laston = v.LastOnline;
-				
-				table.insert( tab, { sid, rpname, charflag, laston } );
-				
-			end
 
-			netstream.Start( ply, "nRosterList", tab );
-			
-			GAMEMODE:LogSQL( "Player " .. ply:Nick() .. " retrieved flags roster." );
-			
-		end
+		netstream.Start( ply, "nRosterList", tab );
 		
-		mysqloo.Query( "SELECT SteamID, RPName, CharFlags, LastOnline FROM cc_chars WHERE CharFlags != ''", qS, qF );
+		GAMEMODE:LogSQL( "Player " .. ply:Nick() .. " retrieved flags roster." );
 		
 	end
+	
+	mysqloo.Query( "SELECT SteamID, RPName, CharFlags, LastOnline FROM cc_chars WHERE CharFlags != ''", qS, qF );
 	
 end
 netstream.Hook( "nGetRosterList", nGetRosterList );

@@ -309,3 +309,24 @@ kingston.command.register("pm", {
 		target:Notify(nil, Color(160, 255, 160), "[PM from %s]: %s", ply:RPName(), body)
 	end
 })
+
+local anoraks = {
+	brown = "models/kingstonstalker/bandit/bandit1",
+	green = "models/kingstonstalker/bandit/bandit2",
+	black = "models/kingstonstalker/bandit/bandit3",
+	white = "models/kingstonstalker/bandit/bandit4",
+	grey = "models/kingstonstalker/bandit/bandit5",
+}
+
+kingston.command.register("anorak", {
+	can_run = function(ply, args)
+		return ply:Alive(), "You need to be alive to change your anorak!"
+	end,
+	on_run = function(ply, args)
+		if anoraks[args[1]] then
+			ply:SetBodySubMat(anoraks[args[1]])
+		else
+			ply:SetBodySubMat("models/kingstonstalker/bandit/bandit1")
+		end
+	end
+})

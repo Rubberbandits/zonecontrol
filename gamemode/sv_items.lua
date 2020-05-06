@@ -185,6 +185,8 @@ function GM:MoneyGiven(giver, receiver, amount)
 	
 	local receiver_msg = Format("You've received %d RU from %s", amount, giver:RPName())
 	receiver:PDANotify("Message", receiver_msg, 5, 8)
+	
+	kingston.log.write("items", "Player %s (%s) has given %s (%s) %d rubles.", giver:RPName(), giver:Nick(), receiver:RPName(), receiver:Nick(), amount)
 end
 
 netstream.Hook( "RetrieveDummyItems", function( ply )

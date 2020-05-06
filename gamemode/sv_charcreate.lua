@@ -36,8 +36,6 @@ function nDeleteCharacter( ply, id )
 		
 		local char = ply:GetCharFromID( id );
 		
-		if( tonumber( char.Loan ) and tonumber( char.Loan ) > 0 ) then return end
-		
 		ply:DeleteCharacter( id, char.RPName );
 		
 	end

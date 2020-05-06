@@ -18,7 +18,7 @@ kingston.log.should_log = {
 kingston.log.query_str = [[
 	INSERT INTO cc_logs (Date, Category, Log) VALUES (UNIX_TIMESTAMP(), ?, ?);
 ]]
-kingston.log.search_str = [[SELECT * FROM cc_logs WHERE Date >= UNIX_TIMESTAMP('%s') AND Date <= (UNIX_TIMESTAMP('%s') + 86400) AND Category = '%s' AND Log LIKE '%%%s%%' LIMIT %d, %d;]]
+kingston.log.search_str = [[SELECT * FROM cc_logs WHERE Date >= UNIX_TIMESTAMP('%s') AND Date <= (UNIX_TIMESTAMP('%s') + 86400) AND Category = '%s' AND Log LIKE '%%%s%%' ORDER BY id DESC LIMIT %d, %d;]]
 
 local function init_log_db_tbl(db)
 	mysqloo.Query("CREATE TABLE IF NOT EXISTS cc_logs ( id INT NOT NULL auto_increment, PRIMARY KEY ( id ) );")

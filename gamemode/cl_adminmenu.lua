@@ -714,6 +714,7 @@ function GM:AdminPlayerMenuDisable()
 	CCP.AdminMenu.WarnName:SetDisabled( true );
 	CCP.AdminMenu.GiveAccessToStockpile:SetDisabled( true );
 	CCP.AdminMenu.TakeAccessFromStockpile:SetDisabled( true );
+	CCP.AdminMenu.ToggleWatched:SetDisabled( true );
 	
 end
 
@@ -783,6 +784,7 @@ function GM:AdminPlayerMenuEnable( ply )
 	CCP.AdminMenu.WarnName:SetDisabled( false );
 	CCP.AdminMenu.GiveAccessToStockpile:SetDisabled( false );
 	CCP.AdminMenu.TakeAccessFromStockpile:SetDisabled( false );
+	CCP.AdminMenu.ToggleWatched:SetDisabled( false );
 	
 end
 
@@ -1366,6 +1368,24 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.WarnName:SetDisabled( true );
 	CCP.AdminMenu.WarnName:PerformLayout();
 	
+	CCP.AdminMenu.ToggleWatched = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
+	CCP.AdminMenu.ToggleWatched:SetFont( "CombineControl.LabelSmall" );
+	CCP.AdminMenu.ToggleWatched:SetText( "Watch" );
+	CCP.AdminMenu.ToggleWatched:SetPos( 220, 400 );
+	CCP.AdminMenu.ToggleWatched:SetSize( 100, 20 );
+	function CCP.AdminMenu.ToggleWatched:DoClick()
+		
+		RunConsoleCommand( "rpa_togglewatched", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
+		if !CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).Player:Watched() then
+			self:SetText("Unwatch")
+		else
+			self:SetText("Watch")
+		end
+		
+	end
+	CCP.AdminMenu.ToggleWatched:SetDisabled( true );
+	CCP.AdminMenu.ToggleWatched:PerformLayout();
+	
 end
 
 function GM:AdminCreateBansMenu()
@@ -1562,14 +1582,14 @@ function GM:AdminCreateLogsMenu()
 	
 	function CCP.AdminMenu.LogList:DoDoubleClick( lineID, line )
 		if line.PreviousPage then
-			CCP.AdminMenu.LogList.Position = math.Clamp(CCP.AdminMenu.LogList.Position - 50, 0, CCP.AdminMenu.LogList.Position)
+			CCP.AdminMenu.LogList.Position = math.Clamp(CCP.AdminMenu.LogList.Position + 50, 0, CCP.AdminMenu.LogList.Position)
 			netstream.Start("RequestLogSearch", CCP.AdminMenu.LogList.Date, CCP.AdminMenu.LogList.Category, CCP.AdminMenu.LogList.Content, CCP.AdminMenu.LogList.Position)
 			
 			return
 		end
 		
 		if line.NextPage then
-			CCP.AdminMenu.LogList.Position = CCP.AdminMenu.LogList.Position + 50
+			CCP.AdminMenu.LogList.Position = CCP.AdminMenu.LogList.Position - 50
 			netstream.Start("RequestLogSearch", CCP.AdminMenu.LogList.Date, CCP.AdminMenu.LogList.Category, CCP.AdminMenu.LogList.Content, CCP.AdminMenu.LogList.Position)
 			
 			return
@@ -1626,7 +1646,6 @@ function GM:AdminCreateLogsMenu()
 	CCP.AdminMenu.Search:SetPos( 10, 84 );
 	CCP.AdminMenu.Search:SetSize( 100, 30 );
 	function CCP.AdminMenu.Search:DoClick()
-		CCP.AdminMenu.LogList:Clear()
 		CCP.AdminMenu.LogList.Position = 0
 		
 		netstream.Start("RequestLogSearch", CCP.AdminMenu.LogList.Date, CCP.AdminMenu.LogList.Category, CCP.AdminMenu.LogList.Content, CCP.AdminMenu.LogList.Position)
@@ -1635,8 +1654,10 @@ function GM:AdminCreateLogsMenu()
 end
 
 function GM:PopulateAdminLogs(tbl)
-	if CCP.AdminMenu.LogList and CCP.AdminMenu.LogList:IsValid() then
+	if CCP.AdminMenu.LogList and CCP.AdminMenu.LogList:IsValid() and #tbl > 0 then
 		CCP.AdminMenu.LogList:Clear()
+		
+		CCP.AdminMenu.LogList.Position = tbl[1].id
 		
 		if CCP.AdminMenu.LogList.Position > 0 then
 			local line = CCP.AdminMenu.LogList:AddLine("Previous page", "", "")

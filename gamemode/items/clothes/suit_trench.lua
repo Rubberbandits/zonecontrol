@@ -9,6 +9,7 @@ ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  10000;
 ITEM.License =  LICENSE_BLACK;
 ITEM.Bonemerge = "models/tnb/stalker_2019/trenchcoat_io7mask.mdl";
+ITEM.DegradationProtection = 80
 ITEM.Bodygroups = {
 	{0, 1}
 }

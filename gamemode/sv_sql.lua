@@ -211,6 +211,7 @@ local PlayerTable = {
 	{ "ScoreboardTitle", "VARCHAR(100)", "" },
 	{ "ScoreboardTitleC", "VARCHAR(100)", "200 200 200" },
 	{ "ScoreboardBadges", "INT", "0" },
+	{ "Watched", "INT", "0" },
 };
 
 local BansTable = {
@@ -559,51 +560,6 @@ function meta:LoadCharsInfo()
 		else
 			self.SQLCharData = { };
 			self:PostLoadCharsInfo();
-			
-			/*local query = ORIG_DB:query(Format("SELECT * FROM cc_chars WHERE SteamID = '%s'", self:SteamID()))
-			query.onSuccess = function(q, old_chars)
-				if #old_chars > 0 then
-					local transaction = CCSQL:createTransaction()
-					transaction.onSuccess = function(q, ret)
-						self:LoadCharsInfo()
-					end
-					transaction.onError = function(q, err)
-						print(err)
-					end
-					for k,v in next, old_chars do
-
-						local query = CCSQL:prepare("INSERT INTO cc_chars ( id, SteamID, RPName, TitleOne, TitleTwo, Title, Model, Trait, Skingroup, CID, Date, Money ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );")
-						query:setNumber(1, v.id)
-						query:setString(2, v.SteamID)
-						query:setString(3, v.RPName)
-						query:setString(4, v.TitleOne)
-						query:setString(5, v.TitleTwo)
-						query:setString(6, v.Title)
-						query:setString(7, v.Model)
-						query:setNumber(8, v.Trait)
-						query:setNumber(9, v.Skingroup)
-						query:setNumber(10, v.CID)
-						query:setString(11, v.Date)
-						query:setNumber(12, v.Money)
-						
-						transaction:addQuery(query)
-						
-						for m,n in next, util.JSONToTable(v.Inventory).offduty do
-							local metaitem = GAMEMODE:GetItemByID(n)
-							if metaitem then
-								local query = CCSQL:query(Format("INSERT INTO cc_items (Owner, ItemClass, Vars) VALUES ('%s', '%s', '%s')", v.id, n, util.TableToJSON(metaitem.Vars or {})))
-								transaction:addQuery(query)
-							end
-						end
-					end
-					transaction:start()
-				else
-					self.SQLCharData = {};
-					self:PostLoadCharsInfo();
-				end
-			end
-			query:start()
-			*/
 		end
 	end
 	
@@ -848,7 +804,7 @@ function meta:UpdateCharacterField( field, value, nolog )
 	
 		if( !nolog ) then
 			
-			GAMEMODE:LogSQL( "Player " .. ply:Nick() .. " (" .. ply:RPName() .. ") updated character field " .. field .. " to " .. tostring( value ) .. "." );
+			--GAMEMODE:LogSQL( "Player " .. ply:Nick() .. " (" .. ply:RPName() .. ") updated character field " .. field .. " to " .. tostring( value ) .. "." );
 			
 		end
 		
@@ -876,7 +832,7 @@ function GM:UpdateCharacterFieldOffline( id, field, value, nolog )
 	
 		if( !nolog ) then
 			
-			GAMEMODE:LogSQL( "Character " .. id .. " updated character field " .. field .. " to " .. tostring( value ) .. "." );
+			--GAMEMODE:LogSQL( "Character " .. id .. " updated character field " .. field .. " to " .. tostring( value ) .. "." );
 			
 		end
 		
@@ -915,7 +871,7 @@ function GM:AddCharacterFieldOffline( id, field, value, min, max )
 		
 		local function qS( ret )
 			
-			GAMEMODE:LogSQL( "Character " .. id .. " updated character field " .. field .. " to " .. tostring( value ) .. "." );
+			--GAMEMODE:LogSQL( "Character " .. id .. " updated character field " .. field .. " to " .. tostring( value ) .. "." );
 			
 		end
 		
@@ -936,7 +892,7 @@ function meta:UpdatePlayerField( field, value )
 	
 	local function qS( ret )
 		
-		GAMEMODE:LogSQL( "Player " .. self:Nick() .. " (" .. self:RPName() .. ") updated player field " .. field .. " to " .. tostring( value ) .. "." );
+		--GAMEMODE:LogSQL( "Player " .. self:Nick() .. " (" .. self:RPName() .. ") updated player field " .. field .. " to " .. tostring( value ) .. "." );
 		
 		self.SQLPlayerData[field] = tostring( value );
 		
@@ -955,7 +911,7 @@ function GM:UpdatePlayerFieldOffline( steamid, field, value )
 	
 	local function qS( ret )
 		
-		GAMEMODE:LogSQL( "Player " .. steamid .. " updated player field " .. field .. " to " .. tostring( value ) .. "." );
+		--GAMEMODE:LogSQL( "Player " .. steamid .. " updated player field " .. field .. " to " .. tostring( value ) .. "." );
 		
 	end
 	

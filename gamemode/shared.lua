@@ -252,14 +252,6 @@ function meta:TranslatePlayerModel()
 	
 end
 
-function meta:GetDutyInventory()
-
-	if( self:CombineFlag() == "" ) then return "offduty" end;
-	if( self:CombineFlag() != "" and self:ActiveFlag() == "" ) then return "offduty" end;
-	if( self:CombineFlag() != "" and self:ActiveFlag() != "" ) then return "onduty"  end;
-
-end
-
 function XRES( x )
 	
 	return x * ( ScrW() / 640 );
@@ -328,10 +320,6 @@ function GM:FindPlayer( name, caller, pda )
 				end
 			end
 			continue;
-		end
-		
-		if( tonumber( name ) == v:CID() or tonumber( name ) == v:FormattedCID() ) then
-			return v;
 		end
 		
 		if( string.find( string.lower( v:VisibleRPName() ), name, nil, true ) ) then
@@ -909,6 +897,17 @@ function player.GetAllLoaded()
 	for _,ply in next, player.GetAll() do
 		if ply:IsValid() and ply:CharID() > 0 then
 			players[#players + 1] = ply
+		end
+	end
+	
+	return players
+end
+
+function player.GetAdmins()
+	local players = {}
+	for k,v in next, player.GetAll() do
+		if v:IsAdmin() and IsValid(v) then
+			players[#players + 1] = v
 		end
 	end
 	

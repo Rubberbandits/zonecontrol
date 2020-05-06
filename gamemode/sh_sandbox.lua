@@ -465,7 +465,7 @@ function GM:CanTool( ply, tr, tool )
 				
 				GAMEMODE:LogAdmin( "[K] " .. ply:Nick() .. " removed player " .. nick .. ".", ply );
 
-				GAMEMODE:Notify(nil, nil, COLOR_NOTIF, "%s was removed by %s.", nick, ply);
+				GAMEMODE:Notify(nil, nil, COLOR_NOTIF, "%s was removed by %s.", nick, ply:Nick());
 				
 			end
 			
