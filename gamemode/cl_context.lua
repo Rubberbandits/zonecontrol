@@ -502,6 +502,19 @@ function GM:GetCCOptions( ent, dist )
 			
 			table.insert( tab, option );
 			
+		elseif ent:GetClass() == "prop_physics" then	
+			local option = { "Set Description", function()
+				Derma_StringRequest(
+					"Set Description",
+					"Set the description of this prop",
+					"",
+					function(text)
+						RunConsoleCommand("rp_propdesc", text)
+					end
+				)
+			end, nil, 100 };
+			
+			table.insert( tab, option );
 		end
 		
 	end
