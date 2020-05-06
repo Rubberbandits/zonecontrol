@@ -209,6 +209,34 @@ surface.CreateFontCC( "CombineControl.Written", {
 	size = 20,
 	weight = 700 } );
 	
+	surface.CreateFont( "InventoryWeight", {
+	font = "Arial",
+	size = ScreenScale( 8 ),
+	weight = 560,
+	antialias = true,
+} );
+
+surface.CreateFont( "InventoryDisplay", {
+	font = "Arial",
+	size = ScreenScale( 6 ),
+	weight = 500,
+	antialias = true,
+} );
+
+surface.CreateFont( "InventoryNameDisplay", {
+	font = "Arial",
+	size = ScreenScale( 8 ),
+	weight = 560,
+	antialias = true,
+} );
+
+surface.CreateFont( "InventoryFactionDisplay", {
+	font = "Arial",
+	size = ScreenScale( 6 ),
+	weight = 560,
+	antialias = true,
+} );
+	
 language.Add( "npc_clawscanner", "Claw Scanner" );
 language.Add( "npc_combine_camera", "Combine Camera" );
 language.Add( "npc_helicopter", "Helicopter" );
