@@ -1,5 +1,6 @@
 kingston = kingston or {}
 kingston.pda = kingston.pda or {}
+kingston.pda.has_authenticated = kingston.pda.has_authenticated or {}
 kingston.pda.tabs = {
 	Journal = {
 		order = 3,
@@ -41,6 +42,7 @@ kingston.pda.tabs = {
 			pnl.save_journal:SetFont("CombineControl.ChatNormal")
 			pnl.save_journal:SetText("")
 			pnl.save_journal:SetContentAlignment(4)
+			pnl.save_journal.NoPaint = true
 			pnl.save_journal.DoClick = function(btn)
 				local title = pnl.journal_title:GetText()
 				local entry = pnl.journal_entry:GetText()
@@ -82,14 +84,15 @@ kingston.pda.tabs = {
 			pnl.delete_journal:SetFont("CombineControl.ChatNormal")
 			pnl.delete_journal:SetText("")
 			pnl.delete_journal:SetContentAlignment(4)
+			pnl.delete_journal.NoPaint = true
 			pnl.delete_journal.DoClick = function(btn)
 				netstream.Start("PDADeleteJournal", pnl:GetParent().pda_id, pnl.selected_journal)
 				
 				pnl.journal_title:SetEditable(false)
-				pnl.journal_title:SetText("Title")
+				pnl.journal_title:SetText("Journal")
 				
 				pnl.journal_entry:SetEditable(false)
-				pnl.journal_entry:SetText("Entry")
+				pnl.journal_entry:SetText("No journal selected.")
 				
 				pnl.delete_journal:SetDisabled(true)
 				pnl.delete_journal:SetText("")
@@ -227,7 +230,7 @@ function PANEL:AddTab(title, func, default)
 	end
 	button:SetSkin("zc_pda")
 	
-	if default then
+	if default and self:HasAuthenticated() then
 		button:DoClick()
 	end
 	
@@ -414,10 +417,48 @@ function PANEL:CreateContact(data)
 	return panel
 end
 
+function PANEL:CreatePasswordEntry()
+	local pnl = self.Body
+	
+	pnl.PasswordEntry = vgui.Create("DTextEntry", pnl)
+	pnl.PasswordEntry:SetSize(ScrW() / 6, ScreenScaleH(12))
+	pnl.PasswordEntry:SetPos((pnl:GetWide() / 2) - ((ScrW() / 6) / 2), (pnl:GetTall() / 2) - ScreenScaleH(19))
+	pnl.PasswordEntry:SetFont("CombineControl.ChatNormal")
+	pnl.PasswordEntry:SetText("Password")
+	pnl.PasswordEntry:SetContentAlignment(5)
+	pnl.PasswordEntry.OnEnter = function(entry)
+		netstream.Start("AuthenticatePDA", self.pda_id, entry:GetText())
+	end
+	
+	pnl.UnlockBtn = vgui.Create("DButton", pnl)
+	pnl.UnlockBtn:SetSize(ScrW() / 6, ScreenScaleH(12))
+	pnl.UnlockBtn:SetPos((pnl:GetWide() / 2) - ((ScrW() / 6) / 2), (pnl:GetTall() / 2) - ScreenScaleH(5))
+	pnl.UnlockBtn:SetFont("CombineControl.ChatNormal")
+	pnl.UnlockBtn:SetText("Unlock")
+	pnl.UnlockBtn.DoClick = function(btn)
+		netstream.Start("AuthenticatePDA", self.pda_id, pnl.PasswordEntry:GetText())
+	end
+end
+
+function PANEL:AuthenticationComplete()
+	self.Body:Clear()
+	kingston.pda.has_authenticated[self.pda_id] = true
+	
+	self:CreateTabs()
+end
+
 function PANEL:CreateTabs()
 	for title,tab in SortedPairsByMemberValue(kingston.pda.tabs, "order") do
 		self:AddTab(title, tab.func, tab.default)
 	end
+end
+
+function PANEL:HasAuthenticated()
+	local item = GAMEMODE.g_ItemTable[self.pda_id]
+	if !item then return false end
+	if !item:GetVar("HasPassword", false) then return true end
+	
+	return kingston.pda.has_authenticated[self.pda_id]
 end
 
 function PANEL:Paint(w, h)

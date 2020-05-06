@@ -1883,7 +1883,7 @@ function GM:PMCreatePDANameEdit( item )
 	CCP.PlayerMenu.PDANameEdit:PerformLayout();
 	
 	CCP.PlayerMenu.PDANameEdit.Label = vgui.Create( "DLabel", CCP.PlayerMenu.PDANameEdit );
-	CCP.PlayerMenu.PDANameEdit.Label:SetText( string.len( LocalPlayer():PDAName() ) .. "/" .. self.MaxNameLength );
+	CCP.PlayerMenu.PDANameEdit.Label:SetText( string.len( item:GetVar("Name", "") ) .. "/" .. self.MaxNameLength );
 	CCP.PlayerMenu.PDANameEdit.Label:SetPos( 10, 74 );
 	CCP.PlayerMenu.PDANameEdit.Label:SetSize( 280, 30 );
 	CCP.PlayerMenu.PDANameEdit.Label:SetFont( "CombineControl.LabelGiant" );

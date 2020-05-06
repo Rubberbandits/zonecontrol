@@ -92,18 +92,27 @@ SKIN.DermaVersion	= 1
 function SKIN:PaintButton(pnl, w, h)
 	if pnl.IsTabButton then
 		kingston.gui.FindFunc(pnl, "Paint", "PageButton", w, h)
+		return
 	end
 	
 	if pnl.CloseButton then
 		kingston.gui.FindFunc(pnl, "Paint", "CloseButton", w, h)
+		return
 	end
 	
 	if pnl.RightDateButton then
 		kingston.gui.FindFunc(pnl, "Paint", "RightButton", w, h)
+		return
 	end
 	
 	if pnl.LeftDateButton then
 		kingston.gui.FindFunc(pnl, "Paint", "LeftButton", w, h)
+		return
+	end
+	
+	if !pnl.NoPaint then
+		surface.SetDrawColor(200,200,200,120)
+		surface.DrawOutlinedRect(0,0,w,h)
 	end
 end
 
