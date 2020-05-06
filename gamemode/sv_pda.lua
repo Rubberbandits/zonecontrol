@@ -1,5 +1,6 @@
 kingston = kingston or {}
 kingston.pda = kingston.pda or {}
+kingston.pda.authenticated = kingston.pda.authenticated or {}
 
 kingston.pda.chat_db_struct = {
 	{ "Date", "VARCHAR(20)" },
@@ -127,11 +128,17 @@ function kingston.pda.recover_journals(pda)
 	kingston.pda.journal_recover:start()
 end
 
+function kingston.pda.player_authenticated(ply, pda)
+	if !kingston.pda.authenticated[pda] then return false end
+	
+	return kingston.pda.authenticated[pda][ply:CharID()] or false
+end
+
 /* Networking */
 
 local function PDAGrabChat(ply, id, date)
 	local item = ply.Inventory[id]
-	if item and item:GetClass() == "pda" and item:GetVar("Power", false) then
+	if item and item:GetClass() == "pda" and item:GetVar("Power", false) and kingston.pda.player_authenticated(ply, id) then
 		kingston.pda.grab_chat(id, date, function(q, data)
 			netstream.Start(ply, "PDAGrabChat", data)
 		end)
@@ -141,7 +148,7 @@ netstream.Hook("PDAGrabChat", PDAGrabChat)
 
 local function PDAGrabJournal(ply, id)
 	local item = ply.Inventory[id]
-	if item and item:GetClass() == "pda" and item:GetVar("Power", false) then
+	if item and item:GetClass() == "pda" and item:GetVar("Power", false) and kingston.pda.player_authenticated(ply, id) then
 		kingston.pda.grab_journal(id, function(q, data)
 			netstream.Start(ply, "PDAGrabJournal", data)
 		end)
@@ -159,7 +166,7 @@ local function PDAWriteJournal(ply, id, title, message, update)
 	if #message > 2048 then return end
 	
 	local item = ply.Inventory[id]
-	if item and item:GetClass() == "pda" and item:GetVar("Power", false) then
+	if item and item:GetClass() == "pda" and item:GetVar("Power", false) and kingston.pda.player_authenticated(ply, id) then
 		kingston.pda.write_journal(id, title, message, update)
 	end
 end
@@ -168,7 +175,8 @@ netstream.Hook("PDAWriteJournal", PDAWriteJournal)
 local function PDADeleteJournal(ply, pda, id)
 	local item = ply.Inventory[pda]
 	if !item then return end
-	
+	if !kingston.pda.player_authenticated(ply, pda) then return end
+
 	kingston.pda.delete_journal(id, function()
 		kingston.pda.grab_journal(pda, function(q, data)
 			netstream.Start(ply, "PDAGrabJournal", data)
@@ -181,6 +189,7 @@ local function PDARecoverJournals(ply, pda)
 	local item = ply.Inventory[pda]
 	if !item then return end
 	if !ply:HasCharFlag("T") or !ply:HasItem("pda_recover") then return end
+	if item:GetVar("Encrypted", false) then return end
 	if ply.StartPDARecover + 119 > CurTime() then return end
 	
 	local items = ply:HasItem("pda_recover")
@@ -193,5 +202,75 @@ local function PDARecoverJournals(ply, pda)
 	end
 	
 	kingston.pda.recover_journals(pda)
+	ply.StartPDARecover = nil
 end
 netstream.Hook("PDARecoverJournals", PDARecoverJournals)
+
+local function PDAEncrypt(ply, pda)
+	local item = ply.Inventory[pda]
+	if !item then return end
+	if item:GetVar("Encrypted", false) then return end
+	if item:GetVar("HasPassword", false) then return end
+	if !ply:HasCharFlag("T") or !ply:HasItem("pda_encryption") then return end
+	if ply.StartPDAEncrypt + 19 > CurTime() then return end
+	
+	local items = ply:HasItem("pda_encryption")
+	if istable(items) and !items.IsItem then
+		items = items[1]
+	end
+	items:RemoveItem(true)
+	
+	item:SetVar("Encrypted", true, false, true)
+	ply.StartPDAEncrypt = nil
+end
+netstream.Hook("PDAEncrypt", PDAEncrypt)
+
+local function PDADecrypt(ply, pda)
+	local item = ply.Inventory[pda]
+	if !item then return end
+	if !item:GetVar("Encrypted", false) then return end
+	if !ply:HasCharFlag("T") or !ply:HasItem("pda_decryption") then return end
+	if ply.StartPDADecrypt + 199 > CurTime() then return end
+	
+	local items = ply:HasItem("pda_decryption")
+	if istable(items) and !items.IsItem then
+		items = items[1]
+	end
+	items:RemoveItem(true)
+	
+	item:SetVar("Encrypted", false, false, true)
+	item:SetVar("HasPassword", false, false, true)
+	item:SetVar("PrivateVars", {Password = ""})
+	ply.StartPDADecrypt = nil
+end
+netstream.Hook("PDADecrypt", PDADecrypt)
+
+local function PDASetPassword(ply, pda, password)
+	local item = ply.Inventory[pda]
+	
+	if !item then return end
+	if !item:GetVar("Encrypted", false) then return end
+	if item:GetVar("HasPassword", false) then return end
+	
+	local private_vars = item:GetVar("PrivateVars", {}) 
+	private_vars.Password = password
+	
+	item:SetVar("PrivateVars", private_vars)
+	item:SetVar("HasPassword", true, false, true)
+end
+netstream.Hook("PDASetPassword", PDASetPassword)
+
+local function AuthenticatePDA(ply, pda, password)
+	local item = ply.Inventory[pda]
+	if !item then return end
+	if !item:GetVar("HasPassword", false) then return end
+	if item:GetVar("PrivateVars", {}).Password != password then return end
+	
+	if !kingston.pda.authenticated[pda] then
+		kingston.pda.authenticated[pda] = {}
+	end
+
+	kingston.pda.authenticated[pda][ply:CharID()] = true
+	netstream.Start(ply, "AuthenticatePDA", pda)
+end
+netstream.Hook("AuthenticatePDA", AuthenticatePDA)

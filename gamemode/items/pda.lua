@@ -79,7 +79,11 @@ ITEM.functions.View = {
 		if CLIENT then
 			GAMEMODE.PDAMenu = vgui.Create("zc_pda")
 			GAMEMODE.PDAMenu.pda_id = item:GetID()
-			GAMEMODE.PDAMenu:CreateTabs()
+			if item:GetVar("HasPassword", false) and !kingston.pda.has_authenticated[item:GetID()] then
+				GAMEMODE.PDAMenu:CreatePasswordEntry()
+			else
+				GAMEMODE.PDAMenu:CreateTabs()
+			end
 			CCP.PlayerMenu:Close()
 		end
 		
@@ -89,12 +93,11 @@ ITEM.functions.View = {
 		return item:GetVar("Power", false)
 	end,
 }
-/*
 ITEM.functions.SetPassword = {
 	SelectionName = "Set Password",
 	OnUse = function(item)
 		if CLIENT then
-		
+			GAMEMODE:PMCreatePDAPassword(item)
 		end
 		
 		return true
@@ -107,8 +110,12 @@ ITEM.functions.Encrypt = {
 	SelectionName = "Encrypt",
 	OnUse = function(item)
 		if CLIENT then
-		
+			GAMEMODE:CreateTimedProgressBar(20, "Encrypting PDA...", LocalPlayer(), function()
+				netstream.Start("PDAEncrypt", item:GetID())
+			end)
 		end
+			
+		item:Owner().StartPDAEncrypt = CurTime()
 		
 		return true
 	end,
@@ -124,9 +131,13 @@ ITEM.functions.Encrypt = {
 ITEM.functions.Decrypt = {
 	SelectionName = "Decrypt",
 	OnUse = function(item)
-		if CLIENT then
-		
-		end
+			if CLIENT then
+				GAMEMODE:CreateTimedProgressBar(200, "Decrypting PDA...", LocalPlayer(), function()
+					netstream.Start("PDADecrypt", item:GetID())
+				end)
+			end
+			
+			item:Owner().StartPDADecrypt = CurTime()
 		
 		return true
 	end,
@@ -139,7 +150,6 @@ ITEM.functions.Decrypt = {
 		)
 	end,
 }
-*/
 ITEM.functions.RecoverJournal = {
 	SelectionName = "Recover",
 	OnUse = function(item)
@@ -175,4 +185,17 @@ function ITEM:OnDeleted()
 	local function onSuccess()
 	end
 	mysqloo.Query( Format( "DELETE FROM cc_pda_journal WHERE Owner = '%d'", self:GetID() ), onSuccess );
+end
+
+
+/* UI */
+function GM:PMCreatePDAPassword(item)
+	Derma_StringRequest(
+		"Set Password", 
+		"Set this PDA's password. (WARNING: THIS IS STORED IN PLAINTEXT. DO NOT USE A REAL PASSWORD!)",
+		"",
+		function(text)
+			netstream.Start("PDASetPassword", item:GetID(), text)
+		end
+	)
 end

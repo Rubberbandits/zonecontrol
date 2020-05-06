@@ -23,3 +23,10 @@ local function PDAGrabContacts(data)
 	end
 end
 netstream.Hook("PDAGrabContacts", PDAGrabContacts)
+
+local function AuthenticatePDA(pda)
+	if GAMEMODE.PDAMenu then
+		GAMEMODE.PDAMenu:AuthenticationComplete()
+	end
+end
+netstream.Hook("AuthenticatePDA", AuthenticatePDA)
