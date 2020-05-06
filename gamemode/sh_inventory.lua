@@ -217,32 +217,6 @@ function meta:SellItemToMenu( k )
 
 end
 
-function meta:ThrowOutItem( k )
-	
-	if( self:PassedOut() ) then return end
-	if( self:TiedUp() ) then return end
-	if( self:IsItemEquipped( self.Inventory[self:GetDutyInventory()][k] ) ) then return end
-	
-	if( CLIENT ) then
-	
-		local metaitem = GAMEMODE:GetItemByID( self.Inventory[self:GetDutyInventory()][k] );
-	
-		if( metaitem.OnRemoved ) then
-
-			metaitem.OnRemoved( self.Inventory[self:GetDutyInventory()][k], self );
-			
-		end
-
-		netstream.Start( "nRemoveItem", k, true );
-		
-		GAMEMODE:PMUpdateInventory();
-		
-	end
-	
-	CC.Me( self, Format( " destroys their %s.", GAMEMODE:GetItemByID( self.Inventory[self:GetDutyInventory()][k] ).Name ), true );
-	
-end
-
 function meta:DropItem( k )
 	
 	if( self:PassedOut() ) then return end

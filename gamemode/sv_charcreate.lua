@@ -96,7 +96,7 @@ function nChangeTitle( ply, desc )
 		
 		local charData = ply:GetCharFromID( ply:CharID() );
 		local Description = util.JSONToTable( charData.Title );
-		Description[ply:GetDutyInventory()] = string.Trim( desc );
+		Description["offduty"] = string.Trim( desc );
 
 		ply:SetDescription( string.Trim( desc ) );
 		ply:UpdateCharacterField( "Title", util.TableToJSON( Description ), nil, true );
@@ -112,7 +112,7 @@ function nChangeTitleOne( ply, title )
 		
 		local charData = ply:GetCharFromID( ply:CharID() );
 		local TitleOne = util.JSONToTable( charData.TitleOne );
-		TitleOne[ply:GetDutyInventory()] = string.Trim( title );
+		TitleOne["offduty"] = string.Trim( title );
 		
 		ply:SetTitleOne( string.Trim( title ) );
 		ply:UpdateCharacterField( "TitleOne", util.TableToJSON( TitleOne ), nil, true );
@@ -128,7 +128,7 @@ function nChangeTitleTwo( ply, title )
 		
 		local charData = ply:GetCharFromID( ply:CharID() );
 		local TitleTwo = util.JSONToTable( charData.TitleTwo );
-		TitleTwo[ply:GetDutyInventory()] = string.Trim( title );
+		TitleTwo["offduty"] = string.Trim( title );
 		
 		ply:SetTitleTwo( string.Trim( title ) );
 		ply:UpdateCharacterField( "TitleTwo", util.TableToJSON( TitleTwo ), nil, true );
