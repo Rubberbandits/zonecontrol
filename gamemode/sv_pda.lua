@@ -129,6 +129,9 @@ function kingston.pda.recover_journals(pda)
 end
 
 function kingston.pda.player_authenticated(ply, pda)
+	local item = ply.Inventory[pda]
+	if !item then return false end
+	if !item:GetVar("HasPassword", false) then return true end
 	if !kingston.pda.authenticated[pda] then return false end
 	
 	return kingston.pda.authenticated[pda][ply:CharID()] or false
