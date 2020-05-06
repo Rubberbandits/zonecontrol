@@ -49,7 +49,11 @@ if SERVER then
 				end
 
 				kingston.command.run(ply, match, arguments, text:sub(#match + 3))
-				kingston.log.write("command", "[%s][ran command: %s] %s", ply and ply:Nick() or "rcon", match, #text:sub(#match + 3) > 0 and text:sub(#match + 3) or "no args")
+				if command.log then
+					command.log(ply, arguments, text:sub(#match + 3))
+				else
+					kingston.log.write("command", "[%s][ran command: %s] %s", ply and ply:Nick() or "rcon", match, #text:sub(#match + 3) > 0 and text:sub(#match + 3) or "no args")
+				end
 			else
 				if IsValid(ply) then
 					ply:Notify(nil, COLOR_ERROR, "That command does not exist.")
