@@ -289,7 +289,7 @@ kingston.chat.register_type("yell", {
 
 kingston.chat.register_type("whisper", {
 	chat_command = "/w",
-	chat_range = 50,
+	chat_range = 100,
 	chat_font = "CombineControl.ChatSmall",
 	no_console_print = true,
 	construct_string = function(chat_type, ply, text)
