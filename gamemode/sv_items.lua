@@ -248,12 +248,16 @@ netstream.Hook("StackItem", function(ply, item_id, to_stack_id)
 	end
 end)
 
-netstream.Hook("SplitStack", function(ply, item_id, amt)
+netstream.Hook("SplitStack", function(ply, item_id, amt, x, y)
 	local item = ply.Inventory[item_id]
 	
 	if item and item.CanSplitStack then
 		if item:CanSplitStack(amt) then
-			item:SplitStack(amt)
+			if x and y then
+				if ply:IsInventorySlotOccupiedItem(x, y, item.W, item.H) then return end
+			end
+
+			item:SplitStack(amt, x, y)
 		end
 	end
 end)

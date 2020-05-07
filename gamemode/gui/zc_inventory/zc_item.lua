@@ -28,7 +28,14 @@ function PANEL:Init()
 			
 			if dropped_item == item then return end
 
-			GAMEMODE.Inventory:PopulateItems()
+			if item:CanStack(dropped_item) then
+				netstream.Start("StackItem", item:GetID(), dropped_item:GetID())
+			
+				local refresh = item:OnStack(dropped_item)
+				if refresh then
+					GAMEMODE.Inventory:PopulateItems()
+				end
+			end
 		end
 	end)
 end
@@ -144,18 +151,6 @@ function PANEL:OnMousePressed( iCode )
 end
 
 function PANEL:OnMouseReleased( iCode ) 
-	if input.IsKeyDown(KEY_LSHIFT) then
-		print("KEY_LSHIFT")
-	
-		-- split stack in half
-	elseif input.IsKeyDown(KEY_LCONTROL) then
-		print("KEY_LCONTROL")
-	
-		-- take one from stack
-	end
-	
-	-- maybe control+shift for manual number input.
-	
 	if iCode == MOUSE_RIGHT then
 		self:CreateActionMenu()
 	end
@@ -165,7 +160,6 @@ function PANEL:OnMouseReleased( iCode )
 	if self:DragMouseRelease(iCode) then
 		return
 	end
-	
 end
 
 function PANEL:CreateActionMenu()
@@ -180,7 +174,7 @@ function PANEL:CreateActionMenu()
 	if item.functions then
 		for k,v in next, item.functions do
 			if v.CanRun(item) then
-				self.action_menu:AddOption(string.lower(v.SelectionName), function()
+				self.action_menu:AddOption((isfunction(v.SelectionName) and string.lower(v.SelectionName(item))) or string.lower(v.SelectionName), function()
 					netstream.Start("ItemCallFunction", item:GetID(), k)
 					self.Item:CallFunction(k)
 					
@@ -207,6 +201,34 @@ function PANEL:CreateActionMenu()
 	end
 	if item.CanDrop then
 		if item:CanDrop() then
+			if InStockpileRange(LocalPlayer()) then
+				self.action_menu:AddOption("stockpile", function()
+					GAMEMODE:PMCreateStockpilesMenu()
+					netstream.Start("nRequestMoveStockpiles");
+				end)
+			end
+			
+			if LocalPlayer():IsAdmin() then
+				self.action_menu:AddOption("edit", function()
+					GAMEMODE.ItemEditor = vgui.Create("CItemCreator")
+					GAMEMODE.ItemEditor:SetItem(item)
+				end)
+			end
+			
+			if LocalPlayer():HasCharFlag("X") and item.BulkPrice and InStockpileRange(LocalPlayer()) and GAMEMODE.SellToMenuEnabled and item:CanSell() then
+				self.action_menu:AddOption("sell for "..GAMEMODE:CalculatePrice(item).." RU", function()
+					LocalPlayer():SellItemToMenu(item:GetID())
+					GAMEMODE.Inventory:PopulateItems()
+				end)
+			end
+			
+			if item.CanSplitStack and item:CanSplitStack() then
+				self.action_menu:AddOption("split", function()
+					netstream.Start("SplitStack", item:GetID())
+					GAMEMODE.Inventory:PopulateItems()
+				end)
+			end
+		
 			self.action_menu:AddOption("drop", function()
 				netstream.Start("ItemDrop", item:GetID())
 				item:DropItem()
@@ -215,6 +237,8 @@ function PANEL:CreateActionMenu()
 			end)
 		end
 	end
+	
+	GAMEMODE.Inventory.SelectedItem = item
 	
 	self.action_menu:SetPaintBackground( true );
 	self.action_menu:Open( gui.MouseX(), gui.MouseY(), nil, self:GetParent() );

@@ -124,6 +124,25 @@ function PANEL:PopulateItems()
 		item_pnl:SetPos(slot:GetPos())
 		item_pnl:SetModel(item:GetModel())
 		item_pnl.Item = item
+	
+		if item.GetBodygroupCategory then
+			item_pnl.Entity:SetBodygroup( item:GetBodygroupCategory(), item:GetBodygroup() );
+		end
+		
+		if item.Base == "clothes" then
+			local submats = item:GetItemSubmaterials()
+			if submats then
+				for m,n in next, submats do
+					item_pnl.Entity:SetSubMaterial( n[1], n[2] )
+				end
+			end
+		else
+			if item.ItemSubmaterials then
+				for m,n in next, item.ItemSubmaterials do
+					item_pnl.Entity:SetSubMaterial( n[1], n[2] )
+				end
+			end
+		end
 		
 		self.InventoryScroll.Items[#self.InventoryScroll.Items + 1] = item_pnl
 	end
@@ -131,6 +150,17 @@ end
 
 function PANEL:Paint(w, h)
 
+end
+
+function PANEL:Think()
+	if input.IsKeyDown(KEY_F3) and !self.LastKeyState and self.HasOpened then
+		self:Close()
+	end
+	
+	self.LastKeyState = input.IsKeyDown(KEY_F3)
+	if !self.HasOpened then
+		self.HasOpened = true
+	end
 end
 
 vgui.Register("zc_inventory", PANEL, "DFrame")

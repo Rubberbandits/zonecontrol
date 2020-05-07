@@ -72,7 +72,7 @@ function BASE:CanSplitStack(amt)
 	return (self:GetVar("Stacked", 0) > 1) and (amt < self:GetVar("Stacked", 0))
 end
 
-function BASE:SplitStack(amt)
+function BASE:SplitStack(amt, x, y)
 	if !amt then
 		amt = math.Round(self:GetVar("Stacked", 0) / 2)
 	end
@@ -83,7 +83,7 @@ function BASE:SplitStack(amt)
 	
 	local item = self:Owner():GiveItem(self.Class, {
 		Stacked = amt,
-	})
+	}, x, y)
 end
 
 function BASE:AddItemToStack(item)

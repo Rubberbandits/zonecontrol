@@ -70,15 +70,6 @@ function item:New( owner, metaitem, id, vars, x, y )
 	end
 	
 	setmetatable( itemdata, item );
-
-	itemdata:Initialize();
-	
-	if( id ) then
-	
-		GAMEMODE.g_ItemTable[id] = itemdata;
-		owner.Inventory[id] = itemdata;
-		
-	end
 	
 	if x and y then
 		itemdata.x = x
@@ -88,6 +79,15 @@ function item:New( owner, metaitem, id, vars, x, y )
 		
 		itemdata.x = x
 		itemdata.y = y
+	end
+
+	itemdata:Initialize();
+	
+	if( id ) then
+	
+		GAMEMODE.g_ItemTable[id] = itemdata;
+		owner.Inventory[id] = itemdata;
+		
 	end
 	
 	return itemdata;
@@ -296,7 +296,9 @@ function item:RemoveItem(network)
 	self = nil;
 	
 	if CLIENT then
-		GAMEMODE:PMUpdateInventory()
+		if GAMEMODE.Inventory then
+			GAMEMODE.Inventory:PopulateItems()
+		end
 	end
 
 end

@@ -151,7 +151,7 @@ function meta:InventoryMaxWeight()
 	
 end
 
-function meta:GiveItem( item_class, vars )
+function meta:GiveItem( item_class, vars, x, y )
 	
 	GAMEMODE:LogItems( "[G] " .. self:VisibleRPName() .. " obtained item " .. item_class .. ".", self );
 	
@@ -161,7 +161,7 @@ function meta:GiveItem( item_class, vars )
 		
 	end
 
-	local object = item( self, item_class );
+	local object = item( self, item_class, nil, nil, x, y );
 	
 	if( vars ) then
 		
@@ -207,32 +207,6 @@ function meta:SellItemToMenu( k )
 
 end
 
-function meta:ThrowOutItem( k )
-	
-	if( self:PassedOut() ) then return end
-	if( self:TiedUp() ) then return end
-	if( self:IsItemEquipped( self.Inventory[self:GetDutyInventory()][k] ) ) then return end
-	
-	if( CLIENT ) then
-	
-		local metaitem = GAMEMODE:GetItemByID( self.Inventory[self:GetDutyInventory()][k] );
-	
-		if( metaitem.OnRemoved ) then
-
-			metaitem.OnRemoved( self.Inventory[self:GetDutyInventory()][k], self );
-			
-		end
-
-		netstream.Start( "nRemoveItem", k, true );
-		
-		GAMEMODE:PMUpdateInventory();
-		
-	end
-	
-	CC.Me( self, Format( " destroys their %s.", GAMEMODE:GetItemByID( self.Inventory[self:GetDutyInventory()][k] ).Name ), true );
-	
-end
-
 function meta:DropItem( k )
 	
 	if( self:PassedOut() ) then return end
@@ -268,7 +242,7 @@ function meta:MoveToStockpile( k, id )
 
 		netstream.Start( "nMoveToStockpile", k, id );
 		
-		GAMEMODE:PMUpdateInventory();
+		GAMEMODE.Inventory:PopulateItems()
 		
 	end
 	

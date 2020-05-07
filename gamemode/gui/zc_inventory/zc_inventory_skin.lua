@@ -102,7 +102,8 @@ function SKIN:PaintButton(pnl, w, h)
 end
 
 function SKIN:PaintVScrollBar(pnl, w, h)
-
+	surface.SetDrawColor(120,120,120,120)
+	surface.DrawOutlinedRect(0,0,w,h)
 end
 
 function SKIN:PaintScrollBarGrip(pnl, w, h)
@@ -160,6 +161,7 @@ derma.DefineSkin( "zc_inventory", "rusty", SKIN );
 local UVSKIN = {}
 UVSKIN.inv_mat = Material("kingston/inventory_panels")
 UVSKIN.mp_screen_mat = Material("kingston/mp_screen_panels")
+UVSKIN.common = Material("kingston/ui_common")
 
 UVSKIN.InventoryBack = {
 	u0 = 0.67,
@@ -224,6 +226,27 @@ UVSKIN.ShortButton = {
 	},
 }
 
+UVSKIN.VBarUp = {
+	u0 = 0.12109,
+	v0 = 0.1689,
+	u1 = 0.1358,
+	v1 = 0.1835,
+}
+
+UVSKIN.VBarDown = {
+	u0 = 0.12109,
+	v0 = 0.216,
+	u1 = 0.1358,
+	v1 = 0.2304,
+}
+
+UVSKIN.VBar = {
+	u0 = 0.12109,
+	v0 = 0.2,
+	u1 = 0.1358,
+	v1 = 0.2156,
+}
+
 function UVSKIN:PaintInventoryFrame(pnl, w, h)
 	surface.SetDrawColor(255, 255, 255, pnl:GetAlpha() * 255)
 	surface.SetMaterial(self.inv_mat)
@@ -237,8 +260,21 @@ function UVSKIN:PaintEquipFrame(pnl, w, h)
 end
 
 function UVSKIN:PaintVBar(pnl, w, h)
-	surface.SetDrawColor(200,200,200,120)
-	surface.DrawOutlinedRect(0,0,w,h)
+	surface.SetDrawColor(255, 255, 255, pnl:GetAlpha() * 255)
+	surface.SetMaterial(self.common)
+	surface.DrawTexturedRectUV(0, 0, w, h, self.VBar.u0, self.VBar.v0, self.VBar.u1, self.VBar.v1)
+end
+
+function UVSKIN:PaintVBarUp(pnl, w, h)
+	surface.SetDrawColor(255, 255, 255, pnl:GetAlpha() * 255)
+	surface.SetMaterial(self.common)
+	surface.DrawTexturedRectUV(0, 0, w, h, self.VBarUp.u0, self.VBarUp.v0, self.VBarUp.u1, self.VBarUp.v1)
+end
+
+function UVSKIN:PaintVBarDown(pnl, w, h)
+	surface.SetDrawColor(255, 255, 255, pnl:GetAlpha() * 255)
+	surface.SetMaterial(self.common)
+	surface.DrawTexturedRectUV(0, 0, w, h, self.VBarDown.u0, self.VBarDown.v0, self.VBarDown.u1, self.VBarDown.v1)
 end
 
 function UVSKIN:PaintGridSlot(pnl, w, h)
@@ -265,8 +301,6 @@ function UVSKIN:PaintLongButton(pnl, w, h)
 	surface.SetDrawColor(255,255,255, pnl:GetAlpha() * 255)
 	surface.SetMaterial(self.inv_mat)
 	surface.DrawTexturedRectUV(0, 0, w, h, state.u0, state.v0, state.u1, state.v1)
-	
-	--surface.DrawOutlinedRect(0,0,w,h)
 end
 
 kingston.gui.RegisterSkin("zc_inventory", UVSKIN)

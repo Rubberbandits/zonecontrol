@@ -30,7 +30,9 @@ netstream.Hook("ReceiveItem", function(class, id, vars, x, y)
 	end
 	
 	local s_Object = item(LocalPlayer(), class, id, vars, x, y)
-	GAMEMODE:PMUpdateInventory()
+	if GAMEMODE.Inventory then
+		GAMEMODE.Inventory:PopulateItems()
+	end
 end)
 
 netstream.Hook( "ReceiveDummyItem", function( s_iID, s_szClass, s_Vars, s_Owner, s_CharID )
