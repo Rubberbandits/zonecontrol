@@ -1,4 +1,6 @@
 -- this is mostly for identification purposes.
+BASE.W = 2
+BASE.H = 1
 BASE.Stackable = true
 BASE.Vars = {
 	Amount = 30,

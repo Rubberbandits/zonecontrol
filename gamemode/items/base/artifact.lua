@@ -1,3 +1,5 @@
+BASE.W = 1
+BASE.H = 1
 BASE.Vars = {
 	Equipped = false,
 };

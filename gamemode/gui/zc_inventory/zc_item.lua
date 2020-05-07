@@ -18,13 +18,38 @@ function PANEL:Init()
 	self:SetDirectionalLight(BOX_FRONT, Color(255, 255, 255))
 	
 	self:SetColor(Color(255, 255, 255, 255))
-	
-	self.Entity = ClientsideModel("models/humans/group01/male_01.mdl", RENDER_GROUP_OPAQUE_ENTITY)
-	self.Entity:SetPos(Vector(0, 0, 10000)) -- not sure if this is a good idea.
+	self:SetZPos(32767)
+	self:Droppable("zc_item")
+	self:Receiver("zc_item", function(pnl, dropped, has_dropped, index, x, y)
+		local dragged_pnl = dropped[1]
+		if has_dropped then
+			local item = pnl.Item
+			local dropped_item = dragged_pnl.Item
+			
+			if dropped_item == item then return end
+
+			GAMEMODE.Inventory:PopulateItems()
+		end
+	end)
 end
 
 function PANEL:SetModel(strModelName)
-	self.Entity:SetModel(strModelName)
+	-- Note - there's no real need to delete the old
+	-- entity, it will get garbage collected, but this is nicer.
+	if ( IsValid( self.Entity ) ) then
+		self.Entity:Remove()
+		self.Entity = nil
+	end
+
+	-- Note: Not in menu dll
+	if ( !ClientsideModel ) then return end
+
+	self.Entity = ClientsideModel( strModelName, RENDERGROUP_OTHER )
+	if ( !IsValid( self.Entity ) ) then return end
+
+	self.Entity:SetNoDraw( true )
+	self.Entity:SetIK( false )
+	
 	self:BestGuessLayout()
 end
 
@@ -42,7 +67,7 @@ function PANEL:Paint( w, h )
 	end
 
 	if self:IsDragging() then
-		surface.SetDrawColor(Color(255, 255, 255, 255))
+		surface.SetDrawColor(Color(200, 200, 200, 100))
 		surface.DrawOutlinedRect(0, 0, w, h)
 	end
 	
@@ -56,31 +81,34 @@ function PANEL:Paint( w, h )
 		end
 	end
 	
-	if IsValid(self.Entity) then return end
+	if ( !IsValid( self.Entity ) ) then return end
 
-	local x, y = self:LocalToScreen(0, 0)
-	self:LayoutEntity(self.Entity)
-	
-	cam.Start3D(self.vCamPos, (self.vLookatPos-self.vCamPos):Angle(), self.fFOV, x, y, self:GetSize())
-		cam.IgnoreZ(true)
-		
-		render.SuppressEngineLighting(true)
-		render.SetLightingOrigin(self.Entity:GetPos())
-		render.ResetModelLighting(self.colAmbientLight.r/255, self.colAmbientLight.g/255, self.colAmbientLight.b/255)
-		render.SetColorModulation(self.colColor.r/255, self.colColor.g/255, self.colColor.b/255)
-		render.SetBlend(self.colColor.a / 255)
-		
-		for i=0, 6 do
-			local col = self.DirectionalLight[i]
-			if col then
-				render.SetModelLighting(i, col.r/255, col.g/255, col.b/255)
+	local x, y = self:LocalToScreen( 0, 0 )
+
+	self:LayoutEntity( self.Entity )
+
+	local ang = self.aLookAngle
+	if ( !ang ) then
+		ang = ( self.vLookatPos - self.vCamPos ):Angle()
+	end
+
+	cam.Start3D( self.vCamPos, ang, self.fFOV, x, y, w, h, 5, self.FarZ )
+		render.SuppressEngineLighting( true )
+		render.SetLightingOrigin( self.Entity:GetPos() )
+		render.ResetModelLighting( self.colAmbientLight.r / 255, self.colAmbientLight.g / 255, self.colAmbientLight.b / 255 )
+		render.SetColorModulation( self.colColor.r / 255, self.colColor.g / 255, self.colColor.b / 255 )
+		render.SetBlend( ( self:GetAlpha() / 255 ) * ( self.colColor.a / 255 ) ) -- * surface.GetAlphaMultiplier()
+
+		for i = 0, 6 do
+			local col = self.DirectionalLight[ i ]
+			if ( col ) then
+				render.SetModelLighting( i, col.r / 255, col.g / 255, col.b / 255 )
 			end
 		end
-		
+
 		self:DrawModel()
-		
-		render.SuppressEngineLighting(false)
-		cam.IgnoreZ(false)
+
+		render.SuppressEngineLighting( false )
 	cam.End3D()
 	
 	if self.Item.Paint then
@@ -91,27 +119,6 @@ function PANEL:Paint( w, h )
 	
 	self.LastPaint = RealTime()
 	self.LastHovered = self:IsHovered()
-end
-
-function PANEL:DrawModel() -- base DModelPanel
-	local curparent = self
-	local rightx = self:GetWide()
-	local leftx = 0
-	local topy = 0
-	local bottomy = self:GetTall()
-	local previous = curparent
-	while(curparent:GetParent() != nil) do
-		curparent = curparent:GetParent()
-		local x,y = previous:GetPos()
-		topy = math.Max(y, topy+y)
-		leftx = math.Max(x, leftx+x)
-		bottomy = math.Min(y+previous:GetTall(), bottomy + y)
-		rightx = math.Min(x+previous:GetWide(), rightx + x)
-		previous = curparent
-	end
-	render.SetScissorRect(leftx,topy,rightx, bottomy, true)
-	self.Entity:DrawModel()
-	render.SetScissorRect(0,0,0,0, false)
 end
 
 function PANEL:PaintOver( w, h )
@@ -162,7 +169,55 @@ function PANEL:OnMouseReleased( iCode )
 end
 
 function PANEL:CreateActionMenu()
+	if !self.Item then return end
+	if self.ActionMenuDisabled then return end
 
+	self.action_menu = vgui.Create("DMenu")
+	self.action_menu:SetSkin("zc_inventory")
+	
+	local item = self.Item
+	local metaitem = GAMEMODE:GetItemByID(item:GetClass())
+	if item.functions then
+		for k,v in next, item.functions do
+			if v.CanRun(item) then
+				self.action_menu:AddOption(string.lower(v.SelectionName), function()
+					netstream.Start("ItemCallFunction", item:GetID(), k)
+					self.Item:CallFunction(k)
+					
+					GAMEMODE.Inventory:PopulateItems()
+				end)
+				
+				self.action_menu:SetPaintBackground(true)
+			end
+		end
+	end
+	if self.Item.DynamicFunctions then
+		for k,v in next, self.Item:DynamicFunctions() do
+			if v.CanRun(item) then
+				self.action_menu:AddOption(v.SelectionName, function()
+					netstream.Start("ItemCallDynamicFunction", item:GetID(), k)
+					v.OnUse(item)
+					
+					GAMEMODE.Inventory:PopulateItems()
+				end)
+				
+				self.action_menu:SetPaintBackground(true)
+			end
+		end
+	end
+	if item.CanDrop then
+		if item:CanDrop() then
+			self.action_menu:AddOption("drop", function()
+				netstream.Start("ItemDrop", item:GetID())
+				item:DropItem()
+				
+				GAMEMODE.Inventory:PopulateItems()
+			end)
+		end
+	end
+	
+	self.action_menu:SetPaintBackground( true );
+	self.action_menu:Open( gui.MouseX(), gui.MouseY(), nil, self:GetParent() );
 end
 
 function PANEL:BestGuessLayout()
@@ -188,4 +243,4 @@ function PANEL:BestGuessLayout()
 	end
 end
 
-vgui.Register( "CItem", PANEL, "DModelPanel" );
+vgui.Register( "zc_item", PANEL, "DModelPanel" );

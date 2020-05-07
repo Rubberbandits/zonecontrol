@@ -1,3 +1,5 @@
+BASE.W = 1
+BASE.H = 1
 BASE.Name =  "Consumable Base";
 BASE.Desc =  "";
 BASE.UseText = ""

@@ -15,6 +15,18 @@ function PANEL:Init()
 	self:AlphaTo(255, 0.2, 0)
 	self:SetDraggable(false)
 	self:SetSkin("zc_inventory")
+	self:Receiver("zc_item", function(pnl, dropped, has_dropped, index, x, y)
+		local dragged_pnl = dropped[1]
+		if has_dropped then
+			local item = dragged_pnl.Item
+			if !item:CanDrop() then return end
+			
+			netstream.Start("nDropItem", item:GetID())
+			item:DropItem()
+			
+			self:PopulateItems()
+		end
+	end)
 
 	self.InventoryBack = vgui.Create("DPanel", self)
 	self.InventoryBack:SetSize(ScrW() / 3.7, ScrH())
@@ -62,10 +74,21 @@ function PANEL:Init()
 	self.InventoryScroll:SetSize(ScrW() / 4.04, self.InventoryBack:GetTall() - (self.InventoryBack:GetTall() / 4.5))
 	self.InventoryScroll:SetPos(ScreenScaleH(12), self.InventoryBack:GetTall() / 6.8)
 	function self.InventoryScroll:Paint(w, h)
-		surface.SetDrawColor(255,0,0)
-		surface.DrawOutlinedRect(0,0,w,h)
 	end
-	self.InventoryScroll.Containers = {}
+	self.InventoryScroll.Grid = {}
+	
+	for y = 1, GAMEMODE.InventoryHeight do
+		self.InventoryScroll.Grid[y] = {}
+		for x = 1, GAMEMODE.InventoryWidth do
+			local slot = vgui.Create("zc_slot", self.InventoryScroll)
+			slot:SetPos((slot:GetWide() * x) - slot:GetWide(), (slot:GetTall() * y) - slot:GetTall())
+			slot.inv_x = x
+			slot.inv_y = y
+			
+			self.InventoryScroll.Grid[y][x] = slot
+		end
+	end
+	self.InventoryScroll.Items = {}
 	
 	self.EquipBack = vgui.Create("DPanel", self)
 	self.EquipBack:SetSize(ScrW() / 3.7, ScrH())
@@ -73,11 +96,41 @@ function PANEL:Init()
 	function self.EquipBack:Paint(w, h)
 		kingston.gui.FindFunc(self, "Paint", "EquipFrame", w, h)
 	end
+	
+	self.CloseButton = vgui.Create("DButton", self.EquipBack)
+	self.CloseButton:SetSize(self.EquipBack:GetWide() - ScreenScaleH(16), ScreenScaleH(16))
+	self.CloseButton:SetPos(ScreenScaleH(8), self.EquipBack:GetTall() - ScreenScaleH(20))
+	self.CloseButton:SetFont("CombineControl.ChatBig")
+	self.CloseButton:SetTextColor(Color(216, 195, 177))
+	self.CloseButton:SetText("Close")
+	self.CloseButton.LongButton = true
+	self.CloseButton.DoClick = function(btn)
+		self:Close()
+	end
+	
+	self:PopulateItems()
+end
+
+function PANEL:PopulateItems()
+	for _,pnl in next, self.InventoryScroll.Items do
+		pnl:Remove()
+	end
+
+	for id,item in next, LocalPlayer().Inventory do
+		local item_pnl = vgui.Create("zc_item", self.InventoryScroll)
+		local slot = self.InventoryScroll.Grid[item.y][item.x]
+		
+		item_pnl:SetSize(slot:GetWide() * item.W, slot:GetTall() * item.H)
+		item_pnl:SetPos(slot:GetPos())
+		item_pnl:SetModel(item:GetModel())
+		item_pnl.Item = item
+		
+		self.InventoryScroll.Items[#self.InventoryScroll.Items + 1] = item_pnl
+	end
 end
 
 function PANEL:Paint(w, h)
-	surface.SetDrawColor(255,0,0)
-	surface.DrawOutlinedRect(0,0,w,h)
+
 end
 
 vgui.Register("zc_inventory", PANEL, "DFrame")

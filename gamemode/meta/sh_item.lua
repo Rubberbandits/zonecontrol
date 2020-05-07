@@ -20,8 +20,7 @@ local blacklist = {
 	["Class"] = true,
 }
 
-function item:New( owner, metaitem, id, vars )
-
+function item:New( owner, metaitem, id, vars, x, y )
 	if( !owner ) then return end
 	if( !IsValid( owner ) ) then return end
 	if( !metaitem ) then return end
@@ -81,38 +80,37 @@ function item:New( owner, metaitem, id, vars )
 		
 	end
 	
+	if x and y then
+		itemdata.x = x
+		itemdata.y = y
+	else
+		x,y = itemdata:FindBestPosition()
+		
+		itemdata.x = x
+		itemdata.y = y
+	end
+	
 	return itemdata;
-
 end
 
 function item:GetName()
-
-	return self.Name; -- cool thing about these funcs is you are able to override in ur item code.
-
+	return self.Name -- cool thing about these funcs is you are able to override in ur item code.
 end
 
 function item:GetDesc()
-
-	return self.Desc;
-	
+	return self.Desc
 end
 
 function item:GetWeight()
-
-	return self.Weight;
-
+	return self.Weight
 end
 
 function item:GetModel()
-
-	return self.Model;
-
+	return self.Model
 end
 
 function item:Owner()
-
-	return self.owner;
-	
+	return self.owner
 end
 
 function item:GetVars(private)
@@ -132,19 +130,16 @@ function item:StockpileID()
 	return self.stockpile or 0
 end
 
-function item:SetVar( key, value, noSave, network )
-
-	if( !self.Vars ) then
-	
+function item:SetVar(key, value, noSave, network)
+	if !self.Vars then
 		self.Vars = {}
-		
 	end
 
-	if( self.Vars[key] == value ) then return end
+	if self.Vars[key] == value then return end
 	
-	self.Vars[key] = value;
+	self.Vars[key] = value
 
-	if( SERVER ) then
+	if SERVER then
 		if network then
 			netstream.Start(item:Owner(), "SetItemVar", self:GetID(), key, value)
 		end
@@ -153,78 +148,85 @@ function item:SetVar( key, value, noSave, network )
 			self:UpdateSave()
 		end
 	end
-	
 end
 
-function item:GetVar( key, fallback )
-
-	if( !self.Vars ) then return fallback end
-
-	return table.Copy(self.Vars)[key] or fallback;
-
+function item:GetVar(key, fallback)
+	if !self.Vars then return fallback end
+	
+	return table.Copy(self.Vars)[key] or fallback
 end
 
 function item:Initialize() -- maybe we can use hook.Run
-
 	-- override when u need obj init cb
-
 end
 
 function item:GetCharID()
-
-	return self.CharID;
-
+	return self.CharID
 end
 
 function item:GetClass()
-
-	return self.Class;
-	
+	return self.Class
 end
 
 function item:GetID()
+	return self.id or 0
+end
 
-	return self.id or 0;
+function item:SetID(nID)
+	self.id = nID
+end
+
+function item:SetCharID(nID)
+	self.CharID = nID
+end
+
+function item:FindBestPosition()
+	for j = 1, GAMEMODE.InventoryHeight do
+		for i = 1, GAMEMODE.InventoryWidth do
+			if !self:Owner():IsInventorySlotOccupiedItem(i, j, self.W, self.H) then
+				return i, j
+			end
+		end
+	end
 	
+	return false, false
 end
 
-function item:SetID( nID )
-
-	self.id = nID;
-
+function item:GetBounds()
+	return self.x, self.y, self.W, self.H
 end
 
-function item:SetCharID( nID )
-
-	self.CharID = nID;
-	
+function item:GetSize()
+	return self.W, self.H
 end
 
-function item:CallFunction( szKey, bNetwork )
-	if( self.functions ) then
-		if( self.functions[szKey] ) then
-			if( self.functions[szKey].CanRun( self ) ) then
-				if( self.FunctionHooks and self.FunctionHooks["Pre"..szKey] ) then
-					self.FunctionHooks["Pre"..szKey]( self );
+function item:GetPos()
+	return self.x, self.y
+end
+
+function item:CallFunction(szKey, bNetwork)
+	if self.functions then
+		if self.functions[szKey] then
+			if self.functions[szKey].CanRun(self) then
+				if self.FunctionHooks and self.FunctionHooks["Pre"..szKey] then
+					self.FunctionHooks["Pre"..szKey](self)
 				end
 				
 				if bNetwork then
 					netstream.Start(self:Owner(), "CallFunction", self:GetID(), szKey)
 				end
 			
-				local ret = self.functions[szKey].OnUse( self );
+				local ret = self.functions[szKey].OnUse(self)
 				
-				if( self.FunctionHooks and self.FunctionHooks["Post"..szKey] ) then
-					self.FunctionHooks["Post"..szKey]( self );
+				if self.FunctionHooks and self.FunctionHooks["Post"..szKey] then
+					self.FunctionHooks["Post"..szKey](self)
 				end
 				
-				if( self.functions[szKey].RemoveOnUse and ret ) then
-
+				if self.functions[szKey].RemoveOnUse and ret then
 					self:RemoveItem();
-					
 				end
 				
-				return ret;
+				return ret
 			end
 		end
 	end
@@ -247,6 +249,9 @@ function item:DropItem(network)
 		GAMEMODE.g_ItemTable[self:GetID()] = nil;
 	
 	end
+	
+	self.x = -1
+	self.y = -1
 	
 	if( SERVER ) then
 	
@@ -325,38 +330,31 @@ end
 if( SERVER ) then
 
 	function item:SaveNewObject( cb )
-	
 		local function onSuccess( data, query )
-		
 			local insertTable = {
 				["id"] = query:lastInsert(),
-			};
+			}
 			
-			table.Merge( self, insertTable );
+			table.Merge(self, insertTable)
 			
-			GAMEMODE.g_ItemTable[query:lastInsert()] = self;
-			self:Owner().Inventory[query:lastInsert()] = self;
+			GAMEMODE.g_ItemTable[query:lastInsert()] = self
+			self:Owner().Inventory[query:lastInsert()] = self
 			
-			if( self.OnNewCreation ) then
-			
-				self:OnNewCreation();
-				
+			if self.OnNewCreation then
+				self:OnNewCreation()
 			end
 			
-			if( cb ) then
-			
+			if cb then
 				cb()
-				
 			end
-
 		end
-		mysqloo.Query( Format( "INSERT INTO cc_items ( Owner, ItemClass, Vars ) VALUES ( '%d', '%s', '%s' )", self:Owner():CharID(), self:GetClass(), util.TableToJSON( self:GetVars(true) or {} ) ), onSuccess );
-	
+		
+		mysqloo.Query(Format("INSERT INTO cc_items ( Owner, ItemClass, Vars, PosX, PosY ) VALUES ( '%d', '%s', '%s', '%d', '%d' )", self:Owner():CharID(), self:GetClass(), util.TableToJSON(self:GetVars(true) or {}), self.x, self.y), onSuccess)
 	end
 	
 	function item:UpdateSave()
 	
-		local query_str = "UPDATE cc_items SET Owner = ?, Vars = ?, Stockpile = ? WHERE id = ?"
+		local query_str = "UPDATE cc_items SET Owner = ?, Vars = ?, Stockpile = ?, PosX = ?, PosY = ? WHERE id = ?"
 		local query = CCSQL:prepare( query_str );
 		function query:onSuccess( ret )
 		end
@@ -368,14 +366,16 @@ if( SERVER ) then
 		query:setNumber( 1, self:GetCharID() );
 		query:setString( 2, util.TableToJSON( self:GetVars(true) or {} ) );
 		query:setNumber( 3, self:StockpileID() );
-		query:setNumber( 4, self:GetID() );
+		query:setNumber( 4, self.x );
+		query:setNumber( 5, self.y );
+		query:setNumber( 6, self:GetID() );
 		query:start();
 	end
 	
 	-- use this when transferring owners!
 	function item:TransmitToOwner()
 
-		netstream.Start( self:Owner(), "ReceiveItem", self:GetClass(), self:GetID(), self:GetVars() );
+		netstream.Start( self:Owner(), "ReceiveItem", self:GetClass(), self:GetID(), self:GetVars(), self.x, self.y );
 	
 	end
 

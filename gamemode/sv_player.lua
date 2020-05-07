@@ -293,27 +293,22 @@ function meta:LoadCharacter( data )
 		end
 	end
 	
-	self.Inventory = {};
-	netstream.Start( self, "nLoadInventory", {} );
+	self.Inventory = {}
+	netstream.Start(self, "nLoadInventory", {})
 	
-	local function onSuccess( ret )
-	
+	local function onSuccess(ret)
 		for k,v in next, ret do
-		
 			if !GAMEMODE:GetItemByID(v.ItemClass) then continue end
 		
-			local object = item( self, v.ItemClass, v.id, util.JSONToTable(v.Vars) );
-			object:TransmitToOwner();
-		
+			local object = item(self, v.ItemClass, v.id, util.JSONToTable(v.Vars), v.PosX, v.PosY)
+			object:TransmitToOwner()
 		end
 	
-		self:Spawn();
-	
+		self:Spawn()
 	end
-	mysqloo.Query( Format( "SELECT * FROM cc_items WHERE Owner = '%d' AND Stockpile = 0", self:CharID() ), onSuccess );
+	mysqloo.Query(Format("SELECT * FROM cc_items WHERE Owner = '%d' AND Stockpile = 0", self:CharID()), onSuccess)
 	
-	GAMEMODE:LogSQL( "Player " .. self:Nick() .. " loaded character " .. data.RPName .. "." );
-	
+	GAMEMODE:LogSQL( "Player " .. self:Nick() .. " loaded character " .. data.RPName .. "." )
 end
 
 function meta:PostLoadCharacter()

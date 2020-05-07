@@ -1,3 +1,5 @@
+BASE.W = 2
+BASE.H = 2
 BASE.Item = ""
 BASE.SuitVariant = ""
 BASE.functions = {};

@@ -23,6 +23,8 @@ BASE.HandsModel = {
 	model = "models/poc/stalker_viewmodels/c_sunrise.mdl",
 	skin = 0,
 }
+BASE.W = 2
+BASE.H = 2
 BASE.functions = {};
 BASE.functions.Equip = {
 	SelectionName = "Equip",

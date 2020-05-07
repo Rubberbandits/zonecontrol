@@ -1,15 +1,5 @@
 local meta = FindMetaTable( "Player" );
 
-function meta:LoadItemsFromString( str )
-	
-	self.Inventory = {};
-	
-	self.Inventory = util.JSONToTable( str ) or self.Inventory;
-	
-	netstream.Start( self, "nLoadInventory", self.Inventory );
-	
-end
-
 function meta:SaveInventory()
 	
 	local str = util.TableToJSON( self.Inventory );
@@ -182,7 +172,7 @@ function meta:GiveItem( item_class, vars )
 	local function cb()
 
 		self.Inventory[object.id] = object
-		netstream.Start( self, "ReceiveItem", item_class, object.id, object.Vars or {} );
+		netstream.Start( self, "ReceiveItem", item_class, object.id, object.Vars or {}, object.x, object.y );
 		
 	end
 	object:SaveNewObject( cb );
@@ -308,4 +298,36 @@ function meta:GetWeight()
 	
 	return nWeight;
 
+end
+
+function meta:IsInventorySlotOccupiedItem( i, j, w, h )
+	if i + w - 1 <= GAMEMODE.InventoryWidth and j + h - 1 <= GAMEMODE.InventoryHeight then
+		local good = true
+
+		for x = 1, w do
+			for y = 1, h do
+				if self:IsInventorySlotOccupied(i + x - 1, j + y - 1) then
+					good = false
+				end
+			end
+		end
+		
+		return !good
+	end
+	
+	return true
+end
+
+function meta:IsInventorySlotOccupied( x, y )
+	for _,item in next, self.Inventory do
+		local metaitem = GAMEMODE:GetItemByID(item.Class)
+
+		if x >= item.x and x <= item.x + metaitem.W - 1 then
+			if y >= item.y and y <= item.y + metaitem.H - 1 then
+				return true
+			end
+		end
+	end
+
+	return false
 end

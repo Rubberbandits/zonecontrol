@@ -20,22 +20,18 @@ netstream.Hook( "LoadItems", function( s_ItemTable )
 
 end );
 
-netstream.Hook( "ReceiveItem", function( s_szClass, s_iID, s_Vars)
-
+netstream.Hook("ReceiveItem", function(class, id, vars, x, y)
 	if !LocalPlayer().Inventory then
 		LocalPlayer().Inventory = {}
 	end
 
-	if( GAMEMODE.g_ItemTable[s_iID] ) then
-	
-		GAMEMODE.g_ItemTable[s_iID] = nil;
-		
+	if GAMEMODE.g_ItemTable[id] then
+		GAMEMODE.g_ItemTable[id] = nil
 	end
 	
-	local s_Object = item( LocalPlayer(), s_szClass, s_iID, s_Vars );
-	GAMEMODE:PMUpdateInventory();
-
-end );
+	local s_Object = item(LocalPlayer(), class, id, vars, x, y)
+	GAMEMODE:PMUpdateInventory()
+end)
 
 netstream.Hook( "ReceiveDummyItem", function( s_iID, s_szClass, s_Vars, s_Owner, s_CharID )
 

@@ -1,3 +1,5 @@
+BASE.W = 2
+BASE.H = 1
 BASE.Vars = {
 	Uses = 1,
 };

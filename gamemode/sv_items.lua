@@ -257,3 +257,14 @@ netstream.Hook("SplitStack", function(ply, item_id, amt)
 		end
 	end
 end)
+
+netstream.Hook("ItemSetPos", function(ply, item_id, x, y)
+	local item = ply.Inventory[item_id]
+	if !item then return end
+	if x > GAMEMODE.InventoryWidth then return end
+	if y > GAMEMODE.InventoryHeight then return end
+	
+	item.x = x
+	item.y = y
+	item:UpdateSave()
+end)
