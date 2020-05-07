@@ -19,12 +19,6 @@ function BASE:OnStack(item)
 	return true
 end
 
-function BASE:CanStack(item)
-	if item.Base == self.Base and self.Class == item.Class then
-		return true
-	end
-end
-
 function BASE:GetWeight()
 	local meta = GAMEMODE:GetItemByID(self.Class)
 	local start_amount = meta.Vars.Amount
@@ -48,7 +42,7 @@ function BASE:CanSplitStack(amt)
 		amt = math.Round(self:GetVar("Amount", 0) / 2)
 	end
 
-	return (self:GetVar("Amount", 0) > 1) and (amt < self:GetVar("Amount", 0))
+	return (amt > 0 and self:GetVar("Amount", 0) > 1) and (amt < self:GetVar("Amount", 0))
 end
 
 function BASE:SplitStack(amt, x, y)

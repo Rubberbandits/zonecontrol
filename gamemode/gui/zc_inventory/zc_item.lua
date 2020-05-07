@@ -31,11 +31,10 @@ function PANEL:Init()
 			if item:CanStack(dropped_item) then
 				netstream.Start("StackItem", item:GetID(), dropped_item:GetID())
 			
-				local refresh = item:OnStack(dropped_item)
-				if refresh then
-					GAMEMODE.Inventory:PopulateItems()
-				end
+				item:OnStack(dropped_item)
 			end
+			
+			GAMEMODE.Inventory:PopulateItems()
 		end
 	end)
 end

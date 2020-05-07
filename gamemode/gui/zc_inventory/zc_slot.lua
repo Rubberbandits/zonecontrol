@@ -17,32 +17,27 @@ function PANEL:Init()
 			local old_x = dropped_item.x
 			local old_y = dropped_item.y
 			if input.IsKeyDown(KEY_LCONTROL) and input.IsKeyDown(KEY_LSHIFT) then
-				print("KEY_LCONTROL+KEY_LSHIFT")
 				should_split = 3
 			else
 				if input.IsKeyDown(KEY_LSHIFT) then
-					print("KEY_LSHIFT")
 					should_split = 1
-					-- split stack in half
 				elseif input.IsKeyDown(KEY_LCONTROL) then
-					print("KEY_LCONTROL")
 					should_split = 2
-					-- take one from stack
 				end
 			end
 			
-			dropped_item.x = slot.inv_x
-			dropped_item.y = slot.inv_y
-			netstream.Start("ItemSetPos", dropped_item:GetID(), dropped_item.x, dropped_item.y)
-			
-			if should_split then
+			if should_split and dropped_item:CanSplitStack() then
 				if should_split == 1 then --split half
-					netstream.Start("SplitStack", dropped_item:GetID(), nil, old_x, old_y)
+					netstream.Start("SplitStack", dropped_item:GetID(), nil, slot.inv_x, slot.inv_y)
 				elseif should_split == 2 then --split one
-					netstream.Start("SplitStack", dropped_item:GetID(), -1, old_x, old_y)
+					netstream.Start("SplitStack", dropped_item:GetID(), 1, slot.inv_x, slot.inv_y)
 				elseif should_split == 3 then --dialog
 				
 				end
+			else
+				dropped_item.x = slot.inv_x
+				dropped_item.y = slot.inv_y
+				netstream.Start("ItemSetPos", dropped_item:GetID(), dropped_item.x, dropped_item.y)
 			end
 			
 			GAMEMODE.Inventory:PopulateItems()

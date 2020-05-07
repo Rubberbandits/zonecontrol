@@ -18,6 +18,7 @@ local blacklist = {
 	["functions"] = true,
 	["FunctionHooks"] = true,
 	["Class"] = true,
+	["Weight"] = true,
 }
 
 function item:New( owner, metaitem, id, vars, x, y )
@@ -102,7 +103,15 @@ function item:GetDesc()
 end
 
 function item:GetWeight()
-	return self.Weight
+	if self.Stackable then
+		local meta = GAMEMODE:GetItemByID(self.Class)
+		local start_amount = meta.Vars.Stacked
+		local start_weight = self:GetVar("Weight", self.Weight)
+		
+		return math.Round(start_weight * (self:GetVar("Stacked", 0) / start_amount), 2)
+	else
+		return self:GetVar("Weight", self.Weight)
+	end
 end
 
 function item:GetModel()
@@ -296,7 +305,7 @@ function item:RemoveItem(network)
 	self = nil;
 	
 	if CLIENT then
-		if GAMEMODE.Inventory then
+		if GAMEMODE.Inventory and IsValid(GAMEMODE.Inventory) then
 			GAMEMODE.Inventory:PopulateItems()
 		end
 	end
@@ -327,6 +336,72 @@ function item:DynamicFunctions()
 
 	return {};
 
+end
+
+-- return true here to refresh the inventory
+function item:OnStack(item)
+	if !self.Stackable then return end
+	
+	self:SetVar("Stacked", self:GetVar("Stacked", 0) + item:GetVar("Stacked", 0), nil, true)
+	item:RemoveItem(true)
+	
+	return true
+end
+
+function item:CanStack(item)
+	if self.Stackable and item.Stackable and item.Base == self.Base and self.Class == item.Class then
+		return true
+	end
+end
+
+function item:Paint(pnl, w, h)
+	if !self.Stackable then return end
+	
+	surface.SetFont("CombineControl.ChatSmall")
+	local amt = self:GetVar("Stacked", 0)
+	local tW, tH = surface.GetTextSize(amt)
+	
+	surface.SetTextColor(Color(100,200,100))
+	surface.SetTextPos(w - tW, h - tH)
+	surface.DrawText(amt)
+end
+
+function item:CanSplitStack(amt)
+	if !self.Stackable then return end
+	
+	if !amt then
+		amt = math.Round(self:GetVar("Stacked", 0) / 2)
+	end
+
+	return (amt > 0 and self:GetVar("Stacked", 0) > 1) and (amt < self:GetVar("Stacked", 0))
+end
+
+function item:SplitStack(amt, x, y)
+	if !self.Stackable then return end
+
+	if !amt then
+		amt = math.Round(self:GetVar("Stacked", 0) / 2)
+	end
+	
+	if amt >= self:GetVar("Stacked", 0) then return end
+
+	self:SetVar("Stacked", self:GetVar("Stacked", 0) - amt, false, true)
+	
+	local item = self:Owner():GiveItem(self.Class, {
+		Stacked = amt,
+	}, x, y)
+end
+
+function item:AddItemToStack(item)
+	if !self.Stackable then return end
+	if item and !item.Stackable then return end
+	
+	if item then
+		self:OnStack(item)
+	else
+		local metaitem = GAMEMODE:GetItemByID(self:GetClass())
+		self:SetVar("Stacked", self:GetVar("Stacked", 0) + (metaitem.Vars.Stacked or 1), nil, true)
+	end
 end
 
 if( SERVER ) then
