@@ -9,6 +9,7 @@ BASE.WeaponType = "primary";
 BASE.DegradeRate = 0.5;
 BASE.StartDurability = 100; -- would not recommend you modify, modify DegrateRate!
 BASE.UseDurability = true;
+BASE.NoDefaultAtts = true
 BASE.SellDurability = 50;
 BASE.functions = {};
 BASE.functions.Equip = {
@@ -243,7 +244,7 @@ function BASE:OnDisconnected()
 	end
 end
 function BASE:GetJamChance()
-	local chance = self.JamChance or 0.04
+	local chance = (self.JamChance * 50) or 0.04
 	for k,v in next, self:GetVar("Upgrades", {}) do
 		local upgrade = GAMEMODE.Upgrades[k]
 		if upgrade.JamChanceModifier then
