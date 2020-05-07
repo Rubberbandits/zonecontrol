@@ -497,7 +497,7 @@ hook.Add("TFA_PostPrimaryAttack", "STALKER.Durability", function(weapon)
 				item:SetVar("Durability", 0)
 				
 				if SERVER then
-					weapon:GetOwner():Notify( Color(255,255,255), "This weapon is broken." );
+					weapon:GetOwner():Notify( nil, Color(255,255,255), "This weapon is broken." );
 				end
 				
 				item:CallFunction("Unequip")
@@ -525,7 +525,7 @@ hook.Add("TFA_CompleteReload", "STALKER.Durability", function(weapon)
 		local amounttoreplace = math.min(maxclip - curclip, weapon:Ammo1())
 
 		item:SetVar("Clip1", curclip + amounttoreplace)
-		weapon:SetJamFactor((new_durability / item.StartDurability) / 100)
+		weapon:SetJamFactor((new_durability / item.StartDurability) / 1)
 	end
 	
 	weapon:SetNW2Int("TimesFired", 0)

@@ -22,7 +22,7 @@ BASE.functions.Equip = {
 		
 			if( SERVER ) then
 			
-				item:Owner():Notify( nil,Color(255,255,255), "This weapon is broken." );
+				item:Owner():Notify( nil, Color(255,255,255), "This weapon is broken." );
 				
 			end
 			
@@ -247,7 +247,7 @@ function BASE:GetJamChance()
 	for k,v in next, self:GetVar("Upgrades", {}) do
 		local upgrade = GAMEMODE.Upgrades[k]
 		if upgrade.JamChanceModifier then
-			chance = math.Clamp(chance - upgrade.JamChanceModifier, 0.001, 1)
+			chance = math.Clamp(chance - upgrade.JamChanceModifier, 0.00001, 1)
 		end
 	end
 	
