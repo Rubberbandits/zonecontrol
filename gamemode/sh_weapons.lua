@@ -559,7 +559,7 @@ local old_GetPrimaryAmmoType = old_GetPrimaryAmmoType or weapon_meta.GetPrimaryA
 local old_RemoveAmmo = old_RemoveAmmo or player_meta.RemoveAmmo
 
 function player_meta:GetAmmoCount(ammotype)
-	local id = game.GetAmmoID(ammotype)
+	local id = game.GetAmmoID(ammotype or "")
 	if id > -1 then
 		return old_GetAmmoCount(self, ammotype)
 	else
