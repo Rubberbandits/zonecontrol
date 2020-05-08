@@ -2240,6 +2240,10 @@ function GM:UpdateItemTooltipPanel(item)
 	pnl.ItemDesc:SetText(item:GetDesc())
 	pnl.ItemDesc:DockMargin(ScreenScaleH(16),ScreenScaleH(2),ScreenScaleH(12),0)
 	
+	if item.TooltipCreation then
+		item:TooltipCreation(pnl)
+	end
+	
 	self.ItemTooltipUpdated = true
 end
 
@@ -2267,35 +2271,6 @@ function GM:PaintItemTip( panel, item )
 				if (gui.MouseY() + 15) + (ScrH() / 2.67) > ScrH() then -- panel is out of bounds
 					x,y = gui.MouseX() + 15, (gui.MouseY() + 15) - ((( gui.MouseY() + 15 ) + (ScrH() / 2.67)) - ScrH())
 				end
-			
-				/*surface.DisableClipping( true );
-				
-				surface.SetDrawColor(Color(255, 255, 255, 255))
-				surface.SetMaterial(tooltip_material)
-				surface.DrawTexturedRectUV(x, y, ScrW() / 6, ScrH() / 2.67, 0, 0, 0.2695, 0.395)
-				
-				surface.SetTextColor( Color( 240, 240, 240, 196 ) );
-				surface.SetFont( "CombineControl.LabelMedium" );
-				local tW,tH = surface.GetTextSize( item:GetName() );
-				surface.SetTextPos( x + ( ( ScrW() / 6 ) / 2 ) - ( tW / 2 ) - 4, y + 25 );
-				surface.DrawText( item:GetName() );
-				
-				surface.SetTextColor( Color( 220, 220, 220, 172 ) );
-				surface.SetFont( "CombineControl.LabelMedium" );
-				surface.SetTextPos( x + 24, y + 48 );
-				surface.DrawText( item:GetWeight().." kg" );
-				
-				surface.SetTextColor( Color( 180, 180, 180, 148 ) );
-				surface.SetFont( "CombineControl.LabelMedium" );
-				local lines, maxW = wrapText(item:GetDesc(), ScrW() / 9)
-				for k,v in next, lines do
-				
-					surface.SetTextPos( x + 18, y + 56 + (16*k) );
-					surface.DrawText( v );
-					
-				end
-				
-				surface.DisableClipping( false );*/
 				
 				GAMEMODE.ItemTooltip:PaintAt(x,y)
 				
