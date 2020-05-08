@@ -2087,7 +2087,7 @@ function GM:PlayerEndVoice( ply )
 	
 end
 
-hook.Add("PostRenderVGUI", "STALKER.RenderTooltip", function()
+hook.Add("PostRenderVGUI", "STALKER.RenderUpgradeTooltip", function()
 	local panel = GAMEMODE.TooltipPanel
 	if panel then
 		local x,y = gui.MouseX() + 15, gui.MouseY() + 15
@@ -2097,6 +2097,19 @@ hook.Add("PostRenderVGUI", "STALKER.RenderTooltip", function()
 		end
 		
 		hook.Run("PaintUpgradeToolTip", panel, x, y)
+	end
+end)
+
+hook.Add("PostRenderVGUI", "STALKER.RenderItemTooltip", function()
+	local panel = GAMEMODE.ItemTooltipPanel
+	if panel then
+		local x,y = gui.MouseX() + 15, gui.MouseY() + 15
+		
+		if (gui.MouseY() + 15) + (ScrH() / 2.67) > ScrH() then -- panel is out of bounds
+			x,y = gui.MouseX() + 15, (gui.MouseY() + 15) - ((( gui.MouseY() + 15 ) + (ScrH() / 2.67)) - ScrH())
+		end
+		
+		hook.Run("PaintItemTip", panel, panel.Item)
 	end
 end)
 
@@ -2198,6 +2211,49 @@ function GM:PaintUpgradeStats(upgrade, x, y)
 	end
 end
 
+function GM:UpdateItemTooltipPanel(item)
+	local pnl = GAMEMODE.ItemTooltip
+	pnl:Clear()
+	
+	pnl.ItemName = vgui.Create("DLabel", pnl)
+	pnl.ItemName:Dock(TOP)
+	pnl.ItemName:SetContentAlignment(5)
+	pnl.ItemName:SetFont("CombineControl.LabelMedium")
+	pnl.ItemName:SetTextColor(Color(240, 240, 240, 196))
+	pnl.ItemName:SetText(item:GetName())
+	pnl.ItemName:DockMargin(0,ScreenScaleH(12),0,0)
+	
+	pnl.ItemWeight = vgui.Create("DLabel", pnl)
+	pnl.ItemWeight:Dock(TOP)
+	pnl.ItemWeight:SetContentAlignment(4)
+	pnl.ItemWeight:SetFont("CombineControl.LabelMedium")
+	pnl.ItemWeight:SetTextColor(Color(220, 220, 220, 172))
+	pnl.ItemWeight:SetText(item:GetWeight().." kg")
+	pnl.ItemWeight:DockMargin(ScreenScaleH(16),ScreenScaleH(2),0,0)
+	
+	pnl.ItemDesc = vgui.Create("DLabel", pnl)
+	pnl.ItemDesc:Dock(TOP)
+	pnl.ItemDesc:SetContentAlignment(8)
+	pnl.ItemDesc:SetFont("CombineControl.LabelMedium")
+	pnl.ItemDesc:SetTextColor(Color(180, 180, 180, 148))
+	pnl.ItemDesc:SetWrap(true)
+	pnl.ItemDesc:SetText(item:GetDesc())
+	pnl.ItemDesc:DockMargin(ScreenScaleH(16),ScreenScaleH(2),ScreenScaleH(12),0)
+	
+	self.ItemTooltipUpdated = true
+end
+
+function GM:CreateItemTooltipPanel()
+	GAMEMODE.ItemTooltip = vgui.Create("EditablePanel")
+	GAMEMODE.ItemTooltip:SetSize(ScrW() / 6, ScrH() / 2.67)
+	GAMEMODE.ItemTooltip:SetPaintedManually(true)
+	function GAMEMODE.ItemTooltip:Paint(w, h)
+		surface.SetDrawColor(Color(255, 255, 255, 255))
+		surface.SetMaterial(tooltip_material)
+		surface.DrawTexturedRectUV(0, 0, w, h, 0, 0, 0.2695, 0.395)
+	end
+end
+
 function GM:PaintItemTip( panel, item )
 
 	if( panel:IsHovered() ) then
@@ -2206,33 +2262,31 @@ function GM:PaintItemTip( panel, item )
 
 			if( RealTime() >= panel.HoverStart + 1 ) then
 				-- this func might get really big and messy
-				local x,y = panel:ScreenToLocal( gui.MouseX() + 15, gui.MouseY() + 15 );
+				local x,y = gui.MouseX() + 15, gui.MouseY() + 15
 				
-				if( ( gui.MouseY() + 15 ) + ( ScrH() / 2.67 ) > ScrH() ) then -- panel is out of bounds
-
-					x,y = panel:ScreenToLocal( gui.MouseX() + 15, ( gui.MouseY() + 15 ) - ( ( ( gui.MouseY() + 15 ) + ( ScrH() / 2.67 ) ) - ScrH() ) );
-					
+				if (gui.MouseY() + 15) + (ScrH() / 2.67) > ScrH() then -- panel is out of bounds
+					x,y = gui.MouseX() + 15, (gui.MouseY() + 15) - ((( gui.MouseY() + 15 ) + (ScrH() / 2.67)) - ScrH())
 				end
 			
-				surface.DisableClipping( true );
+				/*surface.DisableClipping( true );
 				
 				surface.SetDrawColor(Color(255, 255, 255, 255))
 				surface.SetMaterial(tooltip_material)
 				surface.DrawTexturedRectUV(x, y, ScrW() / 6, ScrH() / 2.67, 0, 0, 0.2695, 0.395)
 				
 				surface.SetTextColor( Color( 240, 240, 240, 196 ) );
-				surface.SetFont( "CombineControl.ChatNormal" );
+				surface.SetFont( "CombineControl.LabelMedium" );
 				local tW,tH = surface.GetTextSize( item:GetName() );
 				surface.SetTextPos( x + ( ( ScrW() / 6 ) / 2 ) - ( tW / 2 ) - 4, y + 25 );
 				surface.DrawText( item:GetName() );
 				
 				surface.SetTextColor( Color( 220, 220, 220, 172 ) );
-				surface.SetFont( "CombineControl.ChatNormal" );
+				surface.SetFont( "CombineControl.LabelMedium" );
 				surface.SetTextPos( x + 24, y + 48 );
 				surface.DrawText( item:GetWeight().." kg" );
 				
 				surface.SetTextColor( Color( 180, 180, 180, 148 ) );
-				surface.SetFont( "CombineControl.ChatNormal" );
+				surface.SetFont( "CombineControl.LabelMedium" );
 				local lines, maxW = wrapText(item:GetDesc(), ScrW() / 9)
 				for k,v in next, lines do
 				
@@ -2241,7 +2295,9 @@ function GM:PaintItemTip( panel, item )
 					
 				end
 				
-				surface.DisableClipping( false );
+				surface.DisableClipping( false );*/
+				
+				GAMEMODE.ItemTooltip:PaintAt(x,y)
 				
 			end
 			

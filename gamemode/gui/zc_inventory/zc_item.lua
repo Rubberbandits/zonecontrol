@@ -63,10 +63,6 @@ function PANEL:GetModel()
 	return self.Entity:GetModel()
 end
 
-function PANEL:PaintToolTip()
-	hook.Run("PaintItemTip", self, self.Item)
-end
-
 function PANEL:Paint( w, h )
 	if !self.MetaItem and self.Item then
 		self.MetaItem = GAMEMODE:GetItemByID(self.Item:GetClass())
@@ -78,12 +74,23 @@ function PANEL:Paint( w, h )
 	end
 	
 	if !self:IsDragging() then
-		if self:IsHovered() and !self.LastHovered then
-			self.HoverStart = RealTime()
-		end
-		
-		if !self:IsHovered() and self.LastHovered then
-			self.HoverStart = 0
+		if !self.NoHover then
+			if self:IsHovered() and !self.LastHovered then
+				self.HoverStart = RealTime()
+			end
+			
+			if self.HoverStart and self.HoverStart + 1 <= RealTime() then
+				GAMEMODE.ItemTooltipPanel = self
+				if !GAMEMODE.ItemTooltipUpdated then
+					GAMEMODE:UpdateItemTooltipPanel(self.Item)
+				end
+			end
+			
+			if !self:IsHovered() and self.LastHovered then
+				self.HoverStart = nil
+				GAMEMODE.ItemTooltipPanel = nil
+				GAMEMODE.ItemTooltipUpdated = nil
+			end
 		end
 	end
 	
@@ -120,8 +127,6 @@ function PANEL:Paint( w, h )
 	if self.Item.Paint then
 		self.Item:Paint(self, w, h)
 	end
-	
-	self:PaintToolTip()
 	
 	self.LastPaint = RealTime()
 	self.LastHovered = self:IsHovered()

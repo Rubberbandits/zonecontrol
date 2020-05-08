@@ -29,8 +29,10 @@ function PANEL:Init()
 			if should_split and dropped_item:CanSplitStack() then
 				if should_split == 1 then --split half
 					netstream.Start("SplitStack", dropped_item:GetID(), nil, slot.inv_x, slot.inv_y)
+					dropped_item:SplitStack(nil, slot.inv_x, slot.inv_y)
 				elseif should_split == 2 then --split one
 					netstream.Start("SplitStack", dropped_item:GetID(), 1, slot.inv_x, slot.inv_y)
+					dropped_item:SplitStack(1, slot.inv_x, slot.inv_y)
 				elseif should_split == 3 then --dialog
 				
 				end

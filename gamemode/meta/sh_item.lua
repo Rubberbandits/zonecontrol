@@ -404,74 +404,73 @@ function item:AddItemToStack(item)
 	end
 end
 
-if( SERVER ) then
+function item:SaveNewObject( cb )
+	if !SERVER then return end
 
-	function item:SaveNewObject( cb )
-		local function onSuccess( data, query )
-			local insertTable = {
-				["id"] = query:lastInsert(),
-			}
-			
-			table.Merge(self, insertTable)
-			
-			GAMEMODE.g_ItemTable[query:lastInsert()] = self
-			self:Owner().Inventory[query:lastInsert()] = self
-			
-			if self.OnNewCreation then
-				self:OnNewCreation()
-			end
-			
-			if cb then
-				cb()
-			end
+	local function onSuccess( data, query )
+		local insertTable = {
+			["id"] = query:lastInsert(),
+		}
+		
+		table.Merge(self, insertTable)
+		
+		GAMEMODE.g_ItemTable[query:lastInsert()] = self
+		self:Owner().Inventory[query:lastInsert()] = self
+		
+		if self.OnNewCreation then
+			self:OnNewCreation()
 		end
 		
-		mysqloo.Query(Format("INSERT INTO cc_items ( Owner, ItemClass, Vars, PosX, PosY ) VALUES ( '%d', '%s', '%s', '%d', '%d' )", self:Owner():CharID(), self:GetClass(), util.TableToJSON(self:GetVars(true) or {}), self.x, self.y), onSuccess)
+		if cb then
+			cb()
+		end
 	end
 	
-	function item:UpdateSave()
-	
-		local query_str = "UPDATE cc_items SET Owner = ?, Vars = ?, Stockpile = ?, PosX = ?, PosY = ? WHERE id = ?"
-		local query = CCSQL:prepare( query_str );
-		function query:onSuccess( ret )
-		end
-		function query:onError( err )
-		
-			MsgC( Color( 255, 0, 0 ), "MySQL Query failed: "..err );
-		
-		end
-		query:setNumber( 1, self:GetCharID() );
-		query:setString( 2, util.TableToJSON( self:GetVars(true) or {} ) );
-		query:setNumber( 3, self:StockpileID() );
-		query:setNumber( 4, self.x );
-		query:setNumber( 5, self.y );
-		query:setNumber( 6, self:GetID() );
-		query:start();
-	end
-	
-	-- use this when transferring owners!
-	function item:TransmitToOwner()
+	mysqloo.Query(Format("INSERT INTO cc_items ( Owner, ItemClass, Vars, PosX, PosY ) VALUES ( '%d', '%s', '%s', '%d', '%d' )", self:Owner():CharID(), self:GetClass(), util.TableToJSON(self:GetVars(true) or {}), self.x, self.y), onSuccess)
+end
 
-		netstream.Start( self:Owner(), "ReceiveItem", self:GetClass(), self:GetID(), self:GetVars(), self.x, self.y );
-	
-	end
+function item:UpdateSave()
+	if !SERVER then return end
 
-	function item:Transmit( ply ) -- for sending some item info that is only needed for shit like bonemerge
+	local query_str = "UPDATE cc_items SET Owner = ?, Vars = ?, Stockpile = ?, PosX = ?, PosY = ? WHERE id = ?"
+	local query = CCSQL:prepare( query_str );
+	function query:onSuccess( ret )
+	end
+	function query:onError( err )
 	
-		-- if ply is nil, netstream broadcasts to all clients.
-		netstream.Start( ply, "ReceiveDummyItem", self:GetID(), self:GetClass(), self:GetVars(), self:Owner(), self.CharID );
-		self.IsTransmitted = true; -- for join in progress, client asks server to supply all dummy items.
+		MsgC( Color( 255, 0, 0 ), "MySQL Query failed: "..err );
 	
 	end
+	query:setNumber( 1, self:GetCharID() );
+	query:setString( 2, util.TableToJSON( self:GetVars(true) or {} ) );
+	query:setNumber( 3, self:StockpileID() );
+	query:setNumber( 4, self.x );
+	query:setNumber( 5, self.y );
+	query:setNumber( 6, self:GetID() );
+	query:start();
+end
+
+-- use this when transferring owners!
+function item:TransmitToOwner()
+	if !SERVER then return end
 	
-	function item:DeleteItem()
+	netstream.Start( self:Owner(), "ReceiveItem", self:GetClass(), self:GetID(), self:GetVars(), self.x, self.y );
+end
+
+function item:Transmit( ply ) -- for sending some item info that is only needed for shit like bonemerge
+	if !SERVER then return end
 	
-		local function onSuccess()
-		end
-		mysqloo.Query( Format( "DELETE FROM cc_items WHERE id = '%d'", self:GetID() ), onSuccess );
+	-- if ply is nil, netstream broadcasts to all clients.
+	netstream.Start( ply, "ReceiveDummyItem", self:GetID(), self:GetClass(), self:GetVars(), self:Owner(), self.CharID );
+	self.IsTransmitted = true; -- for join in progress, client asks server to supply all dummy items.
+end
+
+function item:DeleteItem()
+	if !SERVER then return end
 	
+	local function onSuccess()
 	end
-	
+	mysqloo.Query( Format( "DELETE FROM cc_items WHERE id = '%d'", self:GetID() ), onSuccess );
 end
 	
 setmetatable( item, { __call = item.New } )

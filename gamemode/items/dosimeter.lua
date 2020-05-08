@@ -43,7 +43,7 @@ ITEM.functions.View = {
 	OnUse = function(item)	
 		if CLIENT then
 			GAMEMODE.ReadingDosimeter = item
-			CCP.PlayerMenu:Close()
+			GAMEMODE.Inventory:Close()
 		end
 		
 		return true

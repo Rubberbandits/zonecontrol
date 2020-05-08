@@ -126,20 +126,20 @@ function PANEL:PopulateItems()
 		item_pnl.Item = item
 	
 		if item.GetBodygroupCategory then
-			item_pnl.Entity:SetBodygroup( item:GetBodygroupCategory(), item:GetBodygroup() );
+			item_pnl.Entity:SetBodygroup(item:GetBodygroupCategory(), item:GetBodygroup())
 		end
 		
 		if item.Base == "clothes" then
 			local submats = item:GetItemSubmaterials()
 			if submats then
 				for m,n in next, submats do
-					item_pnl.Entity:SetSubMaterial( n[1], n[2] )
+					item_pnl.Entity:SetSubMaterial(n[1], n[2])
 				end
 			end
 		else
 			if item.ItemSubmaterials then
 				for m,n in next, item.ItemSubmaterials do
-					item_pnl.Entity:SetSubMaterial( n[1], n[2] )
+					item_pnl.Entity:SetSubMaterial(n[1], n[2])
 				end
 			end
 		end

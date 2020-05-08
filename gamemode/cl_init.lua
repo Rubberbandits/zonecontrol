@@ -171,7 +171,6 @@ function GM:Initialize()
 end
 
 function GM:InitPostEntity()
-	
 	netstream.Start( "nRequestPData" );
 	netstream.Start( "RetrieveDummyItems" );
 	if cookie.GetNumber( "zc_thirdperson", 0 ) == 1 then
@@ -180,6 +179,8 @@ function GM:InitPostEntity()
 	
 	end
 	
+	
+	self:CreateItemTooltipPanel()
 end
 
 local meta = FindMetaTable( "Player" );
