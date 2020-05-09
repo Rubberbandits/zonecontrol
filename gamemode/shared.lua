@@ -880,6 +880,7 @@ function GM:OnGamemodeLoaded()
 		end
 		
 		self.OverrideSlots[weapon.ClassName] = {slot, current_index}
+		current_index = current_index + 1
 	end
 	
 	for k,v in next, self.Items do
