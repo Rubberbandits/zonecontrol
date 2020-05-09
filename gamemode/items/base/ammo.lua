@@ -1,4 +1,6 @@
 -- this is mostly for identification purposes.
+BASE.W = 2
+BASE.H = 1
 BASE.Stackable = true
 BASE.Vars = {
 	Amount = 30,
@@ -15,12 +17,6 @@ function BASE:OnStack(item)
 	item:RemoveItem(true)
 	
 	return true
-end
-
-function BASE:CanStack(item)
-	if item.Base == self.Base and self.Class == item.Class then
-		return true
-	end
 end
 
 function BASE:GetWeight()
@@ -46,10 +42,10 @@ function BASE:CanSplitStack(amt)
 		amt = math.Round(self:GetVar("Amount", 0) / 2)
 	end
 
-	return (self:GetVar("Amount", 0) > 1) and (amt < self:GetVar("Amount", 0))
+	return (amt > 0 and self:GetVar("Amount", 0) > 1) and (amt < self:GetVar("Amount", 0))
 end
 
-function BASE:SplitStack(amt)
+function BASE:SplitStack(amt, x, y)
 	if !amt then
 		amt = math.Round(self:GetVar("Amount", 0) / 2)
 	end
@@ -60,7 +56,7 @@ function BASE:SplitStack(amt)
 	
 	local item = self:Owner():GiveItem(self.Class, {
 		Amount = amt,
-	})
+	}, x, y)
 end
 
 function BASE:AddItemToStack(item)

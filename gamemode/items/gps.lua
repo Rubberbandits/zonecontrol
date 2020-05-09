@@ -9,6 +9,8 @@ ITEM.CamPos =  Vector( 50, 50, 50 )
 ITEM.LookAt =  Vector( -3.5, -2, 4 )
 ITEM.Weight =  1;
 ITEM.BulkPrice =  3000
+ITEM.W = 1
+ITEM.H = 1
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

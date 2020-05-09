@@ -7,4 +7,6 @@ ITEM.FOV =  15;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 7 );
 ITEM.BulkPrice =  500;
+ITEM.W = 1
+ITEM.H = 2
 ITEM.License =  LICENSE_BLACK;

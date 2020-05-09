@@ -26,3 +26,54 @@ local function SetupLogDirectories()
 	file.CreateDir(kingston.log.dir)
 end
 hook.Add("SetupDataDirectories", SetupLogDirectories)
+
+/* aliases for logging systems */
+
+function GM:SetupDataDirectories()
+	
+end
+
+function GM:LogFile(category, text)
+	kingston.log.write(category, text)
+end
+
+function GM:LogSQL(text)
+	if string.len(text) > 120 then
+		text = string.sub(text, 1, 120) .. " (...)"
+	end
+
+	self:LogFile("sql", text)
+end
+
+function GM:LogBug(text)
+	self:LogFile("bugs", text)
+end
+
+function GM:LogConsole(text)
+	self:LogFile("console", text)
+end
+
+function GM:LogAdmin(text, ply)
+	local ins = ply:SteamID() .. "\t" .. text
+	self:LogFile("admin", ins)
+end
+
+function GM:LogSecurity(steamid, networkid, name, text)
+	local ins = steamid .. "\t" .. networkid .. "\t" .. name .. "\t" .. text
+	self:LogFile("security", ins)
+end
+
+function GM:LogChat(text, ply)
+	local ins = ply:SteamID() .. "\t" .. text
+	self:LogFile("chat", ins)
+end
+
+function GM:LogSandbox(text, ply)
+	local ins = ply:SteamID() .. "\t" .. text
+	self:LogFile("sandbox", ins)
+end
+
+function GM:LogItems(text, ply)
+	local ins = ply:SteamID() .. "\t" .. text
+	self:LogFile("items", ins)
+end

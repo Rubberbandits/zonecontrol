@@ -87,27 +87,14 @@ function GM:PlayerBindPress( ply, bind, down )
 	
 	if( down and string.find( bind, "showteam" ) ) then
 		
-		if( LocalPlayer():TiedUp() ) then
-			
-			LocalPlayer():Notify(nil, COLOR_ERR, "You can't switch characters while tied up.")
-			return true;
-			
-		end
-		
-		if( table.Count( self.Characters ) >= self.MaxCharacters ) then
-			self.CCMode = CC_SELECT_C;
-		else
-			self.CCMode = CC_CREATESELECT_C;
-		end
-		self:CreateCharEditor();
-		
+		self:CreatePlayerMenu();
 		return true;
 		
 	end
 	
 	if( down and string.find( bind, "showspare1" ) ) then
 		
-		self:CreatePlayerMenu();
+		vgui.Create("zc_inventory")
 		return true;
 		
 	end

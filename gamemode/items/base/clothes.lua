@@ -23,11 +23,19 @@ BASE.HandsModel = {
 	model = "models/poc/stalker_viewmodels/c_sunrise.mdl",
 	skin = 0,
 }
+BASE.W = 2
+BASE.H = 2
+BASE.HasEquipSlot = true
 BASE.functions = {};
 BASE.functions.Equip = {
 	SelectionName = "Equip",
 	OnUse = function( item )
 		local metaitem = GAMEMODE:GetItemByID( item:GetClass() );
+		
+		if item.HasEquipSlot then
+			item.x = -1
+			item.y = -1
+		end
 
 		item:SetVar( "Equipped", true );
 		
@@ -101,7 +109,20 @@ BASE.functions.Unequip = {
 	SelectionName = "Unequip",
 	OnUse = function( item )
 		local metaitem = GAMEMODE:GetItemByID( item:GetClass() );
-	
+		
+		if item.HasEquipSlot then
+			local x, y = item:FindBestPosition()
+			
+			item.x = x
+			item.y = y
+		end
+		
+		for k,v in next, item:Owner().Inventory do
+			if v.Base == "artifact" and v:GetVar("Equipped", false) then
+				v:CallFunction("Unequip")
+			end
+		end
+		
 		item:SetVar( "Equipped", false );
 		
 		if SERVER then
@@ -336,6 +357,12 @@ function BASE:DummyItemUpdate(ent)
 				ent:SetBodygroup(0, 0)
 			end
 		end
+	end
+end
+
+function BASE:Paint(pnl, w, h)
+	if self:GetVar("Equipped", false) and !pnl.PaintingDragging then
+		kingston.gui.FindFunc(pnl, "Paint", "ItemDurability", w, h, self)
 	end
 end
 

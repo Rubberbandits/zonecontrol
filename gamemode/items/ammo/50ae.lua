@@ -4,6 +4,8 @@ ITEM.Model = "models/stalker/ammo/magnum.mdl"
 ITEM.Weight = 1
 ITEM.BulkPrice =  6250;
 ITEM.License = LICENSE_BLACK;
+ITEM.W = 1
+ITEM.H = 1
 ITEM.Vars = {
     Amount = 20,
 }

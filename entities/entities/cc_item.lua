@@ -225,6 +225,11 @@ function ENT:Use( ply, caller, type, val )
 			if should_transfer then
 				self.ItemObj.owner = ply;
 				self.ItemObj:SetCharID( ply:CharID() )
+				
+				local x,y = self.ItemObj:FindBestPosition()
+				self.ItemObj.x = x
+				self.ItemObj.y = y
+				
 				self.ItemObj:UpdateSave();
 				self.ItemObj:TransmitToOwner();
 				ply.Inventory[self.ItemObj:GetID()] = self.ItemObj

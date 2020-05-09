@@ -70,29 +70,6 @@ function GM:InitSQL()
 	end
 
 	CCSQL:connect();
-	
-	/* -- Disabled for development...
-	ORIG_DB = mysqloo.connect( "localhost", "test", "NIGGER2000", "test", 3306 )
-	
-	function ORIG_DB:onConnected()
-		
-		MsgC( Color( 200, 200, 200, 255 ), "MySQL successfully connected to " .. self:hostInfo() .. ".\nMySQL server version: " .. self:serverInfo() .. "\n" );
-		
-		mysqloo.Query( "SET interactive_timeout = 28800" );
-		mysqloo.Query( "SET wait_timeout = 28800" );
-		
-	end
-
-	function ORIG_DB:onConnectionFailed( err )
-		
-		GAMEMODE:LogBug( "ERROR: MySQL connection failed (\"" .. err .. "\")." );
-		
-		if( string.find( err, "Unknown MySQL server host" ) ) then return end
-		
-	end
-	
-	ORIG_DB:connect()
-	*/
 end
 
 function mysqloo.Query( q, cb, cbe, noerr )
@@ -229,6 +206,8 @@ local ItemTable = {
 	{ "Owner", "INT" },
 	{ "Stockpile", "INT", 0 },
 	{ "ItemClass", "VARCHAR(256)" },
+	{ "PosX", "INT" },
+	{ "PosY", "INT" },
 	{ "Vars", "TEXT" },
 };
 

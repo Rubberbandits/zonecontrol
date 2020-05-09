@@ -7,6 +7,8 @@ ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  1000;
 ITEM.License =  LICENSE_BLACK;
+ITEM.W = 1
+ITEM.H = 2
 ITEM.functions = {}
 ITEM.functions.Equip = {
 	SelectionName = "Equip",
@@ -51,4 +53,12 @@ end
 
 function ITEM:OnUnloadItem()
 	GAMEMODE.GeigerCounterEquipped = false
+end
+
+function ITEM:QuickUse()
+	if self:GetVar("Equipped", false) then
+		self:CallFunction("Unequip", true)
+	else
+		self:CallFunction("Equip", true)
+	end
 end

@@ -1389,3 +1389,8 @@ function GM:CloseCharCreate()
 	CCP.CharSelectPanel = nil;
 	
 end
+
+local function CharacterLoaded()
+	hook.Run("CharacterLoaded")
+end
+netstream.Hook("CharacterLoaded", CharacterLoaded)

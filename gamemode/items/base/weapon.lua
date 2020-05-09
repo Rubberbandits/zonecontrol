@@ -11,6 +11,9 @@ BASE.StartDurability = 100; -- would not recommend you modify, modify DegrateRat
 BASE.UseDurability = true;
 BASE.NoDefaultAtts = true
 BASE.SellDurability = 50;
+BASE.W = 4
+BASE.H = 2
+BASE.HasEquipSlot = true
 BASE.functions = {};
 BASE.functions.Equip = {
 	SelectionName = "Equip",
@@ -49,6 +52,28 @@ BASE.functions.Equip = {
 			weapon:SetClip1(item:GetVar("Clip1", 0))
 			weapon.JamChance = item:GetJamChance()
 		
+		end
+		
+		if item.HasEquipSlot then -- not cool men, but gotta.
+			local new_x
+			local new_y
+			local occupied = item:Owner():IsInventorySlotOccupied(-1,-1)
+			if occupied and occupied.Base == item.Base then
+				local second_occupied = item:Owner()
+				if second_occupied and second_occupied.Base == item.Base and item.IsTertiary then
+					new_x = -3
+					new_y = -3
+				elseif !item.IsTertiary then
+					new_x = -2
+					new_y = -2
+				end
+			else
+				new_x = -1
+				new_y = -1
+			end
+			
+			item.x = new_x
+			item.y = new_y
 		end
 		
 		item:SetVar( "Equipped", true );
@@ -98,6 +123,13 @@ BASE.functions.Unequip = {
 				
 			end
 		
+		end
+		
+		if item.HasEquipSlot then
+			local x, y = item:FindBestPosition()
+			
+			item.x = x
+			item.y = y
 		end
 		
 		item:SetVar( "Equipped", false );
@@ -289,4 +321,9 @@ function BASE:OnPlayerDeath()
 end
 function BASE:OnUnloadItem()
 	self:Owner().EquippedWeapons[self.WeaponClass] = nil;
+end
+function BASE:Paint(pnl, w, h)
+	if self:GetVar("Equipped", false) and !pnl.PaintingDragging then
+		kingston.gui.FindFunc(pnl, "Paint", "ItemDurability", w, h, self)
+	end
 end

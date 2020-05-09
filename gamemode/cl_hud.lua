@@ -2,10 +2,6 @@ GM.FontFace = "Myriad Pro 100 Rads";
 
 GM.FontHeight = { };
 
-function ScreenScaleH(size)
-	return size * (ScrH() / 480.0)
-end
-
 function surface.CreateFontCC( name, tab )
 	
 	surface.CreateFont( name, tab );
@@ -208,6 +204,34 @@ surface.CreateFontCC( "CombineControl.Written", {
 	font = "Comic Sans MS",
 	size = 20,
 	weight = 700 } );
+	
+	surface.CreateFont( "InventoryWeight", {
+	font = "Arial",
+	size = ScreenScale( 8 ),
+	weight = 560,
+	antialias = true,
+} );
+
+surface.CreateFont( "InventoryDisplay", {
+	font = "Arial",
+	size = ScreenScale( 6 ),
+	weight = 500,
+	antialias = true,
+} );
+
+surface.CreateFont( "InventoryNameDisplay", {
+	font = "Arial",
+	size = ScreenScale( 8 ),
+	weight = 560,
+	antialias = true,
+} );
+
+surface.CreateFont( "InventoryFactionDisplay", {
+	font = "Arial",
+	size = ScreenScale( 6 ),
+	weight = 560,
+	antialias = true,
+} );
 	
 language.Add( "npc_clawscanner", "Claw Scanner" );
 language.Add( "npc_combine_camera", "Combine Camera" );
@@ -2059,7 +2083,7 @@ function GM:PlayerEndVoice( ply )
 	
 end
 
-hook.Add("PostRenderVGUI", "STALKER.RenderTooltip", function()
+hook.Add("PostRenderVGUI", "STALKER.RenderUpgradeTooltip", function()
 	local panel = GAMEMODE.TooltipPanel
 	if panel then
 		local x,y = gui.MouseX() + 15, gui.MouseY() + 15
@@ -2069,6 +2093,19 @@ hook.Add("PostRenderVGUI", "STALKER.RenderTooltip", function()
 		end
 		
 		hook.Run("PaintUpgradeToolTip", panel, x, y)
+	end
+end)
+
+hook.Add("PostRenderVGUI", "STALKER.RenderItemTooltip", function()
+	local panel = GAMEMODE.ItemTooltipPanel
+	if panel then
+		local x,y = gui.MouseX() + 15, gui.MouseY() + 15
+		
+		if (gui.MouseY() + 15) + (ScrH() / 2.67) > ScrH() then -- panel is out of bounds
+			x,y = gui.MouseX() + 15, (gui.MouseY() + 15) - ((( gui.MouseY() + 15 ) + (ScrH() / 2.67)) - ScrH())
+		end
+		
+		hook.Run("PaintItemTip", panel, panel.Item)
 	end
 end)
 
@@ -2168,4 +2205,79 @@ function GM:PaintUpgradeStats(upgrade, x, y)
 		
 		icon_y = icon_y + ScrH() / 45 + 4
 	end
+end
+
+function GM:UpdateItemTooltipPanel(item)
+	local pnl = GAMEMODE.ItemTooltip
+	pnl:Clear()
+	
+	pnl.ItemName = vgui.Create("DLabel", pnl)
+	pnl.ItemName:Dock(TOP)
+	pnl.ItemName:SetContentAlignment(5)
+	pnl.ItemName:SetFont("CombineControl.LabelMedium")
+	pnl.ItemName:SetTextColor(Color(240, 240, 240, 196))
+	pnl.ItemName:SetText(item:GetName())
+	pnl.ItemName:DockMargin(0,ScreenScaleH(12),0,0)
+	
+	pnl.ItemWeight = vgui.Create("DLabel", pnl)
+	pnl.ItemWeight:Dock(TOP)
+	pnl.ItemWeight:SetContentAlignment(4)
+	pnl.ItemWeight:SetFont("CombineControl.LabelMedium")
+	pnl.ItemWeight:SetTextColor(Color(220, 220, 220, 172))
+	pnl.ItemWeight:SetText(item:GetWeight().." kg")
+	pnl.ItemWeight:DockMargin(ScreenScaleH(16),ScreenScaleH(2),0,0)
+	
+	pnl.ItemDesc = vgui.Create("DLabel", pnl)
+	pnl.ItemDesc:Dock(TOP)
+	pnl.ItemDesc:SetContentAlignment(8)
+	pnl.ItemDesc:SetFont("CombineControl.LabelMedium")
+	pnl.ItemDesc:SetTextColor(Color(180, 180, 180, 148))
+	pnl.ItemDesc:SetWrap(true)
+	pnl.ItemDesc:SetText(item:GetDesc())
+	pnl.ItemDesc:DockMargin(ScreenScaleH(16),ScreenScaleH(2),ScreenScaleH(12),0)
+	
+	if item.TooltipCreation then
+		item:TooltipCreation(pnl)
+	end
+	
+	self.ItemTooltipUpdated = true
+end
+
+function GM:CreateItemTooltipPanel()
+	GAMEMODE.ItemTooltip = vgui.Create("EditablePanel")
+	GAMEMODE.ItemTooltip:SetSize(ScrW() / 6, ScrH() / 2.67)
+	GAMEMODE.ItemTooltip:SetPaintedManually(true)
+	function GAMEMODE.ItemTooltip:Paint(w, h)
+		surface.SetDrawColor(Color(255, 255, 255, 255))
+		surface.SetMaterial(tooltip_material)
+		surface.DrawTexturedRectUV(0, 0, w, h, 0, 0, 0.2695, 0.395)
+	end
+end
+
+function GM:PaintItemTip( panel, item )
+
+	if( panel:IsHovered() ) then
+	
+		if( !panel.NoHover ) then
+
+			if( RealTime() >= panel.HoverStart + 1 ) then
+				-- this func might get really big and messy
+				local x,y = gui.MouseX() + 15, gui.MouseY() + 15
+				
+				if (gui.MouseY() + 15) + (ScrH() / 2.67) > ScrH() then -- panel is out of bounds
+					y = (gui.MouseY() + 15) - ((( gui.MouseY() + 15 ) + (ScrH() / 2.67)) - ScrH())
+				end
+				
+				if (gui.MouseX() + 15) + (ScrW() / 6) > ScrW() then
+					x = (gui.MouseX() + 15) - ((( gui.MouseX() + 15 ) + (ScrW() / 6)) - ScrW())
+				end
+				
+				GAMEMODE.ItemTooltip:PaintAt(x,y)
+				
+			end
+			
+		end
+		
+	end
+
 end

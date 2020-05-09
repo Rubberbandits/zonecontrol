@@ -7,3 +7,5 @@ ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  25000;
+ITEM.W = 4
+ITEM.H = 4

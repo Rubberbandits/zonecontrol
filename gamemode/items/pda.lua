@@ -6,6 +6,8 @@ ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  20000;
+ITEM.W = 1
+ITEM.H = 1
 -- explanation of PrivateVars key
 -- this is built into the metaobject of items. the key PrivateVars is not transmitted normally
 -- this is for data that needs to stay on the server and shouldnt be exposed to the client owner

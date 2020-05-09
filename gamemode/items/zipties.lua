@@ -8,3 +8,5 @@ ITEM.LookAt 		= Vector( 0, 0, -1.26 );
 
 ITEM.BulkPrice		= 1500;
 ITEM.License		= LICENSE_BLACK;
+ITEM.W = 1
+ITEM.H = 2

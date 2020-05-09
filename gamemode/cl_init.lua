@@ -8,6 +8,10 @@ if( !CCP ) then
 	
 end
 
+function ScreenScaleH(size)
+	return size * (ScrH() / 480.0)
+end
+
 include( "sh_util.lua" );
 include( "sh_enum.lua" );
 
@@ -65,6 +69,7 @@ include( "cl_bonemerge.lua" );
 include( "cl_geiger.lua" );
 include( "cl_logs.lua" );
 include( "cl_pda.lua" );
+include( "cl_quickslots.lua" );
 
 include( "ctp/cl_ctp.lua" );
 
@@ -171,7 +176,6 @@ function GM:Initialize()
 end
 
 function GM:InitPostEntity()
-	
 	netstream.Start( "nRequestPData" );
 	netstream.Start( "RetrieveDummyItems" );
 	if cookie.GetNumber( "zc_thirdperson", 0 ) == 1 then
@@ -180,6 +184,10 @@ function GM:InitPostEntity()
 	
 	end
 	
+	
+	self:CreateItemTooltipPanel()
+	
+	_G.b_keyf7_pressed = true
 end
 
 local meta = FindMetaTable( "Player" );
@@ -204,14 +212,19 @@ netstream.Hook( "nPDANameTaken", function()
 
 end );
 
+hook.Add("Think", "STALKER.ScreenResolutionChange", function()
+	if ScrW() != GAMEMODE.LastScrW or ScrH() != GAMEMODE.LastScrH then
+		hook.Run("ScreenResolutionChanged")
+	end
+	
+	GAMEMODE.LastScrW = ScrW()
+	GAMEMODE.LastScrH = ScrH()
+end)
+
 game.AddParticles( "particles/hunter_shield_impact.pcf" )
 game.AddParticles( "particles/warpshield.pcf" )
 game.AddParticles( "particles/advisor.pcf" )
 game.AddParticles( "particles/steampuff.pcf" )
-
-function ScreenScaleH(size)
-	return size * (ScrH() / 480)
-end
 
 GM.FullyLoaded = true;
 
