@@ -14,3 +14,6 @@ ITEM.SelfRepairCondition = 80
 ITEM.AmmoType = "9x19"
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 65000
+ITEM.TertiarySlot = true
+ITEM.W = 2
+ITEM.H = 1

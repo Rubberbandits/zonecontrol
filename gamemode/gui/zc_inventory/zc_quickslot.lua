@@ -159,10 +159,6 @@ function PANEL:OnMousePressed( iCode )
 end
 
 function PANEL:OnMouseReleased( iCode ) 
-	if iCode == MOUSE_RIGHT then
-		self:CreateActionMenu()
-	end
-	
 	self:MouseCapture(false)
 	
 	if self:DragMouseRelease(iCode) then

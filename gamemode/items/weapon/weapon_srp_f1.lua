@@ -16,6 +16,7 @@ ITEM.BulkPrice = 5000
 ITEM.Slot = 2
 ITEM.Throwable = true
 ITEM.UseDurability = false
+ITEM.HasEquipSlot = false
 ITEM.Vars = {
 	Equipped = false,
 	CurrentAttachments = {},
@@ -41,3 +42,5 @@ function ITEM:OnThrow(weapon)
 	self:Owner().EquippedWeapons[self.WeaponClass] = nil
 	self:RemoveItem()
 end
+ITEM.W = 1
+ITEM.H = 1

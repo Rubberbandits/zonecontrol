@@ -15,3 +15,6 @@ ITEM.AmmoType = "32acp"
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 12000
 ITEM.Slot = 2
+ITEM.TertiarySlot = true
+ITEM.W = 1
+ITEM.H = 1

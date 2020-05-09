@@ -15,3 +15,6 @@ ITEM.AmmoType = "762x25"
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 175000
 ITEM.Slot = 2
+ITEM.TertiarySlot = true
+ITEM.W = 2
+ITEM.H = 1

@@ -173,12 +173,15 @@ function PANEL:PopulateItems()
 		local pos_x
 		local pos_y
 		
-		if item.HasEquipSlot and item:GetVar("Equipped", false) and !item.TertiarySlot then
+		if item.HasEquipSlot and item:GetVar("Equipped", false) then
 			for k,v in next, self.EquipBack:GetChildren() do
 				if v.ItemBase == item.Base and !occupied_slots[v] then
 					slot = v
 					break
 				end
+			end
+			if item.TertiarySlot then
+				slot = self.EquipBack.weapon3
 			end
 			size_w = slot:GetWide()
 			size_h = slot:GetTall()
@@ -186,21 +189,12 @@ function PANEL:PopulateItems()
 			pos_y = 0
 			parent = slot
 			occupied_slots[slot] = true
-		elseif !item.TertiarySlot then
+		else
 			slot = self.InventoryScroll.Grid[item.y][item.x]
 			size_w = slot:GetWide() * item.W
 			size_h = slot:GetTall() * item.H
 			pos_x, pos_y = slot:GetPos()
 			parent = self.InventoryScroll
-		end
-		
-		if item.TertiarySlot then
-			slot = self.EquipBack.weapon3
-			size_w = slot:GetWide()
-			size_h = slot:GetTall()
-			pos_x = 0
-			pos_y = 0
-			parent = slot
 		end
 		
 		local item_pnl = vgui.Create("zc_item", parent)

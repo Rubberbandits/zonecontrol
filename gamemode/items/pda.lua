@@ -86,7 +86,9 @@ ITEM.functions.View = {
 			else
 				GAMEMODE.PDAMenu:CreateTabs()
 			end
-			CCP.PlayerMenu:Close()
+			if GAMEMODE.Inventory and IsValid(GAMEMODE.Inventory) then
+				GAMEMODE.Inventory:Close()
+			end
 		end
 		
 		return true

@@ -15,3 +15,6 @@ ITEM.AmmoType = "57x28"
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 90000
 ITEM.Slot = 2
+ITEM.TertiarySlot = true
+ITEM.W = 2
+ITEM.H = 1

@@ -34,6 +34,25 @@ BASE.functions.Equip = {
 			
 		end
 		
+		local count = 0
+		local tertiary = 0
+		for k,v in next, item:Owner().EquippedWeapons or {} do
+			local wep_item = GAMEMODE.g_ItemTable[v]
+			if !wep_item.TertiarySlot then
+				count = count + 1
+			else
+				tertiary = tertiary + 1
+			end
+		end
+		
+		if count > 1 or (item.TertiarySlot and tertiary > 0) then
+			if SERVER then
+				item:Owner():Notify(nil, Color(255,0,0), "You have too many weapons equipped!")
+			end
+			
+			return false
+		end
+		
 		if( SERVER ) then
 
 			weapon = item:Owner():Give( item.WeaponClass );
@@ -54,26 +73,9 @@ BASE.functions.Equip = {
 		
 		end
 		
-		if item.HasEquipSlot then -- not cool men, but gotta.
-			local new_x
-			local new_y
-			local occupied = item:Owner():IsInventorySlotOccupied(-1,-1)
-			if occupied and occupied.Base == item.Base then
-				local second_occupied = item:Owner()
-				if second_occupied and second_occupied.Base == item.Base and item.IsTertiary then
-					new_x = -3
-					new_y = -3
-				elseif !item.IsTertiary then
-					new_x = -2
-					new_y = -2
-				end
-			else
-				new_x = -1
-				new_y = -1
-			end
-			
-			item.x = new_x
-			item.y = new_y
+		if item.HasEquipSlot then
+			item.x = -1
+			item.y = -1
 		end
 		
 		item:SetVar( "Equipped", true );
@@ -89,7 +91,21 @@ BASE.functions.Equip = {
 		
 	end,
 	CanRun = function( item )
-
+		local count = 0
+		local tertiary = 0
+		for k,v in next, item:Owner().EquippedWeapons or {} do
+			local wep_item = GAMEMODE.g_ItemTable[v]
+			if !wep_item.TertiarySlot then
+				count = count + 1
+			else
+				tertiary = tertiary + 1
+			end
+		end
+		
+		if count > 1 or (item.TertiarySlot and tertiary > 0) then
+			return false
+		end
+		
 		if item:Owner().EquippedWeapons and item:Owner().EquippedWeapons[item.WeaponClass] then
 			return false
 		end

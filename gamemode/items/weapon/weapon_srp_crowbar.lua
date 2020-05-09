@@ -14,3 +14,5 @@ ITEM.SelfRepairCondition = 40
 ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 7500
 ITEM.Slot = 1
+ITEM.H = 3
+ITEM.W = 1

@@ -15,3 +15,5 @@ ITEM.License = LICENSE_BLACK;
 ITEM.BulkPrice = 150000
 ITEM.Slot = 1
 ITEM.AmmoType = "gas"
+ITEM.W = 2
+ITEM.H = 2
