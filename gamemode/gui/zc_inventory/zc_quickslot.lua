@@ -1,4 +1,4 @@
-local PANEL = { };
+local PANEL = {}
 
 AccessorFunc(PANEL, "Entity", 			"Entity")
 AccessorFunc(PANEL, "vCamPos", 		"CamPos")
@@ -6,6 +6,7 @@ AccessorFunc(PANEL, "fFOV", 			"FOV")
 AccessorFunc(PANEL, "vLookatPos", 		"LookAt")
 AccessorFunc(PANEL, "colAmbientLight", "AmbientLight")
 AccessorFunc(PANEL, "colColor", 		"Color")
+
 function PANEL:Init()
 	self.LastPaint = 0
 	
@@ -18,24 +19,28 @@ function PANEL:Init()
 	
 	self:SetColor(Color(255, 255, 255, 255))
 	self:SetZPos(32767)
-	self:Droppable("zc_item")
+	self:Droppable("zc_quickslot")
 	self:Receiver("zc_item", function(pnl, dropped, has_dropped, index, x, y)
 		local dragged_pnl = dropped[1]
 		if has_dropped then
-			local item = pnl.Item
 			local dropped_item = dragged_pnl.Item
 			
-			if dropped_item == item then GAMEMODE.Inventory:PopulateItems() return end
-
-			if item:CanStack(dropped_item) then
-				netstream.Start("StackItem", item:GetID(), dropped_item:GetID())
-			
-				item:OnStack(dropped_item)
+			if !dropped_item.QuickUse or (dropped_item.CanQuickUse and !dropped_item:CanQuickUse()) then
+				GAMEMODE.Inventory:PopulateItems() 
+				return
 			end
 			
+			pnl:SetBoundItem(dropped_item)
 			GAMEMODE.Inventory:PopulateItems()
 		end
 	end)
+	
+	self.Binder = vgui.Create("DBinder", self)
+	self.Binder:SetSize(ScreenScaleH(16), ScreenScaleH(8))
+	self.Binder:SetPos(0,self:GetTall() - self.Binder:GetTall())
+	self.Binder.OnChange = function(pnl, key)
+		kingston.quickslot.set_bind(self.BindIndex, key)
+	end
 end
 
 function PANEL:SetModel(strModelName)
@@ -63,19 +68,17 @@ function PANEL:GetModel()
 end
 
 function PANEL:Paint( w, h )
-	if !self.MetaItem and self.Item then
-		self.MetaItem = GAMEMODE:GetItemByID(self.Item:GetClass())
+	if self.BoundItem and !self.BoundItem.IsItem then
+		self:ClearBoundItem()
+		return
 	end
-
-	if self:IsDragging() and self.PaintingDragging then
-		local drag_w = ScreenScaleH(29) * self.Item.W
-		local drag_h = ScreenScaleH(29) * self.Item.H
 		
-		surface.SetDrawColor(Color(200, 200, 200, 100))
-		surface.DrawOutlinedRect((w / 2) - (drag_w / 2), (h / 2) - (drag_h / 2), drag_w, drag_h)
+
+	if !self.MetaItem and self.BoundItem then
+		self.MetaItem = GAMEMODE:GetItemByID(self.BoundItem:GetClass())
 	end
 	
-	if !self:IsDragging() then
+	if !self:IsDragging() and self.BoundItem then
 		if !self.NoHover then
 			if self:IsHovered() and !self.LastHovered then
 				self.HoverStart = RealTime()
@@ -84,7 +87,7 @@ function PANEL:Paint( w, h )
 			if self.HoverStart and self.HoverStart + 1 <= RealTime() then
 				GAMEMODE.ItemTooltipPanel = self
 				if !GAMEMODE.ItemTooltipUpdated then
-					GAMEMODE:UpdateItemTooltipPanel(self.Item)
+					GAMEMODE:UpdateItemTooltipPanel(self.BoundItem)
 				end
 			end
 			
@@ -126,8 +129,8 @@ function PANEL:Paint( w, h )
 		render.SuppressEngineLighting( false )
 	cam.End3D()
 	
-	if self.Item.Paint then
-		self.Item:Paint(self, w, h)
+	if self.BoundItem.Paint then
+		self.BoundItem:Paint(self, w, h)
 	end
 	
 	self.LastPaint = RealTime()
@@ -153,7 +156,6 @@ function PANEL:OnMousePressed( iCode )
 		
 		return
 	end
-	
 end
 
 function PANEL:OnMouseReleased( iCode ) 
@@ -166,87 +168,6 @@ function PANEL:OnMouseReleased( iCode )
 	if self:DragMouseRelease(iCode) then
 		return
 	end
-end
-
-function PANEL:CreateActionMenu()
-	if !self.Item then return end
-	if self.ActionMenuDisabled then return end
-
-	self.action_menu = vgui.Create("DMenu")
-	self.action_menu:SetSkin("zc_inventory")
-	
-	local item = self.Item
-	local metaitem = GAMEMODE:GetItemByID(item:GetClass())
-	if item.functions then
-		for k,v in next, item.functions do
-			if v.CanRun(item) then
-				self.action_menu:AddOption((isfunction(v.SelectionName) and string.lower(v.SelectionName(item))) or string.lower(v.SelectionName), function()
-					self.Item:CallFunction(k, true)
-					
-					GAMEMODE.Inventory:PopulateItems()
-				end)
-				
-				self.action_menu:SetPaintBackground(true)
-			end
-		end
-	end
-	if self.Item.DynamicFunctions then
-		for k,v in next, self.Item:DynamicFunctions() do
-			if v.CanRun(item) then
-				self.action_menu:AddOption(v.SelectionName, function()
-					netstream.Start("ItemCallDynamicFunction", item:GetID(), k)
-					v.OnUse(item)
-					
-					GAMEMODE.Inventory:PopulateItems()
-				end)
-				
-				self.action_menu:SetPaintBackground(true)
-			end
-		end
-	end
-	if item.CanDrop then
-		if item:CanDrop() then
-			if InStockpileRange(LocalPlayer()) then
-				self.action_menu:AddOption("stockpile", function()
-					GAMEMODE:PMCreateStockpilesMenu()
-					netstream.Start("nRequestMoveStockpiles");
-				end)
-			end
-			
-			if LocalPlayer():IsAdmin() then
-				self.action_menu:AddOption("edit", function()
-					GAMEMODE.ItemEditor = vgui.Create("CItemCreator")
-					GAMEMODE.ItemEditor:SetItem(item)
-				end)
-			end
-			
-			if LocalPlayer():HasCharFlag("X") and item.BulkPrice and InStockpileRange(LocalPlayer()) and GAMEMODE.SellToMenuEnabled and item:CanSell() then
-				self.action_menu:AddOption("sell for "..GAMEMODE:CalculatePrice(item).." RU", function()
-					LocalPlayer():SellItemToMenu(item:GetID())
-					GAMEMODE.Inventory:PopulateItems()
-				end)
-			end
-			
-			if item.CanSplitStack and item:CanSplitStack() then
-				self.action_menu:AddOption("split", function()
-					netstream.Start("SplitStack", item:GetID())
-					GAMEMODE.Inventory:PopulateItems()
-				end)
-			end
-		
-			self.action_menu:AddOption("drop", function()
-				netstream.Start("ItemDrop", item:GetID())
-				item:DropItem()
-				
-				GAMEMODE.Inventory:PopulateItems()
-			end)
-		end
-	end
-	
-	GAMEMODE.Inventory.SelectedItem = item
-	
-	self.action_menu:SetPaintBackground( true );
-	self.action_menu:Open( gui.MouseX(), gui.MouseY(), nil, self:GetParent() );
 end
 
 function PANEL:BestGuessLayout()
@@ -272,4 +193,69 @@ function PANEL:BestGuessLayout()
 	end
 end
 
-vgui.Register( "zc_item", PANEL, "DModelPanel" );
+function PANEL:SetBoundItem(item)
+	local bind = kingston.quickslot.is_bound(self.Binder:GetSelectedNumber())
+	if !bind then return end
+	
+	for k,v in next, kingston.quickslot.get_binds() do
+		if v.BoundItem == item then
+			v.BoundItem = nil
+		end
+	end
+	
+	for k,v in next, self:GetParent():GetChildren() do
+		if v.BoundItem == item then
+			v:ClearBoundItem()
+		end
+	end
+	
+	bind.BoundItem = item
+	self.BoundItem = item
+	self:SetModel(item:GetModel())
+
+	if item.GetBodygroupCategory then
+		self.Entity:SetBodygroup(item:GetBodygroupCategory(), item:GetBodygroup())
+	end
+	
+	if item.Base == "clothes" then
+		local submats = item:GetItemSubmaterials()
+		if submats then
+			for m,n in next, submats do
+				self.Entity:SetSubMaterial(n[1], n[2])
+			end
+		end
+	else
+		if item.ItemSubmaterials then
+			for m,n in next, item.ItemSubmaterials do
+				self.Entity:SetSubMaterial(n[1], n[2])
+			end
+		end
+	end
+end
+
+function PANEL:ClearBoundItem()
+	local bind = kingston.quickslot.is_bound(self.Binder:GetSelectedNumber())
+	if !bind then return end
+	
+	bind.BoundItem = nil
+	self.BoundItem = nil
+	self:SetModel("")
+end
+
+function PANEL:SetBind(index)
+	local data = kingston.quickslot.get_binds()[index]
+	if !data then return end
+	
+	self.BindIndex = index
+	self.Binder:SetPos(0,self:GetTall() - self.Binder:GetTall())
+	if data.key then
+		self.Binder:SetSelectedNumber(data.key)
+	end
+	if data.BoundItem and data.BoundItem.IsItem then
+		self:SetBoundItem(data.BoundItem)
+	elseif data.BoundItem then
+		self:ClearBoundItem()
+	end
+end
+
+vgui.Register("zc_quickslot", PANEL, "DModelPanel")

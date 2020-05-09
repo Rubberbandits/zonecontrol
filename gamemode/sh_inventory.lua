@@ -298,7 +298,7 @@ function meta:IsInventorySlotOccupied( x, y )
 
 		if x >= item.x and x <= item.x + metaitem.W - 1 then
 			if y >= item.y and y <= item.y + metaitem.H - 1 then
-				return true
+				return item
 			end
 		end
 	end

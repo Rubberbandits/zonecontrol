@@ -43,7 +43,9 @@ ITEM.functions.View = {
 	OnUse = function(item)	
 		if CLIENT then
 			GAMEMODE.ReadingDosimeter = item
-			GAMEMODE.Inventory:Close()
+			if GAMEMODE.Inventory and IsValid(GAMEMODE.Inventory) then
+				GAMEMODE.Inventory:Close()
+			end
 		end
 		
 		return true
@@ -79,4 +81,11 @@ function ITEM:Paint(pnl, w, h)
 		surface.SetTextPos(w - tW, h - tH)
 		surface.DrawText(amt)
 	end
+end
+
+function ITEM:QuickUse()
+	self:CallFunction("View")
+end
+function ITEM:CanQuickUse()
+	return self:GetVar("Activated", false)
 end

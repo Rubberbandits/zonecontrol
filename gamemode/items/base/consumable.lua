@@ -31,3 +31,7 @@ BASE.functions.Use = {
 		return true
 	end,
 }
+
+function BASE:QuickUse()
+	self:CallFunction("Use", true)
+end 

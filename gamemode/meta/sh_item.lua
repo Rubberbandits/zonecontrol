@@ -3,6 +3,8 @@ AddCSLuaFile();
 item = {};
 item.__index = item;
 item.IsItem = true;
+item.W = 1
+item.H = 1
 function item:__tostring()
 
 	return "item["..( self.id or 0 ).."]";
@@ -222,7 +224,11 @@ function item:CallFunction(szKey, bNetwork)
 				end
 				
 				if bNetwork then
-					netstream.Start(self:Owner(), "CallFunction", self:GetID(), szKey)
+					if SERVER then
+						netstream.Start(self:Owner(), "CallFunction", self:GetID(), szKey)
+					else
+						netstream.Start("ItemCallFunction", self:GetID(), szKey)
+					end
 				end
 			
 				local ret = self.functions[szKey].OnUse(self)

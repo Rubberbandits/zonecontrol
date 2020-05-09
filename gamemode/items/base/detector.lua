@@ -4,12 +4,18 @@ BASE.Vars = {
 	Equipped = false,
 }
 BASE.DetectorType = DETECTOR_ECHO;
+BASE.HasEquipSlot = true
 BASE.functions = {};
 BASE.functions.Equip = {
 	SelectionName = "Equip",
 	OnUse = function( item )
-	
 		local metaitem = GAMEMODE:GetItemByID( item:GetClass() );
+		
+		if item.HasEquipSlot then
+			item.x = -1
+			item.y = -1
+		end
+		
 		item:SetVar( "Equipped", true );
 		
 		if( CLIENT ) then
@@ -51,6 +57,13 @@ BASE.functions.Unequip = {
 				
 			end
 			
+		end
+		
+		if item.HasEquipSlot then
+			local x, y = item:FindBestPosition()
+			
+			item.x = x
+			item.y = y
 		end
 	
 		item:SetVar( "Equipped", false );

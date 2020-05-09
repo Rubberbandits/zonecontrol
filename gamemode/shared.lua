@@ -58,6 +58,12 @@ else
 	
 end
 
+hook.Add("pac_CanWearParts", "FlagRestrictPAC", function(ply)
+	if !ply:HasCharFlag("P") and !ply:IsAdmin() then
+		return false, "You're not an admin or don't have the flag!"
+	end
+end)
+
 GM.ModelColors = { };
 
 for _, v in pairs( GM.CitizenModels ) do

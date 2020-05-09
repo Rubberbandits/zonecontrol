@@ -11,3 +11,5 @@ ITEM.PhysicalMass	= 1;
 
 ITEM.BulkPrice =  1000;
 ITEM.License =  LICENSE_BLACK;
+ITEM.W = 1
+ITEM.H = 2

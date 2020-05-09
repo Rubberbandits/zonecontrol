@@ -102,7 +102,9 @@ function PANEL:Init()
 	self.SaveButton:SetText("Save")
 	self.SaveButton.DoClick = function(button)
 		self:SaveCurrentItem()
-		GAMEMODE:PMUpdateInventory()
+		if GAMEMODE.Inventory and IsValid(GAMEMODE.Inventory) then
+			GAMEMODE.Inventory:PopulateItems()
+		end
 		self:Close()
 	end
 end

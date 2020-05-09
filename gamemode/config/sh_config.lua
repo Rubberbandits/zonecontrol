@@ -350,5 +350,6 @@ GM.ToolTrustAdvanced = {
 
 GM.ToolTrustBlacklist = {
 	"dynamite",
-	"creator"
+	"creator",
+	"radiation",
 };

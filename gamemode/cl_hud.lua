@@ -2,10 +2,6 @@ GM.FontFace = "Myriad Pro 100 Rads";
 
 GM.FontHeight = { };
 
-function ScreenScaleH(size)
-	return size * (ScrH() / 480.0)
-end
-
 function surface.CreateFontCC( name, tab )
 	
 	surface.CreateFont( name, tab );
@@ -2269,7 +2265,11 @@ function GM:PaintItemTip( panel, item )
 				local x,y = gui.MouseX() + 15, gui.MouseY() + 15
 				
 				if (gui.MouseY() + 15) + (ScrH() / 2.67) > ScrH() then -- panel is out of bounds
-					x,y = gui.MouseX() + 15, (gui.MouseY() + 15) - ((( gui.MouseY() + 15 ) + (ScrH() / 2.67)) - ScrH())
+					y = (gui.MouseY() + 15) - ((( gui.MouseY() + 15 ) + (ScrH() / 2.67)) - ScrH())
+				end
+				
+				if (gui.MouseX() + 15) + (ScrW() / 6) > ScrW() then
+					x = (gui.MouseX() + 15) - ((( gui.MouseX() + 15 ) + (ScrW() / 6)) - ScrW())
 				end
 				
 				GAMEMODE.ItemTooltip:PaintAt(x,y)

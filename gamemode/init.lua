@@ -114,6 +114,7 @@ AddCSLuaFile( "cl_bonemerge.lua" );
 AddCSLuaFile( "cl_geiger.lua" );
 AddCSLuaFile( "cl_logs.lua" );
 AddCSLuaFile( "cl_pda.lua" );
+AddCSLuaFile( "cl_quickslots.lua" );
 
 AddCSLuaFile( "ctp/cl_ctp.lua" );
 

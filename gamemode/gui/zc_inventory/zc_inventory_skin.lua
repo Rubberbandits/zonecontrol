@@ -247,6 +247,79 @@ UVSKIN.VBar = {
 	v1 = 0.2156,
 }
 
+UVSKIN.HealthBar = {
+	u0 = 0.333,
+	v0 = 0.7705,
+	u1 = 0.5435,
+	v1 = 0.7871,
+}
+
+UVSKIN.ProtectionBar = {
+	u0 = 0.332,
+	v0 = 0.7705,
+	u1 = 0.449,
+	v1 = 0.7871,
+}
+
+UVSKIN.ConditionBar = {
+	u0 = 0.3326,
+	v0 = 0.7578,
+	u1 = 0.39,
+	v1 = 0.7636,
+}
+
+UVSKIN.protection_info = {
+	-- radiation
+	[DMG_RADIATION] = {
+		default = 1,
+		pos_x = ScreenScaleH(27),
+		pos_y = (ScrH() / 4.9),
+	},
+	-- chemical burn
+	[DMG_ACID] = {
+		default = 1,
+		pos_x = ScreenScaleH(27),
+		pos_y = (ScrH() / 5.99),
+	},
+	-- electric shock
+	[DMG_SHOCK] = {
+		default = 1,
+		pos_x = ScreenScaleH(27),
+		pos_y = (ScrH() / 7.64),
+	},
+	-- thermal
+	[DMG_BURN] = {
+		default = 1,
+		pos_x = ScreenScaleH(27),
+		pos_y = (ScrH() / 10.6),
+	},
+	-- psychic
+	[DMG_PARALYZE] = {
+		default = 1,
+		pos_x = ScreenScaleH(133),
+		pos_y = (ScrH() / 4.9),
+	},
+	-- rupture
+	[DMG_SLASH] = {
+		default = 1,
+		pos_x = ScreenScaleH(133),
+		pos_y = (ScrH() / 5.99),
+	},
+	-- bulletproof
+	[DMG_BULLET] = {
+		default = 1,
+		pos_x = ScreenScaleH(133),
+		pos_y = (ScrH() / 7.64),
+	},
+}
+
+UVSKIN.LockedArtifactSlot = {
+	u0 = 0.4668,
+	v0 = 0.831,
+	u1 = 0.523,
+	v1 = 0.8876,
+}
+
 function UVSKIN:PaintInventoryFrame(pnl, w, h)
 	surface.SetDrawColor(255, 255, 255, pnl:GetAlpha() * 255)
 	surface.SetMaterial(self.inv_mat)
@@ -257,6 +330,44 @@ function UVSKIN:PaintEquipFrame(pnl, w, h)
 	surface.SetDrawColor(255, 255, 255, pnl:GetAlpha() * 255)
 	surface.SetMaterial(self.inv_mat)
 	surface.DrawTexturedRectUV(0, 0, w, h, self.EquipFrame.u0, self.EquipFrame.v0, self.EquipFrame.u1, self.EquipFrame.v1)
+	
+	local x, y = pnl:GetPos()
+	
+	local u0 = x + ScreenScaleH(10.5)
+	local v0 = h - (h / 3.87)
+	local u1 = x + ScreenScaleH(10.5) + ScreenScaleH(143.5) * ( LocalPlayer():Health() / LocalPlayer():GetMaxHealth() )
+	local v1 = h - (h / 3.87) + ScreenScaleH(11)
+	
+	render.SetScissorRect(u0, v0, u1, v1, true)
+		surface.SetDrawColor(150, 25, 25, pnl:GetAlpha() * 255)
+		surface.SetMaterial(self.inv_mat)
+		surface.DrawTexturedRectUV(ScreenScaleH(10.5), h - (h / 3.87), ScreenScaleH(143.5), ScreenScaleH(11), self.HealthBar.u0, self.HealthBar.v0, self.HealthBar.u1, self.HealthBar.v1)
+	render.SetScissorRect(u0, v0, u1, v1, false)
+
+	local protection = {}
+	for _,item in next, LocalPlayer().Inventory do
+		if !item:GetVar("Equipped",false) then continue end
+		if !item.GetArmorValues then continue end
+
+		for m,n in next, item:GetArmorValues() do
+			protection[m] = (protection[m] or ((self.protection_info[m] and self.protection_info[m].default) or 1)) * n
+		end
+	end
+	
+	for k,v in next, self.protection_info do
+		if !protection[k] then continue end
+		
+		local u0 = x + v.pos_x
+		local v0 = h - v.pos_y
+		local u1 = x + v.pos_x + ScreenScaleH(82) - (ScreenScaleH(82) * protection[k])
+		local v1 = h - v.pos_y + ScreenScaleH(12)
+		
+		render.SetScissorRect(u0, v0, u1, v1, true)
+			surface.SetDrawColor(255, 255, 255, pnl:GetAlpha() * 255)
+			surface.SetMaterial(self.inv_mat)
+			surface.DrawTexturedRectUV(v.pos_x, v0, ScreenScaleH(82), ScreenScaleH(12), self.ProtectionBar.u0, self.ProtectionBar.v0, self.ProtectionBar.u1, self.ProtectionBar.v1)
+		render.SetScissorRect(u0, v0, u1, v1, false)
+	end
 end
 
 function UVSKIN:PaintVBar(pnl, w, h)
@@ -303,4 +414,88 @@ function UVSKIN:PaintLongButton(pnl, w, h)
 	surface.DrawTexturedRectUV(0, 0, w, h, state.u0, state.v0, state.u1, state.v1)
 end
 
+function UVSKIN:PaintItemDurability(pnl, w, h, item)
+	local x, y = pnl:LocalToScreen(0,0)
+	local pos_x = w / 2 - ScreenScaleH(38.4) / 2
+	local pos_y = h - ScreenScaleH(3.8)
+	
+	local u0 = x + pos_x
+	local v0 = y + pos_y
+	local u1 = x + pos_x + ScreenScaleH(39) * ( item:GetVar("Durability", 100) / 100 )
+	local v1 = y + pos_y + ScreenScaleH(4)
+	
+	render.SetScissorRect(u0, v0, u1, v1, true)
+		surface.SetDrawColor(255 - (255  * (item:GetVar("Durability", 100) / 100)), 200 * (item:GetVar("Durability", 100) / 100), 0, pnl:GetAlpha() * 255)
+		surface.SetMaterial(self.inv_mat)
+		surface.DrawTexturedRectUV(pos_x, pos_y, ScreenScaleH(38.4), ScreenScaleH(3.2), self.ConditionBar.u0, self.ConditionBar.v0, self.ConditionBar.u1, self.ConditionBar.v1)
+	render.SetScissorRect(u0, v0, u1, v1, false)
+end
+
+function UVSKIN:PaintArtifactSlot(pnl, w, h)
+	local artifact_slots
+	local draw_locked
+	for k,v in next, LocalPlayer().Inventory do
+		if v.Base == "clothes" and v:GetVar("Equipped", false) then
+			artifact_slots = v:GetArtifactSlots()
+		end
+	end
+	
+	if !artifact_slots or artifact_slots < 1 or pnl.SlotNumber > artifact_slots then
+		draw_locked = true
+	end
+	
+	if draw_locked then
+		surface.SetDrawColor(255,255,255, pnl:GetAlpha() * 255)
+		surface.SetMaterial(self.inv_mat)
+		surface.DrawTexturedRectUV(0, 0, w, h, self.LockedArtifactSlot.u0, self.LockedArtifactSlot.v0, self.LockedArtifactSlot.u1, self.LockedArtifactSlot.v1)
+	end
+end
+
 kingston.gui.RegisterSkin("zc_inventory", UVSKIN)
+
+hook.Add("ScreenResolutionChanged", "STALKER.UpdateProtectionPositions", function()
+	UVSKIN.protection_info = {
+		-- radiation
+		[DMG_RADIATION] = {
+			default = 1,
+			pos_x = ScreenScaleH(27),
+			pos_y = (ScrH() / 4.9),
+		},
+		-- chemical burn
+		[DMG_ACID] = {
+			default = 1,
+			pos_x = ScreenScaleH(27),
+			pos_y = (ScrH() / 5.99),
+		},
+		-- electric shock
+		[DMG_SHOCK] = {
+			default = 1,
+			pos_x = ScreenScaleH(27),
+			pos_y = (ScrH() / 7.64),
+		},
+		-- thermal
+		[DMG_BURN] = {
+			default = 1,
+			pos_x = ScreenScaleH(27),
+			pos_y = (ScrH() / 10.6),
+		},
+		-- psychic
+		[DMG_PARALYZE] = {
+			default = 1,
+			pos_x = ScreenScaleH(133),
+			pos_y = (ScrH() / 4.9),
+		},
+		-- rupture
+		[DMG_SLASH] = {
+			default = 1,
+			pos_x = ScreenScaleH(133),
+			pos_y = (ScrH() / 5.99),
+		},
+		-- bulletproof
+		[DMG_BULLET] = {
+			default = 1,
+			pos_x = ScreenScaleH(133),
+			pos_y = (ScrH() / 7.64),
+		},
+	}
+end)

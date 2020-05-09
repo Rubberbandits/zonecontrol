@@ -7,3 +7,5 @@ ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.PhysicalMass	= 1;
 ITEM.BulkPrice =  240000;
+ITEM.W = 1
+ITEM.H = 1

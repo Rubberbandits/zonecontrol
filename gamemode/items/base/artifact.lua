@@ -5,10 +5,16 @@ BASE.Vars = {
 };
 BASE.Tier = 1;
 BASE.Artifact = true;
+BASE.HasEquipSlot = true
 BASE.functions = {};
 BASE.functions.Equip = {
 	SelectionName = "Equip",
 	OnUse = function( item )
+	
+		if item.HasEquipSlot then
+			item.x = -1
+			item.y = -1
+		end
 
 		item:SetVar( "Equipped", true );
 		
@@ -34,6 +40,13 @@ BASE.functions.Equip = {
 BASE.functions.Unequip = {
 	SelectionName = "Unequip",
 	OnUse = function( item )
+	
+		if item.HasEquipSlot then
+			local x, y = item:FindBestPosition()
+			
+			item.x = x
+			item.y = y
+		end
 	
 		item:SetVar( "Equipped", false );
 		return true
@@ -69,4 +82,7 @@ function BASE:CanPickup( ply, ent )
 	
 	return true;
 
+end
+function BASE:CanSell()
+	return true
 end
