@@ -98,7 +98,7 @@ local function nMoveToStockpile( ply, index, id )
 
 	local item = ply.Inventory[index];
 	local stockpile = GAMEMODE.LoadedStockpiles[id]
-	
+
 	if( !InStockpileRange( ply ) ) then return end
 	if( item and stockpile ) then
 

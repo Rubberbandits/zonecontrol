@@ -993,11 +993,8 @@ function GM:PopulateMoveToStock( tbl )
 		CCP.StockpilesMenu.Stockpile[k]:SetPos( 10, y );
 		CCP.StockpilesMenu.Stockpile[k]:SetSize( 200, 20 );
 		CCP.StockpilesMenu.Stockpile[k].DoClick = function( self )
-			
-			LocalPlayer():MoveToStockpile( GAMEMODE.Inventory.SelectedItem, k );
-			if GAMEMODE.Inventory and IsValid(GAMEMODE.Inventory) then
-				GAMEMODE.Inventory:PopulateItems()
-			end
+
+			LocalPlayer():MoveToStockpile( GAMEMODE.Inventory.SelectedItem:GetID(), k );
 			CCP.StockpilesMenu:Close();
 			
 		end

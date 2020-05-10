@@ -229,7 +229,7 @@ function meta:MoveToStockpile( k, id )
 	if( self:TiedUp() ) then return end
 	
 	local item = self.Inventory[k]
-	
+
 	if !item then return end
 	if !item:CanDrop() then return end
 	
