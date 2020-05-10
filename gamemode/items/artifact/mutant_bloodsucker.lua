@@ -4,9 +4,6 @@ ITEM.Name =  "Bloodsucker Resistances"
 ITEM.Desc =  "If you have this, you're either a bloodsucker or a CHEATING BASTARD."
 ITEM.Model =  "models/Gibs/HGIBS.mdl"
 ITEM.Tier =  5
-ITEM.FOV =  35
-ITEM.CamPos =  Vector( 50, 50, 50 )
-ITEM.LookAt =  Vector( -3.5, -2, 4 )
 ITEM.Weight =  1;
 ITEM.ArmorValues = {
     -- "Impact" (blunt)

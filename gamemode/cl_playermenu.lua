@@ -995,7 +995,9 @@ function GM:PopulateMoveToStock( tbl )
 		CCP.StockpilesMenu.Stockpile[k].DoClick = function( self )
 			
 			LocalPlayer():MoveToStockpile( GAMEMODE.Inventory.SelectedItem, k );
-			GAMEMODE:PMResetText();
+			if GAMEMODE.Inventory and IsValid(GAMEMODE.Inventory) then
+				GAMEMODE.Inventory:PopulateItems()
+			end
 			CCP.StockpilesMenu:Close();
 			
 		end
@@ -1388,33 +1390,33 @@ end
 
 function GM:PMCreatePDANameEdit( item )
 	
-	CCP.PlayerMenu.PDANameEdit = vgui.Create( "DFrame" );
-	CCP.PlayerMenu.PDANameEdit:SetSize( 300, 114 );
-	CCP.PlayerMenu.PDANameEdit:Center();
-	CCP.PlayerMenu.PDANameEdit:SetTitle( "Change PDA Name" );
-	CCP.PlayerMenu.PDANameEdit.lblTitle:SetFont( "CombineControl.Window" );
-	CCP.PlayerMenu.PDANameEdit:MakePopup();
-	CCP.PlayerMenu.PDANameEdit.PerformLayout = CCFramePerformLayout;
-	CCP.PlayerMenu.PDANameEdit:PerformLayout();
+	CCP.PDANameEdit = vgui.Create( "DFrame" );
+	CCP.PDANameEdit:SetSize( 300, 114 );
+	CCP.PDANameEdit:Center();
+	CCP.PDANameEdit:SetTitle( "Change PDA Name" );
+	CCP.PDANameEdit.lblTitle:SetFont( "CombineControl.Window" );
+	CCP.PDANameEdit:MakePopup();
+	CCP.PDANameEdit.PerformLayout = CCFramePerformLayout;
+	CCP.PDANameEdit:PerformLayout();
 	
-	CCP.PlayerMenu.PDANameEdit.Label = vgui.Create( "DLabel", CCP.PlayerMenu.PDANameEdit );
-	CCP.PlayerMenu.PDANameEdit.Label:SetText( string.len( item:GetVar("Name", "") ) .. "/" .. self.MaxNameLength );
-	CCP.PlayerMenu.PDANameEdit.Label:SetPos( 10, 74 );
-	CCP.PlayerMenu.PDANameEdit.Label:SetSize( 280, 30 );
-	CCP.PlayerMenu.PDANameEdit.Label:SetFont( "CombineControl.LabelGiant" );
-	CCP.PlayerMenu.PDANameEdit.Label:PerformLayout();
+	CCP.PDANameEdit.Label = vgui.Create( "DLabel", CCP.PDANameEdit );
+	CCP.PDANameEdit.Label:SetText( string.len( item:GetVar("Name", "") ) .. "/" .. self.MaxNameLength );
+	CCP.PDANameEdit.Label:SetPos( 10, 74 );
+	CCP.PDANameEdit.Label:SetSize( 280, 30 );
+	CCP.PDANameEdit.Label:SetFont( "CombineControl.LabelGiant" );
+	CCP.PDANameEdit.Label:PerformLayout();
 	
-	CCP.PlayerMenu.PDANameEdit.Entry = vgui.Create( "DTextEntry", CCP.PlayerMenu.PDANameEdit );
-	CCP.PlayerMenu.PDANameEdit.Entry:SetFont( "CombineControl.LabelBig" );
-	CCP.PlayerMenu.PDANameEdit.Entry:SetPos( 10, 34 );
-	CCP.PlayerMenu.PDANameEdit.Entry:SetSize( 280, 30 );
-	CCP.PlayerMenu.PDANameEdit.Entry:PerformLayout();
-	CCP.PlayerMenu.PDANameEdit.Entry:SetValue( item:GetVar("Name", "") );
-	CCP.PlayerMenu.PDANameEdit.Entry:RequestFocus();
-	CCP.PlayerMenu.PDANameEdit.Entry:SetCaretPos( string.len( CCP.PlayerMenu.PDANameEdit.Entry:GetValue() ) );
-	function CCP.PlayerMenu.PDANameEdit.Entry:OnChange()
+	CCP.PDANameEdit.Entry = vgui.Create( "DTextEntry", CCP.PDANameEdit );
+	CCP.PDANameEdit.Entry:SetFont( "CombineControl.LabelBig" );
+	CCP.PDANameEdit.Entry:SetPos( 10, 34 );
+	CCP.PDANameEdit.Entry:SetSize( 280, 30 );
+	CCP.PDANameEdit.Entry:PerformLayout();
+	CCP.PDANameEdit.Entry:SetValue( item:GetVar("Name", "") );
+	CCP.PDANameEdit.Entry:RequestFocus();
+	CCP.PDANameEdit.Entry:SetCaretPos( string.len( CCP.PDANameEdit.Entry:GetValue() ) );
+	function CCP.PDANameEdit.Entry:OnChange()
 		
-		if( CCP.PlayerMenu.PDANameEdit and CCP.PlayerMenu.PDANameEdit.Label ) then
+		if( CCP.PDANameEdit and CCP.PDANameEdit.Label ) then
 			
 			local val = self:GetValue();
 			
@@ -1426,13 +1428,13 @@ function GM:PMCreatePDANameEdit( item )
 				
 			end
 			
-			CCP.PlayerMenu.PDANameEdit.Label:SetText( string.len( string.Trim( val ) ) .. "/" .. GAMEMODE.MaxNameLength );
-			CCP.PlayerMenu.PDANameEdit.Label:SetTextColor( col );
+			CCP.PDANameEdit.Label:SetText( string.len( string.Trim( val ) ) .. "/" .. GAMEMODE.MaxNameLength );
+			CCP.PDANameEdit.Label:SetTextColor( col );
 			
 		end
 		
 	end
-	function CCP.PlayerMenu.PDANameEdit.Entry:AllowInput( val )
+	function CCP.PDANameEdit.Entry:AllowInput( val )
 		
 		if( !string.find( allowedChars, val, 1, true ) ) then
 			
@@ -1444,20 +1446,20 @@ function GM:PMCreatePDANameEdit( item )
 		
 	end
 	
-	CCP.PlayerMenu.PDANameEdit.OK = vgui.Create( "DButton", CCP.PlayerMenu.PDANameEdit );
-	CCP.PlayerMenu.PDANameEdit.OK:SetFont( "CombineControl.LabelSmall" );
-	CCP.PlayerMenu.PDANameEdit.OK:SetText( "OK" );
-	CCP.PlayerMenu.PDANameEdit.OK:SetPos( 240, 74 );
-	CCP.PlayerMenu.PDANameEdit.OK:SetSize( 50, 30 );
-	function CCP.PlayerMenu.PDANameEdit.OK:DoClick()
+	CCP.PDANameEdit.OK = vgui.Create( "DButton", CCP.PDANameEdit );
+	CCP.PDANameEdit.OK:SetFont( "CombineControl.LabelSmall" );
+	CCP.PDANameEdit.OK:SetText( "OK" );
+	CCP.PDANameEdit.OK:SetPos( 240, 74 );
+	CCP.PDANameEdit.OK:SetSize( 50, 30 );
+	function CCP.PDANameEdit.OK:DoClick()
 		
-		local val = string.Trim( CCP.PlayerMenu.PDANameEdit.Entry:GetValue() );
+		local val = string.Trim( CCP.PDANameEdit.Entry:GetValue() );
 		
 		if( string.len( val ) <= GAMEMODE.MaxNameLength and string.len( val ) >= GAMEMODE.MinNameLength ) then
 			
 			if( !string.find( allowedChars, val, 1, true ) ) then
 				
-				CCP.PlayerMenu.PDANameEdit:Remove();
+				CCP.PDANameEdit:Remove();
 
 				netstream.Start( "nChangePDAName", val, item:GetID() );
 				
@@ -1474,9 +1476,9 @@ function GM:PMCreatePDANameEdit( item )
 		end
 		
 	end
-	CCP.PlayerMenu.PDANameEdit.OK:PerformLayout();
+	CCP.PDANameEdit.OK:PerformLayout();
 	
-	CCP.PlayerMenu.PDANameEdit.Entry.OnEnter = CCP.PlayerMenu.PDANameEdit.OK.DoClick;
+	CCP.PDANameEdit.Entry.OnEnter = CCP.PDANameEdit.OK.DoClick;
 	
 end
 

@@ -4,9 +4,6 @@ ITEM.Name =  "Rag"
 ITEM.Desc =  "A piece of cloth. Smells of gasoline."
 ITEM.Model =  "models/kali/miscstuff/stalker/aid/bandage.mdl"
 ITEM.Tier =  0
-ITEM.FOV =  6
-ITEM.CamPos =  Vector( 50, 50, 50 )
-ITEM.LookAt =  Vector( 0, 0, 0 )
 ITEM.Weight =  .5;
 ITEM.ArmorValues = {
     -- "Impact" (blunt)

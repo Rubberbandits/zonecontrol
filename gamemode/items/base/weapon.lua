@@ -44,8 +44,8 @@ BASE.functions.Equip = {
 				tertiary = tertiary + 1
 			end
 		end
-		
-		if count > 1 or (item.TertiarySlot and tertiary > 0) then
+
+		if count > 2 or (item.TertiarySlot and tertiary > 1) then
 			if SERVER then
 				item:Owner():Notify(nil, Color(255,0,0), "You have too many weapons equipped!")
 			end

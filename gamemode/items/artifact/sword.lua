@@ -10,9 +10,6 @@ ITEM.ItemSubmaterials = {
 }
 
 ITEM.Tier =  2
-ITEM.FOV =  35
-ITEM.CamPos =  Vector( 50, 50, 50 )
-ITEM.LookAt =  Vector( -3.5, -2, 4 )
 ITEM.Weight =  1;
 ITEM.BulkPrice =  7500
 ITEM.ArmorValues = {

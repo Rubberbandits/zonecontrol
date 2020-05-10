@@ -4,10 +4,10 @@ ITEM.Desc							=	"A more advanced artifact detector, which doesnt only beep but
 ITEM.Model									=	"models/kali/miscstuff/stalker/detector_bear.mdl"
 ITEM.Size	 								=	1
 ITEM.Amount 								=	1
-ITEM.FOV 			= 8;
 ITEM.DetectorType = 2
-ITEM.CamPos 		= Vector( 0.5, 18.75, 60 );
-ITEM.LookAt 		= Vector( 0, 1, 4.83 );
+ITEM.FOV 			= 5;
+ITEM.CamPos 		= Vector( -1.37, -0, 100 );
+ITEM.LookAt 		= Vector( 0, 0, 0 );
 ITEM.Weight 		= 1;
 
 ITEM.BulkPrice		= 15000;
