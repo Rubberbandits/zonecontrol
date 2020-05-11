@@ -49,15 +49,8 @@ function GM:GetMaps()
 	
 	for _, v in pairs( maps ) do
 		
-		local mapname, _ = string.gsub( v, ".bsp", "" );
-		
-		local files = file.Find( self.FolderName .. "/gamemode/maps/" .. mapname .. ".lua", "LUA", "namedesc" );
-		
-		if( #files > 0 ) then
-			
-			table.insert( tab, mapname );
-			
-		end
+		local mapname, _ = string.gsub( v, ".bsp", "\n" );
+		table.insert( tab, mapname );
 		
 	end
 	
