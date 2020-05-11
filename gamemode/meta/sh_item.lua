@@ -412,8 +412,10 @@ end
 
 function item:SaveNewObject( cb )
 	if !SERVER then return end
-
-	local function onSuccess( data, query )
+	
+	local query_str = "INSERT INTO cc_items ( Owner, ItemClass, Vars, PosX, PosY ) VALUES ( ?, ?, ?, ?, ? )"
+	local query = CCSQL:prepare( query_str );
+	query.onSuccess = function( query, ret )
 		local insertTable = {
 			["id"] = query:lastInsert(),
 		}
@@ -431,8 +433,17 @@ function item:SaveNewObject( cb )
 			cb()
 		end
 	end
+	function query:onError( err )
 	
-	mysqloo.Query(Format("INSERT INTO cc_items ( Owner, ItemClass, Vars, PosX, PosY ) VALUES ( '%d', '%s', '%s', '%d', '%d' )", self:Owner():CharID(), self:GetClass(), util.TableToJSON(self:GetVars(true) or {}), self.x, self.y), onSuccess)
+		MsgC( Color( 255, 0, 0 ), "MySQL Query failed: "..err );
+	
+	end
+	query:setNumber( 1, self:GetCharID() );
+	query:setString( 2, self:GetClass() );
+	query:setString( 3, util.TableToJSON( self:GetVars(true) or {} ) );
+	query:setNumber( 4, self.x );
+	query:setNumber( 5, self.y );
+	query:start();
 end
 
 function item:UpdateSave()
