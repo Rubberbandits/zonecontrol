@@ -150,9 +150,9 @@ function GM:ItemPickedUp( ply, item )
 				item:SetVar("Primary", false, nil, true)
 			end
 		end
+		
+		kingston.log.write("items", "[%s (%s)(%s)] picked up item %s [ID: %d]", ply:RPName(), ply:Nick(), ply:SteamID(), item:GetName(), item:GetID())
 	end
-	
-	kingston.log.write("items", "[%s (%s)(%s)] picked up item %s [ID: %d]", ply:RPName(), ply:Nick(), ply:SteamID(), item:GetName(), item:GetID())
 	
 	self:UpdateEncumberance(ply, item)
 end
