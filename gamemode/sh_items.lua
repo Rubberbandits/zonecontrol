@@ -50,6 +50,10 @@ if( #files > 0 ) then
 		
 		include( "items/"..v );
 		
+		if CLIENT then
+			util.PrecacheModel(ITEM.Model)
+		end
+		
 		ITEM.Class = string.StripExtension( v )
 		
 		if( ITEM.Base ) then
@@ -96,6 +100,10 @@ for k,v in next, GM.MetaBases do
 		end
 		
 		include( "items/"..k.."/"..n );
+		
+		if CLIENT then
+			util.PrecacheModel(ITEM.Model)
+		end
 		
 		ITEM.Class = string.StripExtension( n );
 		ITEM.Base = ITEM.Base or k;

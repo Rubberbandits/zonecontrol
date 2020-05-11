@@ -1532,10 +1532,7 @@ end
 GM.Notifications = { };
 
 function nAddNotification( str )
-	
-	local str = net.ReadString();
-	GAMEMODE:AddNotification( str );
-	
+	GAMEMODE:AddNotification(str)
 end
 netstream.Hook( "nAddNotification", nAddNotification );
 

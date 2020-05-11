@@ -1,52 +1,31 @@
-hook.Add("CanPickup", "CC_HiddenCheck", function(ply, item_object, item_ent)
-	if( item_ent:GetNoDraw() and !ply:IsAdmin() ) then
-		return false
-	end
+kingston = kingston or {}
+kingston.item = kingston.item or {}
+
+kingston.item.item_requests = kingston.item.item_requests or {}
+
+function kingston.item.gm_request_item(gamemaster, item_class, data)
+	local metaitem = GAMEMODE:GetItemByID(item_class)
+
+	kingston.item.item_requests[#kingston.item.item_requests + 1] = {
+		requester = gamemaster,
+		class = item_class,
+		vars = data,
+	}
 	
-	return true
-end)
+	netstream.Start(player.GetAdmins(), "nAddNotification", Format("Player %s (%s) is requesting item %s (%s)", gamemaster:Nick(), gamemaster:RPName(), (data or {}).Name or metaitem.Name, item_class))
+end
 
-netstream.Hook( "ItemCallFunction", function( ply, s_nID, s_szKey )
-
-	local s_Item = ply:FindItemByID( s_nID );
-	if( s_Item ) then
-
-		s_Item:CallFunction( s_szKey );
-		
-	end
-
-
-end );
-
-netstream.Hook( "ItemCallDynamicFunction", function( ply, s_nID, s_nFuncKey )
-
-	local s_Item = ply:FindItemByID( s_nID );
+function kingston.item.approve_gm_item(id)
+	local request = kingston.item.item_requests[id]
+	if !request then return end
 	
-	if( s_Item and s_Item.DynamicFunctions ) then
+	request.requester:GiveItem(request.class, request.vars)
+	netstream.Start(request.requester, "nAddNotification", Format("Your request for item %s was approved.", request.class))
 	
-		local struct = s_Item:DynamicFunctions()[s_nFuncKey];
-	
-		if( struct.CanRun( s_Item ) ) then
-	
-			struct.OnUse( s_Item );
-			
-		end
-		
-	end
-	
-end );
+	kingston.item.item_requests[id] = nil
+end
 
-netstream.Hook( "ItemDrop", function( ply, s_nID )
-
-	local s_Item = ply:FindItemByID( s_nID );
-	
-	if( s_Item ) then
-
-		s_Item:DropItem();
-		
-	end
-
-end );
+/* Gamemode Hooks */
 
 function GM:DropItem( s_Item )
 
@@ -142,8 +121,6 @@ function GM:UpdateEncumberance(ply, item)
 					ply:Notify(nil, Color(255,100,0), "You're no longer over-encumbered.")
 				end
 				
-				kingston.log.write("items", "[%s (%s)(%s)] picked up item %s [ID: %d]", ply:RPName(), ply:Nick(), ply:SteamID(), item:GetName(), item:GetID())
-				
 				ply.LastWeight = ply:InventoryWeight()
 			end
 		end
@@ -175,6 +152,8 @@ function GM:ItemPickedUp( ply, item )
 		end
 	end
 	
+	kingston.log.write("items", "[%s (%s)(%s)] picked up item %s [ID: %d]", ply:RPName(), ply:Nick(), ply:SteamID(), item:GetName(), item:GetID())
+	
 	self:UpdateEncumberance(ply, item)
 end
 
@@ -194,6 +173,58 @@ function GM:MoneyGiven(giver, receiver, amount)
 	
 	kingston.log.write("items", "Player %s (%s) has given %s (%s) %d rubles.", giver:RPName(), giver:Nick(), receiver:RPName(), receiver:Nick(), amount)
 end
+
+/* Networking */
+
+hook.Add("CanPickup", "CC_HiddenCheck", function(ply, item_object, item_ent)
+	if( item_ent:GetNoDraw() and !ply:IsAdmin() ) then
+		return false
+	end
+	
+	return true
+end)
+
+netstream.Hook( "ItemCallFunction", function( ply, s_nID, s_szKey )
+
+	local s_Item = ply:FindItemByID( s_nID );
+	if( s_Item ) then
+
+		s_Item:CallFunction( s_szKey );
+		
+	end
+
+
+end );
+
+netstream.Hook( "ItemCallDynamicFunction", function( ply, s_nID, s_nFuncKey )
+
+	local s_Item = ply:FindItemByID( s_nID );
+	
+	if( s_Item and s_Item.DynamicFunctions ) then
+	
+		local struct = s_Item:DynamicFunctions()[s_nFuncKey];
+	
+		if( struct.CanRun( s_Item ) ) then
+	
+			struct.OnUse( s_Item );
+			
+		end
+		
+	end
+	
+end );
+
+netstream.Hook( "ItemDrop", function( ply, s_nID )
+
+	local s_Item = ply:FindItemByID( s_nID );
+	
+	if( s_Item ) then
+
+		s_Item:DropItem();
+		
+	end
+
+end );
 
 netstream.Hook( "RetrieveDummyItems", function( ply )
 
@@ -274,4 +305,21 @@ netstream.Hook("ItemSetPos", function(ply, item_id, x, y)
 	item.x = x
 	item.y = y
 	item:UpdateSave()
+end)
+
+netstream.Hook("RequestItemSpawn", function(ply, item_class, data)
+	if !ply:IsEventCoordinator() then return end
+
+	if !item_class then return end
+	if !GAMEMODE:GetItemByID(item_class) then return end
+	
+	-- need to do minmax checking and auth
+	
+	kingston.item.gm_request_item(ply, item_class, data)
+end)
+
+netstream.Hook("AdminRequestedItems", function(ply)
+	if !ply:IsAdmin() then return end
+	
+	netstream.Start(ply, "AdminRequestedItems", kingston.item.item_requests)
 end)

@@ -496,6 +496,16 @@ function GM:AdminCreateToolsMenu()
 	end
 	CCP.AdminMenu.DeleteStockpilesBut:PerformLayout();
 	
+	CCP.AdminMenu.ItemRequestsBut = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
+	CCP.AdminMenu.ItemRequestsBut:SetFont( "CombineControl.LabelSmall" );
+	CCP.AdminMenu.ItemRequestsBut:SetText( "Item Requests" );
+	CCP.AdminMenu.ItemRequestsBut:SetPos( 560, 10 );
+	CCP.AdminMenu.ItemRequestsBut:SetSize( 100, 20 );
+	function CCP.AdminMenu.ItemRequestsBut:DoClick()
+		GAMEMODE:CreateItemRequestMenu()
+	end
+	CCP.AdminMenu.ItemRequestsBut:PerformLayout();
+	
 	CCP.AdminMenu.SeeAllL = vgui.Create( "DLabel", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.SeeAllL:SetText( "SeeAll Enabled" );
 	CCP.AdminMenu.SeeAllL:SetPos( 10, 40 );
@@ -2225,4 +2235,61 @@ function GM:AdminCreateRoleplayMenu()
 	end
 	CCP.AdminMenu.ListItemsBut:PerformLayout();
 	
+end
+
+function GM:CreateItemRequestMenu()
+	self.AdminItemRequests = vgui.Create("DFrame")
+	self.AdminItemRequests:SetSize(ScrW() / 3, ScrH() / 1.5)
+	self.AdminItemRequests:SetTitle("Item Requests")
+	self.AdminItemRequests:Center()
+	self.AdminItemRequests:MakePopup()
+	
+	local pnl = self.AdminItemRequests
+	
+	pnl.Requests = vgui.Create("DListView", pnl)
+	pnl.Requests:SetSize(pnl:GetWide(), pnl:GetTall() / 2 - 24)
+	pnl.Requests:SetPos(0,24)
+	pnl.Requests:AddColumn("Requester")
+	pnl.Requests:AddColumn("Item Class")
+	pnl.Requests.SortByColumn = function() end
+	pnl.Requests.OnRowSelected = function(panel, id, line)
+		pnl.ItemInfo:Clear()
+		
+		local data = line.data
+		if data then
+			for k,v in next, data do 
+				pnl.ItemInfo:AddLine(k, tostring(v))
+			end
+		end
+	end
+	pnl.Requests.OnRowRightClick = function(panel, id, line)
+		local menu = DermaMenu(panel)
+		menu:AddOption("Approve", function()
+			RunConsoleCommand("rpa_approveitemrequest", line.id)
+			pnl.Requests:RemoveLine(id)
+			pnl.ItemInfo:Clear()
+		end)
+		menu:AddOption("Deny", function()
+			RunConsoleCommand("rpa_denyitemrequest", line.id)
+			pnl.Requests:RemoveLine(id)
+			pnl.ItemInfo:Clear()
+		end)
+		menu:Open()
+	end
+	
+	pnl.ItemInfo = vgui.Create("DListView", pnl)
+	pnl.ItemInfo:SetSize(pnl:GetWide(), pnl:GetTall() / 2 - 8)
+	pnl.ItemInfo:SetPos(0, pnl:GetTall() / 2 + 4)
+	pnl.ItemInfo:AddColumn("Key")
+	pnl.ItemInfo:AddColumn("Value")
+	
+	netstream.Start("AdminRequestedItems")
+end
+
+function GM:AdminPopulateItemRequests(data)
+	for k,v in next, data do
+		local line = self.AdminItemRequests.Requests:AddLine(v.requester:Nick(), v.class)
+		line.data = v.vars
+		line.id = k
+	end
 end

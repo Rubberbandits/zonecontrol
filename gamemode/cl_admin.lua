@@ -353,3 +353,8 @@ local function nPrintUsingSeeAll(tbl)
 	end
 end
 netstream.Hook("nPrintUsingSeeAll", nPrintUsingSeeAll)
+
+local function AdminRequestedItems(data)
+	GAMEMODE:AdminPopulateItemRequests(data)
+end
+netstream.Hook("AdminRequestedItems", AdminRequestedItems)
