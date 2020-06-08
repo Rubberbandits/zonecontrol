@@ -1,6 +1,6 @@
 
 ITEM.Name =  "Burer hand";
-ITEM.Desc =  "The dry, ashy hand of a Burer. Burer's hand seems to play a vital role in the creature's use of the telekinetic powers. It’s probably worth a lot to someone.";
+ITEM.Desc =  "The dry, ashy hand of a Burer. Burer's hand seems to play a vital role in the creature's use of the telekinetic powers. It's probably worth a lot to someone.";
 ITEM.Model =  "models/handburer.mdl";
 ITEM.Weight =  3;
 ITEM.FOV =  9;

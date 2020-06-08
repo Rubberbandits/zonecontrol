@@ -322,7 +322,6 @@ GM.PropWhitelist = {
 
 GM.ToolTrustBasic = {
 	"weld",
-	"duplicator",
 	"nocollide",
 	"remover",
 	"camera",
@@ -352,4 +351,5 @@ GM.ToolTrustBlacklist = {
 	"dynamite",
 	"creator",
 	"radiation",
+	"duplicator",
 };
