@@ -49,7 +49,7 @@ function GM:GetMaps()
 	
 	for _, v in pairs( maps ) do
 		
-		local mapname, _ = string.gsub( v, ".bsp", "\n" );
+		local mapname, _ = string.gsub( v, ".bsp", "" );
 		table.insert( tab, mapname );
 		
 	end

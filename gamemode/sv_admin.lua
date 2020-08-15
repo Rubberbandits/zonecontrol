@@ -154,7 +154,7 @@ local function ChangeLevel( ply, args )
 		return;
 		
 	end
-	
+
 	if( table.HasValue( GAMEMODE:GetMaps(), args[1] ) ) then
 
 		GAMEMODE:Notify(nil, "CombineControl.ChatHuge", COLOR_ERROR, "%s is changing the map to %s in five seconds.", ply:Nick(), map)

@@ -95,18 +95,26 @@ function GM:RefreshHelpMenuContent()
 		If the command needs a player, you can specify "^" to target yourself and "-" to target the player you're looking at.
 		
 		rpa_restart - Restart the server.
+		
 		rpa_kill [player] - Kill a player.
 		rpa_slap [player] - Slap a player.
 		rpa_ko [player] - Knock out a player.
+		rpa_wake [player] - Wake up a player.
+		rpa_explode [player] - Explode a player.
 		rpa_kick [player] (reason) - Kick a player.
 		rpa_ban [player] [time] (reason) - Ban a player. A time of 0 is a permaban.
 		rpa_unban [SteamID] - Unban a player.
 		rpa_changebanlength [SteamID] [duration] - Change a ban's length for a player.
 		rpa_goto [player] - Teleport to a player.
 		rpa_bring [player] - Teleport a player to you.
+		rpa_send [target] [destination] - Teleport targeted player to destination player.
 		rpa_namewarn [player] - Give a player a name warning.
 		rpa_setname [player] [new name] - Change a player's name.
 		rpa_setcharmodel [player] [model] - Change a player's model. You can use citizen IDs ("male_01", for example) instead of the full path.
+		rpa_givestockpile [player] - Gives a player the ability to create a stockpile.
+		rpa_setrank [player] [rank] - Sets a player's rank. Possible arguments: "user" "eventcoordinator" "admin"
+		rpa_togglewatched [player] - Makes it so a player's every action will be logged in all admins' consoles.
+		
 		rpa_seeall - Toggle admin ESP mode.
 		
 		rpa_editinventory [player] - Open a character's inventory for editing.
@@ -132,8 +140,44 @@ function GM:RefreshHelpMenuContent()
 		
 		rpa_stopsound - Stop all playing sounds for everyone.
 		
+		rpa_blowout_enabled [number] - Enable the occurance of blowouts.
+		rpa_blowout_auto_schedule [duration] - Whether or not blowouts should occur randomly.
+		rpa_blowout_interval [duration] - the minimum time in between blowouts.
+		rpa_announcing_duration [duration] - the duration or the pre-blowout period, before the first announcement.
+		rpa_triggerblowoutinstant - Instantly trigger a blowout, only about 30 seconds before it actually starts.
+		rpa_triggerblowout - Trigger a blowout, which will start at the designated announcing duration after this command has ran.
+		rpa_cancelblowout - Cancel ongoing blowout.
+		
+		rpa_oocdelay [duration] - Minimum time between OOC chat messages.
+		
+		rpa_hideadmin - Hide your admin badge from the scoreboard.
+		rpa_hidden - Hides you from the scoreboard completely.
+		
+		rpa_panic - Remove all props that could possibly be in motion.
+		
+		rpa_setdmgmult [number] - Change how much damage all weapons do, via a multiplier.
+		
 		/ev - Broadcast an IC event.]] } );
 		
+	end
+	
+	if LocalPlayer():IsEventCoordinator() then
+			table.insert( self.HelpContent, { "Gamemaster", [[
+		Note: In CombineControl, there is no rpa_observe - observe mode is just noclip.
+		
+		If the command needs a player, you can specify "^" to target yourself and "-" to target the player you're looking at.
+		
+		rpg_goto [player] - Teleport to a player.
+		rpg_bring [player] - Teleport a player to you.
+		rpg_send [target] [destination] - Teleport targeted player to destination player.
+		rpg_seeall - Toggle admin ESP mode.
+		rpg_seeallprops - Toggle saved props being visible in admin ESP.
+		rpg_setmodelself [model] - Set your own model.
+		rpg_togglesaved - Toggle a prop being saved.
+		rpg_hidden - Hide yourself from the scoreboard.
+		rpg_createitem - Open the item request menu.
+		
+		/ev - Broadcast an IC event.]] } );
 	end
 	
 end

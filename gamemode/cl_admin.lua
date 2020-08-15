@@ -49,7 +49,7 @@ local function nAListItems( filter )
 		chat.OldAddText( Color( 128, 128, 128, 255 ), "ITEM LIST (FILTER \"" .. filter .. "\"):" );
 	end
 	
-	for k, v in pairs( GAMEMODE.Items ) do
+	for k, v in SortedPairs( GAMEMODE.Items ) do
 		
 		if( !v.EasterEgg ) then
 			
@@ -75,7 +75,7 @@ local function nAListArtifacts( filter )
 		chat.OldAddText( Color( 128, 128, 128, 255 ), "ITEM LIST (FILTER \"" .. filter .. "\"):" );
 	end
 	
-	for k, v in pairs( GAMEMODE.Items ) do
+	for k, v in SortedPairs( GAMEMODE.Items ) do
 		
 		if( !v.EasterEgg and v.Base == "artifact" ) then
 			

@@ -116,6 +116,7 @@ function GM:OnReceiveDummyItem(s_iID, s_DummyItem)
 		}
 	else
 		self.BonemergeItems[s_iID].Vars = s_DummyItem.Vars
+		self.BonemergeItems[s_iID].CharID = s_DummyItem.CharID
 	end
 
 	if s_DummyItem.Vars["Equipped"] then
