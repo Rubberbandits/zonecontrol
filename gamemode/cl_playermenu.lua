@@ -747,7 +747,7 @@ function GM:PMPopulateBusiness()
 	end
 	
 	local items_to_list = {}
-	for k, v in pairs( self.Items ) do
+	for k, v in SortedPairs( self.Items ) do
 		if( bit.band( lic, v.License or -1 ) == v.License ) then
 			items_to_list[#items_to_list+1] = k
 		end

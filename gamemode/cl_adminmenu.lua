@@ -2140,7 +2140,7 @@ function GM:AdminCreateRoleplayMenu()
 		
 		local y = 0;
 		
-		for k, v in pairs( GAMEMODE.Items ) do
+		for k, v in SortedPairs( GAMEMODE.Items ) do
 			
 			if( !v.EasterEgg ) then
 				
