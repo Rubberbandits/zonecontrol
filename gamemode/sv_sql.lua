@@ -37,7 +37,9 @@ function GM:InitSQL()
 		MsgC( Color( 200, 200, 200, 255 ), "MySQL successfully connected to " .. self:hostInfo() .. ".\nMySQL server version: " .. self:serverInfo() .. "\n" );
 		GAMEMODE.NoMySQL = false;
 		
-		hook.Run("InitSQLTables", self)
+		timer.Simple(0.01, function()
+			hook.Run("InitSQLTables", self)
+		end
 		
 		for k, v in pairs( GAMEMODE.SQLQueue ) do
 			

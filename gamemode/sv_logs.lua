@@ -31,10 +31,12 @@ hook.Add("InitSQLTables", "STALKER.InitLogDBTable", init_log_db_tbl)
 function kingston.log.db_write(category, text, ...)
 	local str = Format(text, ...)
 
-	kingston.log.query:clearParameters()
-		kingston.log.query:setString(1, category)
-		kingston.log.query:setString(2, str)
-	kingston.log.query:start()
+	if kingston.log.query then
+		kingston.log.query:clearParameters()
+			kingston.log.query:setString(1, category)
+			kingston.log.query:setString(2, str)
+		kingston.log.query:start()
+	end
 	
 	if kingston.log.console_log or kingston.log.should_log[category] then
 		MsgC(COLOR_LOG, str.."\n")
