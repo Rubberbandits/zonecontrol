@@ -39,7 +39,7 @@ function GM:InitSQL()
 		
 		timer.Simple(0.01, function()
 			hook.Run("InitSQLTables", self)
-		end
+		end)
 		
 		for k, v in pairs( GAMEMODE.SQLQueue ) do
 			
