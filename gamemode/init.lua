@@ -148,16 +148,19 @@ function GM:Initialize()
 		
 	end
 	
-	self:InitSQL();
 	hook.Run("SetupDataDirectories")
-	self:LoadBans();
-	RetrieveStockpiles();
 	
 	for k,v in next, buttons do
 		local ent = ents.GetMapCreatedEntity(k)
 		if !ent then return end
 		ent:Fire("lock")
 	end
+end
+
+function GM:InitPostEntity()
+	self:InitSQL();
+	self:LoadBans();
+	RetrieveStockpiles();
 end
 
 GM.FullyLoaded = true;
