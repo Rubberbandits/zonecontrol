@@ -201,7 +201,9 @@ function meta:SellItemToMenu( k )
 
 		netstream.Start( "nSellItemToMenu", k );
 		item:RemoveItem()
-		GAMEMODE:PMUpdateInventory();
+		if GAMEMODE.Inventory then
+			GAMEMODE.Inventory:PopulateItems()
+		end
 		
 	end
 
