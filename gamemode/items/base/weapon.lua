@@ -294,6 +294,8 @@ function BASE:OnDisconnected()
 	end
 end
 function BASE:GetJamChance()
+	if !self.JamChance then return end
+
 	local chance = (self.JamChance * 50) or 0.04
 	for k,v in next, self:GetVar("Upgrades", {}) do
 		local upgrade = GAMEMODE.Upgrades[k]
