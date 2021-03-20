@@ -722,6 +722,37 @@ GM.Music = {
 	{ "100rads/music/stalker/level/underground/music_01.ogg", 211, SONG_IDLE, "underground_music_01"},
 };
 
+local function processFile(path)
+	if !path:find(".ogg") then return end
+
+	local str = "\t{ \""..path.."\", "
+	sound.PlayFile("sound/"..path, "noplay", function(chnl, errCode, errStr)
+		if IsValid(chnl) then
+			local exploded = string.Explode("/", path)
+			local isCombat = exploded[#exploded -1] == "combat"
+			local trackType = isCombat and "SONG_ACTION" or "SONG_IDLE"
+
+			str = str..math.floor(chnl:GetLength())..", "..trackType..", \""..exploded[#exploded - 1].."_"..string.StripExtension(exploded[#exploded]).."\"},"
+		else
+			print(errStr)
+		end
+
+		print(str)
+	end)
+end
+
+local function recursiveSearch(path)
+	local files,dirs = file.Find("sound/"..path.."*.*", "GAME")
+
+	for _,d in ipairs(dirs) do
+		recursiveSearch(path..d.."/")
+	end
+
+	for _,f in ipairs(files) do
+		processFile(path..f)
+	end	
+end
+
 function GM:GetSongList( e )
 	
 	local tab = { };
