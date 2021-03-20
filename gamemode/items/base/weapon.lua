@@ -69,7 +69,9 @@ BASE.functions.Equip = {
 			end
 		
 			weapon:SetClip1(item:GetVar("Clip1", 0))
-			weapon.JamChance = item:GetJamChance()
+			if item.JamChance then
+				weapon.JamChance = item:GetJamChance()
+			end
 		
 		end
 		
