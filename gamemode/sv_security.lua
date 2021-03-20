@@ -1,6 +1,7 @@
 kingston = kingston or {}
 kingston.security = kingston.security or {}
-kingston.security.api_key = "869469DBF9BC38D6BCF1A0E96C582258"
+-- now defined in sv_config for security, ignored by git
+kingston.security.api_key = GM.SteamAPIKey
 
 function GM:SteamIDIsBanned( sid )
 	
