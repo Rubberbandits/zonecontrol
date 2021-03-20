@@ -13,4 +13,10 @@ ITEM.SelfRepairCondition = 100
 ITEM.License = M;
 ITEM.BulkPrice = 10000
 ITEM.Slot = 2
-ITEM.Vars.Clip1 = 1000
+ITEM.Vars = {
+	Equipped = false,
+	CurrentAttachments = {},
+	Upgrades = {},
+	Durability = 100,
+	Clip1 = 1000,
+};
