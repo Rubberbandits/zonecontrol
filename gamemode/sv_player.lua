@@ -317,9 +317,9 @@ function meta:PostLoadCharacter()
 end
 
 function GM:SpeedThink( ply )
-	
+
 	local walk, run, jump, crouch = ply:GetSpeeds();
-	
+
 	if( ply:GetRunSpeed() != run ) then
 		
 		ply:SetRunSpeed( run );
