@@ -227,7 +227,7 @@ end
 
 GM.ModelHands = {}
 for k,v in next, GM.CitizenModels do
-	GM.ModelHands[v] = {"models/poc/stalker_viewmodels/c_anorak.mdl", 0, "10000000"}
+	GM.ModelHands[v] = {"models/weapons/c_arms_refugee.mdl", 0, "10000000"}
 end
 for k,v in next, GM.ModelHands do
 	player_manager.AddValidModel(k, k)

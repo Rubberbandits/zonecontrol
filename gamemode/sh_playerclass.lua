@@ -8,7 +8,8 @@ function PLAYER:GetHandsModel()
 	if self.Player.Inventory then
 		for k,v in next, self.Player.Inventory do
 			if v.Base == "clothes" and v:GetVar("Equipped", false) and v.HandsModel then
-				return v:GetHands()
+				--return v:GetHands()
+				return "models/weapons/c_arms_refugee.mdl"
 			end
 		end
 	end
