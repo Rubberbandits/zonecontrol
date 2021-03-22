@@ -184,7 +184,13 @@ function GM:InitPostEntity()
 	
 	end
 	
-	
+	function VJWelcomeCode()
+
+	end
+	concommand.Add("vj_welcome", VJWelcomeCode)
+	net.Receive("VJWelcome", VJWelcomeCode)
+	concommand.Add("vj_iamhere", function(ply,cmd,args) end)
+
 	self:CreateItemTooltipPanel()
 	
 	_G.b_keyf7_pressed = true
