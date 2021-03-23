@@ -28,13 +28,15 @@ function nBuyItem( ply, id, single )
 	
 	if( item and bit.band( lic, item.License or -1 ) == item.License ) then
 
+		local price = hook.Run("GetBuyPrice", ply, id, single)
+
 		if( single ) then
 			
-			if( ply:Money() >= item.BulkPrice / 5 + ( ( item.BulkPrice / 5 ) / GAMEMODE.SellPercentage ) ) then
+			if( ply:Money() >= price ) then
 				
 				if( ply:InventoryWeight() < ply:InventoryMaxWeight() ) then
 					
-					ply:AddMoney( -1 * math.Round(( item.BulkPrice / 5 + ( ( item.BulkPrice / 5 ) / GAMEMODE.SellPercentage ) )) );
+					ply:AddMoney( -1 * price );
 					ply:UpdateCharacterField( "Money", tostring( ply:Money() ) );
 					
 					ply:GiveItem( id, item.Vars or {} );
@@ -45,11 +47,11 @@ function nBuyItem( ply, id, single )
 			
 		else
 			
-			if( ply:Money() >= item.BulkPrice ) then
+			if( ply:Money() >= price ) then
 				
 				if( ply:InventoryWeight() < ply:InventoryMaxWeight() ) then
 					
-					ply:AddMoney( -1 * math.Round(item.BulkPrice) );
+					ply:AddMoney( -1 * price );
 					ply:UpdateCharacterField( "Money", tostring( ply:Money() ) );
 					
 					ply:GiveItem( id, item.Vars or {} );
@@ -68,3 +70,26 @@ function nBuyItem( ply, id, single )
 	
 end
 netstream.Hook( "nBuyItem", nBuyItem );
+
+util.AddNetworkString("zcSendCustomPrices")
+
+local function zcSendCustomPrices(len, ply)
+	if ply.RetrievedItemPrices then return end
+
+	net.Start("zcSendCustomPrices")
+		net.WriteUInt(table.Count(GAMEMODE.ItemPrice), 32)
+		for id,price in next, GAMEMODE.ItemPrice do
+			net.WriteString(id)
+			net.WriteUInt(price, 32)
+		end
+	net.Send(ply)
+
+	ply.RetrievedItemPrices = true
+end
+net.Receive("zcSendCustomPrices", zcSendCustomPrices)
+
+hook.Add("Initialize", "LoadItemPrices", function()
+	local data = file.Read("zonecontrol/itemprices.txt", "DATA")
+
+	GAMEMODE.ItemPrice = data and util.JSONToTable(data) or {}
+end)

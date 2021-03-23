@@ -183,6 +183,9 @@ function GM:InitPostEntity()
 		ctp:Enable();
 	
 	end
+
+	net.Start("zcSendCustomPrices")
+	net.SendToServer()
 	
 	function VJWelcomeCode()
 
@@ -217,6 +220,14 @@ netstream.Hook( "nPDANameTaken", function()
 	LocalPlayer():Notify(nil, COLOR_ERR, "This PDA name is taken.")
 
 end );
+
+local function zcSendCustomPrices(len)
+	local count = net.ReadUInt(32)
+	for i = 1, count do
+		GAMEMODE.ItemPrice[net.ReadString()] = net.ReadUInt(32)
+	end
+end
+net.Receive("zcSendCustomPrices", zcSendCustomPrices)
 
 hook.Add("Think", "STALKER.ScreenResolutionChange", function()
 	if ScrW() != GAMEMODE.LastScrW or ScrH() != GAMEMODE.LastScrH then

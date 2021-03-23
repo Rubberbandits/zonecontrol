@@ -846,15 +846,18 @@ function GM:PMPopulateBusiness()
 			desc:SizeToContents();
 			desc:PerformLayout();
 
+			local singlePrice = hook.Run("GetBuyPrice", LocalPlayer(), item, true)
+			local bulkPrice = hook.Run("GetBuyPrice", LocalPlayer(), item)
+
 			local price = vgui.Create( "DLabel", itempane );
-			price:SetText( "1 for " .. math.Round(metaitem.BulkPrice / 5 + ( ( metaitem.BulkPrice / 5 ) / GAMEMODE.SellPercentage )) .. " rubles" );
+			price:SetText( "1 for " .. singlePrice .. " rubles" );
 			price:SetPos( 74 + tW + 20, 10 );
 			price:SetFont( "CombineControl.LabelTiny" );
 			price:SizeToContents();
 			price:PerformLayout();
 			
 			local price = vgui.Create( "DLabel", itempane );
-			price:SetText( "5 for " .. metaitem.BulkPrice .. " rubles" );
+			price:SetText( "5 for " .. bulkPrice .. " rubles" );
 			price:SetPos( 74 + tW + 120, 10 );
 			price:SetFont( "CombineControl.LabelTiny" );
 			price:SizeToContents();
@@ -867,7 +870,7 @@ function GM:PMPopulateBusiness()
 			buyone:SetSize( 46, 24 );
 			function buyone:DoClick()
 
-				if( LocalPlayer():Money() >= metaitem.BulkPrice / 5 + ( ( metaitem.BulkPrice / 5 ) / GAMEMODE.SellPercentage ) ) then
+				if( LocalPlayer():Money() >= singlePrice ) then
 					
 					if( LocalPlayer():InventoryWeight() < LocalPlayer():InventoryMaxWeight() ) then
 						
@@ -897,7 +900,7 @@ function GM:PMPopulateBusiness()
 			buyfive:SetSize( 46, 24 );
 			function buyfive:DoClick()
 
-				if( LocalPlayer():Money() >= metaitem.BulkPrice ) then
+				if( LocalPlayer():Money() >= bulkPrice ) then
 					
 					if( LocalPlayer():InventoryWeight() < LocalPlayer():InventoryMaxWeight() ) then
 						

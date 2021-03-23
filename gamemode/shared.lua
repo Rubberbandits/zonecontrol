@@ -895,6 +895,20 @@ function GM:CalculatePrice(item)
 	return 0
 end
 
+GM.ItemPrice = GM.ItemPrice or {}
+
+function GM:GetBuyPrice(ply, id, single)
+	local metaitem = self:GetItemByID(id)
+	if metaitem then
+		local customPrice = self.ItemPrice[id]
+		if customPrice then
+			return single and self.ItemPrice[id] or (self.ItemPrice[id] * 5)
+		else
+			return (single and math.Round((metaitem.BulkPrice / 5 + ((metaitem.BulkPrice / 5) / GAMEMODE.SellPercentage)))) or metaitem.BulkPrice
+		end
+	end
+end
+
 function GM:OnGamemodeLoaded()
 	self:LoadWeaponItems();
 	if CLIENT then
