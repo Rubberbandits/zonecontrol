@@ -117,3 +117,23 @@ function ents.GetNPCs()
 	return tab;
 	
 end
+
+local dropItems = {
+	["npc_wick_mutant_dog"] = {
+		chance = 50, 
+		items = {"taildog"}
+	},
+}
+
+if SERVER then
+	function GM:OnNPCKilled(npc, attacker, inflictor, dmginfo)
+		local possibleItems = dropItems[npc:GetClass()]
+		if possibleItems then
+			local chance = math.random(1, 100)
+			if chance <= possibleItems.chance then
+				local itemID = table.Random(possibleItems.items)
+				local ent = self:CreateNewItemEntity(itemID, npc:GetPos() + npc:GetAngles():Up() * 10, Angle())
+			end
+		end
+	end
+end
