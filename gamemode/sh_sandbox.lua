@@ -810,6 +810,8 @@ function GM:GravGunPunt( ply, ent )
 end
 
 function GM:CanProperty( ply, prop, ent )
+
+	if ent:IsNPC() and !ply:IsAdmin() then return false end
 	
 	return ( ply:GetActiveWeapon():GetClass() == "gmod_tool" );
 	
