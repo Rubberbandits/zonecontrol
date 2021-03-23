@@ -119,12 +119,237 @@ function ents.GetNPCs()
 end
 
 local dropItems = {
-	npc_wick_mutant_dog = {
-		chance = 50, 
-		items = {
-			"taildog",
-		},
-	},
+    npc_wick_mutant_dog = {
+        chance = 30, 
+        items = {
+            "taildog",
+        },
+    },
+    vj_mutant_burer = {
+        chance = 50, 
+        items = {
+            "handburer",
+        },
+    },
+    vj_mutant_burer3 = {
+        chance = 90, 
+        items = {
+            "handburer",
+        },
+    },
+	vj_mutant_controler2 = {
+        chance = 90, 
+        items = {
+            "handcontroller",
+        },
+    },
+	vj_mutant_controler8 = {
+        chance = 90, 
+        items = {
+            "handcontroller",
+        },
+    },
+	vj_mutant_controler6 = {
+        chance = 90, 
+        items = {
+            "handcontroller",
+        },
+    },
+	vj_mutant_izlom = {
+        chance = 40, 
+        items = {
+            "adhesive",
+			"antidote",
+			"beans",
+			"bolt_lucky",
+			"boots",
+			"buckleparts",
+			"cigs",
+			"coffeebeans",
+			"cossacks",
+			"crayons",
+			"gasrag",
+			"grease",
+			"jarteeth",
+			"keys1",
+			"oldpda",
+			"playboy",
+			"pliers",
+			"sign1",
+			"tinmug",
+			"walnut_odd",
+			"wire",
+			"wrench",
+        },
+    },
+	vj_mutant_izlom4 = {
+        chance = 40, 
+        items = {
+            "adhesive",
+			"antidote",
+			"beans",
+			"bolt_lucky",
+			"boots",
+			"buckleparts",
+			"cigs",
+			"coffeebeans",
+			"cossacks",
+			"crayons",
+			"gasrag",
+			"grease",
+			"jarteeth",
+			"keys1",
+			"oldpda",
+			"playboy",
+			"pliers",
+			"sign1",
+			"tinmug",
+			"walnut_odd",
+			"wire",
+			"wrench",
+        },
+    },
+	vj_mutant_izlom3 = {
+        chance = 40, 
+        items = {
+            "adhesive",
+			"antidote",
+			"beans",
+			"bolt_lucky",
+			"boots",
+			"buckleparts",
+			"cigs",
+			"coffeebeans",
+			"cossacks",
+			"crayons",
+			"gasrag",
+			"grease",
+			"jarteeth",
+			"keys1",
+			"oldpda",
+			"playboy",
+			"pliers",
+			"sign1",
+			"tinmug",
+			"walnut_odd",
+			"wire",
+			"wrench",
+        },
+    },
+	vj_mutant_zombi = {
+        chance = 40, 
+        items = {
+            "adhesive",
+			"antidote",
+			"beans",
+			"bolt_lucky",
+			"boots",
+			"buckleparts",
+			"cigs",
+			"coffeebeans",
+			"cossacks",
+			"crayons",
+			"gasrag",
+			"grease",
+			"jarteeth",
+			"keys1",
+			"oldpda",
+			"playboy",
+			"pliers",
+			"sign1",
+			"tinmug",
+			"walnut_odd",
+			"wire",
+			"wrench",
+        },
+    },
+	vj_mutant_zombi2 = {
+        chance = 40, 
+        items = {
+            "adhesive",
+			"antidote",
+			"beans",
+			"bolt_lucky",
+			"boots",
+			"buckleparts",
+			"cigs",
+			"coffeebeans",
+			"cossacks",
+			"crayons",
+			"gasrag",
+			"grease",
+			"jarteeth",
+			"keys1",
+			"oldpda",
+			"playboy",
+			"pliers",
+			"sign1",
+			"tinmug",
+			"walnut_odd",
+			"wire",
+			"wrench",
+        },
+    },
+	vj_mutant_psevdodog4 = {
+        chance = 20, 
+        items = {
+            "tailpseudodog",
+        },
+    },
+	vj_mutant_psevdodog = {
+        chance = 50, 
+        items = {
+            "tailpseudodog",
+        },
+    },
+	vj_mutant_psevdodog4 = {
+        chance = 70, 
+        items = {
+            "tailpseudodog",
+        },
+    },
+	vj_mutant_psydog = {
+        chance = 70, 
+        items = {
+            "tailpseudodog",
+        },
+    },
+	vj_mutant_psydog = {
+        chance = 70, 
+        items = {
+            "tailpseudodog",
+        },
+    },
+	vj_mutant_bloodsucker2 = {
+        chance = 20, 
+        items = {
+            "tentacles",
+        },
+    },
+	vj_mutant_bloodsucker5 = {
+        chance = 50, 
+        items = {
+            "tentacles",
+        },
+    },
+	vj_mutant_bloodsucker = {
+        chance = 50, 
+        items = {
+            "tentacles",
+        },
+    },
+	vj_mutant_bloodsucker4 = {
+        chance = 80, 
+        items = {
+            "tentacles",
+        },
+    },
+	npc_wick_mutant_snork = {
+        chance = 40, 
+        items = {
+            "legsnork",
+        },
+    },
 }
 
 if SERVER then
