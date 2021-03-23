@@ -119,7 +119,7 @@ function ents.GetNPCs()
 end
 
 local dropItems = {
-	["npc_wick_mutant_dog"] = {
+	npc_wick_mutant_dog = {
 		chance = 50, 
 		items = {
 			"taildog",
