@@ -298,8 +298,8 @@ function meta:IsInventorySlotOccupied( x, y )
 	for _,item in next, self.Inventory do
 		local metaitem = GAMEMODE:GetItemByID(item.Class)
 
-		if x >= item.x and x <= item.x + metaitem.W - 1 then
-			if y >= item.y and y <= item.y + metaitem.H - 1 then
+		if x >= item.x and x <= item.x + (metaitem.W or 1) - 1 then
+			if y >= item.y and y <= item.y + (metaitem.H or 1) - 1 then
 				return item
 			end
 		end
