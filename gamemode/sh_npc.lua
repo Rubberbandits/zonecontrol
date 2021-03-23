@@ -121,7 +121,9 @@ end
 local dropItems = {
 	["npc_wick_mutant_dog"] = {
 		chance = 50, 
-		items = {"taildog"}
+		items = {
+			"taildog",
+		},
 	},
 }
 
