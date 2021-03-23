@@ -119,46 +119,46 @@ function ents.GetNPCs()
 end
 
 local dropItems = {
-    npc_wick_mutant_dog = {
-        chance = 30, 
-        items = {
-            "taildog",
-        },
-    },
-    vj_mutant_burer = {
-        chance = 50, 
-        items = {
-            "handburer",
-        },
-    },
-    vj_mutant_burer3 = {
-        chance = 90, 
-        items = {
-            "handburer",
-        },
-    },
+	npc_wick_mutant_dog = {
+		chance = 30, 
+		items = {
+			"taildog",
+		},
+	},
+	vj_mutant_burer = {
+		chance = 50, 
+		items = {
+			"handburer",
+		},
+	},
+	vj_mutant_burer3 = {
+		chance = 90, 
+		items = {
+			"handburer",
+		},
+	},
 	vj_mutant_controler2 = {
-        chance = 90, 
-        items = {
-            "handcontroller",
-        },
-    },
+		chance = 90, 
+		items = {
+			"handcontroller",
+		},
+	},
 	vj_mutant_controler8 = {
-        chance = 90, 
-        items = {
-            "handcontroller",
-        },
-    },
+		chance = 90, 
+		items = {
+			"handcontroller",
+		},
+	},
 	vj_mutant_controler6 = {
-        chance = 90, 
-        items = {
-            "handcontroller",
-        },
-    },
+		chance = 90, 
+		items = {
+			"handcontroller",
+		},
+	},
 	vj_mutant_izlom = {
-        chance = 40, 
-        items = {
-            "adhesive",
+		chance = 40, 
+		items = {
+			"adhesive",
 			"antidote",
 			"beans",
 			"bolt_lucky",
@@ -180,12 +180,12 @@ local dropItems = {
 			"walnut_odd",
 			"wire",
 			"wrench",
-        },
-    },
+		},
+	},
 	vj_mutant_izlom4 = {
-        chance = 40, 
-        items = {
-            "adhesive",
+		chance = 40, 
+		items = {
+			"adhesive",
 			"antidote",
 			"beans",
 			"bolt_lucky",
@@ -207,12 +207,12 @@ local dropItems = {
 			"walnut_odd",
 			"wire",
 			"wrench",
-        },
-    },
+		},
+	},
 	vj_mutant_izlom3 = {
-        chance = 40, 
-        items = {
-            "adhesive",
+		chance = 40, 
+		items = {
+			"adhesive",
 			"antidote",
 			"beans",
 			"bolt_lucky",
@@ -234,12 +234,12 @@ local dropItems = {
 			"walnut_odd",
 			"wire",
 			"wrench",
-        },
-    },
+		},
+	},
 	vj_mutant_zombi = {
-        chance = 40, 
-        items = {
-            "adhesive",
+		chance = 40, 
+		items = {
+			"adhesive",
 			"antidote",
 			"beans",
 			"bolt_lucky",
@@ -261,12 +261,12 @@ local dropItems = {
 			"walnut_odd",
 			"wire",
 			"wrench",
-        },
-    },
+		},
+	},
 	vj_mutant_zombi2 = {
-        chance = 40, 
-        items = {
-            "adhesive",
+		chance = 40, 
+		items = {
+			"adhesive",
 			"antidote",
 			"beans",
 			"bolt_lucky",
@@ -288,68 +288,156 @@ local dropItems = {
 			"walnut_odd",
 			"wire",
 			"wrench",
-        },
-    },
+		},
+	},
 	vj_mutant_psevdodog4 = {
-        chance = 20, 
-        items = {
-            "tailpseudodog",
-        },
-    },
+		chance = 20, 
+		items = {
+			"tailpseudodog",
+		},
+	},
 	vj_mutant_psevdodog = {
-        chance = 50, 
-        items = {
-            "tailpseudodog",
-        },
-    },
+		chance = 50, 
+		items = {
+			"tailpseudodog",
+		},
+	},
 	vj_mutant_psevdodog4 = {
-        chance = 70, 
-        items = {
-            "tailpseudodog",
-        },
-    },
+		chance = 70, 
+		items = {
+			"tailpseudodog",
+		},
+	},
 	vj_mutant_psydog = {
-        chance = 70, 
-        items = {
-            "tailpseudodog",
-        },
-    },
+		chance = 70, 
+		items = {
+			"tailpseudodog",
+		},
+	},
 	vj_mutant_psydog = {
-        chance = 70, 
-        items = {
-            "tailpseudodog",
-        },
-    },
+		chance = 70, 
+		items = {
+			"tailpseudodog",
+		},
+	},
 	vj_mutant_bloodsucker2 = {
-        chance = 20, 
-        items = {
-            "tentacles",
-        },
-    },
+		chance = 20, 
+		items = {
+			"tentacles",
+		},
+	},
 	vj_mutant_bloodsucker5 = {
-        chance = 50, 
-        items = {
-            "tentacles",
-        },
-    },
+		chance = 50, 
+		items = {
+			"tentacles",
+		},
+	},
 	vj_mutant_bloodsucker = {
-        chance = 50, 
-        items = {
-            "tentacles",
-        },
-    },
+		chance = 50, 
+		items = {
+			"tentacles",
+		},
+	},
 	vj_mutant_bloodsucker4 = {
-        chance = 80, 
-        items = {
-            "tentacles",
-        },
-    },
+		chance = 80, 
+		items = {
+			"tentacles",
+		},
+	},
 	npc_wick_mutant_snork = {
-        chance = 40, 
-        items = {
-            "legsnork",
-        },
-    },
+		chance = 40, 
+		items = {
+			"legsnork",
+		},
+	},
+	vj_mutant_boar = {
+		chance = 30, 
+		items = {
+			"boarchop",
+		},
+	},
+	vj_mutant_boar3 = {
+		chance = 80, 
+		items = {
+			"boarchop",
+		},
+	},
+	vj_mutant_boar2 = {
+		chance = 50, 
+		items = {
+			"boarchop",
+		},
+	},
+	vj_mutant_boar4 = {
+		chance = 50, 
+		items = {
+			"boarchop",
+		},
+	},
+	vj_mutant_cat = {
+		chance = 40, 
+		items = {
+			"catgland",
+		},
+	},
+	vj_mutant_cat3 = {
+		chance = 70, 
+		items = {
+			"catgland",
+		},
+	},
+	vj_mutant_chimera = {
+		chance = 90, 
+		items = {
+			"chimeraclaw",
+		},
+	},
+	vj_mutant_chimera5 = {
+		chance = 40, 
+		items = {
+			"chimeraclaw",
+			"flash",
+		},
+	},
+	vj_mutant_chimera3 = {
+		chance = 60, 
+		items = {
+			"chimeraclaw",
+		},
+	},
+	vj_mutant_flesh = {
+		chance = 40, 
+		items = {
+			"fleshmeat",
+			"flesheye",
+		},
+	},
+	vj_mutant_flesh6 = {
+		chance = 20, 
+		items = {
+			"fleshmeat",
+			"flesheye",
+		},
+	},
+	vj_mutant_flesh2 = {
+		chance = 70, 
+		items = {
+			"fleshmeat",
+			"flesheye",
+		},
+	},
+	vj_mutant_poltergeist = {
+		chance = 20, 
+		items = {
+			"moonlight",
+		},
+	},
+	vj_mutant_poltergeist3 = {
+		chance = 20, 
+		items = {
+			"flame",
+		},
+	},
 }
 
 if SERVER then
