@@ -27,7 +27,7 @@ ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
 ITEM.SelfRepairCondition = 70
 
 -- this is the ammo type of the gun. use the ammo item classname
-ITEM.AmmoType = "545x39"
+ITEM.AmmoType = "ammo_545x39"
 
 -- dont worry about this for now
 ITEM.License = LICENSE_BLACK;

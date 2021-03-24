@@ -11,6 +11,6 @@ ITEM.FOV 			= 15;
 ITEM.CamPos 		= Vector( 100, 100, 25 );
 ITEM.LookAt 		= Vector( 5, 0, 0 );
 ITEM.SelfRepairCondition = 70
-ITEM.AmmoType = "762x39"
+ITEM.AmmoType = "ammo_762x39"
 ITEM.License = "B"
 ITEM.BulkPrice = 70000
