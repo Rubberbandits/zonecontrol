@@ -475,7 +475,7 @@ function meta:SQLSaveNewPlayer()
 	end
 	
 	GAMEMODE:LogSQL( "Creating new player record for user " .. self:Nick() .. "..." );
-	mysqloo.Query( "INSERT INTO cc_players ( SteamID, IPAddress, LastName ) VALUES ( '" .. self:SteamID() .. "', '".. self:IPAddress() .."', '".. self:Nick() .."' )", qS );
+	mysqloo.Query( "INSERT INTO cc_players ( SteamID, IPAddress, LastName ) VALUES ( '" .. self:SteamID() .. "', '".. self:IPAddress() .."', '".. mysqloo.Escape(self:Nick()) .."' )", qS );
 	
 end
 
