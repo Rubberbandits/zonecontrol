@@ -1,4 +1,4 @@
-ITEM.Name =  "Jerry-Can of Fuel";
+ITEM.Name =  "Jerry-Can of Gas";
 ITEM.Desc =  "A can filled with gasoline, used to fuel any of your favorite motorized objects.\nThis can has %d seconds left of fuel.";
 ITEM.Model =  "models/z-o-m-b-i-e/st/balon/st_kanistra_01.mdl";
 ITEM.Weight =  10;

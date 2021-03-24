@@ -1,5 +1,5 @@
 ITEM.Name = "CZ 805"
-ITEM.Desc = "A modern Czech tactical assault rifle. Unflinchingly reliable when looked after."
+ITEM.Desc = "A modern Czech tactical assault rifle. Unflinchingly reliable when looked after. Uses 5.56x45mm."
 ITEM.Model = "models/weapons/tfa_ins2/w_cz805.mdl"
 ITEM.WeaponClass = "tfa_ins2_cz805"
 ITEM.Weight = 3.5

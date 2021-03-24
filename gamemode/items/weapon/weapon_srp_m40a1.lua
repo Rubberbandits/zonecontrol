@@ -1,5 +1,5 @@
 ITEM.Name = "M40A1"
-ITEM.Desc = "This US Army sniper rifle must have 'fallen off a truck.' Based on the civilian Remington 700, the M40A1 is a basic but accurate rifle."
+ITEM.Desc = "This US Army sniper rifle must have 'fallen off a truck.' Based on the civilian Remington 700, the M40A1 is a basic but accurate rifle. Fires 7.62x51mm."
 ITEM.Model = "models/weapons/tfa_ins2/w_m40a1.mdl"
 ITEM.WeaponClass = "tfa_ins2_m40a1"
 ITEM.Weight = 2

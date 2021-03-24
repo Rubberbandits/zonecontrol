@@ -15,3 +15,6 @@ ITEM.AmmoType = "9x19"
 ITEM.License = "B"
 ITEM.BulkPrice = 65000
 ITEM.Slot = 2
+ITEM.TertiarySlot = true
+ITEM.W = 2
+ITEM.H = 1

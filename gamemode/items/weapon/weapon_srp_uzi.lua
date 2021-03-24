@@ -1,5 +1,5 @@
 ITEM.Name = "IMI Uzi"
-ITEM.Desc = "The Israeli submachine gun that redefined submachine guns. Okay, that's a bit of a stretch. But it is pretty cool."
+ITEM.Desc = "The Israeli submachine gun that redefined submachine guns. Okay, that's a bit of a stretch. But it is pretty cool. Chambered in 9x19mm."
 ITEM.Model = "models/weapons/tfa_ins2/w_uzi.mdl"
 ITEM.WeaponClass = "tfa_ins2_uzi"
 ITEM.Weight = 3

@@ -1,5 +1,5 @@
 ITEM.Name = "Mossberg M590"
-ITEM.Desc = "A widely distributed tactical shotgun popular with police and military forces all over the globe as well as civilian shooters."
+ITEM.Desc = "A widely distributed tactical shotgun popular with police and military forces all over the globe as well as civilian shooters. Fires 12 gauge."
 ITEM.Model = "models/weapons/tfa_ins2/w_m590.mdl"
 ITEM.WeaponClass = "tfa_ins2_m590"
 ITEM.Weight = 2.65

@@ -1,5 +1,5 @@
 ITEM.Name = "Walther P99"
-ITEM.Desc = "A modern German pistol with excellent ergonomics. Slick and reliable. Uses 9x19mm"
+ITEM.Desc = "A modern German pistol with excellent ergonomics. Slick and reliable. Uses 9x19mm."
 ITEM.Model = "models/weapons/w_p99.mdl"
 ITEM.WeaponClass = "tfa_walther_p99"
 ITEM.Weight = 2

@@ -1,5 +1,5 @@
 ITEM.Name = "Fort 500"
-ITEM.Desc = "A Ukrainian police shotgun. Rugged and reliable, and inexpensive to maintain thanks to domestic manufacture. Uses 12 gauge. Comes in a box due to missing world model."
+ITEM.Desc = "A Ukrainian police shotgun. Rugged and reliable, and inexpensive to maintain thanks to domestic manufacture. Comes in a box due to missing world model. Uses 12 gauge."
 ITEM.Model = "models/props_junk/cardboard_box003a.mdl"
 ITEM.WeaponClass = "tfa_ins2_fort500"
 ITEM.Weight = 4
