@@ -192,6 +192,8 @@ function GM:PlayerLoadout( ply )
 end
 
 function meta:LoadPlayer( data )
+
+	if !data then return end
 	
 	self:SetToolTrust( tonumber( data.ToolTrust ), true );
 	self:SetPhysTrust( tonumber( data.PhysTrust ), true );
