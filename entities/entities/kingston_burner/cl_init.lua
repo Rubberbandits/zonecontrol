@@ -85,9 +85,6 @@ local matRefract = Material( "sprites/heatwave" )
 
 function ENT:Draw()
 
-	local mypos = self:GetPos()
-	local dist = LocalPlayer():GetPos():Distance(mypos)
-
 	if render.GetDXLevel() >= 80 then
 		
 		render.UpdateRefractTexture()
