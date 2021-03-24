@@ -1,0 +1,96 @@
+ITEM.Base = "clothes"
+ITEM.Name =  "Example Suit";
+ITEM.Desc =  "An example suit.";
+ITEM.Model =  "models/error.mdl";
+ITEM.Weight =  1;
+
+-- dont worry about this
+ITEM.FOV =  20;
+ITEM.CamPos =  Vector( 50, 50, 50 );
+ITEM.LookAt =  Vector( 0, 0, 0 );
+
+-- dont worry about this
+ITEM.Bonemerge = "models/tnb/stalker_2019/sunrise_combat.mdl";
+ITEM.RemoveBody = true
+ITEM.AllowGender = true
+ITEM.HelmetBodygroup = {0,1}
+
+-- condition level that anyone can repair this suit at.
+ITEM.SelfRepairCondition = 50
+
+-- when a player takes damage, the suit also takes condition damage.
+-- DegradationProtection is used to calculate how much of the damage
+-- should also be applied to the suit. so if DegradationProtection is
+-- set to 10, it will remove 10% of the value of the damage that was taken
+ITEM.DegradationProtection = 10
+
+-- the amount that the suit will add to the players max carry weight when equipped
+ITEM.CarryAdd = 1
+
+-- the amount of artifact slots the suit has
+ITEM.ArtifactSlots = 1
+
+-- dont worry about this
+ITEM.Vars = {
+	Equipped = false,
+	Upgrades = {},
+	Durability = 100,
+	SuitClass = "suit_combatsunrise_lone10",
+}
+
+-- dont worry about this
+ITEM.HandsModel = {
+	body = "000000000",
+	model = "models/poc/stalker_viewmodels/c_sunrise.mdl",
+	skin = 0,
+}
+
+-- damage scaling for suits math is just multiplying damage * resistance
+-- so each suit has its own resistance values, and those are processed the same
+-- so the product of the initial formula then gets repeated through each upgrade
+-- like so:
+-- damage * initial suit value (0.5)
+-- product * upgrade 1 value (0.9)
+-- product 2 * upgrade 2 value (0.8)
+-- the initial formula is a 50% reduction in the damage
+-- the second formula is a 10% reduction from that 50% (45% of initial damage)
+-- the third formula is a 20% reduction from 45% (36%)
+
+--[[
+-- 1 is full damage, 0 is no damage.
+ITEM.ArmorValues = {
+	-- "Impact" (blunt)
+	[DMG_CRUSH] = 1,
+	[DMG_FALL] = 1,
+	[DMG_CLUB] = 1,
+	[DMG_VEHICLE] = 1,
+	-- "Rupture" (sharp)
+	[DMG_SLASH] = 1,
+	-- "Bulletproof"
+	[DMG_BULLET] = 1,
+	-- "Explosion"
+	[DMG_BLAST] = 1,
+	-- "Thermal"
+	[DMG_BURN] = 1,
+	[DMG_SLOWBURN] = 1,
+	-- "Chemical Burn"
+	[DMG_ACID] = 1,
+	[DMG_POISON] = 1,
+	[DMG_NERVEGAS] = 1,
+	-- "Electric Shock"
+	[DMG_SHOCK] = 1,
+	-- "Radiation"
+	[DMG_RADIATION] = 1,
+	-- "Psychic"
+	[DMG_PARALYZE] = 1,
+}
+-]]
+
+-- these values will change the movement speed of a player when the suit
+-- is equipped. 
+ITEM.Speeds = {
+	w = 1,
+	r = 1,
+	c = 1,
+	j = 1,
+}

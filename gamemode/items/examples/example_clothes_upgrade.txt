@@ -1,0 +1,123 @@
+--EFFECT
+UPGRADE.Base = "clothes"
+UPGRADE.Name = "Example Clothing Upgrade.";
+UPGRADE.Desc = "This is an example!";
+
+-- The icon information for the upgrade menu.
+-- Count from top left. First image is 1,1. Each page are different images.
+-- Page 1: https://i.imgur.com/6T82Rab.png
+-- Page 2: https://i.imgur.com/XeQQ6NN.png
+-- Page 3: https://i.imgur.com/TTPE1Xl.png
+-- Page 4: https://i.imgur.com/YoDVwR3.png
+-- Page 5: https://i.imgur.com/go1vgMk.jpg
+-- Page 6: https://i.imgur.com/w9PIOSE.png
+UPGRADE.IconPage = 1
+UPGRADE.IconX = 1
+UPGRADE.IconY = 1
+
+-- this value is an actual percentage
+-- when a player takes damage, the suit will also take damage
+-- this value controls how much protection the suit has from damage
+-- in this example, 10 would reduce the condition hit by 10%
+-- all of the values of all upgrades for DegradationProtection are added together
+-- so if you want to give a suit protection against degradation, use a positive value
+-- if you want to make it more fragile, use a negative value.
+-- UPGRADE.DegradationProtection = 10
+
+-- UPGRADE.RequiredItems arguments
+-- First value is item classname required
+-- Second value is the amount of the item needed
+-- Third value is ConsumeOnUse
+UPGRADE.RequiredItems = {
+	--{ "item_classname", 1, true },
+};
+
+-- any upgrades that this upgrade is incompatible with.
+UPGRADE.Incompatible = {
+	--"test_upgrade_2",
+};
+
+-- damage scaling for suits math is just multiplying damage * resistance
+-- so each suit has its own resistance values, and those are processed the same
+-- so the product of the initial formula then gets repeated through each upgrade
+-- like so:
+-- damage * initial suit value (0.5)
+-- product * upgrade 1 value (0.9)
+-- product 2 * upgrade 2 value (0.8)
+-- the initial formula is a 50% reduction in the damage
+-- the second formula is a 10% reduction from that 50% (45% of initial damage)
+-- the third formula is a 20% reduction from 45% (36%)
+
+--[[
+-- 1 is full damage, 0 is no damage.
+UPGRADE.ArmorValues = {
+	-- "Impact" (blunt)
+	[DMG_CRUSH] = 1,
+	[DMG_FALL] = 1,
+	[DMG_CLUB] = 1,
+	[DMG_VEHICLE] = 1,
+	-- "Rupture" (sharp)
+	[DMG_SLASH] = 1,
+	-- "Bulletproof"
+	[DMG_BULLET] = 1,
+	-- "Explosion"
+	[DMG_BLAST] = 1,
+	-- "Thermal"
+	[DMG_BURN] = 1,
+	[DMG_SLOWBURN] = 1,
+	-- "Chemical Burn"
+	[DMG_ACID] = 1,
+	[DMG_POISON] = 1,
+	[DMG_NERVEGAS] = 1,
+	-- "Electric Shock"
+	[DMG_SHOCK] = 1,
+	-- "Radiation"
+	[DMG_RADIATION] = 1,
+	-- "Psychic"
+	[DMG_PARALYZE] = 1,
+}
+-]]
+
+-- UPGRADE.AddWalkSpeed = 1
+-- UPGRADE.AddRunSpeed = 1
+-- UPGRADE.AddCrouchSpeed = 1
+-- UPGRADE.AddJumpHeight = 1
+-- These add the number straight onto the default run speed of the suit.
+
+-- UPGRADE.ReduceWeight = 1
+-- reduces weight of item, negative values can increase weight
+
+-- UPGRADE.ArtifactSlots = 1
+-- adds artifact slots
+
+-- Technical details about RequiredUpgrade:
+-- Do not go further than 3 levels deep!
+-- The menus simply aren't meant to handle it, and thus the upgrades will never be seen in the GUI.
+-- They can technically exist.
+-- UPGRADE.RequiredUpgrade = ""
+-- requires an upgrade. use classname.
+
+-- UPGRADE.CarryAdd = 1
+-- this adds more carrying capacity when the suit is worn.
+
+-- When you hover over an upgrade, you will get a tooltip display.
+-- This table can have multiple entries. Just copy the format between the second pair of braces ({})
+-- Then change IconX, IconY. Text is displayed alongside icon.
+-- Icons can be found here: https://i.imgur.com/bQjFCzY.png
+UPGRADE.PropertiesTooltip = {
+	{
+		IconX = 1,
+		IconY = 1,
+		Text = "+10% Durability Increase.",
+	},
+	{
+		IconX = 1,
+		IconY = 1,
+		Text = "+10% Durability Increase.",
+	},
+}
+
+-- items that this upgrade can be applied to
+UPGRADE.Item = {
+	suit_trenchsunrise = true,
+}

@@ -1,0 +1,44 @@
+ITEM.Name = "Weapon Name"
+ITEM.Desc = "Weapon Description"
+ITEM.Model = "models/error.mdl"
+ITEM.WeaponClass = "tfa_example_class"
+ITEM.Weight = 1
+
+-- dont worry about these
+-- ITEM.SafetyPos = Vector(0,0,0)
+-- ITEM.SafetyAng = Angle(-12.4, 0, 0)
+
+-- this is the base jam chance of the gun. 1 would be jamming all of the time
+-- 0 would never jam. as condition of the gun worsens, the higher the jam chance.
+-- the value is 0-1. so on the first shot, only 2% chance the gun will jam
+ITEM.JamChance = 0.02
+
+-- this is rate in which guns' condition degrades, for every bullet fired
+-- current_condition - DegradeRate = next_condition
+ITEM.DegradeRate = 0.05
+
+-- item display settings, dont worry about these
+ITEM.FOV 			= 46
+ITEM.CamPos 		= Vector( 50, 4.47, 0.9 )
+ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
+
+-- when the condition of a gun is anywhere above this value, it can be repaired by anyone
+-- using non-tech tools, called weapon maintainers
+ITEM.SelfRepairCondition = 70
+
+-- this is the ammo type of the gun. use the ammo item classname
+ITEM.AmmoType = "545x39"
+
+-- dont worry about this for now
+ITEM.License = LICENSE_BLACK;
+
+-- this is the price of the gun in the business menu.
+-- guns with a BulkPrice of 0 cant be bought in the menu
+-- BulkPrice is individual price * 5
+ITEM.BulkPrice = 60000
+
+-- this is the minimum condition that a gun can be sold at
+-- ITEM.SellDurability = 50;
+
+-- amount of damage each hit does to a player. omit to use default from swep
+-- ITEM.Damage = 20;

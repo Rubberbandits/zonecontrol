@@ -1,0 +1,75 @@
+UPGRADE.Base = "weapon";
+UPGRADE.Name = "Weapon Upgrade";
+UPGRADE.Desc = "";
+-- items this upgrade is to be used on
+UPGRADE.Item = {
+    gun_example_gun = true,
+}
+-- if you want to give an attachment based on an upgrade
+UPGRADE.Attachment = "";
+
+-- The icon information for the upgrade menu.
+-- Count from top left. First image is 1,1. Each page are different images.
+-- Page 1: https://i.imgur.com/6T82Rab.png
+-- Page 2: https://i.imgur.com/XeQQ6NN.png
+-- Page 3: https://i.imgur.com/TTPE1Xl.png
+-- Page 4: https://i.imgur.com/YoDVwR3.png
+-- Page 5: https://i.imgur.com/go1vgMk.jpg
+-- Page 6: https://i.imgur.com/w9PIOSE.png
+UPGRADE.IconPage = 1;
+UPGRADE.IconX = 1;
+UPGRADE.IconY = 1;
+
+-- UPGRADE.RequiredItems arguments
+-- First value is item classname required
+-- Second value is the amount of the item needed
+-- Third value is ConsumeOnUse
+UPGRADE.RequiredItems = {
+	--{ "item_classname", 1, true },
+};
+
+-- Technical details about RequiredUpgrade:
+-- Do not go further than 3 levels deep!
+-- The menus simply aren't meant to handle it, and thus the upgrades will never be seen in the GUI.
+-- They can technically exist.
+-- UPGRADE.RequiredUpgrade = "";
+UPGRADE.Incompatible = {
+	--"test_upgrade_2",
+};
+-- UPGRADE.ReduceWeight = 1
+-- reduces weight of item, negative values can increase weight
+
+-- UPGRADE.JamChanceModifier = 0.01
+-- so this will make it 1% less likely to jam
+-- subtracts JamChanceModifier from base JamChance of weapon item.
+-- JamChance tends to be around 0.06 for a lot of guns.
+-- the value is 0-1. so on the first shot, only 2% chance the gun will jam
+
+-- UPGRADE.ReduceSpread = 0.001
+-- UPGRADE.ReduceRecoilUp = 0.001
+-- UPGRADE.ReduceRecoilHorizontal = 0.001
+-- min value for all of these is 0.001, so keep the amount you reduce low! 0.001 is a laser beam.
+-- takes above upgrade value and subtracts from base swep value. negative will increase
+
+-- UPGRADE.AddRPM = 10
+-- Adds number to base RPM (Rounds per minute)
+
+-- UPGRADE.ChangeAmmoType = "9x19"
+-- Changes weapon ammo type.
+
+-- When you hover over an upgrade, you will get a tooltip display.
+-- This table can have multiple entries. Just copy the format between the second pair of braces ({})
+-- Then change IconX, IconY. Text is displayed alongside icon.
+-- Icons can be found here: https://i.imgur.com/bQjFCzY.png
+UPGRADE.PropertiesTooltip = {
+	{
+		IconX = 1,
+		IconY = 1,
+		Text = "+10% Durability Increase.",
+	},
+	{
+		IconX = 1,
+		IconY = 1,
+		Text = "+10% Durability Increase.",
+	},
+}
