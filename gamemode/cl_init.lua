@@ -238,28 +238,6 @@ hook.Add("Think", "STALKER.ScreenResolutionChange", function()
 	GAMEMODE.LastScrH = ScrH()
 end)
 
-game.AddParticles( "particles/hunter_shield_impact.pcf" )
-game.AddParticles( "particles/warpshield.pcf" )
-game.AddParticles( "particles/advisor.pcf" )
-game.AddParticles( "particles/steampuff.pcf" )
-game.AddParticles( "particles/electrical_fx.pcf" )
-game.AddParticles( "particles/fire_01.pcf" )
-game.AddParticles( "particles/koks.pcf" )
-game.AddParticles( "particles/mortar_fx.pcf" )
-game.AddParticles( "particles/shadowmonster.pcf" )
-game.AddParticles( "particles/stalactite.pcf" )
-game.AddParticles( "particles/stalker_effects.pcf" )
-game.AddParticles( "particles/stalker_effects2.pcf" )
-game.AddParticles( "particles/striderbuster.pcf" )
-game.AddParticles( "particles/vorti_fx.pcf" )
-game.AddParticles( "particles/choreo_gman.pcf" )
-game.AddParticles( "particles/effect_hl2.pcf" )
-game.AddParticles( "particles/1187_teleport.pcf" )
-game.AddParticles( "particles/blood_impact.pcf" )
-game.AddParticles( "particles/vortigaunt_fx.pcf" )
-game.AddParticles( "particles/vortigaunte_fx.pcf" )
-game.AddParticles( "particles/water_impact.pcf" )
-
 GM.FullyLoaded = true;
 
 MsgC( Color( 200, 200, 200, 255 ), "Clientside loaded.\n" );
