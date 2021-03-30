@@ -6,7 +6,7 @@ ITEM.Weight = 1
 
 -- dont worry about these
 -- ITEM.SafetyPos = Vector(0,0,0)
--- ITEM.SafetyAng = Angle(-12.4, 0, 0)
+-- ITEM.SafetyAng = Vector(-12.4, 0, 0)
 
 -- this is the base jam chance of the gun. 1 would be jamming all of the time
 -- 0 would never jam. as condition of the gun worsens, the higher the jam chance.
