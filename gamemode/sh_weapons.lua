@@ -391,6 +391,10 @@ GM.WeaponStatistics["Primary.Damage"] = function(weapon, value)
 	if weapon:GetOwner().EquippedWeapons then
 		local item = GAMEMODE.g_ItemTable[weapon:GetOwner().EquippedWeapons[weapon:GetClass()]]
 		if item and item.Damage then
+			if weapon.Primary and weapon.Primary.Damage != item.Damage then
+				weapon.Primary.Damage = item.Damage
+			end
+
 			return item.Damage
 		end
 	end

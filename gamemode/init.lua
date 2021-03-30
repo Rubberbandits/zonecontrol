@@ -133,11 +133,15 @@ function GM:Initialize()
 	game.ConsoleCommand( "sv_allowdownload 0\n" );
 	game.ConsoleCommand( "pac_restrictions 1\n" );
 	game.ConsoleCommand( "mp_falldamage 1\n" );
+
 	game.ConsoleCommand( "sv_tfa_cmenu 0\n" );
 	game.ConsoleCommand( "sv_tfa_default_clip 0\n" );
 	game.ConsoleCommand( "sv_tfa_jamming_factor_inc 0.5\n" );
 	game.ConsoleCommand( "sv_tfa_jamming_mult 0.6\n" );
 	game.ConsoleCommand( "sv_tfa_penetration_hitmarker 0\n" );
+	game.ConsoleCommand( "sv_tfa_damage_multiplier 1\n" );
+	game.ConsoleCommand( "sv_tfa_damage_mult_min 1\n" );
+	game.ConsoleCommand( "sv_tfa_damage_mult_max 1\n" );
 	
 	if( game.IsDedicated() and !self.PrivateMode ) then
 		
