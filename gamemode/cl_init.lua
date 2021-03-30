@@ -154,6 +154,16 @@ if cookie.GetNumber("zc_cursor", 0) == 1 then
 	GM:CreateCursor()
 end
 
+
+local function KillVJ()
+	function VJWelcomeCode()
+
+	end
+	concommand.Add("vj_welcome", VJWelcomeCode)
+	net.Receive("VJWelcome", VJWelcomeCode)
+	concommand.Add("vj_iamhere", function(ply,cmd,args) end)
+end
+
 function GM:Initialize()
 	
 	RunConsoleCommand( "cl_showhints", "0" );
@@ -172,6 +182,8 @@ function GM:Initialize()
 		PrecacheParticleSystem( v );
 	
 	end
+
+	KillVJ()
 	
 end
 
@@ -184,20 +196,17 @@ function GM:InitPostEntity()
 	
 	end
 
+	KillVJ()
+
 	net.Start("zcSendCustomPrices")
 	net.SendToServer()
-	
-	function VJWelcomeCode()
-
-	end
-	concommand.Add("vj_welcome", VJWelcomeCode)
-	net.Receive("VJWelcome", VJWelcomeCode)
-	concommand.Add("vj_iamhere", function(ply,cmd,args) end)
 
 	self:CreateItemTooltipPanel()
 	
 	_G.b_keyf7_pressed = true
 end
+
+KillVJ()
 
 local meta = FindMetaTable( "Player" );
 
