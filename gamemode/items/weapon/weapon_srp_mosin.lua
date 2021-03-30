@@ -16,3 +16,4 @@ ITEM.License = "A"
 ITEM.BulkPrice = 68000
 ITEM.Slot = 2
 ITEM.SlotPos = 1
+ITEM.Damage = 70
