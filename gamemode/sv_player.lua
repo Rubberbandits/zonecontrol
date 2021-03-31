@@ -523,7 +523,6 @@ function GM:EntityTakeDamage( ent, dmg )
 			
 		end
 		
-		dmg:ScaleDamage( 1 - ( ent:Toughness() / 100 ) * 0.5 );
 		dmg:ScaleDamage( ent:DrugDamageMod() );
 		dmg:ScaleDamage( math.Clamp( ( ent:Hunger() / 100 ) * 2, 1, 2 ) );
 		
