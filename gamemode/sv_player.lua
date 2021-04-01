@@ -106,7 +106,7 @@ function GM:PlayerSpawn( ply )
 	ply:AllowFlashlight( true );
 	
 	ply:SetMaxHealth(100)
-	ply:SetHealth(25)
+	ply:SetHealth(10)
 	ply.LastRadiation = 0
 	ply:SetRadiation(0)
 	
