@@ -1,7 +1,7 @@
 ITEM.Name = "Fire Extinguisher"
 ITEM.Desc = "Used for extinguishing fires. Also pretty weighty."
 ITEM.Model = "models/weapons/w_fire_extinguisher.mdl"
-ITEM.WeaponClass = "weapon_extinguisher"
+ITEM.WeaponClass = "weapon_extinguisher_infinite"
 ITEM.Weight = 5
 ITEM.SafetyPos = Vector(0,0,0)
 ITEM.SafetyAng = Vector(-12.4, 0, 0)
@@ -13,10 +13,3 @@ ITEM.SelfRepairCondition = 100
 ITEM.License = M;
 ITEM.BulkPrice = 10000
 ITEM.Slot = 2
-ITEM.Vars = {
-	Equipped = false,
-	CurrentAttachments = {},
-	Upgrades = {},
-	Durability = 100,
-	Clip1 = 1000,
-};
