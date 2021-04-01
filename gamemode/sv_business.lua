@@ -1,32 +1,8 @@
-function nBuyBusinessLicense( ply, t )
-	
-	if( GAMEMODE.BusinessLicenses[t] and GAMEMODE.BusinessLicenses[t][2] and bit.band( ply:BusinessLicenses(), t ) != t ) then
-		
-		if( ply:Money() >= GAMEMODE.BusinessLicenses[t][2] ) then
-			
-			ply:AddMoney( -1 * GAMEMODE.BusinessLicenses[t][2] );
-			ply:UpdateCharacterField( "Money", tostring( ply:Money() ) );
-			
-			ply:SetBusinessLicenses( ply:BusinessLicenses() + t );
-			ply:UpdateCharacterField( "BusinessLicenses", ply:BusinessLicenses() );
-			
-			netstream.Start( ply, "nPopulateBusiness" );
-			
-		end
-		
-	end
-	
-end
-netstream.Hook( "nBuyBusinessLicense", nBuyBusinessLicense );
-
 function nBuyItem( ply, id, single )
 	
 	local item = GAMEMODE:GetItemByID( id );
-	local lic = ply:BusinessLicenses();
-	
-	if( ply:HasCharFlag( "X" ) ) then lic = lic + LICENSE_BLACK end
-	
-	if( item and bit.band( lic, item.License or -1 ) == item.License ) then
+
+	if( item and item.License and ply:HasCharFlag(item.License) ) then
 
 		local price = hook.Run("GetBuyPrice", ply, id, single)
 

@@ -736,25 +736,17 @@ end
 function GM:PMPopulateBusiness()
 	
 	CCP.PlayerMenu.BusinessPane:Clear();
-	
-	local lic = LocalPlayer():BusinessLicenses();
 	local y = 0;
-	
-	if( LocalPlayer():HasCharFlag( "X" ) ) then
-		
-		lic = lic + LICENSE_BLACK;
-		
-	end
 	
 	local items_to_list = {}
 	for k, v in SortedPairs( self.Items ) do
 		local price = hook.Run("GetBuyPrice", LocalPlayer(), k)
 
 		if !price or price == 0 then continue end
-
-		if( bit.band( lic, v.License or -1 ) == v.License ) then
-			items_to_list[#items_to_list+1] = k
-		end
+		if !v.License then continue end
+		if !LocalPlayer():HasCharFlag(v.License) then continue end
+		
+		items_to_list[#items_to_list+1] = k
 	end
 	
 	CCP.PlayerMenu.BusinessPane.NextThink = CurTime()

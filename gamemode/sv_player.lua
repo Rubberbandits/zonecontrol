@@ -481,26 +481,6 @@ function GM:PlayerCanPickupWeapon( ply, wep )
 		
 	end
 	
-	if( ply:HasCharFlag( "V" ) or ply:HasCharFlag( "W" ) ) then
-		
-		if( !table.HasValue( self.VortWeaponPickups, wep:GetClass() ) ) then
-			
-			return false;
-			
-		end
-		
-	end
-	
-	if( ply:HasCharFlag( "S" ) ) then
-		
-		if( !table.HasValue( self.StalkerWeaponPickups, wep:GetClass() ) ) then
-			
-			return false;
-			
-		end
-		
-	end
-	
 	return true;
 	
 end
