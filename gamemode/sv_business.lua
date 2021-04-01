@@ -30,6 +30,8 @@ function nBuyItem( ply, id, single )
 
 		local price = hook.Run("GetBuyPrice", ply, id, single)
 
+		if !price or price == 0 then return end
+
 		if( single ) then
 			
 			if( ply:Money() >= price ) then
