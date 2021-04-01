@@ -19,18 +19,18 @@ BASE.functions.Use = {
 			LocalPlayer():Notify(nil, COLOR_NOTIF, item.ConsumeText)
 		end
 		
-		local amount = item:GetVar("Stacked", 0)
-		if amount > 1 then
-			item:SetVar("Stacked", amount - 1)
-		else
-			item:RemoveItem()
-		end
-
 		local owner = item:Owner()
 
 		if item.HungerReduce then
 			owner:SetHunger(math.Clamp(owner:Hunger() - item.HungerReduce, 0, 100))
 			owner:UpdateCharacterField("Hunger", owner:Hunger())
+		end
+
+		local amount = item:GetVar("Stacked", 0)
+		if amount > 1 then
+			item:SetVar("Stacked", amount - 1)
+		else
+			item:RemoveItem()
 		end
 		
 		return true
