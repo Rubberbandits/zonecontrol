@@ -8,11 +8,11 @@ ITEM.ItemSubmaterials = {
 }
 ITEM.ConsumeText = "You tend to your wounds. By the power of science, you are healed."
 ITEM.UseText = "Use"
-ITEM.HealAmount = 70
-ITEM.RadiationHealAmount = 30
+ITEM.HealAmount = 65
+ITEM.RadiationHealAmount = 100
 ITEM.Weight =  1;
 ITEM.FOV =  9;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 5.02 );
-ITEM.BulkPrice =  15000;
+ITEM.BulkPrice =  13125;
 ITEM.License =  "X";
