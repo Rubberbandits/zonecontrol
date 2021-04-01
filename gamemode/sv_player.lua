@@ -91,6 +91,7 @@ function GM:PlayerConnect( name, ip )
 end
 
 function GM:PlayerSpawn( ply )
+	print("playerspawn")
 	self.BaseClass:PlayerSpawn( ply );
 	
 	player_manager.SetPlayerClass( ply, "player_cc" );
@@ -107,6 +108,7 @@ function GM:PlayerSpawn( ply )
 	
 	ply:SetMaxHealth(100)
 	if ply.JustDied then
+		print("set health to 10")
 		ply:SetHealth(10)
 		ply.JustDied = false
 	end
@@ -235,6 +237,7 @@ netstream.Hook( "nRequestPData", nRequestPData );
 function meta:LoadCharacter( data )
 	
 	if self.CharCreateCompleted and self:CharID() and self:CharID() > 0 then
+		print("update health")
 		GAMEMODE:UpdateCharacterFieldOffline(self:CharID(), "Health", self:Health())
 	end
 
@@ -279,6 +282,7 @@ function meta:LoadCharacter( data )
 	
 	self:SetHunger( tonumber( data.Hunger ) );
 
+	print("set health")
 	self:SetHealth(tonumber(data.Health))
 
 	self.EntryPort = tonumber( data.EntryPort );
