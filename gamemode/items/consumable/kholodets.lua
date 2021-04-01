@@ -7,6 +7,6 @@ ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  500;
-ITEM.License =  LICENSE_BLACK;
+ITEM.License =  "X";
 ITEM.ConsumeText = "It's about what you expected: bland, generally slimy, and stringy in all the wrong ways. At least it's a filling and potentially wholesome meal. There's never been a more perfect food analogy for Soviet rule."
 ITEM.UseText = "Eat"

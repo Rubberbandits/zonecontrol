@@ -10,6 +10,6 @@ ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.PhysicalMass	= 1;
 
 ITEM.BulkPrice =  1000;
-ITEM.License =  LICENSE_BLACK;
+ITEM.License =  "X";
 ITEM.W = 1
 ITEM.H = 2

@@ -31,4 +31,4 @@ SWEP.ItemLookAt = Vector( 0, 0, 4.65 );
 SWEP.GrenadeClass = "cc_grenade_flash";
 
 SWEP.ItemBulkPrice		= 15000
-SWEP.ItemLicense		= LICENSE_BLACK
+SWEP.ItemLicense		= "X"

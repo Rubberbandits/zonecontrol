@@ -249,7 +249,7 @@ for k,v in next, GM.SuitVariants do
 	ITEM.SuitVariant = k
 	if v.BulkPrice then
 		ITEM.BulkPrice = v.BulkPrice
-		ITEM.License = LICENSE_BLACK
+		ITEM.License = "X"
 	end
 	ITEM.Weight = 0.5
 

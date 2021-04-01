@@ -30,7 +30,7 @@ ITEM.SelfRepairCondition = 70
 ITEM.AmmoType = "ammo_545x39"
 
 -- dont worry about this for now
-ITEM.License = LICENSE_BLACK;
+ITEM.License = "X";
 
 -- this is the price of the gun in the business menu.
 -- guns with a BulkPrice of 0 cant be bought in the menu

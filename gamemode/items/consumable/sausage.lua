@@ -10,6 +10,6 @@ ITEM.LookAt =  Vector( 1, -1, 0 );
 ITEM.PhysicalMass	= 1;
 
 ITEM.BulkPrice =  800;
-ITEM.License =  LICENSE_BLACK;
+ITEM.License =  "X";
 ITEM.ConsumeText = "The sausage is very chewy. Every so often there is a speck of bone, but otherwise the meat is very flavorful. Very salty."
 ITEM.UseText = "Eat"

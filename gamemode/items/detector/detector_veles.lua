@@ -11,4 +11,4 @@ ITEM.LookAt 		= Vector( 0, 1, 4.83 );
 ITEM.Weight 		= 0.8;
 
 ITEM.BulkPrice		= 75000;
-ITEM.License		= LICENSE_BLACK;
+ITEM.License		= "X";

@@ -7,6 +7,6 @@ ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  550;
-ITEM.License =  LICENSE_BLACK;
+ITEM.License =  "X";
 ITEM.ConsumeText = "As your teeth sink into the meaty gelatin, you're surprised and delighted to taste hints of garlic and other hidden seasonings. It's a simple yet wholesome meal, and not as bad as you were expecting. Maybe USSR life wasn't so bad."
 ITEM.UseText = "Eat"

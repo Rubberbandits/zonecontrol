@@ -25,7 +25,7 @@ SWEP.ItemLookAt = Vector(0, 0, 0)
 
 SWEP.ItemBulkAmount 	= 5
 SWEP.ItemBulkPrice		= 40000
-SWEP.ItemLicense		= LICENSE_BLACK
+SWEP.ItemLicense		= "X"
 
 function SWEP:PreDrawViewModel(vm, wep, ply)
 	vm:SetMaterial("engine/occlusionproxy") -- Hide that view model with hacky material

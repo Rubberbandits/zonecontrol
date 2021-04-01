@@ -7,6 +7,6 @@ ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  350;
-ITEM.License =  LICENSE_BLACK;
+ITEM.License =  "X";
 ITEM.ConsumeText = "Your teeth can just barely penetrate the rockhard crust of the bread. It was well worth it. You feel nourished to an extent."
 ITEM.UseText = "Eat"

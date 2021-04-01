@@ -7,6 +7,6 @@ ITEM.FOV =  7;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0.18 );
 ITEM.BulkPrice =  400;
-ITEM.License =  LICENSE_BLACK; 
+ITEM.License =  "X"; 
 ITEM.ConsumeText = "You open and drink the entire can."
 ITEM.UseText = "Drink"

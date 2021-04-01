@@ -8,4 +8,4 @@ ITEM.CamPos =  Vector( 2.56, -0.01, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.CarryAdd =  15;
 ITEM.BulkPrice =  1000;
-ITEM.License =  LICENSE_BLACK;
+ITEM.License =  "X";

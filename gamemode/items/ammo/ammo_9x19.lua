@@ -5,7 +5,7 @@ ITEM.Weight = 1
 ITEM.W = 1
 ITEM.H = 1
 ITEM.BulkPrice =  5250;
-ITEM.License = LICENSE_BLACK;
+ITEM.License = "X";
 ITEM.Vars = {
     Amount = 30,
 }

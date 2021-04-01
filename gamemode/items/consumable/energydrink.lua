@@ -10,6 +10,6 @@ ITEM.LookAt =  Vector( 0, 0, 3 );
 ITEM.PhysicalMass	= 1;
 
 ITEM.BulkPrice =  300;
-ITEM.License =  LICENSE_BLACK;
+ITEM.License =  "X";
 ITEM.ConsumeText = "The energy drink has a sugary, acidic taste. It doesn't feel like battery acid, but it does taste like it. Zing!"
 ITEM.UseText = "Drink"

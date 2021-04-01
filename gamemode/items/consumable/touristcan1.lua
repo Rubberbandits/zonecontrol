@@ -7,6 +7,6 @@ ITEM.FOV =  8;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  400;
-ITEM.License =  LICENSE_BLACK; 
+ITEM.License =  "X"; 
 ITEM.ConsumeText = "Although bland, the canned tuna is quite filling. The meat is wet, but it feels dry. The oiley taste lingers in your mouth."
 ITEM.UseText = "Eat"

@@ -6,6 +6,6 @@ ITEM.FOV =  9;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  500;
-ITEM.License =  LICENSE_BLACK;
+ITEM.License =  "X";
 ITEM.ConsumeText = "You eat what glue is left in the tube."
 ITEM.UseText = "Use"

@@ -7,6 +7,6 @@ ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.PhysicalMass	= 1;
 ITEM.BulkPrice =  250;
-ITEM.License =  LICENSE_BLACK;
+ITEM.License =  "X";
 ITEM.ConsumeText = "You take a cautious sip from the bottle despite your best instincts. After a few swigs from the odd Zone concoction, you feel an odd sense of serenity with the Zone. Your senses are dulled but you're absolutely full of energy."
 ITEM.UseText = "Drink"

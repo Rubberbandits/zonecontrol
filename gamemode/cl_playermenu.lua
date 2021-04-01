@@ -745,7 +745,7 @@ function GM:PMPopulateBusiness()
 		if !price or price == 0 then continue end
 		if !v.License then continue end
 		if !LocalPlayer():HasCharFlag(v.License) then continue end
-		
+
 		items_to_list[#items_to_list+1] = k
 	end
 	
@@ -1272,22 +1272,7 @@ local function nOpenStockpilesMenu()
 end
 netstream.Hook( "nOpenStockpilesMenu", nOpenStockpilesMenu );
 
-local flag_to_license = {
-	["X"] = LICENSE_BLACK,
-}
-
 function GM:PMCreateBusiness()
-	
-	local lic = LocalPlayer():BusinessLicenses();
-	local flags = LocalPlayer():CharFlags();
-	
-	for i = 1, #LocalPlayer():CharFlags() do
-		local flag = LocalPlayer():CharFlags()[i]
-		
-		if flag and flag_to_license[flag] then
-			lic = lic + flag_to_license[flag]
-		end
-	end
 	
 	local y = CCP.PlayerMenu.ContentPane:GetTall() - 30;
 	

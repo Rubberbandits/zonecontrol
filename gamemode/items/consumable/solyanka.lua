@@ -7,6 +7,6 @@ ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  550;
-ITEM.License =  LICENSE_BLACK;
+ITEM.License =  "X";
 ITEM.ConsumeText = "You choke down the cold soup with bitterness. The different chunks of meal remind you of about every different dinner you've experienced over the past month, but all in exceptionally shitty ways. They say hot solyanka is a cure for any sickness, but the way your stomach's beginning to rumble, you wonder if cold solyanka has the opposite effect."
 ITEM.UseText = "Eat"

@@ -10,6 +10,6 @@ ITEM.FOV =  14;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  600;
-ITEM.License =  LICENSE_BLACK;
+ITEM.License =  "X";
 ITEM.ConsumeText = "You light up a smoke and take a few puffs, feeling sated."
 ITEM.UseText = "Smoke"

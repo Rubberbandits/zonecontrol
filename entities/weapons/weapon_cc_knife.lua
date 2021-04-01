@@ -35,7 +35,7 @@ SWEP.ItemCamPos = Vector( -0.89, 50, -0.89 );
 SWEP.ItemLookAt = Vector( 0, 0, 8.04 );
 
 SWEP.ItemBulkPrice		= 10000;
-SWEP.ItemLicense		= LICENSE_BLACK;
+SWEP.ItemLicense		= "X";
 */
 
 SWEP.SecondaryBlock = true;

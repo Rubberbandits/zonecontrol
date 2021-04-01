@@ -7,6 +7,6 @@ ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  150;
-ITEM.License =  LICENSE_BLACK;
+ITEM.License =  "X";
 ITEM.ConsumeText = "The sweet confection crumbles and crunches in your mouth. It's not much for a meal, but it's a fine dessert."
 ITEM.UseText = "Eat"

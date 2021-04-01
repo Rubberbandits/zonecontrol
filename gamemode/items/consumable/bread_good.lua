@@ -6,6 +6,6 @@ ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  400;
-ITEM.License =  LICENSE_BLACK;
+ITEM.License =  "X";
 ITEM.ConsumeText = "Your mouth confirms with joy that this is, indeed, bread: pleasantly ordinary, and thankfully far from stale."
 ITEM.UseText = "Eat"

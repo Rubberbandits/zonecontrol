@@ -3,7 +3,7 @@ ITEM.Desc = "A 50-round box of heavy machinegun ammunition.\nIt has %d rounds le
 ITEM.Model = "models/stalker/ammo/pkm.mdl"
 ITEM.Weight = 3
 ITEM.BulkPrice =  8250;
-ITEM.License = LICENSE_BLACK;
+ITEM.License = "X";
 ITEM.Vars = {
     Amount = 50,
 }

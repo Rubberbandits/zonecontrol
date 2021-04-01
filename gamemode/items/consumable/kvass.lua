@@ -6,6 +6,6 @@ ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  650;
-ITEM.License =  LICENSE_BLACK;
+ITEM.License =  "X";
 ITEM.ConsumeText = "Taking a drink, you're reminded of nasty western light beers and cheap apple cider. There's not enough alcohol in the kvass for it to be classified as an alcoholic beverage in Russia, but you're certain enough of this stuff will give you a good buzz. That is, if you can stomach enough of the piss-like drink."
 ITEM.UseText = "Drink"

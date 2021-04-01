@@ -11,4 +11,4 @@ ITEM.ConsumeText = "As you take the pills, you feel your presence float away fro
 ITEM.UseText = "Swallow"
 ITEM.HealAmount = 0
 ITEM.BulkPrice =  2000;
-ITEM.License =  LICENSE_BLACK;
+ITEM.License =  "X";

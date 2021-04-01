@@ -29,7 +29,7 @@ SWEP.ItemCamPos = Vector( 50, 50, 50 );
 SWEP.ItemLookAt = Vector( 0, 0, 0 );
 
 SWEP.ItemBulkPrice		= 100
-SWEP.ItemLicense		= LICENSE_BLACK
+SWEP.ItemLicense		= "X"
 */
 
 function SWEP:CheckThrowPosition( eye, src )
