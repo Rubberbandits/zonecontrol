@@ -106,7 +106,10 @@ function GM:PlayerSpawn( ply )
 	ply:AllowFlashlight( true );
 	
 	ply:SetMaxHealth(100)
-	ply:SetHealth(10)
+	if ply.JustDied then
+		ply:SetHealth(10)
+		ply.JustDied = false
+	end
 	ply.LastRadiation = 0
 	ply:SetRadiation(0)
 	
@@ -608,6 +611,8 @@ function GM:DoPlayerDeath( ply, attacker, dmg )
 		ply:CreateRagdoll();
 		
 	end
+
+	ply.JustDied = true
 end
 
 function GM:PlayerDeathThink(ply)
