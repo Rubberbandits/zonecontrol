@@ -630,7 +630,7 @@ function GM:ScalePlayerDamage( ply, hitgroup, dmginfo )
 
     if( hitgroup == HITGROUP_HEAD ) then
 
-        dmginfo:ScaleDamage( 2 );
+        dmginfo:ScaleDamage( 1.5 );
        
     end
    
