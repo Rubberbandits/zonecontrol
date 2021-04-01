@@ -1,0 +1,17 @@
+ITEM.Name = "Flamethrower"
+ITEM.Desc = "A novel device that converts fuel into fire and then applies it liberally to the target of your fury."
+ITEM.Model = "models/weapons/tfa_doi/w_flame_m2.mdl"
+ITEM.WeaponClass = "tfa_doi_flamethrower_american"
+ITEM.Weight = 6
+ITEM.SafetyPos = Vector(0,0,0)
+ITEM.SafetyAng = Vector(-12.4, 0, 0)
+ITEM.JamChance = 0
+ITEM.DegradeRate = 0.05
+ITEM.FOV 			= 46
+ITEM.CamPos 		= Vector( 50, 4.47, 0.9 )
+ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
+ITEM.SelfRepairCondition = 40
+ITEM.AmmoType = "gas"
+ITEM.License = "A"
+ITEM.BulkPrice = 20000
+ITEM.Slot = 1
