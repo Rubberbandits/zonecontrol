@@ -112,7 +112,6 @@ function GM:PlayerSpawn( ply )
 	elseif ply.CharCreateCompleted then
 		local data = ply:GetCharFromID(ply:CharID())
 		if data then
-			print(data.Health)
 			ply:SetHealth(tonumber(data.Health))
 		end
 	end
