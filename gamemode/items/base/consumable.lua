@@ -21,7 +21,7 @@ BASE.functions.Use = {
 		
 		local owner = item:Owner()
 
-		if item.HungerReduce then
+		if item.HungerReduce and SERVER then
 			owner:SetHunger(math.Clamp(owner:Hunger() - item.HungerReduce, 0, 100))
 			owner:UpdateCharacterField("Hunger", owner:Hunger())
 		end
