@@ -106,7 +106,7 @@ function GM:PlayerSpawn( ply )
 	ply:AllowFlashlight( true );
 	
 	ply:SetMaxHealth(100)
-	ply:SetHealth(100)
+	ply:SetHealth(25)
 	ply.LastRadiation = 0
 	ply:SetRadiation(0)
 	
@@ -231,6 +231,10 @@ netstream.Hook( "nRequestPData", nRequestPData );
 
 function meta:LoadCharacter( data )
 	
+	if self.CharCreateCompleted and self:CharID() and self:CharID() > 0 then
+		GAMEMODE:UpdateCharacterFieldOffline(self:CharID(), "Health", self:Health())
+	end
+
 	self.CharCreateCompleted = true;
 	self:Freeze( false );
 	
@@ -271,6 +275,8 @@ function meta:LoadCharacter( data )
 	self:SetBusinessLicenses( tonumber( data.BusinessLicenses ) );
 	
 	self:SetHunger( tonumber( data.Hunger ) );
+
+	self:SetHealth(tonumber(data.Health))
 
 	self.EntryPort = tonumber( data.EntryPort );
 	
@@ -782,6 +788,8 @@ function GM:PlayerDisconnected( ply )
 		end
 		
 	end
+
+	self:UpdateCharacterFieldOffline(ply:CharID(), "Health", ply:Health())
 	
 end
 

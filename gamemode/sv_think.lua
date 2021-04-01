@@ -1,6 +1,6 @@
 function GM:Think()
 	
-	for _, v in pairs( player.GetAll() ) do
+	for _, v in ipairs( player.GetAll() ) do
 		
 		self:ConsciousThink( v );
 		self:HungerThink( v );

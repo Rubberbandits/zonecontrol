@@ -174,6 +174,7 @@ local CharTable = {
 	{ "LastOnline", "VARCHAR(20)", "" },
 	{ "Location", "FLOAT", "1" },
 	{ "EntryPort", "FLOAT", "1" },
+	{ "Health", "FLOAT", "100"}
 };
 
 local PlayerTable = {

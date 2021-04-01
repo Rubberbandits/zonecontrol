@@ -111,7 +111,7 @@ end
 
 -- General Gameplay
 
-GM.UseHunger = false;
+GM.UseHunger = true;
 
 GM.FistsHaveEffectOnPlayers = false;
 GM.DoorRammingEnabled = true;

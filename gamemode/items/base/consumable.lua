@@ -5,6 +5,7 @@ BASE.Desc =  "";
 BASE.UseText = ""
 BASE.ConsumeText = ""
 BASE.Stackable = true
+BASE.HungerReduce = 10
 BASE.Vars = {
 	Stacked = 1,
 }
@@ -23,6 +24,13 @@ BASE.functions.Use = {
 			item:SetVar("Stacked", amount - 1)
 		else
 			item:RemoveItem()
+		end
+
+		local owner = item:Owner()
+
+		if item.HungerReduce then
+			owner:SetHunger(math.Clamp(owner:Hunger() - item.HungerReduce, 0, 100))
+			owner:UpdateCharacterField("Hunger", owner:Hunger())
 		end
 		
 		return true
