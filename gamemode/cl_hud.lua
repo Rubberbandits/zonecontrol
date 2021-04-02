@@ -917,11 +917,11 @@ function GM:DrawHealthBars()
 
 	if( self.UseHunger ) then
 		
-		draw.RoundedBox( 0, 20, y, w, 14, Color( 30, 30, 30, 200 ) );
+		draw.RoundedBox( 0, 20, 4, w, 14, Color( 30, 30, 30, 200 ) );
 		
 		if( self.HGDraw > 0 ) then
 			
-			draw.RoundedBox( 0, 22, y + 2, ( w - 4 ) * ( math.Clamp( self.HGDraw, 1, 100 ) / 100 ), 10, Color( 37, 150, 37, 255 ) );
+			draw.RoundedBox( 0, 22, 6, ( w - 4 ) * ( math.Clamp( self.HGDraw, 1, 100 ) / 100 ), 10, Color( 37, 150, 37, 255 ) );
 			
 			y = y - 16;
 			
