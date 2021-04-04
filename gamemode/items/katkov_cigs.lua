@@ -18,7 +18,7 @@ ITEM.functions.unpack = {
     CanRun = function(item)
         return true
     end,
-    OnRun = function(item)
+    OnUse = function(item)
         if CLIENT then
             LocalPlayer():Notify(nil, COLOR_NOTIF, "You open the pack of cigarettes.")
         else
