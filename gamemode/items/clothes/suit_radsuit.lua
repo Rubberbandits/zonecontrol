@@ -8,6 +8,8 @@ ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.Bonemerge = "models/stalker_2019/radsuit.mdl";
 ITEM.DegradationProtection = 90
+ITEM.BulkPrice = 500000
+ITEM.License = "S"
 ITEM.Bodygroups = {
 	{1, 0}
 }

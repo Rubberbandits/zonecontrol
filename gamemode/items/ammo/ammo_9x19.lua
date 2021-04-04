@@ -4,8 +4,8 @@ ITEM.Model = "models/stalker/ammo/9x19.mdl"
 ITEM.Weight = 1
 ITEM.W = 1
 ITEM.H = 1
-ITEM.BulkPrice =  5250;
-ITEM.License = "X";
+ITEM.BulkPrice =  2250;
+ITEM.License = "A";
 ITEM.Vars = {
     Amount = 30,
 }

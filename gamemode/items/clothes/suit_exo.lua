@@ -9,6 +9,8 @@ ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.CarryAdd =  15;
 ITEM.Bonemerge = "models/stalker_2019/exosuit.mdl";
 ITEM.DegradationProtection = 85
+ITEM.BulkPrice = 1250000
+ITEM.License = "S"
 ITEM.Bodygroups = {
 	{1, 0}
 }

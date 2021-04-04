@@ -13,6 +13,6 @@ ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
 ITEM.SelfRepairCondition = 70
 ITEM.AmmoType = "ammo_12ga"
 ITEM.License = "B"
-ITEM.BulkPrice = 82000
+ITEM.BulkPrice = 73000
 ITEM.Slot = 2
 ITEM.Damage = 13

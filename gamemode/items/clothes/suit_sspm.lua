@@ -8,6 +8,8 @@ ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.Bonemerge = "models/tnb/stalker_2019/ssp.mdl";
 ITEM.DegradationProtection = 80
+ITEM.BulkPrice = 500000
+ITEM.License = "S"
 ITEM.Bodygroups = {
 	{1, 0}
 }
