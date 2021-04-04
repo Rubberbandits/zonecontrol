@@ -1,6 +1,6 @@
 
 ITEM.Name =  "Broken PDA";
-ITEM.Desc =  "An abused Multimedia PDA with a cracked screen. If the SIM card inside is in-tact, the thing very well may contain some lucrative information. Someone out there’s probably got the tools to crack into it if that’s the case.";
+ITEM.Desc =  "An abused Multimedia PDA with a cracked screen. If the SIM card inside is in-tact, the thing very well may contain some lucrative information. Someone out there's probably got the tools to crack into it if that's the case.";
 ITEM.Model =  "models/kali/miscstuff/stalker/pda.mdl";
 ITEM.Weight =  1;
 ITEM.FOV =  10;

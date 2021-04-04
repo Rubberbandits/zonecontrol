@@ -8,7 +8,7 @@ ITEM.DetectorType = 2
 ITEM.FOV 			= 5;
 ITEM.CamPos 		= Vector( -1.37, -0, 100 );
 ITEM.LookAt 		= Vector( 0, 0, 0 );
-ITEM.Weight 		= 1;
+ITEM.Weight 		= .5;
 
 ITEM.BulkPrice		= 62500;
 ITEM.License		= "X";

@@ -5,4 +5,6 @@ ITEM.Weight =  2;
 ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
-ITEM.BulkPrice =  800;
+ITEM.ConsumeText = "You take a big, hungry bite out of the hunk of meat. It's chewy and hard to get down, but it's packed with deliciously meaty protein and fills you up nicely."
+ITEM.UseText = "Eat"
+ITEM.HungerReduce = 45
