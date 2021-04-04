@@ -2,7 +2,7 @@
 ITEM.Name =  "Kholodets";
 ITEM.Desc =  "Traditional Russian meat jelly. You can see shredded pork and onions buried within the translucent gelatin. It's reminiscent of harsher times and goes great with vodka.";
 ITEM.Model =  "models/z-o-m-b-i-e/st/kitchen/st_posuda_konservy_01_3.mdl";
-ITEM.Weight =  0.5;
+ITEM.Weight =  1.2;
 ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
