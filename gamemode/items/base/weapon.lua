@@ -97,6 +97,8 @@ BASE.functions.Equip = {
 		local tertiary = 0
 		for k,v in next, item:Owner().EquippedWeapons or {} do
 			local wep_item = GAMEMODE.g_ItemTable[v]
+			if !wep_item then item:Owner().EquippedWeapons[k] = nil continue end
+			
 			if !wep_item.TertiarySlot then
 				count = count + 1
 			else

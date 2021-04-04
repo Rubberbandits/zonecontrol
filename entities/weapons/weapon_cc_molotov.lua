@@ -114,7 +114,7 @@ function SWEP:ThinkChild()
 					item = item[1]
 				end
 				
-				item:CallFunction("Unequip")
+				item:CallFunction("Unequip", true)
 				item:RemoveItem(true)
 			end
 			
