@@ -1,9 +1,11 @@
 ITEM.Name =  "Burnt Beans";
-ITEM.Desc =  "A burnt can of beans.";
+ITEM.Desc =  "A barely recognizable can of beans that probably went for a rumble in a Burner.";
 ITEM.Model =  "models/props_junk/garbage_metalcan001a.mdl";
 ITEM.Weight =  1;
 ITEM.FOV =  7;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
-ITEM.ConsumeText = "You open and eat the can of burnt beans."
+ITEM.BulkPrice = 5
+ITEM.License = "X"
+ITEM.ConsumeText = "You pick off the crusty, scorched lid of the can and scrape out the burnt remnants. You don't think you can even stomach a bite and choose to go hungry."
 ITEM.UseText = "Eat"

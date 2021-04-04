@@ -1,12 +1,13 @@
 
 ITEM.Name =  "Clean Water";
-ITEM.Desc =  "A can of water, purified and boiled before being sealed.";
+ITEM.Desc =  "A bottle of water, purified and boiled before being sealed.";
 ITEM.Model =  "models/props_junk/PopCan01a.mdl";
-ITEM.Weight =  1;
+ITEM.Weight =  .5;
 ITEM.FOV =  7;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0.18 );
-ITEM.BulkPrice =  15;
+ITEM.BulkPrice =  375;
 ITEM.License =  "X";
-ITEM.ConsumeText = "You open and drink the entire can."
+ITEM.ConsumeText = "You open and drink the entire bottle. Like a breath of fresh air, it refreshes you."
 ITEM.UseText = "Drink"
+ITEM.HungerReduce = 37

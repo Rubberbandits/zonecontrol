@@ -11,5 +11,20 @@ ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  600;
 ITEM.License =  "X";
-ITEM.ConsumeText = "You light up a smoke and take a few puffs, feeling sated."
-ITEM.UseText = "Smoke"
+ITEM.functions = {}
+ITEM.functions.unpack = {
+    SelectionName = "Open",
+    RemoveOnUse = true,
+    CanRun = function(item)
+        return true
+    end,
+    OnRun = function(item)
+        if CLIENT then
+            LocalPlayer():Notify(nil, COLOR_NOTIF, "You open the pack of cigarettes.")
+        else
+            item:Owner():GiveItem("cigarettes", {Stacked = 20})
+        end
+
+        return true
+    end,
+}

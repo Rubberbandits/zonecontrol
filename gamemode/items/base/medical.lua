@@ -18,6 +18,11 @@ BASE.functions.Use = {
 		if CLIENT then
 			LocalPlayer():Notify(nil, COLOR_NOTIF, item.ConsumeText)
 		else
+			if item.HungerReduce then
+				owner:SetHunger(math.Clamp(owner:Hunger() - item.HungerReduce, 0, 100))
+				owner:UpdateCharacterField("Hunger", owner:Hunger())
+			end
+
 			if item.RadiationHealAmount then
 				item:Owner():SetMaxHealth(math.Clamp(item:Owner():GetMaxHealth() + item.RadiationHealAmount, 0, 100))
 				item:Owner():SetRadiation(math.Clamp(item:Owner():Radiation() - item.RadiationHealAmount, 0, item:Owner():Radiation()))
