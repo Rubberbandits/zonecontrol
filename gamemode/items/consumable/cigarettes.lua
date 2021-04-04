@@ -17,15 +17,20 @@ function ITEM:DynamicFunctions()
             CanRun = function()
                 return true
             end,
-            SelectionName = "Eat",
+            SelectionName = "eat",
             OnUse = function(item)
                 if CLIENT then
-                    LocalPlayer():Notify(nil, COLOR_NOTIF, "Subconsciously, as you put the cigarette in your mouth to smoke, you instead begin chewing. Gulp. Smoky.")
+                    LocalPlayer():Notify(nil, COLOR_NOTIF, "Subconsciously, as you put the cigarette in your mouth to smoke, you instead begin to chew. Gulp. Smoky.")
                 else
                     item:Owner():SetHealth(item:Owner():Health() - 5)
                 end
 
-                item:Remove()
+                local amount = item:GetVar("Stacked", 0)
+                if amount > 1 then
+                    item:SetVar("Stacked", amount - 1)
+                else
+                    item:RemoveItem()
+                end
             end
         }
     }

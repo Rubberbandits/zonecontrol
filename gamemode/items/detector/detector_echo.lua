@@ -10,5 +10,5 @@ ITEM.CamPos 		= Vector( 0.5, 18.75, 60 );
 ITEM.LookAt 		= Vector( 0, 1, 4.83 );
 ITEM.Weight 		= 1.5;
 
-ITEM.BulkPrice		= 4000;
+ITEM.BulkPrice		= 22500;
 ITEM.License		= "X";
