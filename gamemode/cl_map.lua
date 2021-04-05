@@ -59,7 +59,7 @@ end
 
 local function nConnect( ip )
 
-	game.ConsoleCommand( "connect " .. ip .. "\n" );
+	RunConsoleCommand( "connect", ip );
 	
 end
 netstream.Hook( "nConnect", nConnect );
