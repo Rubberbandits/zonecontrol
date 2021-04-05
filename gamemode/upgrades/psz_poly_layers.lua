@@ -9,14 +9,14 @@ UPGRADE.IconY = 27
 
 UPGRADE.ArmorValues = {
 	-- "Bulletproof"
-	[DMG_BULLET] = 0.9, -- 10% increase in resistance
+	[DMG_BULLET] = 0.95, -- 5% increase in resistance
 }
 
 UPGRADE.PropertiesTooltip = {
 	{
 		IconX = 5,
 		IconY = 1,
-		Text = "+10% Bulletproof.",
+		Text = "+5% Bulletproof.",
 	},
 }
 

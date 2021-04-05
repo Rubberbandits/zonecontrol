@@ -9,15 +9,15 @@ UPGRADE.IconY = 21
 
 UPGRADE.ArmorValues = {
 	-- "Thermal"
-    [DMG_BURN] = 0.70,
-    [DMG_SLOWBURN] = 0.70,
+    [DMG_BURN] = 0.90,
+    [DMG_SLOWBURN] = 0.90,
 }
 
 UPGRADE.PropertiesTooltip = {
 	{
 		IconX = 7,
 		IconY = 3,
-		Text = "+30% Thermal Protection.",
+		Text = "+10% Thermal Protection.",
 	},
 }
 

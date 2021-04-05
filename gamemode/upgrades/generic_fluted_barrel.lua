@@ -37,4 +37,4 @@ UPGRADE.RequiredItems = {
 UPGRADE.Incompatible = {
 	"generic_heavy_barrel",
 };
-UPGRADE.Item = WEAPON_RIFLES;
+UPGRADE.Item = WEAPON_ALL;
