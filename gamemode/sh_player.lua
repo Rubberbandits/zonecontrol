@@ -732,11 +732,15 @@ GM.ModelMovementSpeeds = {
 };
 
 function meta:GetSpeeds()
-	
+
 	local w = 90;
 	local r = 200 + self:Speed() * 0.7;
 	local j = 170 + self:Agility() * 0.5;
 	local c = 90;
+
+	if self:CharID() == 0 then
+		return w,r,j,c
+	end
 	
 	if( !self.HasTrait ) then return end
 	
