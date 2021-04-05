@@ -1,7 +1,7 @@
 ITEM.Name = ".50 Action Express Ammo"
 ITEM.Desc = "A 20-round box of .50 AE.\nIt has %d rounds left in it."
 ITEM.Model = "models/stalker/ammo/magnum.mdl"
-ITEM.Weight = 1
+ITEM.Weight = 0.4
 ITEM.BulkPrice =  6250;
 ITEM.License = "A";
 ITEM.W = 1

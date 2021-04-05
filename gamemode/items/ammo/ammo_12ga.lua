@@ -1,7 +1,7 @@
 ITEM.Name = "12 Gauge"
-ITEM.Desc = "A 30-round box of 12 gauge shells.\nIt has %d shells left in it."
+ITEM.Desc = "A 20-round box of 12 gauge shells.\nIt has %d shells left in it."
 ITEM.Model = "models/stalker/ammo/12x70.mdl"
-ITEM.Weight = 1
+ITEM.Weight = 0.4
 ITEM.BulkPrice =  2500;
 ITEM.License = "A";
 ITEM.Vars = {
