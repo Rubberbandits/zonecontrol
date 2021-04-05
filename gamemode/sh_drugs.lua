@@ -36,6 +36,10 @@ function meta:ApplyDrug(class)
 	local data = GAMEMODE:GetDrugData(class)
 	if !data then return end
 
+	if !self.DrugEffects then
+		self:ClearDrug()
+	end
+
 	if data.Duration then
 		timer.Create("DRUG_"..class, data.Duration, 1, function()
 			self:RemoveDrug(class)
@@ -47,6 +51,10 @@ function meta:ApplyDrug(class)
 end
 
 function meta:RemoveDrug(class)
+	if !self.DrugEffects then
+		self:ClearDrug()
+	end
+
 	self.DrugEffects[class] = nil
 	hook.Run("PlayerDrugRemoved", self, class)
 end

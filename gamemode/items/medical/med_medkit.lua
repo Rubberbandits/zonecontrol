@@ -112,19 +112,21 @@ GM:CreateDrugType("MEDKIT", {
 			end
 		end,
 		PlayerDrugApplied = function(ply, drug)
-			GAMEMODE:ResetDrugFX();
-			
-			GAMEMODE.DrugType = "MEDKIT";
-			GAMEMODE.DrugStart = CurTime();
-			
-			surface.PlaySound( Sound( "ambient/atmosphere/hole_hit2.wav" ) );
-			
-			GAMEMODE.DrugAmbience = CreateSound( LocalPlayer(), "ambient/atmosphere/noise2.wav" );
-			GAMEMODE.DrugAmbience:SetSoundLevel( 0 );
-			GAMEMODE.DrugAmbience:Play();
+			if drug == "MEDKIT" and CLIENT then
+				GAMEMODE:ResetDrugFX();
+				
+				GAMEMODE.DrugType = "MEDKIT";
+				GAMEMODE.DrugStart = CurTime();
+				
+				surface.PlaySound( Sound( "ambient/atmosphere/hole_hit2.wav" ) );
+				
+				GAMEMODE.DrugAmbience = CreateSound( LocalPlayer(), "ambient/atmosphere/noise2.wav" );
+				GAMEMODE.DrugAmbience:SetSoundLevel( 0 );
+				GAMEMODE.DrugAmbience:Play();
+			end
 		end,
 		PlayerDrugRemoved = function(ply, drug)
-			if drug == "MEDKIT" then
+			if drug == "MEDKIT" and CLIENT then
 				GAMEMODE:ResetDrugFX()
 			end
 		end,

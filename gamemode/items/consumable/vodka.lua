@@ -96,7 +96,7 @@ GM:CreateDrugType("VODKA", {
 			end
 		end,
 		PlayerDrugRemoved = function(ply, drug)
-			if drug == "VODKA" then
+			if drug == "VODKA" and CLIENT then
 				GAMEMODE:ResetDrugFX()
 			end
 		end,
