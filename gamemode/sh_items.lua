@@ -180,9 +180,7 @@ local s_tUpgradeFiles = file.Find( GM.FolderName.."/gamemode/upgrades/*.lua", "L
 if( #s_tUpgradeFiles > 0 ) then
 
 	for _, v in next, s_tUpgradeFiles do
-	
-		if( GM.Upgrades[string.StripExtension( v )] ) then return end
-	
+
 		local s_UpgradeBase = {}
 		UPGRADE = {};
 		UPGRADE.ClassName = string.StripExtension( v );
