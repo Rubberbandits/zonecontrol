@@ -9,23 +9,23 @@ UPGRADE.IconY = 30
 
 UPGRADE.ArmorValues = {
 	-- "Chemical Burn"
-    [DMG_ACID] = 0.80,
-    [DMG_POISON] = 0.80,
-    [DMG_NERVEGAS] = 0.80,
+    [DMG_ACID] = 0.85,
+    [DMG_POISON] = 0.85,
+    [DMG_NERVEGAS] = 0.85,
     -- "Electric Shock"
-    [DMG_SHOCK] = 0.80,
+    [DMG_SHOCK] = 0.85,
 }
 
 UPGRADE.PropertiesTooltip = {
 	{
 		IconX = 7,
 		IconY = 2,
-		Text = "+20% Chemical Protection.",
+		Text = "+15% Chemical Protection.",
 	},
 	{
 		IconX = 5,
 		IconY = 7,
-		Text = "+20% Electricity Protection.",
+		Text = "+15% Electricity Protection.",
 	}
 }
 
