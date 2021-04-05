@@ -487,7 +487,7 @@ function meta:PostLoadCharsInfo()
 		netstream.Start( self, "nCharacterList", self.SQLCharData );
 		
 		local nStartType = 0;
-		if( GAMEMODE.CurrentLocation != LOCATION_CITY ) then
+		if( GAMEMODE.CurrentLocation != LOCATION_CORDON ) then
 			nStartType = CC_SELECT;
 		else
 			if( self:SQLGetNumChars() < GAMEMODE.MaxCharacters ) then
@@ -501,7 +501,7 @@ function meta:PostLoadCharsInfo()
 		
 	else
 		
-		if( GAMEMODE.CurrentLocation and GAMEMODE.CurrentLocation != LOCATION_CITY ) then
+		if( GAMEMODE.CurrentLocation and GAMEMODE.CurrentLocation != LOCATION_CORDON ) then
 
 			netstream.Start( self, "nConnect", IP_GENERAL..PORT_CITY );
 			return;
