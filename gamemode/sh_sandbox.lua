@@ -864,13 +864,13 @@ function GM:SaveSavedProps()
 		file.CreateDir("zonecontrol/savedprops")
 	end
 	
-	file.Write( "CombineControl/savedprops/" .. game.GetMap() .. ".txt", text );
+	file.Write( "zonecontrol/savedprops/" .. game.GetMap() .. ".txt", text );
 	
 end
 
 function GM:SpawnSavedProps()
 	
-	local c = file.Read( "CombineControl/savedprops/" .. game.GetMap() .. ".txt" ) or "";
+	local c = file.Read( "zonecontrol/savedprops/" .. game.GetMap() .. ".txt" ) or "";
 	local tab = string.Explode( "\n", c );
 	
 	for _, v in ipairs( tab ) do
