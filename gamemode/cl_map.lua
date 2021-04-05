@@ -59,6 +59,7 @@ end
 
 local function nConnect( ip )
 
+	print(ip)
 	LocalPlayer():ConCommand( "connect " .. ip .. "\n" );
 	
 end

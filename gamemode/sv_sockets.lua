@@ -15,6 +15,7 @@ function meta:GoToServer( location, port )
 	self:UpdateCharacterField( "EntryPort", port );
 	
 	local server = ServerLocations[location] or "";
+	print(server)
 		
 	netstream.Start( self, "nConnect", server );
 	
@@ -33,7 +34,7 @@ function GM:CreateLocationPoint( pos, loc, rad, port, cp )
 	
 end
 
-function nServerOfferAccept( ply, loc, port )
+local function nServerOfferAccept( ply, loc, port )
 
 	local good = false;
 	
