@@ -3,7 +3,7 @@ ENT.Base = "base_point";
 
 function ENT:Think()
 	
-	for _, v in pairs( player.GetAll() ) do
+	for _, v in ipairs( player.GetAll() ) do
 		
 		local d = v:GetPos():Distance( self:GetPos() );
 		
@@ -13,10 +13,7 @@ function ENT:Think()
 			
 			if( CurTime() >= v.LastServerOffer + 1 ) then
 				
-				net.Start( "nServerOffer" );
-					net.WriteUInt( self.Location, 5 );
-					net.WriteUInt( self.Port or 1, 5 );
-				net.Send( v );
+				netstream.Start(v, "nServerOffer", self.Location, self.Port)
 				
 			end
 			
