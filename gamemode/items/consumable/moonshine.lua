@@ -12,3 +12,4 @@ ITEM.ConsumeText = "You uncork and swig the moonshine. A shiver crawls up your s
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = 5
 ITEM.RadiationHealAmount = 10
+ITEM.DrugType = "VODKA"

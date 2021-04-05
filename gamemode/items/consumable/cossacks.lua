@@ -11,3 +11,4 @@ ITEM.ConsumeText = "You have a hearty swig of vodka. It feels right."
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = 20
 ITEM.RadiationHealAmount = 10
+ITEM.DrugType = "VODKA"

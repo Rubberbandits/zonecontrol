@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Red Red Wine";
 ITEM.Desc =  "It's up to you.";
 ITEM.Model =  "models/props_junk/garbage_glassbottle003a.mdl";
@@ -12,3 +11,4 @@ ITEM.ConsumeText = "The red red wine makes you feel so fine."
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = 25
 ITEM.RadiationHealAmount = 5
+ITEM.DrugType = "VODKA"
