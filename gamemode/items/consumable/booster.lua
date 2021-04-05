@@ -1,7 +1,7 @@
 ITEM.Name =  "Booster Energy Drink";
 ITEM.Desc =  "A dangerous concoction of uppers and downers in a square plastic bottle. The label's hand-drawn. It smells distinctly of cherry cough syrup.";
 ITEM.Model =  "models/stalker/item/medical/booster.mdl";
-ITEM.Weight =  2.5;
+ITEM.Weight =  0.25;
 ITEM.FOV =  7;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );

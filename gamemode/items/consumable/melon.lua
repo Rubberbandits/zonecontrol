@@ -2,7 +2,7 @@
 ITEM.Name =  "Melon";
 ITEM.Desc =  "A fruit, watery and juicy. They grow in squares in Japan!";
 ITEM.Model =  "models/props_junk/watermelon01.mdl";
-ITEM.Weight =  10;
+ITEM.Weight =  5;
 ITEM.FOV =  14;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );

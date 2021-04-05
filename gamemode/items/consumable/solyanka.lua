@@ -2,7 +2,7 @@
 ITEM.Name =  "Solyanka";
 ITEM.Desc =  "A stew of pitiful leftovers. You can't tell exactly what's in it, just that there's a lot of indistinct... stuff. Hopefully some of it is meat, and all of it is edible.";
 ITEM.Model =  "models/z-o-m-b-i-e/st/kitchen/st_posuda_konservy_01_3.mdl";
-ITEM.Weight =  1.5;
+ITEM.Weight =  0.5;
 ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );

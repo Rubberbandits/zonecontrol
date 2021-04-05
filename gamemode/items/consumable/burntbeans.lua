@@ -1,7 +1,7 @@
 ITEM.Name =  "Burnt Beans";
 ITEM.Desc =  "A barely recognizable can of beans that probably went for a rumble in a Burner.";
 ITEM.Model =  "models/props_junk/garbage_metalcan001a.mdl";
-ITEM.Weight =  0.2;
+ITEM.Weight =  0.1;
 ITEM.FOV =  7;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
