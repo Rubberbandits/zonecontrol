@@ -2,7 +2,7 @@
 ITEM.Name =  "Sausage";
 ITEM.Desc =  "Preserved and packaged roll of ground pork. A high protein meal that is tastier than bread.";
 ITEM.Model =  "models/stalker/item/food/sausage.mdl";
-ITEM.Weight =  1;
+ITEM.Weight =  0.25;
 ITEM.FOV =  6;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 1, -1, 0 );

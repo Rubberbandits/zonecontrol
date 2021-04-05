@@ -2,7 +2,7 @@
 ITEM.Name =  "Canned Water";
 ITEM.Desc =  "Purified water in a can.";
 ITEM.Model =  "models/props_junk/PopCan01a.mdl";
-ITEM.Weight =  0.5;
+ITEM.Weight =  0.1;
 ITEM.FOV =  7;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0.18 );

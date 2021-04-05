@@ -2,7 +2,7 @@
 ITEM.Name =  "Energy Drink";
 ITEM.Desc =  "Canned energy drink. One of many things that keep a stalker awake during the night.";
 ITEM.Model =  "models/stalker/item/food/drink.mdl";
-ITEM.Weight =  2.5;
+ITEM.Weight =  0.33;
 ITEM.FOV =  6;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 3 );

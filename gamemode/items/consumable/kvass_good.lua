@@ -2,7 +2,7 @@
 ITEM.Name =  "Homemade Kvass";
 ITEM.Desc =  "Homemade bread-beer, from raisins and black bread. The contents are a thick and appetizing dark orange.";
 ITEM.Model =  "models/kali/miscstuff/stalker/food/cossacks vodka.mdl";
-ITEM.Weight =  0.8;
+ITEM.Weight =  0.33;
 ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );

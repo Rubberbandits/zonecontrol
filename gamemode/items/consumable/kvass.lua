@@ -1,7 +1,7 @@
 ITEM.Name =  "Kvass";
 ITEM.Desc =  "Smuggled bread-beer, made from raisins and black bread. The contents are a thick and murky dark orange.";
 ITEM.Model =  "models/kali/miscstuff/stalker/food/cossacks vodka.mdl";
-ITEM.Weight =  0.5;
+ITEM.Weight =  0.33;
 ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
