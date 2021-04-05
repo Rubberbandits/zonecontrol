@@ -34,7 +34,8 @@ end
 
 function meta:ApplyDrug(class)
 	local data = GAMEMODE:GetDrugData(class)
-	if !data then return
+	if !data then return end
+	
 	if data.Duration then
 		timer.Create("DRUG_"..class, data.Duration, 1, function()
 			self:RemoveDrug(class)
