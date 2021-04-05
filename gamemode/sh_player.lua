@@ -732,11 +732,15 @@ GM.ModelMovementSpeeds = {
 };
 
 function meta:GetSpeeds()
-	
+
 	local w = 90;
 	local r = 200 + self:Speed() * 0.7;
 	local j = 170 + self:Agility() * 0.5;
 	local c = 90;
+
+	if self:CharID() == 0 then
+		return w,r,j,c
+	end
 	
 	if( !self.HasTrait ) then return end
 	
@@ -790,21 +794,23 @@ function meta:GetSpeeds()
 		
 	end
 
-	for k,v in next, self.Inventory do
-		if v.Base != "clothes" then continue end
-		if !v:GetVar("Equipped", false) then continue end
-		if !v.GetSpeeds then continue end
+	if self.Inventory then
+		for k,v in next, self.Inventory do
+			if v.Base != "clothes" then continue end
+			if !v:GetVar("Equipped", false) then continue end
+			if !v.GetSpeeds then continue end
 
-		local speeds = v:GetSpeeds()
+			local speeds = v:GetSpeeds()
+			
+			w = w + (speeds["w"] or 0)
+			r = r + (speeds["r"] or 0)
+			c = c + (speeds["c"] or 0)
+			j = j + (speeds["j"] or 0)
+		end
 		
-		w = w + (speeds["w"] or 0)
-		r = r + (speeds["r"] or 0)
-		c = c + (speeds["c"] or 0)
-		j = j + (speeds["j"] or 0)
-	end
-	
-	if self:InventoryWeight() > self:InventoryMaxWeight() then
-		r = w
+		if self:InventoryWeight() > self:InventoryMaxWeight() then
+			r = w
+		end
 	end
 	
 	return w, r, j, c;

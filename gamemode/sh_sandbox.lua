@@ -821,7 +821,7 @@ function GM:SaveSavedProps()
 	
 	local text = "";
 	
-	for _, v in pairs( ents.FindByClass( "prop_physics" ) ) do
+	for _, v in ipairs( ents.FindByClass( "prop_physics" ) ) do
 		
 		if( v:PropSaved() ) then
 			
@@ -855,17 +855,25 @@ function GM:SaveSavedProps()
 		end
 		
 	end
+
+	if !file.IsDir("zonecontrol", "DATA") then
+		file.CreateDir("zonecontrol")
+	end
+
+	if !file.IsDir("zonecontrol/savedprops", "DATA") then
+		file.CreateDir("zonecontrol/savedprops")
+	end
 	
-	file.Write( "CombineControl/savedprops/" .. game.GetMap() .. ".txt", text );
+	file.Write( "zonecontrol/savedprops/" .. game.GetMap() .. ".txt", text );
 	
 end
 
 function GM:SpawnSavedProps()
 	
-	local c = file.Read( "CombineControl/savedprops/" .. game.GetMap() .. ".txt" ) or "";
+	local c = file.Read( "zonecontrol/savedprops/" .. game.GetMap() .. ".txt" ) or "";
 	local tab = string.Explode( "\n", c );
 	
-	for _, v in pairs( tab ) do
+	for _, v in ipairs( tab ) do
 		
 		if( string.len( v ) > 0 ) then
 			
