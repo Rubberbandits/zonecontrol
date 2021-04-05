@@ -15,7 +15,9 @@ function GM:RefreshHelpMenuContent()
             /y - Yell
             /w - Whisper
             /me - Action
+			/lme - Loud action
             /it - World action
+			/lit - Loud world action
             /ev - Emotes world actions globally, for GM's and Admins
             /lev - Emotes world actions locally, for GM's and Admins
 
@@ -51,26 +53,26 @@ function GM:RefreshHelpMenuContent()
 		Register your username if you want to be able to message people privately. If your PDA is annoying you, turn it off.
 
 		/pda all - Send a public message to all PDA users
-		/pda username - Send a private message to a specific PDA username. Use the Contacts tab to find active users
+		/pda username - Send a private message to a specific PDA username. Use the Contacts tab to find active users.
 
-		When viewing the contents of your PDA, you should find the Journal, Contacts, and Messages tab, as well as a clock
+		When viewing the contents of your PDA, you should find the Journal, Contacts, and Messages tab, as well as a clock.
 
-		The Journal allows you to take personal notes. Tap the green New entry button to create a new entry
-		Select a title for your entry, then fill out the contents. Handy for writing poems during your roadside picnic
+		The Journal allows you to take personal notes. Tap the green "New entry" button to create a new entry.
+		Select a title for your entry, then fill out the contents. Handy for writing poems during your roadside picnic.
 
-		The Contacts tab allows you to view all other active PDA users connected to your network
+		The Contacts tab allows you to view all other active PDA users connected to your network.
 
-		The Messages tab will log and date messages you send and receive
+		The Messages tab will log and date messages you send and receive.
 
-		Extra functions and updates to your PDA system may come overtime! Check back here to learn new functions]] 
+		Extra functions and updates to your PDA system may come overtime! Check back here to learn new functions.]] 
 		},
-		{ "Tooltrust", [[By default, you don't have tooltrust, you have phystrust, and you have proptrust. Phys- and proptrust give you a physgun and the ability to spawn props respectively. Tooltrust gives you a toolgun.
+		{ "Tooltrust", [[By default, you don't have tooltrust. You have phystrust, and you have proptrust. Phys- and proptrust give you a physgun and the ability to spawn props respectively. Tooltrust gives you a toolgun.
 		
 		Basic tooltrust gives you some common simple tools, a slightly increased prop limit, and slightly increased prop spawn permissions. To get this, ask an admin.
 		
-		Advanced tooltrust gives you most tools, an increased prop limit, and increased prop spawn permissions. Advanced tooltrust users' props are solid, whereas basic and non tooltrusted props are no-collided. To get this, check the forums.
+		Advanced tooltrust gives you most tools, an increased prop limit, and increased prop spawn permissions. Advanced tooltrust users' props are solid, whereas basic and non tooltrusted props are no-collided. To get this, ask an admin.
 		
-		Admins can take away phys and proptrust if you abuse the privillege - you can get it back on the forums.]] 
+		Admins can take away phys and proptrust if you abuse the privillege - you can get it back through Discord.]] 
 		},
 		{ "Flags", 
 			[[ZoneControl uses a flag system. Most flags are automatic - you don't need to run a command to access them.
@@ -78,8 +80,13 @@ function GM:RefreshHelpMenuContent()
 
 			Character Flags
 			T - Technician
-			X - Black Market Dealer
+			X - Black Market Dealer (Trader)
 			G - Gamemaster, per-character
+		
+			Trader Flags (You must have X flags to have these.)
+			A - Ammunition
+			B - Firearms
+			S - Suits
 			]] 
 		},
 	};
