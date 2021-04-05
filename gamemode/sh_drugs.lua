@@ -20,6 +20,12 @@ function GM:GetDrugData(class)
 	return self.DrugEffects[class]
 end
 
+function meta:ClearDrug()
+	
+	self.DrugEffects = { };
+	
+end
+
 function meta:HasDrug(d)
 	if SERVER then
 		if !self.DrugEffects then
