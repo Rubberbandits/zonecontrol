@@ -934,7 +934,7 @@ end
 function GM:GetPlayerSight()
 	
 	local range = 256;
-	range = range + ( LocalPlayer():Perception() + LocalPlayer():DrugPerceptionMod() ) * 20.48;
+	range = range + ( LocalPlayer():Perception() ) * 20.48;
 	range = range - ( LocalPlayer():Hunger() / 100 ) * 200;
 	
 	return 512;
@@ -1700,7 +1700,6 @@ function GM:HUDPaint()
 		if( cookie.GetNumber( "zc_hud", 1 ) == 1 and !self.Mastermind ) then
 			
 			self:DrawDamage();
-			self:DrawDrugs();
 			self:DrawConsciousness();
 			self:DrawDoors();
 			self:DrawEntities();
@@ -1855,8 +1854,6 @@ function GM:PostDrawOpaqueRenderables()
 		self:MapPostDrawOpaqueRenderables();
 		
 	end
-	
-	self:DrugPostDrawOpaqueRenderables();
 	
 end
 
@@ -2069,8 +2066,6 @@ function GM:RenderScreenspaceEffects()
 		DrawColorModify( tab );
 		
 	end
-	
-	self:RenderScreenspaceDrugs();
 	
 end
 

@@ -770,8 +770,6 @@ function meta:GetSpeeds()
 		
 	end
 	
-	r = r * self:DrugSpeedMod();
-	
 	if( string.lower( self:GetModel() ) == "models/stalker.mdl" ) then
 		
 		w = 36.89;
@@ -812,9 +810,15 @@ function meta:GetSpeeds()
 			r = w
 		end
 	end
+
+	w, r, j, c = hook.Run("GetPlayerSpeeds", self, w, r, j, c)
 	
 	return w, r, j, c;
 	
+end
+
+function GM:GetPlayerSpeeds(ply, w, r, j, c)
+	return w, r, j, c
 end
 
 function player.GetByCharID( id )

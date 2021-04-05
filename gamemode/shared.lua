@@ -6,6 +6,7 @@ DeriveGamemode( "sandbox" );
 util.IncludeDir("gui", false, true, "client")
 
 include("sh_npc_code.lua")
+include("sh_drugs.lua")
 
 GM.Name = "ZoneControl";
 GM.Author = "rusty";

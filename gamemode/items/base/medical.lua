@@ -32,6 +32,10 @@ BASE.functions.Use = {
 				item:Owner():SetHealth(math.min(item:Owner():Health() + item.HealAmount, item:Owner():GetMaxHealth()))
 			end
 		end
+
+		if item.DrugType then
+			item:Owner():ApplyDrug(item.DrugType)
+		end
 		
 		local amount = item:GetVar("Stacked", 0)
 		if amount > 1 then

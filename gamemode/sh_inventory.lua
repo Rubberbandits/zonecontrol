@@ -146,9 +146,15 @@ function meta:InventoryMaxWeight()
 			end
 		end
 	end
+
+	w = hook.Run("GetInventoryMaxWeight", self, w)
 	
 	return w;
 	
+end
+
+function GM:GetInventoryMaxWeight(ply, weight)
+	return weight
 end
 
 function meta:GiveItem( item_class, vars, x, y )

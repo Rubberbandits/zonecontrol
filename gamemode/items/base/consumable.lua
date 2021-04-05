@@ -37,6 +37,10 @@ BASE.functions.Use = {
 			end
 		end
 
+		if item.DrugType then
+			item:Owner():ApplyDrug(item.DrugType)
+		end
+
 		local amount = item:GetVar("Stacked", 0)
 		if amount > 1 then
 			item:SetVar("Stacked", amount - 1)
