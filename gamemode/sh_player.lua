@@ -770,8 +770,6 @@ function meta:GetSpeeds()
 		
 	end
 	
-	r = r * self:DrugSpeedMod();
-	
 	if( string.lower( self:GetModel() ) == "models/stalker.mdl" ) then
 		
 		w = 36.89;
@@ -812,9 +810,15 @@ function meta:GetSpeeds()
 			r = w
 		end
 	end
+
+	w, r, j, c = hook.Run("GetPlayerSpeeds", self, w, r, j, c)
 	
 	return w, r, j, c;
 	
+end
+
+function GM:GetPlayerSpeeds(ply, w, r, j, c)
+	return w, r, j, c
 end
 
 function player.GetByCharID( id )
@@ -893,11 +897,19 @@ end
 function meta:GetRadiationResistance()
 	if CLIENT and self != LocalPlayer() then return end
 	
+	local mult = 1
+
 	for k,v in next, self.Inventory do
-		if v.Base == "clothes" and v:GetVar("Equipped", false) then
-			return v:GetArmorValues()[DMG_RADIATION] or 1
+		if v.Base == "clothes" or v.Base == "artifact" and v:GetVar("Equipped", false) then
+			mult = v:GetArmorValues()[DMG_RADIATION] or 1
 		end
 	end
+
+	mult = mult * hook.Run("GetPlayerRadiationResistance", self, mult)
 	
-	return 1
+	return mult
+end
+
+function GM:GetPlayerRadiationResistance(ply, mult)
+	return mult
 end

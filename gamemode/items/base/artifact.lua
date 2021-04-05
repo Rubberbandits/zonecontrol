@@ -86,3 +86,6 @@ end
 function BASE:CanSell()
 	return true
 end
+function BASE:GetArmorValues()
+	return self.ArmorValues or {}
+end

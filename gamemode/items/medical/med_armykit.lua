@@ -13,3 +13,4 @@ ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 5.02 );
 ITEM.BulkPrice =  11250;
 ITEM.License =  "X";
+ITEM.DrugType = "MEDKIT"

@@ -13,9 +13,7 @@ ITEM.ConsumeText = "The anabiotic starts to kick in quickly. Your mind is overwh
 ITEM.HealAmount = 0
 ITEM.FunctionHooks = {}
 ITEM.FunctionHooks.PostUse = function(item)
-	if CLIENT then
-		GAMEMODE:DrugEffectBreen();	
-	else
+	if SERVER then
 		local ply = item.owner -- have to cache because item gets removed!!
 		timer.Simple( 5, function() ply:TakeCDamage( 100 ) end )	
 	end
