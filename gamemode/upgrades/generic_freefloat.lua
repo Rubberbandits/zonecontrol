@@ -29,4 +29,4 @@ UPGRADE.RequiredItems = {
 };
 
 UPGRADE.Incompatible = {};
-UPGRADE.Item = WEAPON_RIFLES;
+UPGRADE.Item = WEAPON_ALL;

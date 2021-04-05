@@ -31,5 +31,5 @@ UPGRADE.Incompatible = {
 
 --CLASS
 UPGRADE.Item = {
-	gun_rare_uspmatch = true,
+	weapon_srp_uspmatch = true,
 }

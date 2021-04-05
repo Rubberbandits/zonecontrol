@@ -277,7 +277,7 @@ function meta:Gender()
 	
 	local mdl = string.lower( self:GetModel() );
 	
-	if(mdl == "models/cultist/stalker/female_02.mdl" ) then return GENDER_NIGGER end
+	if(mdl == "models/cultist/stalker/female_02.mdl" ) then return GENDER_EXCEPTION end
 	
 	if( string.find( mdl, "female" ) ) then return GENDER_FEMALE end
 	if( mdl == "models/player/alyx.mdl" ) then return GENDER_FEMALE end
