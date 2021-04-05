@@ -9,6 +9,7 @@ ITEM.PhysicalMass	= 1;
 ITEM.ConsumeText = "You swallow the pills."
 ITEM.UseText = "Swallow"
 ITEM.BulkPrice =  2500;
+ITEM.License = "D"
 ITEM.DrugType = "RADIOPROTECT"
 
 GM:CreateDrugType("RADIOPROTECT", {

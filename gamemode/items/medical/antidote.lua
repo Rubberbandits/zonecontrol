@@ -10,4 +10,4 @@ ITEM.ConsumeText = "The antidote starts to clear toxins from your system. Over t
 ITEM.HealAmount = 0
 ITEM.UseText = "Inject"
 ITEM.BulkPrice =  1500;
-ITEM.License =  "X";
+ITEM.License =  "D";

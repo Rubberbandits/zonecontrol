@@ -15,5 +15,5 @@ ITEM.FOV =  9;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 5.02 );
 ITEM.BulkPrice =  13125;
-ITEM.License =  "X";
+ITEM.License =  "D";
 ITEM.DrugType = "MEDKIT"

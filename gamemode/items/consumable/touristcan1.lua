@@ -8,6 +8,6 @@ ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  375;
 ITEM.License =  "X"; 
-ITEM.ConsumeText = "Although overly salty, the canned Spam is quite filling. The meat is wet, but it feels dry. The oiley aftertaste lingers in your mouth."
+ITEM.ConsumeText = "Although overly salty, the canned Spam is quite filling. The meat is wet, but it feels dry. The oily aftertaste lingers in your mouth."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 37

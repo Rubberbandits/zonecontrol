@@ -86,6 +86,7 @@ function GM:RefreshHelpMenuContent()
 			Trader Flags (You must have X flags to have these.)
 			A - Ammunition
 			B - Firearms
+			D - Medical
 			S - Suits
 			]] 
 		},
