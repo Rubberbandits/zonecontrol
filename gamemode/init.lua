@@ -162,14 +162,6 @@ function GM:Initialize()
 	end
 end
 
-function GM:InitPostEntity()
-	self:InitSQL();
-	self:LoadBans();
-	RetrieveStockpiles();
-
-	net.Receive("VJSay", function(len, pl) end)
-end
-
 GM.FullyLoaded = true;
 
 MsgC( Color( 200, 200, 200, 255 ), "Serverside loaded.\n" );
