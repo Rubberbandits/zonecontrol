@@ -57,17 +57,14 @@ function GM:CreateParticleEmitters()
 	
 end
 
-function nConnect( ip )
+local function nConnect( ip )
 
 	LocalPlayer():ConCommand( "connect " .. ip .. "\n" );
 	
 end
 netstream.Hook( "nConnect", nConnect );
 
-function nServerOffer( loc, port )
-	
-	local loc = net.ReadUInt( 5 );
-	local port = net.ReadUInt( 5 );
+local function nServerOffer( loc, port )
 	
 	if( CCP.ServerOffer and CCP.ServerOffer:IsValid() ) then return end
 	
