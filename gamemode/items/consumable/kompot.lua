@@ -2,7 +2,7 @@
 ITEM.Name =  "Kompot";
 ITEM.Desc =  "A sweet fruity drink, served hot or cold depending on the season. This kompot is made with... well, something, that's presumably fruit. The indistinct chunks float at the surface of the liquid.";
 ITEM.Model =  "models/kali/miscstuff/stalker/food/energy drink.mdl";
-ITEM.Weight =  1;
+ITEM.Weight =  0.25;
 ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );

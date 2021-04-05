@@ -2,7 +2,7 @@
 ITEM.Name =  "Box of Crayons";
 ITEM.Desc =  "A box of assorted crayons. They double as candles, conveniently.";
 ITEM.Model =  "models/props_lab/box01a.mdl";
-ITEM.Weight =  0;
+ITEM.Weight =  0.1;
 ITEM.FOV =  10;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );

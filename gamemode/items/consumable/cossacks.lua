@@ -1,7 +1,7 @@
 ITEM.Name =  "Cossacks Vodka";
 ITEM.Desc =  "A clear liquor distilled by the Katkov company. 65% alcohol, by volume.";
 ITEM.Model =  "models/kali/miscstuff/stalker/food/cossacks vodka.mdl";
-ITEM.Weight =  2;
+ITEM.Weight =  0.75;
 ITEM.FOV =  7;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );

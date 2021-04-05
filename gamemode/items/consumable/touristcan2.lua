@@ -2,7 +2,7 @@
 ITEM.Name =  "Kalakukko";
 ITEM.Desc =  "Smoked salmon in rye bread, tinned. 439kcals of energy, 26g's of protein, 32g's of carbohydrates, and 22g's of fat.";
 ITEM.Model =  "models/kali/miscstuff/stalker/food/tourist's breakfast.mdl";
-ITEM.Weight =  1.5;
+ITEM.Weight =  0.5;
 ITEM.FOV =  8;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );

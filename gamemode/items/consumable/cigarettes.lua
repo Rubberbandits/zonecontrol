@@ -2,7 +2,7 @@
 ITEM.Name =  "Cigarettes";
 ITEM.Desc =  "A single cigarette.";
 ITEM.Model =  "models/props_lab/box01a.mdl";
-ITEM.Weight =  .1;
+ITEM.Weight =  .025;
 ITEM.FOV =  7;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0.18 );
