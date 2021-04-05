@@ -72,7 +72,7 @@ GM:CreateDrugType("MEDKIT", {
 				end
 			end
 		end,
-		RenderScreenspaceEffects = function()
+		/*RenderScreenspaceEffects = function()
 			if GAMEMODE.DrugType and GAMEMODE.DrugType == "MEDKIT" then
 				local d = CurTime() - GAMEMODE.DrugStart;
 				
@@ -110,7 +110,7 @@ GM:CreateDrugType("MEDKIT", {
 					
 				end
 			end
-		end,
+		end,*/
 		PlayerDrugApplied = function(ply, drug)
 			if drug == "MEDKIT" and CLIENT then
 				GAMEMODE:ResetDrugFX();
