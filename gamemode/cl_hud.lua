@@ -1280,6 +1280,26 @@ local EntityRenderingFuncs = {
 	end,
 }
 
+hook.Add("Think", "MaintainHUDEntList", function()
+	local self = gmod_GetGamemode()
+
+	if !self.NextHUDEntUpdate then
+		self.NextHUDEntUpdate = CurTime()
+	end
+
+	if self.NextHUDEntUpdate <= CurTime() then
+		if !self.HUDEntList then
+			self.HUDEntList = {}
+		end
+
+		for class,func in next, EntityRenderingFuncs do
+			table.Add(self.HUDEntList, ents.FindByClass(class))
+		end
+
+		self.NextHUDEntUpdate = CurTime() + 1
+	end
+end)
+
 function GM:DrawEntities()
 	
 	if( self.SeeAll and ( !LocalPlayer():IsAdmin() and !LocalPlayer():IsEventCoordinator() ) ) then
@@ -1290,7 +1310,7 @@ function GM:DrawEntities()
 		
 	end
 
-	local entsToLoop = self.SeeAll and ents.GetAll() or ents.FindInSphere(LocalPlayer():GetPos(), 700)
+	local entsToLoop = self.SeeAll and self.HUDEntList or ents.FindInSphere(LocalPlayer():GetPos(), 700)
 
 	for _,v in ipairs(entsToLoop) do
 		local func = EntityRenderingFuncs[v:GetClass()]
