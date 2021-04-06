@@ -1280,6 +1280,7 @@ local EntityRenderingFuncs = {
 	end,
 }
 
+/*
 hook.Add("Think", "MaintainHUDEntList", function()
 	local self = gmod_GetGamemode()
 
@@ -1299,6 +1300,7 @@ hook.Add("Think", "MaintainHUDEntList", function()
 		self.NextHUDEntUpdate = CurTime() + 1
 	end
 end)
+*/
 
 function GM:DrawEntities()
 	
@@ -1310,7 +1312,7 @@ function GM:DrawEntities()
 		
 	end
 
-	local entsToLoop = self.SeeAll and self.HUDEntList or ents.FindInSphere(LocalPlayer():GetPos(), 700)
+	local entsToLoop = self.SeeAll and ents.GetAll() or ents.FindInSphere(LocalPlayer():GetPos(), 700)
 
 	for _,v in ipairs(entsToLoop) do
 		local func = EntityRenderingFuncs[v:GetClass()]
