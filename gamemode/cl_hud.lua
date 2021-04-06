@@ -1280,7 +1280,18 @@ local EntityRenderingFuncs = {
 	end,
 }
 
-/*
+local function AddNumericalTables(dest, source)
+	-- At least one of them needs to be a table or this whole thing will fall on its ass
+	if ( !istable( source ) ) then return dest end
+	if ( !istable( dest ) ) then dest = {} end
+
+	for k, v in ipairs( source ) do
+		table.insert( dest, v )
+	end
+
+	return dest
+end
+
 hook.Add("Think", "MaintainHUDEntList", function()
 	local self = gmod_GetGamemode()
 
@@ -1294,13 +1305,12 @@ hook.Add("Think", "MaintainHUDEntList", function()
 		end
 
 		for class,func in next, EntityRenderingFuncs do
-			table.Add(self.HUDEntList, ents.FindByClass(class))
+			AddNumericalTables(self.HUDEntList, ents.FindByClass(class))
 		end
 
-		self.NextHUDEntUpdate = CurTime() + 1
+		self.NextHUDEntUpdate = CurTime() + 5
 	end
 end)
-*/
 
 function GM:DrawEntities()
 	
@@ -1312,9 +1322,11 @@ function GM:DrawEntities()
 		
 	end
 
-	local entsToLoop = self.SeeAll and ents.GetAll() or ents.FindInSphere(LocalPlayer():GetPos(), 700)
+	local entsToLoop = self.SeeAll and self.HUDEntList or ents.FindInSphere(LocalPlayer():GetPos(), 700)
 
 	for _,v in ipairs(entsToLoop) do
+		if !IsValid(v) then continue end
+
 		local func = EntityRenderingFuncs[v:GetClass()]
 		if func then func(v) end
 	end
