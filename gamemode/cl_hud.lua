@@ -984,11 +984,11 @@ local Player_Ragdoll = GetMetaMethod("Player", "Ragdoll")
 local Player_Alive = GetMetaMethod("Player", "Alive")
 local Player_GetEyeTraceNoCursor = GetMetaMethod("Player", "GetEyeTraceNoCursor")
 
-local Vector_DistToSqrt = GetMetaMethod("Vector", "DistToSqrt")
+local Vector_DistToSqr = GetMetaMethod("Vector", "DistToSqr")
 local Vector_ToScreen = GetMetaMethod("Vector", "ToScreen")
 
 local function WithinRadius(pos1, pos2, d)
-	return Vector_DistToSqrt(pos1, pos2) < d * d
+	return Vector_DistToSqr(pos1, pos2) < d * d
 end
 
 local EntityRenderingFuncs = {
