@@ -193,3 +193,16 @@ local function set_rank(ply, _, args)
 	end
 end
 concommand.Add( "rpa_serversetrank", set_rank );
+
+/*
+	Console command running support
+*/
+
+hook.Add("InitPostEntity", "RCONCommandSupport", function()
+	Entity(0).Notify = function(ent, font, color, text, ...)
+		MsgC(color, Format(text, ...).."\n")
+	end
+	Entity(0).Nick = function(self)
+		return "Console"
+	end
+end)
