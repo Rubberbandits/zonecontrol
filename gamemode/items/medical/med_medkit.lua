@@ -59,11 +59,13 @@ GM:CreateDrugType("MEDKIT", {
 						
 					end
 					
+					/*
 					if( GAMEMODE.DrugAmbience ) then
 						
 						GAMEMODE.DrugAmbience:ChangeVolume( math.abs( math.sin( CurTime() * 10 ) * mul ), 0 );
 						
 					end
+					*/
 					
 				else
 					
@@ -119,10 +121,6 @@ GM:CreateDrugType("MEDKIT", {
 				GAMEMODE.DrugStart = CurTime();
 				
 				surface.PlaySound( Sound( "ambient/atmosphere/hole_hit2.wav" ) );
-				
-				GAMEMODE.DrugAmbience = CreateSound( LocalPlayer(), "ambient/atmosphere/noise2.wav" );
-				GAMEMODE.DrugAmbience:SetSoundLevel( 0 );
-				GAMEMODE.DrugAmbience:Play();
 			end
 		end,
 		PlayerDrugRemoved = function(ply, drug)
