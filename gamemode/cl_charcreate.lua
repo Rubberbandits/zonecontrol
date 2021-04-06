@@ -251,7 +251,7 @@ function GM:CreateCharCreate()
 		
 	end
 	
-	if( self.CCMode != CC_SELECT or self.CCMode != CC_SELECT_C ) then
+	if( self.CCMode != CC_SELECT and self.CCMode != CC_SELECT_C ) then
 	
 		CCP.CharCreatePanel.m_nPage = 1;
 		self:CharCreatePage1();

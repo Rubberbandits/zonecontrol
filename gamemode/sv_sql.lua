@@ -635,6 +635,8 @@ end
 
 function meta:SaveNewCharacter( name, title, titleone, titletwo, model, trait, skin, gear )
 	
+	if GAMEMODE.CurrentLocation and GAMEMODE.CurrentLocation != LOCATION_CORDON then return end
+
 	local d = os.date( "!%m/%d/%y %H:%M:%S" );
 	local ply = self;
 	local inventoryTbl = {}
