@@ -15,7 +15,6 @@ function meta:GoToServer( location, port )
 	self:UpdateCharacterField( "EntryPort", port );
 	
 	local server = ServerLocations[location] or "";
-	print(server)
 		
 	netstream.Start( self, "nConnect", server );
 	
