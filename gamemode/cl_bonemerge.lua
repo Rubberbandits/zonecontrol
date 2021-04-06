@@ -265,7 +265,7 @@ local function BonemergeThink()
 		if !v.CharID then continue end
 		if v:CharID() <= 0 then continue end
 		if v:IsDormant() then continue end
-		if !GAMEMODE.EfficientModelCheck[v:GetModel()] then continue end
+		if !GAMEMODE.EfficientModelCheck[v:GetModel()] then GAMEMODE:RemoveBonemergedItemCache(v) continue end
 		if v:GetNoDraw() then continue end
 		
 		ProcessBody(v)
