@@ -1290,13 +1290,14 @@ function GM:DrawEntities()
 		
 	end
 
-	local entsToLoop = self.SeeAll and ents.GetAll() or ents.FindInSphere(LocalPlayer():GetPos(), 512)
+	local entsToLoop = self.SeeAll and ents.GetAll() or ents.FindInSphere(LocalPlayer():GetPos(), 700)
 
 	for _,v in ipairs(entsToLoop) do
 		local func = EntityRenderingFuncs[v:GetClass()]
 		if func then func(v) end
 	end
 	
+	/*
 	for _, v in ipairs( ents.FindByClass( "npc_*" ) ) do
 		
 		if( table.HasValue( self.NPCDrawBlacklist, v:GetClass() ) ) then continue; end
@@ -1323,6 +1324,7 @@ function GM:DrawEntities()
 		end
 		
 	end
+	*/
 	
 end
 

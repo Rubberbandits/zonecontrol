@@ -264,7 +264,7 @@ local function ProcessBody(ply)
 end
 
 local function BonemergeThink()
-	for k,v in next, player.GetAll() do
+	for k,v in ipairs(player.GetAll()) do
 		if !IsValid(v) then continue end
 		if !v.CharID then continue end
 		if v:CharID() <= 0 then continue end
