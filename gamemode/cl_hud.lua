@@ -1106,7 +1106,7 @@ local EntityRenderingFuncs = {
 		local localply = self.LocalPlayer
 		local selfPos = Entity_GetPos(self.LocalPlayer)
 		
-		if pos.visible and Player_CanSee(localply, v) and WithinRadius(selfPos, entPos, 256) then
+		if self.SeeAll or (pos.visible and Player_CanSee(localply, v) and WithinRadius(selfPos, entPos, 256)) then
 			
 			v.HUDAlpha = math_Clamp( v.HUDAlpha + FrameTime(), 0, 1 );
 			
@@ -1549,7 +1549,7 @@ hook.Add( "HUDPaint", "test", function()
 
 	if( GAMEMODE.SeeAllBones ) then
 
-		for _,ply in next, player.GetAll() do
+		for _,ply in ipairs(player.GetAll()) do
 		
 			if( ply == LocalPlayer() ) then continue end
 
