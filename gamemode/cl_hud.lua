@@ -1043,7 +1043,7 @@ local EntityRenderingFuncs = {
 		
 			if( !self.SeeAll and v:GetNoDraw() ) then
 			
-				continue;
+				return;
 				
 			end
 			
