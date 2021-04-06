@@ -1204,7 +1204,7 @@ local EntityRenderingFuncs = {
 					
 				end
 			else
-				if( ( self.SeeAll or ( pos.visible and Player_CanSee(localply, v) and WithinRadius(selfPos, entPos, 512) and Entity_GetNoDraw(v) ) ) and Player_Alive(v) ) then
+				if( ( self.SeeAll or ( pos.visible and Player_CanSee(localply, v) and WithinRadius(selfPos, entPos, 512) and !Entity_GetNoDraw(v) ) ) and Player_Alive(v) ) then
 					
 					v.HUDAlpha = math_Clamp( v.HUDAlpha + FrameTime(), 0, 1 );
 					
