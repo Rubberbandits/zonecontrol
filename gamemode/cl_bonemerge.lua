@@ -138,6 +138,9 @@ function GM:OnReceiveDummyItem(s_iID, s_DummyItem)
 			self.BodyHidden[s_DummyItem.Owner] = false
 
 			if s_DummyItem.Owner.Body then
+				local body = s_DummyItem.Owner:Body()
+				if !body or #body == 0 then return end
+
 				self.BonemergeBodies[s_DummyItem.Owner] = s_DummyItem.Owner:CreateNewBonemerge(s_DummyItem.Owner:Body())
 				self.BonemergeBodies[s_DummyItem.Owner]:SetSubMaterial(0, s_DummyItem.Owner:BodySubMat())
 			end
@@ -268,6 +271,7 @@ local function BonemergeThink()
 		if v:IsDormant() then continue end
 		if !GAMEMODE.EfficientModelCheck[v:GetModel()] and !v.CacheCleared then GAMEMODE:RemoveBonemergedItemCache(v) v.CacheCleared = true continue end
 		if v:GetNoDraw() then continue end
+		if #v:Body() == 0 then continue end
 		
 		ProcessBody(v)
 		local ent_found = ProcessBonemergeItems(v)
