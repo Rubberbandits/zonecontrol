@@ -209,4 +209,7 @@ hook.Add("InitPostEntity", "RCONCommandSupport", function()
 	Entity(0).Nick = function(self)
 		return "Console"
 	end
+	Entity(0).SteamID = function(self)
+		return "STEAM_0:0:CONSOLE"
+	end
 end)
