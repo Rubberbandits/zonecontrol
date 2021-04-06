@@ -840,12 +840,6 @@ function meta:HasTrait( trait )
 	
 end
 
-function meta:IsEventCoordinator()
-	
-	return self:GetUserGroup() == "gamemaster" or self:HasCharFlag( "G" );
-	
-end
-
 function game.GetIP()
 	
 	local hostip = tonumber( GetConVarString( "hostip" ) );

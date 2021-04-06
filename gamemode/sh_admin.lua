@@ -79,3 +79,9 @@ function meta:IsAdmin()
 
 	return false
 end
+
+function meta:IsEventCoordinator()
+	
+	return (self:GetUserGroup() == "gamemaster" or self:HasCharFlag( "G" )) and !self:HasCharFlag("Q")
+	
+end
