@@ -259,6 +259,8 @@ function GM:CreateCharCreate()
 	else
 	
 		GAMEMODE:CreateCharSelect();
+		CCP.CharCreatePanel.TopBar.Buttons[1].m_bIsDown = false
+		CCP.CharCreatePanel.TopBar.Buttons[1]:SetDisabled(true)
 		
 	end
 	
