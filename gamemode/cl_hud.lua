@@ -1181,7 +1181,7 @@ local EntityRenderingFuncs = {
 		end
 
 		local localply = self.LocalPlayer
-		local selfPos = Entity_GetPos(localPly)
+		local selfPos = Entity_GetPos(localply)
 		local entPos = Entity_GetPos(v)
 
 		if v != localply or Player_GetViewEntity(localply) != localply then
