@@ -1250,6 +1250,8 @@ function SWEP:DrawWorldModel()
 
 	elseif self.RepositionToHand then
 
+		if !IsValid(self.Owner) then return end
+
 		local hand = self.Owner:GetAttachment(self.Owner:LookupAttachment("anim_attachment_rh"))
 
 		if hand then
