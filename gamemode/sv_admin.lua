@@ -42,6 +42,10 @@ end
 function concommand.AddAdmin( cmd, func, sa, playertarget )
 	
 	local function c( ply, _, args )
+
+		if !ply:IsValid() then
+			ply = Entity(0)
+		end
 		
 		if( ply:EntIndex() != 0 and !ply:IsAdmin() ) then
 			
