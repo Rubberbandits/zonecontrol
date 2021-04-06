@@ -852,7 +852,7 @@ function meta:Notify( font, color, text, ... )
 
 	if( CLIENT ) then
 	
-		GAMEMODE:AddChat( { CB_ALL, CB_OOC }, font or "CombineControl.ChatNormal", color, Format( text, ... ) );
+		GAMEMODE:AddChat( {[CB_ALL] = true, [CB_OOC] = true}, font or "CombineControl.ChatNormal", color, Format( text, ... ) );
 		
 	elseif( SERVER ) then
 		
@@ -866,7 +866,7 @@ function GM:Notify( rf, font, color, text, ... )
 
 	if( CLIENT ) then
 	
-		GAMEMODE:AddChat( { CB_ALL, CB_OOC }, font or "CombineControl.ChatNormal", color, Format( text, ... ) );
+		GAMEMODE:AddChat( {[CB_ALL] = true, [CB_OOC] = true}, font or "CombineControl.ChatNormal", color, Format( text, ... ) );
 		
 	elseif( SERVER ) then
 		
@@ -888,7 +888,7 @@ if( CLIENT ) then
 
 	netstream.Hook( "NotifyPlayer", function( font, color, text, varargs )
 		
-		GAMEMODE:AddChat( { CB_ALL, CB_OOC }, font or "CombineControl.ChatNormal", color, Format( text, unpack(varargs) ) );
+		GAMEMODE:AddChat( {[CB_ALL] = true, [CB_OOC] = true}, font or "CombineControl.ChatNormal", color, Format( text, unpack(varargs) ) );
 	
 	end );
 	

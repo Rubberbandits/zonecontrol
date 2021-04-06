@@ -1928,7 +1928,7 @@ netstream.Hook( "nRequestStockpileName", nRequestStockpileName );
 
 local function nSellItemMessage( price, itemname )
 
-	GAMEMODE:AddChat( { CB_ALL, CB_IC }, "CombineControl.ChatNormal", Color( 200, 200, 200, 255 ), "You sold the " .. itemname .. " for " .. price .. " rubles." );
+	GAMEMODE:AddChat( {[CB_ALL] = true, [CB_IC] = true}, "CombineControl.ChatNormal", Color( 200, 200, 200, 255 ), "You sold the " .. itemname .. " for " .. price .. " rubles." );
 
 end
 netstream.Hook( "nSellItemMessage", nSellItemMessage );
