@@ -1200,7 +1200,9 @@ function GM:DrawEntities()
 		
 	end
 
-	for _,v in ipairs(ents.GetAll()) do
+	local entsToLoop = self.SeeAll and ents.GetAll() or ents.FindInSphere(LocalPlayer():GetPos(), 1024)
+
+	for _,v in ipairs(entsToLoop) do
 		local func = EntityRenderingFuncs[v:GetClass()]
 		if func then func(v) end
 	end
