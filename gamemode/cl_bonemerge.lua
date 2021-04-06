@@ -252,6 +252,7 @@ end
 local function ProcessBody(ply)
 	if !GAMEMODE.BodyHidden[ply] and !IsValid(GAMEMODE.BonemergeBodies[ply]) then
 		GAMEMODE.BonemergeBodies[ply] = ply:CreateNewBonemerge(ply:Body())
+		if !IsValid(GAMEMODE.BonemergeBodies[ply]) then return end
 		GAMEMODE.BonemergeBodies[ply]:SetSubMaterial(0, ply:BodySubMat())
 	elseif GAMEMODE.BodyHidden[ply] and IsValid(GAMEMODE.BonemergeBodies[ply]) then
 		GAMEMODE.BonemergeBodies[ply]:Remove()
