@@ -1,3 +1,6 @@
+GM.AdminCommands = GM.AdminCommands or {}
+GM.GamemasterCommands = GM.GamemasterCommands or {}
+
 function nGetBansList( ply )
 	
 	if( !ply:IsAdmin() ) then return end
@@ -106,9 +109,6 @@ concommand.AddAdminVariable( "rpa_blowout_enabled", "BlowoutEnabled", 1, "Blowou
 concommand.AddAdminVariable( "rpa_blowout_auto_schedule", "BlowoutAutoShedule", 1, "Blowout auto-schedule" );
 concommand.AddAdminVariable( "rpa_blowout_interval", "BlowoutInterval", 7200, "Blowout interval" );
 concommand.AddAdminVariable( "rpa_announcing_duration", "BlowoutAnnounceDuration", 300, "Blowout announce duration" );
-
-GM.AdminCommands = GM.AdminCommands or {}
-GM.GamemasterCommands = GM.GamemasterCommands or {}
 
 local cmd_files = file.Find( GM.FolderName.."/gamemode/admincmds/*.lua", "LUA", "namedesc" );
 if #cmd_files > 0 then
