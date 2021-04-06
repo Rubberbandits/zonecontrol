@@ -1077,3 +1077,20 @@ PrecacheParticleSystem("bubble")
 PrecacheParticleSystem("teleport")
 PrecacheParticleSystem("tramplin_type2")
 PrecacheParticleSystem("striderbuster_shotdown_explosion_trail")
+
+local function SetEntityDesc( ply, cmd, args, szArgs )
+	local targ = ply:GetEyeTraceNoCursor().Entity
+	local szDesc = szArgs
+	
+	if !ply:IsAdmin() then
+		if #szDesc > 512 then return end
+		if targ.PropSteamID and targ:PropSteamID() != ply:SteamID() then return end
+	end
+
+	if targ and IsValid(targ) and targ:GetClass() == "prop_physics" or targ:GetClass() == "prop_ragdoll" then
+		if targ.PropDesc and SERVER then
+			targ:SetPropDesc(szDesc)
+		end
+	end
+end
+concommand.Add( "rp_propdesc", SetEntityDesc );
