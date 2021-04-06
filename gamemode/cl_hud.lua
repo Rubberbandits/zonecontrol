@@ -1952,21 +1952,9 @@ end
 
 function GM:PostDrawOpaqueRenderables()
 	
-	for _, v in pairs( player.GetAll() ) do
-		
-		if( v:GetActiveWeapon() and v:GetActiveWeapon():IsValid() and v:GetActiveWeapon() != NULL ) then
-			
-			if( v:GetActiveWeapon().PostDrawOpaqueRenderables ) then
-				
-				v:GetActiveWeapon():PostDrawOpaqueRenderables();
-				
-			end
-			
-		end
-		
+	if self.Mastermind then
+		self:RenderNPCTargets();
 	end
-	
-	self:RenderNPCTargets();
 	
 	if( self.MapPostDrawOpaqueRenderables ) then
 		
