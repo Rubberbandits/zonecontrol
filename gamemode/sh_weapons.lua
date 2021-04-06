@@ -401,6 +401,8 @@ GM.WeaponStatistics["Secondary.CanBash"] = function(weapon, value)
 	end
 end
 GM.WeaponStatistics["FireModes"] = function(weapon, value)
+	if !weapon:GetOwner() or !IsValid(weapon:GetOwner()) or !weapon:GetOwner():IsPlayer() then return value end
+
 	if weapon:GetOwner():Holstered() then
 		local tbl = {}
 		for i = 1, #value do
@@ -427,16 +429,22 @@ hook.Add( "TFA_GetStat", "STALKER.Statistics", function( weapon, stat, value )
 end );
 
 hook.Add("TFA_PreCanPrimaryAttack", "STALKER.PreventFire", function(weapon)
+	if !weapon:GetOwner() or !IsValid(weapon:GetOwner()) or !weapon:GetOwner():IsPlayer() then return true end
+
 	if (weapon:GetOwner():Holstered()) then
 		return false
 	end
 end)
 hook.Add("TFA_CanPrimaryAttack", "STALKER.PreventFire", function(weapon)
+	if !weapon:GetOwner() or !IsValid(weapon:GetOwner()) or !weapon:GetOwner():IsPlayer() then return true end
+
 	if (weapon:GetOwner():Holstered()) then
 		return false
 	end
 end)
 hook.Add("TFA_SecondaryAttack", "STALKER.PreventADS", function(weapon)
+	if !weapon:GetOwner() or !IsValid(weapon:GetOwner()) or !weapon:GetOwner():IsPlayer() then return false end
+
 	if (weapon:GetOwner():Holstered()) then
 		return true
 	end

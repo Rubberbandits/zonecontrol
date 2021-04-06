@@ -6,7 +6,7 @@ end
 
 function GM:MapInitPostEntity()
 	
-	self:CreateLocationPoint( Vector( -1679.909180, 14224.734375, 900.020752 ), LOCATION_GARBAGE, 200, TRANSITPORT_CORDON_GARBAGE );
+	--self:CreateLocationPoint( Vector( -1679.909180, 14224.734375, 900.020752 ), LOCATION_GARBAGE, 200, TRANSITPORT_CORDON_GARBAGE );
 	
 end
 
