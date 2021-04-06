@@ -1292,6 +1292,7 @@ local function AddNumericalTables(dest, source)
 	return dest
 end
 
+/*
 hook.Add("Think", "MaintainHUDEntList", function()
 	local self = gmod_GetGamemode()
 
@@ -1311,6 +1312,7 @@ hook.Add("Think", "MaintainHUDEntList", function()
 		self.NextHUDEntUpdate = CurTime() + 5
 	end
 end)
+*/
 
 function GM:DrawEntities()
 	
@@ -1322,7 +1324,7 @@ function GM:DrawEntities()
 		
 	end
 
-	local entsToLoop = self.SeeAll and (self.HUDEntList or {}) or ents.FindInSphere(LocalPlayer():GetPos(), 700)
+	local entsToLoop = self.SeeAll and ents.GetAll() or ents.FindInSphere(LocalPlayer():GetPos(), 700)
 
 	for _,v in ipairs(entsToLoop) do
 		if !IsValid(v) then continue end
