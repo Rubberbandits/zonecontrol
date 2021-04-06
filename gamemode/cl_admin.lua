@@ -1,6 +1,7 @@
 local function nAInvalidMap( tab )
 	
-	GAMEMODE:AddChat( {[CB_ALL] = true, [CB_OOC] = true}, "CombineControl.ChatNormal", Color( 200, 0, 0, 255 ), "Error: Invalid map specified." );
+	GAMEMODE:AddChat( { CB_ALL, CB_OOC }, "CombineControl.ChatNormal", Color( 200, 0, 0, 255 ), "Error: Invalid map specified." );
+	
 	chat.OldAddText( Color( 128, 128, 128, 255 ), "Valid Maps:" );
 	
 	for _, v in pairs( tab ) do

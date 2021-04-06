@@ -78,7 +78,7 @@ end
 
 function nAddChat( col, str )
 	
-	GAMEMODE:AddChat( {[CB_ALL] = true, [CB_OOC] = true}, "CombineControl.ChatNormal", Color( col.x, col.y, col.z, 255 ), str );
+	GAMEMODE:AddChat( { CB_ALL, CB_OOC }, "CombineControl.ChatNormal", Color( col.x, col.y, col.z, 255 ), str );
 	
 end
 netstream.Hook( "nAddChat", nAddChat );
@@ -93,10 +93,9 @@ function GM:DrawChat()
 		
 		if !self.ChatLines then return end
 		
-		for _, v in ipairs( self.ChatLines ) do
-			local filter = v[2] or {}
-
-			if( filter[self.ChatboxFilter] and CurTime() - v[1] < 10 ) then
+		for _, v in pairs( self.ChatLines ) do
+			
+			if( table.HasValue( v[2] or {}, self.ChatboxFilter ) and CurTime() - v[1] < 10 ) then
 				
 				table.insert( tab, v );
 				
@@ -173,10 +172,9 @@ function GM:DrawRadioChat()
 	
 	local tab = { };
 	
-	for _, v in ipairs( self.ChatLines ) do
-		local filter = v[2] or {}
-
-		if( filter[CB_RADIO] and CurTime() - v[1] < 10 ) then
+	for _, v in pairs( self.ChatLines ) do
+		
+		if( table.HasValue( v[2] or {}, CB_RADIO ) and CurTime() - v[1] < 10 ) then
 			
 			table.insert( tab, v );
 			
@@ -283,7 +281,7 @@ function GM:CreateChatbox()
 			
 			if( string.len( self:GetValue() ) > 2000 ) then
 				
-				GAMEMODE:AddChat( {[CB_ALL] = true, [CB_OOC] = true}, "CombineControl.ChatNormal", Color( 200, 0, 0, 255 ), "The maximum chat length is 2000 characters. You typed " .. string.len( self:GetValue() ) .. "." );
+				GAMEMODE:AddChat( { CB_ALL, CB_OOC }, "CombineControl.ChatNormal", Color( 200, 0, 0, 255 ), "The maximum chat length is 2000 characters. You typed " .. string.len( self:GetValue() ) .. "." );
 				GAMEMODE.NextChatText = self:GetValue();
 				
 			else
@@ -440,7 +438,7 @@ function GM:ChatText( index, name, text, type )
 		
 		if( type == "joinleave" ) then
 			if( !string.find( text, "left the game" ) ) then
-				GAMEMODE:AddChat( {[CB_ALL] = true, [CB_OOC] = true}, "CombineControl.ChatNormal", Color( 150, 150, 150, 255 ), text );
+				GAMEMODE:AddChat( { CB_ALL, CB_OOC }, "CombineControl.ChatNormal", Color( 150, 150, 150, 255 ), text );
 			end
 		end
 		
@@ -479,7 +477,7 @@ if( !chat.OldAddText ) then
 			
 		end
 		
-		GAMEMODE:AddChat( {[CB_ALL] = true, [CB_OOC] = true}, "CombineControl.ChatNormal", col, str );
+		GAMEMODE:AddChat( { CB_ALL, CB_OOC }, "CombineControl.ChatNormal", col, str );
 		
 	end
 	

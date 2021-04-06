@@ -250,15 +250,7 @@ function SWEP:Reload()
 
 			if CLIENT then
 
-				GAMEMODE:AddChat(
-					{
-						[CB_ALL] = true, 
-						[CB_OOC] = true
-					},
-					"CombineControl.ChatNormal", 
-					Color(200, 0, 0, 255), 
-					"You're not strong enough to ram this door!"
-				)
+				GAMEMODE:AddChat(nil, { CB_ALL, CB_OOC }, "CombineControl.ChatNormal", Color(200, 0, 0, 255), "You're not strong enough to ram this door!")
 
 			end
 
