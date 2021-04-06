@@ -1182,7 +1182,7 @@ local EntityRenderingFuncs = {
 
 		local localply = self.LocalPlayer
 		local selfPos = Entity_GetPos(localply)
-		local entPos = Entity_GetPos(v)
+		local entPos = Entity_EyePos(v)
 
 		if v != localply or Player_GetViewEntity(localply) != localply then
 			if( !v.HUDAlpha ) then v.HUDAlpha = 0; end
