@@ -1,6 +1,12 @@
 GM.ServerConnectIDs = { };
 
 function GM:InitPostEntity()
+
+	self:InitSQL();
+	self:LoadBans();
+	RetrieveStockpiles();
+
+	net.Receive("VJSay", function(len, pl) end)
 	
 	local ent = ents.FindByClass( "func_dustmotes" );
 	

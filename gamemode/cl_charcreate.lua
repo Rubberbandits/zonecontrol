@@ -251,7 +251,7 @@ function GM:CreateCharCreate()
 		
 	end
 	
-	if( self.CCMode != CC_SELECT or self.CCMode != CC_SELECT_C ) then
+	if( self.CCMode != CC_SELECT and self.CCMode != CC_SELECT_C ) then
 	
 		CCP.CharCreatePanel.m_nPage = 1;
 		self:CharCreatePage1();
@@ -259,6 +259,8 @@ function GM:CreateCharCreate()
 	else
 	
 		GAMEMODE:CreateCharSelect();
+		CCP.CharCreatePanel.TopBar.Buttons[2]:DoClick()
+		CCP.CharCreatePanel.TopBar.Buttons[1]:SetDisabled(true)
 		
 	end
 	

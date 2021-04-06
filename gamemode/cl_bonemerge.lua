@@ -252,6 +252,7 @@ end
 local function ProcessBody(ply)
 	if !GAMEMODE.BodyHidden[ply] and !IsValid(GAMEMODE.BonemergeBodies[ply]) then
 		GAMEMODE.BonemergeBodies[ply] = ply:CreateNewBonemerge(ply:Body())
+		if !IsValid(GAMEMODE.BonemergeBodies[ply]) then return end
 		GAMEMODE.BonemergeBodies[ply]:SetSubMaterial(0, ply:BodySubMat())
 	elseif GAMEMODE.BodyHidden[ply] and IsValid(GAMEMODE.BonemergeBodies[ply]) then
 		GAMEMODE.BonemergeBodies[ply]:Remove()
@@ -265,7 +266,7 @@ local function BonemergeThink()
 		if !v.CharID then continue end
 		if v:CharID() <= 0 then continue end
 		if v:IsDormant() then continue end
-		if !GAMEMODE.EfficientModelCheck[v:GetModel()] then continue end
+		if !GAMEMODE.EfficientModelCheck[v:GetModel()] and !v.CacheCleared then GAMEMODE:RemoveBonemergedItemCache(v) v.CacheCleared = true continue end
 		if v:GetNoDraw() then continue end
 		
 		ProcessBody(v)

@@ -132,17 +132,24 @@ GM.AFKTime = 600;
 
 -- Cross-Server Transfers
 
-IP_GENERAL = "1.2.3.4";
-PORT_CITY = 27015;
-PORT_CANAL = 27016;
-PORT_OUTLANDS = 27017;
-PORT_COAST = 27018;
+IP_GENERAL = "play.100rads.bar";
+PORT_CORDON = 27015;
+PORT_GARBAGE = 27016;
+PORT_RASPAD = 27017;
+PORT_AGROPROM = 27018;
+PORT_DARKVALLEY = 27019;
+PORT_ROSTOK = 27020;
 
-TRANSITPORT_CITY_GATE = 2;
-TRANSITPORT_CITY_SEWER = 3;
-TRANSITPORT_CITY_COMBINE = 4;
-TRANSITPORT_CAVES_ENTRY = 5;
-TRANSITPORT_COAST_ENTRY = 6;
+TRANSITPORT_CORDON_GARBAGE = 2;
+TRANSITPORT_GARBAGE_CORDON = 3;
+TRANSITPORT_CORDON_RASPAD = 4;
+TRANSITPORT_RASPAD_CORDON = 5
+TRANSITPORT_GARBAGE_ROSTOK = 5;
+TRANSITPORT_ROSTOK_GARBAGE = 6;
+TRANSITPORT_GARBAGE_DARKVALLEY = 7;
+TRANSITPORT_DARKVALLEY_GARBAGE = 8;
+TRANSITPORT_GARBAGE_AGROPROM = 9;
+TRANSITPORT_AGROPROM_GARBAGE = 10;
 
 -- Donations
 
@@ -200,45 +207,39 @@ GM.Recipes = {
 };
 
 GM.GearSelection = {
-    ["backpack"] = 500,
-    ["med_medkit"] = 900,
-    ["smallmedkit"] = 100,
-    ["antirad"] = 300,
-    ["bread"] = 85,
-    ["sausage"] = 50,
-    ["energydrink"] = 80,
-    ["touristcan1"] = 100,
-    ["cossacks"] = 500,
-    ["radio"] = 800,
-    ["dollars"] = 80,
-    ["pda"] = 400,
-    ["cigarettes"] = 150,
-    ["playboy"] = 200,
-    ["guitar"] = 700,
-    ["gunoil"] = 200,
-    ["detector_echo"] = 1000,
-    ["detector_bear"] = 3200,
-    ["geiger_counter"] = 2500,
-    ["dosimeter"] = 100,
-    ["weapon_srp_makarov"] = 4400,
-    ["9x18"] = 200,
-    ["weapon_srp_tokarev"] = 5500,
-    ["762x25"] = 350,
-    ["weapon_srp_sawnoff"] = 3500,
-    ["12ga"] = 200,
-    ["weapon_srp_doublebarrel"] = 6500,
-    ["weapon_srp_m500"] = 7500,
-    ["weapon_srp_ak74u"] = 9000,
-    ["545x39"] = 450,
-    ["weapon_srp_hammerless"] = 1500,
-    ["32acp"] = 100,
-    ["weapon_srp_mosin"] = 7000,
-    ["762x54r"] = 500,
-    ["weapon_srp_kitchenknife"] = 500,
-    ["weapon_srp_kabar"] = 2500,
-    ["weapon_srp_hatchet"] = 1000,
-    ["suit_trenchcoat"] = 2000,
-    ["weapon_srp_f1"] = 2200,
+	["backpack"] = 500,
+	["med_medkit"] = 900,
+	["smallmedkit"] = 100,
+	["antirad"] = 300,
+	["bread"] = 85,
+	["sausage"] = 50,
+	["energydrink"] = 80,
+	["touristcan1"] = 100,
+	["cossacks"] = 500,
+	["radio"] = 800,
+	["dollars"] = 80,
+	["pda"] = 400,
+	["morley_reds"] = 150,
+	["playboy"] = 200,
+	["guitar"] = 700,
+	["gunoil"] = 200,
+	["geiger_counter"] = 2500,
+	["dosimeter"] = 100,
+	["weapon_srp_makarov"] = 4400,
+	["9x18"] = 200,
+	["weapon_srp_tokarev"] = 5500,
+	["762x25"] = 350,
+	["weapon_srp_sawnoff"] = 3500,
+	["12ga"] = 200,
+	["weapon_srp_doublebarrel"] = 6500,
+	["weapon_srp_m500"] = 7500,
+	["weapon_srp_hammerless"] = 1500,
+	["32acp"] = 100,
+	["weapon_srp_kitchenknife"] = 500,
+	["weapon_srp_kabar"] = 2500,
+	["weapon_srp_hatchet"] = 1000,
+	["suit_trenchcoat"] = 2000,
+	["weapon_srp_f1"] = 2200,
 }
 
 GM.DefaultSelfRepairCond = 90
@@ -278,7 +279,7 @@ GM.RadioBeeps = {
 
 GM.Voices = { };
 GM.Voices[GENDER_MALE] = {
-    { "Joke 1", "pointoc/human/talk/jokes/joke_1.ogg" },
+	{ "Joke 1", "pointoc/human/talk/jokes/joke_1.ogg" },
 	{ "Greetings", {
 		{ "Well, hey.", "pointoc/human/meet/meet_hello_1.ogg" },
 		{ "Hey, brother.", "pointoc/human/meet/meet_hello_2.ogg" },
