@@ -1322,7 +1322,7 @@ function GM:DrawEntities()
 		
 	end
 
-	local entsToLoop = self.SeeAll and self.HUDEntList or ents.FindInSphere(LocalPlayer():GetPos(), 700)
+	local entsToLoop = self.SeeAll and (self.HUDEntList or {}) or ents.FindInSphere(LocalPlayer():GetPos(), 700)
 
 	for _,v in ipairs(entsToLoop) do
 		if !IsValid(v) then continue end
