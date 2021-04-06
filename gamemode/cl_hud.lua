@@ -948,18 +948,149 @@ GM.NPCDrawBlacklist = {
 	"monster_generic"
 }
 
-function GM:DrawEntities()
-	
-	if( self.SeeAll and ( !LocalPlayer():IsAdmin() and !LocalPlayer():IsEventCoordinator() ) ) then
+local EntityRenderingFuncs = {
+	prop_physics = function(v)
+		local self = gmod.GetGamemode()
+
+		if( !v.HUDAlpha ) then v.HUDAlpha = 0; end
 		
-		self.SeeAll = false;
+		local pos = ( v:GetPos() + Vector( 0, 0, 10 ) ):ToScreen();
 		
-		return;
+		if( ( pos.visible and LocalPlayer():CanSee( v ) and LocalPlayer():GetPos():Distance( v:GetPos() ) < 256 ) ) then
+			
+			v.HUDAlpha = math.Clamp( v.HUDAlpha + FrameTime(), 0, 1 );
+			
+		elseif( v.HUDAlpha > 0 ) then
+			
+			v.HUDAlpha = math.Clamp( v.HUDAlpha - FrameTime(), 0, 1 );
+			
+		end
 		
-	end
-	
-	for _, v in pairs( player.GetAll() ) do
+		if( v.HUDAlpha > 0 and LocalPlayer():GetActiveWeapon() and LocalPlayer():GetActiveWeapon():IsValid() and LocalPlayer():GetActiveWeapon() != NULL and LocalPlayer():GetActiveWeapon():GetClass() == "weapon_physgun" ) then
+			
+			draw.DrawTextShadow( v:PropCreator(), "CombineControl.PlayerFont", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
+			pos.y = pos.y + 24;
+			draw.DrawTextShadow( v:PropSteamID(), "CombineControl.LabelSmall", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
+			pos.y = pos.y + 14;
+			
+		end
 		
+		if( v.HUDAlpha > 0 ) then
+		
+			local lines, maxW = wrapText( v:PropDesc(), 512, "CombineControl.LabelSmall" );
+			
+			for m,n in next, lines do
+			
+				surface.SetFont( "CombineControl.LabelSmall" );
+				local w,h = surface.GetTextSize( n );
+				draw.DrawTextShadow( n, "CombineControl.LabelSmall", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
+				pos.y = pos.y + h + 2;
+			
+			end
+			
+		end
+	end,
+	prop_ragdoll = function(v)
+		local self = gmod.GetGamemode()
+
+		if( !v.HUDAlpha ) then v.HUDAlpha = 0; end
+		
+		local pos = ( v:GetPos() + Vector( 0, 0, 10 ) ):ToScreen();
+		
+		if( ( pos.visible and LocalPlayer():CanSee( v ) and LocalPlayer():GetPos():Distance( v:GetPos() ) < 256 ) ) then
+			
+			v.HUDAlpha = math.Clamp( v.HUDAlpha + FrameTime(), 0, 1 );
+			
+		elseif( v.HUDAlpha > 0 ) then
+			
+			v.HUDAlpha = math.Clamp( v.HUDAlpha - FrameTime(), 0, 1 );
+			
+		end
+		
+		if( v.HUDAlpha > 0 ) then
+		
+			local lines, maxW = wrapText( v:PropDesc(), 512, "CombineControl.LabelSmall" );
+			
+			for m,n in next, lines do
+			
+				surface.SetFont( "CombineControl.LabelSmall" );
+				local w,h = surface.GetTextSize( n );
+				draw.DrawTextShadow( n, "CombineControl.LabelSmall", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
+				pos.y = pos.y + h + 2;
+			
+			end
+			
+		end
+	end,
+	cc_item = function(v)
+		local self = gmod.GetGamemode()
+
+		if( !v.HUDAlpha ) then v.HUDAlpha = 0; end
+		
+		local pos = v:GetPos():ToScreen();
+		
+		if( self.SeeAll or ( pos.visible and LocalPlayer():CanSee( v ) and LocalPlayer():GetPos():Distance( v:GetPos() ) < self:GetPlayerSight() / 2 ) ) then
+			
+			v.HUDAlpha = math.Clamp( v.HUDAlpha + FrameTime(), 0, 1 );
+			
+		elseif( v.HUDAlpha > 0 ) then
+			
+			v.HUDAlpha = math.Clamp( v.HUDAlpha - FrameTime(), 0, 1 );
+			
+		end
+		
+		if( v.HUDAlpha > 0 ) then
+		
+			if( !self.SeeAll and v:GetNoDraw() ) then
+			
+				continue;
+				
+			end
+			
+			local metaitem = GAMEMODE:GetItemByID(v:GetItemClass())
+			local name = v:GetItemName() or metaitem.Name
+			local weight = v:GetItemWeight() or metaitem.Weight
+			
+			draw.DrawTextShadow( name, "CombineControl.PlayerFont", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
+			pos.y = pos.y + 20;
+			
+			draw.DrawTextShadow( "Weight - " .. tostring( weight ), "CombineControl.LabelSmall", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
+			pos.y = pos.y + 16;
+			
+		end
+	end,
+	cc_paper = function(v)
+		local self = gmod.GetGamemode()
+
+		if( !v.HUDAlpha ) then v.HUDAlpha = 0; end
+		
+		local a, b = v:GetRotatedAABB( v:OBBMins(), v:OBBMaxs() );
+		local wpos = ( v:GetPos() + ( a + b ) / 2 );
+		local pos = wpos:ToScreen();
+		
+		if( self.SeeAll or ( pos.visible and LocalPlayer():CanSee( v ) and LocalPlayer():GetPos():Distance( v:GetPos() ) < self:GetPlayerSight() / 2 ) ) then
+			
+			v.HUDAlpha = math.Clamp( v.HUDAlpha + FrameTime(), 0, 1 );
+			
+		elseif( v.HUDAlpha > 0 ) then
+			
+			v.HUDAlpha = math.Clamp( v.HUDAlpha - FrameTime(), 0, 1 );
+			
+		end
+		
+		if( v.HUDAlpha > 0 ) then
+			
+			draw.DrawTextShadow( "Paper", "CombineControl.PlayerFont", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
+			pos.y = pos.y + 20;
+			
+			draw.DrawTextShadow( "Press C to read.", "CombineControl.LabelSmall", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
+			pos.y = pos.y + 16;
+			
+		end
+	end,
+	player = function(v)
+		local self = gmod.GetGamemode()
+
 		if( v != LocalPlayer() or LocalPlayer():GetViewEntity() != LocalPlayer() ) then
 			
 			if( !v.HUDAlpha ) then v.HUDAlpha = 0; end
@@ -1056,153 +1187,25 @@ function GM:DrawEntities()
 			end
 			
 		end
+	end,
+}
+
+function GM:DrawEntities()
+	
+	if( self.SeeAll and ( !LocalPlayer():IsAdmin() and !LocalPlayer():IsEventCoordinator() ) ) then
+		
+		self.SeeAll = false;
+		
+		return;
 		
 	end
-	
-	for _, v in pairs( ents.FindByClass( "prop_physics" ) ) do
-		
-		if( !v.HUDAlpha ) then v.HUDAlpha = 0; end
-		
-		local pos = ( v:GetPos() + Vector( 0, 0, 10 ) ):ToScreen();
-		
-		if( ( pos.visible and LocalPlayer():CanSee( v ) and LocalPlayer():GetPos():Distance( v:GetPos() ) < 256 ) ) then
-			
-			v.HUDAlpha = math.Clamp( v.HUDAlpha + FrameTime(), 0, 1 );
-			
-		elseif( v.HUDAlpha > 0 ) then
-			
-			v.HUDAlpha = math.Clamp( v.HUDAlpha - FrameTime(), 0, 1 );
-			
-		end
-		
-		if( v.HUDAlpha > 0 and LocalPlayer():GetActiveWeapon() and LocalPlayer():GetActiveWeapon():IsValid() and LocalPlayer():GetActiveWeapon() != NULL and LocalPlayer():GetActiveWeapon():GetClass() == "weapon_physgun" ) then
-			
-			draw.DrawTextShadow( v:PropCreator(), "CombineControl.PlayerFont", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
-			pos.y = pos.y + 24;
-			draw.DrawTextShadow( v:PropSteamID(), "CombineControl.LabelSmall", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
-			pos.y = pos.y + 14;
-			
-		end
-		
-		if( v.HUDAlpha > 0 ) then
-		
-			local lines, maxW = wrapText( v:PropDesc(), 512, "CombineControl.LabelSmall" );
-			
-			for m,n in next, lines do
-			
-				surface.SetFont( "CombineControl.LabelSmall" );
-				local w,h = surface.GetTextSize( n );
-				draw.DrawTextShadow( n, "CombineControl.LabelSmall", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
-				pos.y = pos.y + h + 2;
-			
-			end
-			
-		end
-		
+
+	for _,v in ipairs(ents.GetAll()) do
+		local func = EntityRenderingFuncs[v:GetClass()]
+		if func then func(v) end
 	end
 	
-	for _, v in next, ents.FindByClass( "prop_ragdoll" ) do
-	
-		if( !v.HUDAlpha ) then v.HUDAlpha = 0; end
-		
-		local pos = ( v:GetPos() + Vector( 0, 0, 10 ) ):ToScreen();
-		
-		if( ( pos.visible and LocalPlayer():CanSee( v ) and LocalPlayer():GetPos():Distance( v:GetPos() ) < 256 ) ) then
-			
-			v.HUDAlpha = math.Clamp( v.HUDAlpha + FrameTime(), 0, 1 );
-			
-		elseif( v.HUDAlpha > 0 ) then
-			
-			v.HUDAlpha = math.Clamp( v.HUDAlpha - FrameTime(), 0, 1 );
-			
-		end
-		
-		if( v.HUDAlpha > 0 ) then
-		
-			local lines, maxW = wrapText( v:PropDesc(), 512, "CombineControl.LabelSmall" );
-			
-			for m,n in next, lines do
-			
-				surface.SetFont( "CombineControl.LabelSmall" );
-				local w,h = surface.GetTextSize( n );
-				draw.DrawTextShadow( n, "CombineControl.LabelSmall", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
-				pos.y = pos.y + h + 2;
-			
-			end
-			
-		end
-	
-	end
-	
-	for _, v in pairs( ents.FindByClass( "cc_item" ) ) do
-		
-		if( !v.HUDAlpha ) then v.HUDAlpha = 0; end
-		
-		local pos = v:GetPos():ToScreen();
-		
-		if( self.SeeAll or ( pos.visible and LocalPlayer():CanSee( v ) and LocalPlayer():GetPos():Distance( v:GetPos() ) < self:GetPlayerSight() / 2 ) ) then
-			
-			v.HUDAlpha = math.Clamp( v.HUDAlpha + FrameTime(), 0, 1 );
-			
-		elseif( v.HUDAlpha > 0 ) then
-			
-			v.HUDAlpha = math.Clamp( v.HUDAlpha - FrameTime(), 0, 1 );
-			
-		end
-		
-		if( v.HUDAlpha > 0 ) then
-		
-			if( !self.SeeAll and v:GetNoDraw() ) then
-			
-				continue;
-				
-			end
-			
-			local metaitem = GAMEMODE:GetItemByID(v:GetItemClass())
-			local name = v:GetItemName() or metaitem.Name
-			local weight = v:GetItemWeight() or metaitem.Weight
-			
-			draw.DrawTextShadow( name, "CombineControl.PlayerFont", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
-			pos.y = pos.y + 20;
-			
-			draw.DrawTextShadow( "Weight - " .. tostring( weight ), "CombineControl.LabelSmall", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
-			pos.y = pos.y + 16;
-			
-		end
-		
-	end
-	
-	for _, v in pairs( ents.FindByClass( "cc_paper" ) ) do
-		
-		if( !v.HUDAlpha ) then v.HUDAlpha = 0; end
-		
-		local a, b = v:GetRotatedAABB( v:OBBMins(), v:OBBMaxs() );
-		local wpos = ( v:GetPos() + ( a + b ) / 2 );
-		local pos = wpos:ToScreen();
-		
-		if( self.SeeAll or ( pos.visible and LocalPlayer():CanSee( v ) and LocalPlayer():GetPos():Distance( v:GetPos() ) < self:GetPlayerSight() / 2 ) ) then
-			
-			v.HUDAlpha = math.Clamp( v.HUDAlpha + FrameTime(), 0, 1 );
-			
-		elseif( v.HUDAlpha > 0 ) then
-			
-			v.HUDAlpha = math.Clamp( v.HUDAlpha - FrameTime(), 0, 1 );
-			
-		end
-		
-		if( v.HUDAlpha > 0 ) then
-			
-			draw.DrawTextShadow( "Paper", "CombineControl.PlayerFont", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
-			pos.y = pos.y + 20;
-			
-			draw.DrawTextShadow( "Press C to read.", "CombineControl.LabelSmall", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
-			pos.y = pos.y + 16;
-			
-		end
-		
-	end
-	
-	for _, v in pairs( ents.FindByClass( "npc_*" ) ) do
+	for _, v in ipairs( ents.FindByClass( "npc_*" ) ) do
 		
 		if( table.HasValue( self.NPCDrawBlacklist, v:GetClass() ) ) then continue; end
 		
@@ -1701,7 +1704,7 @@ function GM:HUDPaint()
 			
 			self:DrawDamage();
 			self:DrawConsciousness();
-			self:DrawDoors();
+			--self:DrawDoors();
 			self:DrawEntities();
 			self:DrawPlayerInfo();
 			self:DrawHealthBars();
