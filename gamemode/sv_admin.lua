@@ -1,5 +1,6 @@
-GM.AdminCommands = GM.AdminCommands or {}
-GM.GamemasterCommands = GM.GamemasterCommands or {}
+kingston = kingston or {}
+kingston.AdminCommands = kingston.AdminCommands or {}
+kingston.GamemasterCommands = kingston.GamemasterCommands or {}
 
 function nGetBansList( ply )
 	
@@ -35,7 +36,7 @@ function concommand.AddGamemaster( cmd, func, sa, playertarget )
 	end
 	concommand.Add( cmd, c );
 
-	gmod.GetGamemode().GamemasterCommands[cmd] = {}
+	kingston.GamemasterCommands[cmd] = {}
 	
 end
 
@@ -68,7 +69,7 @@ function concommand.AddAdmin( cmd, func, sa, playertarget )
 	end
 	concommand.Add( cmd, c );
 	
-	gmod.GetGamemode().AdminCommands[cmd] = {}
+	kingston.AdminCommands[cmd] = {}
 
 end
 
