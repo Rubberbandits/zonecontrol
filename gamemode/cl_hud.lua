@@ -1297,25 +1297,14 @@ local function AddNumericalTables(dest, source)
 	return dest
 end
 
-hook.Add("Think", "MaintainHUDEntList", function()
-	if GAMEMODE.SeeAll then
-		if !GAMEMODE.NextHUDEntUpdate then
-			GAMEMODE.NextHUDEntUpdate = CurTime()
-		end
+local function FindSeeAllEnts()
+	local ents = {}
 
-		if GAMEMODE.NextHUDEntUpdate <= CurTime() then
-			if !GAMEMODE.HUDEntList then
-				GAMEMODE.HUDEntList = {}
-			end
+	AddNumericalTables(ents, ents.FindByClass("cc_item"))
+	AddNumericalTables(ents, player.GetAll())
 
-			for class,func in next, EntityRenderingFuncs do
-				AddNumericalTables(GAMEMODE.HUDEntList, ents.FindByClass(class))
-			end
-
-			GAMEMODE.NextHUDEntUpdate = CurTime() + 5
-		end
-	end
-end)
+	return ents
+end
 
 function GM:DrawEntities()
 	
@@ -1327,7 +1316,7 @@ function GM:DrawEntities()
 		
 	end
 
-	local entsToLoop = self.SeeAll and (self.HUDEntList or {}) or ents.FindInSphere(LocalPlayer():GetPos(), 700)
+	local entsToLoop = self.SeeAll and FindSeeAllEnts() or ents.FindInSphere(LocalPlayer():GetPos(), 700)
 
 	for _,v in ipairs(entsToLoop) do
 		if !IsValid(v) then continue end
