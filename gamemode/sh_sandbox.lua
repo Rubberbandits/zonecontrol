@@ -9,7 +9,7 @@ GM.PropAccessors = {
 	{ "Saved", 		"Bool",		false },
 };
 
-for k, v in pairs( GM.PropAccessors ) do
+for k, v in ipairs( GM.PropAccessors ) do
 	
 	meta["SetProp" .. v[1]] = function( self, val )
 		
@@ -43,6 +43,7 @@ for k, v in pairs( GM.PropAccessors ) do
 				
 				prop["Prop" .. v[1] .. "Val"] = val;
 				
+				hook.Run("PropAccessorChanged", prop, v[1], val)
 			end
 			
 		end
@@ -64,7 +65,7 @@ end
 
 function meta:SyncPropData( ply )
 	
-	for _, n in pairs( GAMEMODE.PropAccessors ) do
+	for _, n in ipairs( GAMEMODE.PropAccessors ) do
 		
 		netstream.Start( ply, "nSetProp"..n[1], self, self["Prop" .. n[1]]( self ) );
 		
