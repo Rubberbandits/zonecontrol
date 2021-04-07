@@ -412,6 +412,11 @@ GM.WeaponStatistics["FireModes"] = function(weapon, value)
 		return tbl
 	end
 end
+GM.WeaponStatistics["IronSightsMoveSpeed"] = function(weapon, value)
+	if !value then
+		return 200
+	end
+end
 
 hook.Add( "TFA_GetStat", "STALKER.Statistics", function( weapon, stat, value )
 
