@@ -796,15 +796,53 @@ function GM:DrawPlayerInfo()
 
 end
 
+local function GetMetaMethod(tbl, func)
+	return FindMetaTable(tbl)[func]
+end
+
+local gmod_GetGamemode = gmod.GetGamemode
+local math_Clamp = math.Clamp
+local math_abs = math.abs
+local draw_DrawTextShadow = draw.DrawTextShadow
+local wrapText = wrapText
+local surface_SetFont = surface.SetFont
+local surface_GetTextSize = surface.GetTextSize
+local FrameTime = FrameTime
+local Color = Color
+local tostring = tostring
+local IsValid = IsValid
+local ScrW = ScrW
+local ScrH = ScrH
+local CurTime = CurTime
+local surface_SetMaterial = surface.SetMaterial
+local surface_DrawTexturedRectUV = surface.DrawTexturedRectUV
+local surface_SetDrawColor = surface.SetDrawColor
+local draw_RoundedBox = draw.RoundedBox
+local render_SetScissorRect = render.SetScissorRect
+
+local Entity_Health = GetMetaMethod("Entity", "Health")
+local Entity_GetMaxHealth = GetMetaMethod("Entity", "GetMaxHealth")
+
+local Player_Hunger = GetMetaMethod("Player", "Hunger")
+local Player_VisibleRPName = GetMetaMethod("Player", "VisibleRPName")
+local Player_Toughness = GetMetaMethod("Player", "Toughness")
+local Player_LastLegShot = GetMetaMethod("Player", "LastLegShot")
+
+local COLOR_BACKBAR = Color(30,30,30,200)
+local COLOR_LEGSHOT = Color(150, 150, 100, 255)
+local COLOR_HUNGER = Color(37, 150, 37, 255)
+
 function GM:DrawHealthBars()
+
+	if !self.LocalPlayer then
+		self.LocalPlayer = LocalPlayer()
+	end
 	
 	if( !self.HPDraw ) then self.HPDraw = 100 end
-	if( !self.ARDraw ) then self.ARDraw = 0 end
 	if( !self.HGDraw ) then self.HGDraw = 0 end
 	
-	local hp = LocalPlayer():Health();
-	local ar = LocalPlayer():Armor();
-	local hg = LocalPlayer():Hunger();
+	local hp = Entity_Health(self.LocalPlayer);
+	local hg = Player_Hunger(self.LocalPlayer);
 	
 	if( self.HPDraw > hp ) then
 		
@@ -816,25 +854,9 @@ function GM:DrawHealthBars()
 		
 	end
 	
-	if( math.abs( self.HPDraw - hp ) < 1 ) then
+	if( math_abs( self.HPDraw - hp ) < 1 ) then
 		
 		self.HPDraw = hp;
-		
-	end
-	
-	if( self.ARDraw > ar ) then
-		
-		self.ARDraw = self.ARDraw - 0.5;
-		
-	elseif( self.ARDraw < ar ) then
-		
-		self.ARDraw = self.ARDraw + 0.5;
-		
-	end
-	
-	if( math.abs( self.ARDraw - ar ) < 1 ) then
-		
-		self.ARDraw = ar;
 		
 	end
 	
@@ -848,20 +870,22 @@ function GM:DrawHealthBars()
 		
 	end
 	
-	if( math.abs( self.HGDraw - hg ) < 1 ) then
+	if( math_abs( self.HGDraw - hg ) < 1 ) then
 		
 		self.HGDraw = hg;
 		
 	end
+
+	local maxHealth = Entity_GetMaxHealth(self.LocalPlayer)
+	local scrW, scrH = ScrW(), ScrH()
 	
-	self.HPDraw = math.Clamp( self.HPDraw, 0, LocalPlayer():GetMaxHealth() );
-	self.ARDraw = math.Clamp( self.ARDraw, 0, 100 );
-	self.HGDraw = math.Clamp( self.HGDraw, 0, 100 );
+	self.HPDraw = math_Clamp( self.HPDraw, 0, maxHealth );
+	self.HGDraw = math_Clamp( self.HGDraw, 0, 100 );
 	
 	local w = 220;
 	
-	surface.SetFont( "CombineControl.LabelGiant" );
-	local x, y = surface.GetTextSize( LocalPlayer():VisibleRPName() );
+	surface_SetFont( "CombineControl.LabelGiant" );
+	local x, y = surface_GetTextSize( Player_VisibleRPName(self.LocalPlayer) );
 	
 	if( x + 8 > w ) then
 		
@@ -869,47 +893,34 @@ function GM:DrawHealthBars()
 		
 	end
 	
-	local y = ScrH() - 24;
+	local y = scrH - 24;
 	
 	if( self.HPDraw > 0 ) then
 	
-		local u0 = ScrW() - ( ScrW() / 7.38 );
-		local v0 = ScrH() - ( ScrH() / 7.5 );
-		local u1 = ScrW() - ( ScrW() / 7.38 ) + ( ScrW() / 9.3 ) * ( self.HPDraw / LocalPlayer():GetMaxHealth() );
-		local v1 = ScrH() - ( ScrH() / 7.5 ) + 8;
+		local u0 = scrW - ( scrW / 7.38 );
+		local v0 = scrH - ( scrH / 7.5 );
+		local u1 = scrW - ( scrW / 7.38 ) + ( scrW / 9.3 ) * ( self.HPDraw / maxHealth );
+		local v1 = scrH - ( scrH / 7.5 ) + 8;
 	
-		surface.SetMaterial( matHints );
-		surface.SetDrawColor( 255, 255, 255, 255 );
-		render.SetScissorRect( u0, v0, u1, v1, true );
-			surface.DrawTexturedRectUV( u0, v0, ScrW() / 9.3, 8, 0.764, 0.151, 0.857, 0.156 );
-		render.SetScissorRect( 0, 0, 0, 0, false );
+		surface_SetMaterial( matHints );
+		surface_SetDrawColor( 255, 255, 255, 255 );
+		render_SetScissorRect( u0, v0, u1, v1, true );
+			surface_DrawTexturedRectUV( u0, v0, scrW / 9.3, 8, 0.764, 0.151, 0.857, 0.156 );
+		render_SetScissorRect( 0, 0, 0, 0, false );
 		
 	end
 	
-	if( self.ARDraw > 0 ) then
-		
-		draw.RoundedBox( 0, 20, y, w, 14, Color( 30, 30, 30, 200 ) );
-		draw.RoundedBox( 0, 22, y + 2, ( w - 4 ) * ( math.Clamp( self.ARDraw, 1, 100 ) / 100 ), 10, Color( 37, 84, 158, 255 ) );
-		
-		if( LocalPlayer():Armor() > 100 ) then
-			
-			draw.RoundedBox( 0, 22, y + 2, ( w - 4 ) * ( math.Clamp( self.ARDraw - 100, 1, 100 ) / 100 ), 10, Color( 240, 240, 240, 255 ) );
-			
-		end
-		
-		y = y - 16;
-		
-	end
+	local b = 15 - ( Player_Toughness(self.LocalPlayer) / 100 * 15 );
+	b = b + ( hg / 100 ) * 10;
+
+	local lastLegShot = Player_LastLegShot(self.LocalPlayer)
 	
-	local b = 15 - ( LocalPlayer():Toughness() / 100 * 15 );
-	b = b + ( LocalPlayer():Hunger() / 100 ) * 10;
-	
-	if( CurTime() - LocalPlayer():LastLegShot() < b + 5 ) then
+	if( CurTime() - lastLegShot < b + 5 ) then
 		
-		local mul = 1 - ( CurTime() - LocalPlayer():LastLegShot() ) / ( b + 5 );
+		local mul = 1 - ( CurTime() - lastLegShot ) / ( b + 5 );
 		
-		draw.RoundedBox( 0, 20, y, w, 14, Color( 30, 30, 30, 200 ) );
-		draw.RoundedBox( 0, 22, y + 2, ( w - 4 ) * mul, 10, Color( 150, 150, 100, 255 ) );
+		draw_RoundedBox( 0, 20, y, w, 14, COLOR_BACKBAR );
+		draw_RoundedBox( 0, 22, y + 2, ( w - 4 ) * mul, 10, COLOR_LEGSHOT );
 		
 		y = y - 16;
 		
@@ -917,11 +928,11 @@ function GM:DrawHealthBars()
 
 	if( self.UseHunger ) then
 		
-		draw.RoundedBox( 0, 20, 4, w, 14, Color( 30, 30, 30, 200 ) );
+		draw_RoundedBox( 0, 20, 4, w, 14, COLOR_BACKBAR );
 		
 		if( self.HGDraw > 0 ) then
 			
-			draw.RoundedBox( 0, 22, 6, ( w - 4 ) * ( math.Clamp( self.HGDraw, 1, 100 ) / 100 ), 10, Color( 37, 150, 37, 255 ) );
+			draw_RoundedBox( 0, 22, 6, ( w - 4 ) * ( math_Clamp( self.HGDraw, 1, 100 ) / 100 ), 10, COLOR_HUNGER );
 			
 			y = y - 16;
 			
@@ -947,21 +958,6 @@ GM.NPCDrawBlacklist = {
 	"npc_bullseye",
 	"monster_generic"
 }
-
-local function GetMetaMethod(tbl, func)
-	return FindMetaTable(tbl)[func]
-end
-
-local gmod_GetGamemode = gmod.GetGamemode
-local math_Clamp = math.Clamp
-local draw_DrawTextShadow = draw.DrawTextShadow
-local wrapText = wrapText
-local surface_SetFont = surface.SetFont
-local surface_GetTextSize = surface.GetTextSize
-local FrameTime = FrameTime
-local Color = Color
-local tostring = tostring
-local IsValid = IsValid
 
 local PositionOffset = Vector(0,0,10)
 
@@ -1823,19 +1819,6 @@ function GM:HUDPaint()
 	if( self:InIntroCam() ) then
 		
 		self:DrawFancyIntro();
-		return;
-		
-	end
-	
-	if( self.CombineCameraView and self.CombineCameraView:IsValid() ) then
-		
-		if( cookie.GetNumber( "zc_chat", 1 ) == 1 ) then
-			
-			self:DrawChat();
-			self:DrawRadioChat();
-			
-		end
-		
 		return;
 		
 	end
