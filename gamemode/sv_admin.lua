@@ -35,7 +35,7 @@ function concommand.AddGamemaster( cmd, func, sa, playertarget )
 	end
 	concommand.Add( cmd, c );
 
-	GAMEMODE.GamemasterCommands[cmd] = {}
+	gmod.GetGamemode().GamemasterCommands[cmd] = {}
 	
 end
 
@@ -68,7 +68,7 @@ function concommand.AddAdmin( cmd, func, sa, playertarget )
 	end
 	concommand.Add( cmd, c );
 	
-	GAMEMODE.AdminCommands[cmd] = {}
+	gmod.GetGamemode().AdminCommands[cmd] = {}
 
 end
 
