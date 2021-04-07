@@ -1081,6 +1081,8 @@ PrecacheParticleSystem("striderbuster_shotdown_explosion_trail")
 local function SetEntityDesc( ply, cmd, args, szArgs )
 	local targ = ply:GetEyeTraceNoCursor().Entity
 	local szDesc = szArgs
+
+	print(desc)
 	
 	if !ply:IsAdmin() then
 		if #szDesc > 512 then return end
