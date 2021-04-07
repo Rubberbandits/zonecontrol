@@ -991,6 +991,12 @@ local function WithinRadius(pos1, pos2, d)
 	return Vector_DistToSqr(pos1, pos2) < d * d
 end
 
+local SeeAllEntityRequirements = {
+	prop_physics = function(v)
+		return #v:PropDesc() > 0
+	end
+}
+
 local EntityRenderingFuncs = {
 	prop_physics = function(v)
 		local self = gmod_GetGamemode()
@@ -1307,7 +1313,14 @@ hook.Add("Think", "MaintainHUDEntList", function()
 			GAMEMODE.HUDEntList = {}
 
 			for class,func in next, EntityRenderingFuncs do
-				AddNumericalTables(GAMEMODE.HUDEntList, ents.FindByClass(class))
+				local entReqs = SeeAllEntityRequirements[class]
+				if entReqs then
+					for _,v in ipairs(ents.FindByClass(class)) do
+						if entReqs(v) then table.insert(GAMEMODE.HUDEntList, v) end
+					end
+				else
+					AddNumericalTables(GAMEMODE.HUDEntList, ents.FindByClass(class))
+				end
 			end
 
 			GAMEMODE.NextHUDEntUpdate = CurTime() + 5

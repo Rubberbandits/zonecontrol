@@ -357,3 +357,13 @@ local function AdminRequestedItems(data)
 	GAMEMODE:AdminPopulateItemRequests(data)
 end
 netstream.Hook("AdminRequestedItems", AdminRequestedItems)
+
+local function WhatIsThis()
+	local ent = LocalPlayer():GetEyeTraceNoCursor()
+
+	if IsValid(ent) and ent:GetClass() == "prop_physics" then
+		print("Model: ".. ent:GetModel())
+		print("Creator: "..ent:PropCreator().." ("..ent:PropSteamID()..")")
+	end
+end
+concommand.Add("whatisthis", WhatIsThis)
