@@ -927,12 +927,12 @@ function GM:DrawHealthBars()
 	end
 
 	if( self.UseHunger ) then
-		
-		draw_RoundedBox( 0, 20, 4, w, 14, COLOR_BACKBAR );
+	
+		draw_RoundedBox( 0, scrW - w - scrW * 0.1, 4, w, 14, COLOR_BACKBAR );
 		
 		if( self.HGDraw > 0 ) then
 			
-			draw_RoundedBox( 0, 22, 6, ( w - 4 ) * ( math_Clamp( self.HGDraw, 1, 100 ) / 100 ), 10, COLOR_HUNGER );
+			draw_RoundedBox( 0, scrW - w - (scrW * 0.1) + 2, 6, ( w - 4 ) * ( math_Clamp( self.HGDraw, 1, 100 ) / 100 ), 10, COLOR_HUNGER );
 			
 			y = y - 16;
 			
