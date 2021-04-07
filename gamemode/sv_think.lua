@@ -42,10 +42,10 @@ hook.Add("Think", "STALKER.SatiatedHealthRegen", function()
 			if ply:CharID() == 0 then continue end
 
 			if ply:Hunger() <= 25 then
-				ply:SetHealth(math.Clamp(ply:Health() + 2, 0, ply:GetMaxHealth()))
+				ply:SetHealth(math.Clamp(ply:Health() + 1, 0, ply:GetMaxHealth()))
 			end
 		end
 
-		GAMEMODE.NextHealthRegenThink = CurTime() + 10
+		GAMEMODE.NextHealthRegenThink = CurTime() + 18
 	end
 end)
