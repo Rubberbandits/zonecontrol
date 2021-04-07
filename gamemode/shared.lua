@@ -1082,7 +1082,7 @@ local function SetEntityDesc( ply, cmd, args, szArgs )
 	local targ = ply:GetEyeTraceNoCursor().Entity
 	local szDesc = szArgs
 
-	print(desc)
+	print(targ)
 	
 	if !ply:IsAdmin() then
 		if #szDesc > 512 then return end
