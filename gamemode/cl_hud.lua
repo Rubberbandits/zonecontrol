@@ -1298,12 +1298,12 @@ local function AddNumericalTables(dest, source)
 end
 
 local function FindSeeAllEnts()
-	local ents = {}
+	local entities = {}
 
-	AddNumericalTables(ents, ents.FindByClass("cc_item"))
-	AddNumericalTables(ents, player.GetAll())
+	AddNumericalTables(entities, ents.FindByClass("cc_item"))
+	AddNumericalTables(entities, player.GetAll())
 
-	return ents
+	return entities
 end
 
 function GM:DrawEntities()
