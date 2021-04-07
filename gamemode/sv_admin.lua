@@ -219,8 +219,6 @@ local function SetEntityDesc( ply, cmd, args, szArgs )
 	local targ = ply:GetEyeTraceNoCursor().Entity
 	local szDesc = szArgs
 
-	print(targ)
-	
 	if !ply:IsAdmin() then
 		if #szDesc > 512 then return end
 		if targ.PropSteamID and targ:PropSteamID() != ply:SteamID() then return end
