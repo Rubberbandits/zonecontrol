@@ -313,6 +313,8 @@ local function DrawBonemergedShadows(ply)
 	for _,m in ipairs(GAMEMODE.BonemergeItemKeys) do
 		local n = GAMEMODE.BonemergeItems[m]
 
+		if !n then continue end
+
 		if n.Owner == ply and IsValid(n.BonemergedEntity) and n.Vars["Equipped"] then
 			n.BonemergedEntity:CreateShadow()
 		end
