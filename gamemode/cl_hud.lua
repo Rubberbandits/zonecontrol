@@ -882,17 +882,7 @@ function GM:DrawHealthBars()
 	self.HPDraw = math_Clamp( self.HPDraw, 0, maxHealth );
 	self.HGDraw = math_Clamp( self.HGDraw, 0, 100 );
 	
-	local w = 220;
-	
-	surface_SetFont( "CombineControl.LabelGiant" );
-	local x, y = surface_GetTextSize( Player_VisibleRPName(self.LocalPlayer) );
-	
-	if( x + 8 > w ) then
-		
-		w = x + 8;
-		
-	end
-	
+	local w = scrW * 0.15;
 	local y = scrH - 24;
 	
 	if( self.HPDraw > 0 ) then
