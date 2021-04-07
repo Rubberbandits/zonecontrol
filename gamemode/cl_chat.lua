@@ -63,8 +63,10 @@ function GM:AddChat( filter, font, ... )
 		end
 		
 	end
+
+	filter = filter or {}
 	
-	if( !system.HasFocus() and table.HasValue( filter or {}, self.ChatboxFilter ) ) then
+	if( !system.HasFocus() and filter[self.ChatboxFilter] ) then
 		
 		system.FlashWindow();
 		
