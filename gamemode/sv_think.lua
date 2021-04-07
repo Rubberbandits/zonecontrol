@@ -46,6 +46,6 @@ hook.Add("Think", "STALKER.SatiatedHealthRegen", function()
 			end
 		end
 
-		GAMEMODE.NextHealthRegenThink = CurTime() + 18
+		GAMEMODE.NextHealthRegenThink = CurTime() + 60
 	end
 end)
