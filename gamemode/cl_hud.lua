@@ -992,6 +992,7 @@ local EntityRenderingFuncs = {
 		end
 
 		local propDesc = Entity_PropDesc(v)
+		print(propDesc)
 		local physgunOut = IsValid(ActiveWeapon) and Entity_GetClass(ActiveWeapon) == "weapon_physgun"
 
 		if #propDesc == 0 and !physgunOut then return end
