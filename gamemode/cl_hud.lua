@@ -999,6 +999,11 @@ local EntityRenderingFuncs = {
 			self.LocalPlayer = LocalPlayer()
 		end
 
+		local propDesc = Entity_PropDesc(v)
+		local physgunOut = IsValid(ActiveWeapon) and Entity_GetClass(ActiveWeapon) == "weapon_physgun"
+
+		if #propDesc == 0 and !physgunOut then return end
+
 		if( !v.HUDAlpha ) then v.HUDAlpha = 0; end
 		
 		local entPos = Entity_GetPos(v)
@@ -1018,7 +1023,7 @@ local EntityRenderingFuncs = {
 		
 		local ActiveWeapon = Player_GetActiveWeapon(localply)
 		
-		if( v.HUDAlpha > 0 and IsValid(ActiveWeapon) and Entity_GetClass(ActiveWeapon) == "weapon_physgun" ) then
+		if( v.HUDAlpha > 0 and physgunOut ) then
 			
 			draw_DrawTextShadow( Entity_PropCreator(v), "CombineControl.PlayerFont", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
 			pos.y = pos.y + 24;
@@ -1027,9 +1032,9 @@ local EntityRenderingFuncs = {
 			
 		end
 		
-		if( v.HUDAlpha > 0 ) then
+		if( v.HUDAlpha > 0 and #propDesc > 0) then
 		
-			local lines, maxW = wrapText( Entity_PropDesc(v), 512, "CombineControl.LabelSmall" );
+			local lines, maxW = wrapText( propDesc, 512, "CombineControl.LabelSmall" );
 			
 			for m,n in ipairs(lines) do
 			
