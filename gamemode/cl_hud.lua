@@ -882,7 +882,7 @@ function GM:DrawHealthBars()
 	self.HPDraw = math_Clamp( self.HPDraw, 0, maxHealth );
 	self.HGDraw = math_Clamp( self.HGDraw, 0, 100 );
 	
-	local w = scrW * 0.15;
+	local w = scrW * 0.1;
 	local y = scrH - 24;
 	
 	if( self.HPDraw > 0 ) then
