@@ -179,6 +179,8 @@ local function ProcessBonemergeItems(ply)
 	for _,m in ipairs(GAMEMODE.BonemergeItemKeys) do
 		local n = GAMEMODE.BonemergeItems[m]
 
+		if !n then continue end
+
 		if n.Owner == ply and n.CharID != ply:CharID() then
 			if n.BonemergedEntity then
 				n.BonemergedEntity:Remove()
