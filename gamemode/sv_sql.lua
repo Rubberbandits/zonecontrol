@@ -175,6 +175,7 @@ local CharTable = {
 	{ "Location", "FLOAT", "1" },
 	{ "EntryPort", "FLOAT", "1" },
 	{ "Health", "FLOAT", "100"}
+	{ "JustTransitioned", "TINYINT(1)", "0"}
 };
 
 local PlayerTable = {

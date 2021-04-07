@@ -13,6 +13,7 @@ function meta:GoToServer( location, port )
 	
 	self:UpdateCharacterField( "Location", location );
 	self:UpdateCharacterField( "EntryPort", port );
+	self:UpdateCharacterField("JustTransitioned", 1);
 	
 	local server = ServerLocations[location] or "";
 		
