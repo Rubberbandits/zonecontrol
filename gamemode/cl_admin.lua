@@ -359,7 +359,7 @@ end
 netstream.Hook("AdminRequestedItems", AdminRequestedItems)
 
 local function WhatIsThis()
-	local ent = LocalPlayer():GetEyeTraceNoCursor()
+	local ent = LocalPlayer():GetEyeTraceNoCursor().Entity
 
 	if IsValid(ent) and ent:GetClass() == "prop_physics" then
 		print("Model: ".. ent:GetModel())
