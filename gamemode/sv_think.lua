@@ -4,8 +4,6 @@ function GM:Think()
 		
 		self:ConsciousThink( v );
 		self:HungerThink( v );
-		self:AdminThink( v );
-		self:AFKThink( v );
 		v:WaterThink();
 		
 	end
@@ -33,3 +31,21 @@ function GM:Think()
 	self:SQLThink();
 	
 end
+
+hook.Add("Think", "STALKER.SatiatedHealthRegen", function()
+	if !GAMEMODE.NextHealthRegenThink then
+		GAMEMODE.NextHealthRegenThink = CurTime()
+	end
+
+	if GAMEMODE.NextHealthRegenThink <= CurTime() then
+		for _,ply in ipairs(player.GetAll()) do
+			if ply:CharID() == 0 then continue end
+
+			if ply:Hunger() <= 25 then
+				ply:SetHealth(math.Clamp(ply:Health() + 2, 0, ply:GetMaxHealth()))
+			end
+		end
+
+		GAMEMODE.NextHealthRegenThink = CurTime() + 10
+	end
+end)
