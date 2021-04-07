@@ -61,4 +61,6 @@ function ITEM:QuickUse()
 	else
 		self:CallFunction("Equip", true)
 	end
+
+	return true
 end
