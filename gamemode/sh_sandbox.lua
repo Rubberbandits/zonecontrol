@@ -757,6 +757,27 @@ function GM:PhysgunPickup( ply, ent )
 	end
 	if( ent:IsNPC() ) then return false end
 	if( ent:GetClass() == "prop_vehicle_apc" ) then return false end
+	if( ent:GetClass() == "obj_polter_sfera" ) then return false end
+	if( ent:GetClass() == "obj_polter_fire" ) then return false end
+	if( ent:GetClass() == "obj_polter_electro" ) then return false end
+	if( ent:GetClass() == "anom_hoverstone" ) then return false end
+	if( ent:GetClass() == "anom_vortex" ) then return false end
+	if( ent:GetClass() == "kometa" ) then return false end
+	if( ent:GetClass() == "electra_anomaly" ) then return false end
+	if( ent:GetClass() == "electra_anomaly_type2" ) then return false end
+	if( ent:GetClass() == "kisel_anomaly" ) then return false end
+	if( ent:GetClass() == "gazirovka_anomaly" ) then return false end
+	if( ent:GetClass() == "kometa_kisel" ) then return false end
+	if( ent:GetClass() == "obj_jarka_polter" ) then return false end
+	if( ent:GetClass() == "space_anomaly" ) then return false end
+	if( ent:GetClass() == "maysorubka_anomaly" ) then return false end
+	if( ent:GetClass() == "maysorubka_anomaly_type2" ) then return false end
+	if( ent:GetClass() == "par" ) then return false end
+	if( ent:GetClass() == "teleport" ) then return false end
+	if( ent:GetClass() == "kometa_electra" ) then return false end
+	if( ent:GetClass() == "obj_izlom_boom" ) then return false end
+	if( ent:GetClass() == "tramplin_anomaly" ) then return false end
+	if( ent:GetClass() == "voronka_anomaly" ) then return false end
 	
 	if( ply:PhysTrust() == 0 ) then return false end
 	
