@@ -1077,3 +1077,12 @@ PrecacheParticleSystem("bubble")
 PrecacheParticleSystem("teleport")
 PrecacheParticleSystem("tramplin_type2")
 PrecacheParticleSystem("striderbuster_shotdown_explosion_trail")
+
+if StormFox2 then
+	hook.Add("InitPostEntity", "StormFox2ChangeClear", function()
+		local weather = StormFox2.Weather.Get("clear")
+		if weather then
+			weather:Set("fogColor", Color(0,0,0,0))
+		end
+	end)
+end
