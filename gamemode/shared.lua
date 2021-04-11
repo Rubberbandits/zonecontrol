@@ -368,11 +368,11 @@ function GM:CheckCharacterValidity( name, desc, titleone, titletwo, model, trait
 	end
 	
 	if( string.len( titleone ) > 128 ) then
-		return false, "Title one must be shorter than 128 characters.";
+		return false, "Description line one must be shorter than 128 characters.";
 	end
 	
 	if( string.len( titletwo ) > 128 ) then
-		return false, "Title two must be shorter than 128 characters.";
+		return false, "Description line two must be shorter than 128 characters.";
 	end
 	
 	if( !table.HasValue( self.CitizenModels, string.lower( model ) ) ) then

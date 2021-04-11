@@ -601,9 +601,9 @@ function GM:CharCreatePage2()
 	end
 	
 	CCP.CharCreatePanel.TitleOneLabel = vgui.Create( "DLabel", CCP.CharCreatePanel.ContentPane );
-	CCP.CharCreatePanel.TitleOneLabel:SetText( "Title One" );
+	CCP.CharCreatePanel.TitleOneLabel:SetText( "Description Line One" );
 	CCP.CharCreatePanel.TitleOneLabel:SetPos( 350, 60 );
-	CCP.CharCreatePanel.TitleOneLabel:SetFont( "CombineControl.LabelGiant" );
+	CCP.CharCreatePanel.TitleOneLabel:SetFont( "CombineControl.LabelSmall" );
 	CCP.CharCreatePanel.TitleOneLabel:SizeToContents();
 	CCP.CharCreatePanel.TitleOneLabel:PerformLayout();
 	
@@ -625,9 +625,9 @@ function GM:CharCreatePage2()
 	end
 	
 	CCP.CharCreatePanel.TitleTwoLabel = vgui.Create( "DLabel", CCP.CharCreatePanel.ContentPane );
-	CCP.CharCreatePanel.TitleTwoLabel:SetText( "Title Two" );
+	CCP.CharCreatePanel.TitleTwoLabel:SetText( "Description Line Two" );
 	CCP.CharCreatePanel.TitleTwoLabel:SetPos( 350, 90 );
-	CCP.CharCreatePanel.TitleTwoLabel:SetFont( "CombineControl.LabelGiant" );
+	CCP.CharCreatePanel.TitleTwoLabel:SetFont( "CombineControl.LabelSmall" );
 	CCP.CharCreatePanel.TitleTwoLabel:SizeToContents();
 	CCP.CharCreatePanel.TitleTwoLabel:PerformLayout();
 	

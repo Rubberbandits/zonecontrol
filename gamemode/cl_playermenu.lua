@@ -401,7 +401,7 @@ function GM:PMCreateTitleEdit()
 	CCP.PlayerMenu.Title:PerformLayout();
 	
 	CCP.PlayerMenu.Title.TitleOne = vgui.Create( "DLabel", CCP.PlayerMenu.Title );
-	CCP.PlayerMenu.Title.TitleOne:SetText( "Title One" );
+	CCP.PlayerMenu.Title.TitleOne:SetText( "Description Line One" );
 	CCP.PlayerMenu.Title.TitleOne:SetPos( 10, 24 );
 	CCP.PlayerMenu.Title.TitleOne:SetSize( 380, 30 );
 	CCP.PlayerMenu.Title.TitleOne:SetFont( "CombineControl.LabelGiant" );
@@ -445,7 +445,7 @@ function GM:PMCreateTitleEdit()
 	end
 	
 	CCP.PlayerMenu.Title.TitleTwo = vgui.Create( "DLabel", CCP.PlayerMenu.Title );
-	CCP.PlayerMenu.Title.TitleTwo:SetText( "Title Two" );
+	CCP.PlayerMenu.Title.TitleTwo:SetText( "Description Line Two" );
 	CCP.PlayerMenu.Title.TitleTwo:SetPos( 10, 116 );
 	CCP.PlayerMenu.Title.TitleTwo:SetSize( 380, 30 );
 	CCP.PlayerMenu.Title.TitleTwo:SetFont( "CombineControl.LabelGiant" );
