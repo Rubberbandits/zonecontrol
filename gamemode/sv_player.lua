@@ -548,7 +548,7 @@ function GM:EntityTakeDamage( ent, dmg )
 		    local nDmgScale = 1
 			for _,item in next, ent.Inventory do
 				if item.OnTakeDamage then
-					item:OnTakeDamage(dmg)
+					--item:OnTakeDamage(dmg)
 				end
 				
 			    if !item:GetVar("Equipped",false) then continue end
