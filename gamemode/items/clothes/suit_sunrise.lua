@@ -12,7 +12,7 @@ ITEM.Bonemerge = "models/tnb/stalker_2019/sunrise.mdl";
 ITEM.RemoveBody = true
 ITEM.AllowGender = true
 ITEM.HelmetBodygroup = {1,1}
-ITEM.DegradationProtection = 25
+ITEM.DegradationProtection = 97.5
 ITEM.Bodygroups = {
 	{1, 0}
 }
