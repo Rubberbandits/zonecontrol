@@ -1,7 +1,7 @@
 ITEM.Base = "clothes"
 ITEM.Name =  "CS-1";
 ITEM.Desc =  "An old suit formerly in service to the Clear Sky faction. Against all odds it's survived to the present day.";
-ITEM.Model =  "models/z-o-m-b-i-e/st/box/st_box_metall_01.mdl";
+ITEM.Model =  "models/kek1ch/cs_heavy_outfit.mdl";
 ITEM.Weight =  8;
 ITEM.FOV =  20;
 ITEM.CamPos =  Vector( 50, 50, 50 );

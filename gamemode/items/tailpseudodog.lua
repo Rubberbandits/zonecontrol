@@ -1,7 +1,7 @@
 
 ITEM.Name =  "Pseudodog tail";
 ITEM.Desc =  "The tail of a Pseudodog, chopped clean from the base. Makes for a decent trophy.";
-ITEM.Model =  "models/dogtail.mdl";
+ITEM.Model =  "models/kek1ch/item_psevdodog_tail.mdl";
 ITEM.Weight =  1;
 ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );

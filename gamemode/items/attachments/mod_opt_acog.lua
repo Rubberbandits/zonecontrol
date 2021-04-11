@@ -1,6 +1,6 @@
 ITEM.Name = "Trijicon TA-31(F)"
 ITEM.Desc = "An expensive four-times optic by the company Trijicon."
-ITEM.Model = "models/props_junk/cardboard_box004a.mdl"
+ITEM.Model = "models/kek1ch/grooming.mdl"
 ITEM.Attachment = {
 	cod_scope_acog = true,
 }

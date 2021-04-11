@@ -1,7 +1,7 @@
 ITEM.Base = "clothes"
 ITEM.Name =  "SSP-99M";
 ITEM.Desc =  "An advanced scientific suit designed for ecological work within the Exclusion Zone. Upgraded with kevlar padding for emergency protection.";
-ITEM.Model =  "models/z-o-m-b-i-e/st/box/st_box_metall_01.mdl";
+ITEM.Model =  "models/kek1ch/ecolog_outfit_orange.mdl";
 ITEM.Weight =  12;
 ITEM.FOV =  20;
 ITEM.CamPos =  Vector( 50, 50, 50 );

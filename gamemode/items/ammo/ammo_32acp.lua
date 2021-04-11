@@ -1,6 +1,6 @@
 ITEM.Name = ".32 ACP Ammo"
 ITEM.Desc = "A 30-round box of .32 ACP.\nIt has %d rounds left in it."
-ITEM.Model = "models/stalker/ammo/45cal.mdl"
+ITEM.Model = "models/kek1ch/ammo.mdl"
 ITEM.Weight = 0.16
 ITEM.BulkPrice =  1500;
 ITEM.License = "A";

@@ -1,6 +1,6 @@
 ITEM.Name =  "Flesh eye";
 ITEM.Desc =  "The enlarged eyeball of a flesh, gouged from a corpse. Levels of radioactive isotopes contained in the eye can be analyzed for scientific purposes and therefore it is always in demand by scientists.";
-ITEM.Model =  "models/gibs/humans/eye_gib.mdl";
+ITEM.Model =  "models/kek1ch/item_flesh_eye.mdl";
 ITEM.Weight =  1;
 ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );

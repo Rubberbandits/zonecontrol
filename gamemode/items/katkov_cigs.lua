@@ -1,10 +1,7 @@
 
 ITEM.Name =  "Katkovite Victorys";
 ITEM.Desc =  "A local pack of premium smokes produced in the Zone. You swore you thought this guy made booze, too.";
-ITEM.Model =  "models/kali/miscstuff/stalker/sensor_d.mdl";
-ITEM.ItemSubmaterials = {
-	{ 0 , "models/props_canal/metalcrate001d" }
-}
+ITEM.Model =  "models/kek1ch/drink_cigar1.mdl";
 ITEM.Weight =  0.5;
 ITEM.FOV =  14;
 ITEM.CamPos =  Vector( 50, 50, 50 );

@@ -1,6 +1,6 @@
 ITEM.Name = "Suppressor"
 ITEM.Desc = "A multi-caliber suppressor. Amazing!"
-ITEM.Model = "models/props_junk/cardboard_box004a.mdl"
+ITEM.Model = "models/kek1ch/grooming.mdl"
 ITEM.Attachment = {
 	cod_br_supp = true,
 	ins2_br_supp = true,

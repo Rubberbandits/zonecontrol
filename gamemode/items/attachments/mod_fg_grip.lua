@@ -1,6 +1,6 @@
 ITEM.Name = "Foregrip"
 ITEM.Desc = "A vertical foregrip."
-ITEM.Model = "models/props_junk/cardboard_box004a.mdl"
+ITEM.Model = "models/kek1ch/grooming.mdl"
 ITEM.Attachment = {
 	cod_fg_grip = true,
 	ins2_fg_grip = true,

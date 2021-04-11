@@ -1,6 +1,6 @@
 ITEM.Name =  "Cat gland";
 ITEM.Desc =  "A pheromone gland removed from a Zone wildcat. Of interest to hunters and scientists.";
-ITEM.Model =  "models/gibs/humans/sgib_02.mdl";
+ITEM.Model =  "models/kek1ch/item_cat_thyroid.mdl";
 ITEM.Weight =  1;
 ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );

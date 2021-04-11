@@ -1,7 +1,7 @@
 ITEM.Base = "clothes"
 ITEM.Name =  "Trenchcoat";
 ITEM.Desc =  "A simple leather trenchcoat. Commonly associated with people of ill repute.";
-ITEM.Model =  "models/z-o-m-b-i-e/st/box/st_box_metall_01.mdl";
+ITEM.Model =  "models/kek1ch/novice_outfit.mdl";
 ITEM.Weight =  4;
 ITEM.FOV =  20;
 ITEM.CamPos =  Vector( 50, 50, 50 );

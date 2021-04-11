@@ -1,6 +1,6 @@
 ITEM.Name =  "Vodka";
 ITEM.Desc =  "A bottle of vodka. Probably unsafe to drink.";
-ITEM.Model =  "models/props_junk/glassjug01.mdl";
+ITEM.Model =  "models/kek1ch/dev_vodka2.mdl";
 ITEM.Weight =  0.5;
 ITEM.FOV =  11;
 ITEM.CamPos =  Vector( 50, 50, 50 );
