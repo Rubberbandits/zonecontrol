@@ -159,7 +159,13 @@ end
 derma.DefineSkin( "zc_inventory", "rusty", SKIN );
 
 local UVSKIN = {}
-UVSKIN.inv_mat = Material("kingston/inventory_panels")
+--UVSKIN.inv_mat = Material("kingston/inventory_panels")
+UVSKIN.inv_mat = CreateMaterial("inventory_pnl", "UnlitGeneric", {
+	["$basetexture"] = "kingston/inventory_panels",
+	["$translucent"] = 1,
+	["$vertexalpha"] = 1,
+	["$vertexcolor"] = 1
+})
 UVSKIN.mp_screen_mat = Material("kingston/mp_screen_panels")
 UVSKIN.common = Material("kingston/ui_common")
 
