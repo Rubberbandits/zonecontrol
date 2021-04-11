@@ -86,6 +86,9 @@ end
 function BASE:CanSell()
 	return true
 end
+function BASE:GetSellPrice()
+	return self.BulkPrice / 5
+end
 function BASE:GetArmorValues()
 	return self.ArmorValues or {}
 end
