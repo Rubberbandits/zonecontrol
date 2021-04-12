@@ -11,6 +11,6 @@ ITEM.BulkPrice =  10000;
 ITEM.License =  "X";
 ITEM.SuitOnly = true
 ITEM.TechOnly = true
-ITEM.RaiseCondition = 20
+ITEM.RaiseCondition = 30
 ITEM.W = 1
 ITEM.H = 1

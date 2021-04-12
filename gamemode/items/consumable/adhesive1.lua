@@ -10,3 +10,4 @@ ITEM.License =  "X"
 ITEM.ConsumeText = "You squeeze out what perfectly fine, serviceable glue is left in the tube into your mouth and eat it. Freak."
 ITEM.UseText = "Use"
 ITEM.HungerReduce = -10
+ITEM.RaiseCondition = 2

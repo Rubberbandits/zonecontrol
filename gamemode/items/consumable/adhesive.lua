@@ -10,3 +10,4 @@ ITEM.License =  "X"
 ITEM.ConsumeText = "After a moment of struggle, you force the childproof lid off and dribble the liquid glue into your mouth. Are you okay?"
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = -10
+ITEM.RaiseCondition = 3
