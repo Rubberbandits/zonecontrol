@@ -53,8 +53,10 @@ if !kingston.quickslot.binds_created then
 				if !item then return end
 				if !item.QuickUse then return end
 				
-				item:QuickUse()
-				bind.BoundItem = nil
+				local result = item:QuickUse()
+				if !result then
+					bind.BoundItem = nil 
+				end
 			end,
 		}
 		kingston.quickslot.create_bind(bind)

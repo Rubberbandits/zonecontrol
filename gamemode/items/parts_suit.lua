@@ -1,6 +1,6 @@
 ITEM.Name = "Suit Parts"
-ITEM.Desc = "A box of suit parts."
-ITEM.Model = "models/props_lab/box01a.mdl"
+ITEM.Desc = "An assortment of suit parts."
+ITEM.Model = "models/kek1ch/bron_k.mdl"
 ITEM.Weight = 0.5
 ITEM.License = "T"
 ITEM.BulkPrice =  12500;

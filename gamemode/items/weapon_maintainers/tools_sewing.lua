@@ -1,7 +1,7 @@
 
 ITEM.Name =  "Sewing Kit";
 ITEM.Desc =  "A collection of sewing supplies.";
-ITEM.Model =  "models/sewing_kit_a.mdl";
+ITEM.Model =  "models/kek1ch/sewing_kit_b.mdl";
 ITEM.Weight =  .5;
 ITEM.License = "T"
 ITEM.FOV =  10;

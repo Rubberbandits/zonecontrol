@@ -1,7 +1,6 @@
 local function nAInvalidMap( tab )
 	
-	GAMEMODE:AddChat( { CB_ALL, CB_OOC }, "CombineControl.ChatNormal", Color( 200, 0, 0, 255 ), "Error: Invalid map specified." );
-	
+	GAMEMODE:AddChat( {[CB_ALL] = true, [CB_OOC] = true}, "CombineControl.ChatNormal", Color( 200, 0, 0, 255 ), "Error: Invalid map specified." );
 	chat.OldAddText( Color( 128, 128, 128, 255 ), "Valid Maps:" );
 	
 	for _, v in pairs( tab ) do
@@ -358,3 +357,13 @@ local function AdminRequestedItems(data)
 	GAMEMODE:AdminPopulateItemRequests(data)
 end
 netstream.Hook("AdminRequestedItems", AdminRequestedItems)
+
+local function WhatIsThis()
+	local ent = LocalPlayer():GetEyeTraceNoCursor().Entity
+
+	if IsValid(ent) and ent:GetClass() == "prop_physics" then
+		print("Model: ".. ent:GetModel())
+		print("Creator: "..ent:PropCreator().." ("..ent:PropSteamID()..")")
+	end
+end
+concommand.Add("whatisthis", WhatIsThis)

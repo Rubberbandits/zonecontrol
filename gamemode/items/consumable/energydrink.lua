@@ -19,7 +19,7 @@ GM:CreateDrugType("ENERGYDRINK", {
 	Hooks = {
 		GetPlayerSpeeds = function(ply, w, r, j, c)
 			if ply:HasDrug("ENERGYDRINK") then
-				return r * 1.2
+				return w, r * 1.2, j, c
 			end
 		end,
 		PlayerDrugApplied = function(ply, drug)

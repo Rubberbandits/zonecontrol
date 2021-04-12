@@ -1,10 +1,7 @@
 
 ITEM.Name =  "Morley Reds";
 ITEM.Desc =  "A pack of cigarettes from the west with a stark red label. Such a stylish packaging, they belong in the blazer pocket of someone with black lungs.";
-ITEM.Model =  "models/kali/miscstuff/stalker/sensor_d.mdl";
-ITEM.ItemSubmaterials = {
-	{ 0 , "models/props_canal/metalcrate001d" }
-}
+ITEM.Model =  "models/kek1ch/drink_cigar0.mdl";
 ITEM.Weight =  0.5;
 ITEM.FOV =  14;
 ITEM.CamPos =  Vector( 50, 50, 50 );

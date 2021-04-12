@@ -1,6 +1,6 @@
 ITEM.Name = "PU Scope"
 ITEM.Desc = "A very cheap and old magnified scope originally for the Mosin Nagant rifle."
-ITEM.Model = "models/props_junk/cardboard_box004a.mdl"
+ITEM.Model = "models/kek1ch/grooming.mdl"
 ITEM.Attachment = {
 	ins2_si_mosin = true,
 }

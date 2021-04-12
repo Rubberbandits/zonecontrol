@@ -342,6 +342,10 @@ function BASE:OnPlayerDeath()
 	end
 end
 function BASE:OnUnloadItem()
+	if !self:Owner().EquippedWeapons then
+		self:Owner().EquippedWeapons = {}
+	end
+
 	self:Owner().EquippedWeapons[self.WeaponClass] = nil;
 end
 function BASE:Paint(pnl, w, h)

@@ -1,7 +1,7 @@
 ITEM.Base = "backpack"
 ITEM.Name =  "Rucksack";
 ITEM.Desc =  "A heavy-duty backpack with more space and better rigging.";
-ITEM.Model =  "models/props_junk/garbage_bag001a.mdl";
+ITEM.Model =  "models/kek1ch/sumka7.mdl";
 ITEM.Weight =  1;
 ITEM.FOV =  25;
 ITEM.CamPos =  Vector( 2.56, -0.01, 50 );

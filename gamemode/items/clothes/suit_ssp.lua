@@ -1,13 +1,13 @@
 ITEM.Base = "clothes"
 ITEM.Name =  "SSP-99";
 ITEM.Desc =  "An advanced scientific suit designed for ecological work within the Exclusion Zone.";
-ITEM.Model =  "models/z-o-m-b-i-e/st/box/st_box_metall_01.mdl";
+ITEM.Model =  "models/kek1ch/ecolog_outfit_green.mdl";
 ITEM.Weight =  12;
 ITEM.FOV =  20;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.Bonemerge = "models/tnb/stalker_2019/ssp.mdl";
-ITEM.DegradationProtection = 75
+ITEM.DegradationProtection = 97.5
 ITEM.BulkPrice = 500000
 ITEM.License = "S"
 ITEM.Bodygroups = {

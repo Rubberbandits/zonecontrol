@@ -1,6 +1,6 @@
 ITEM.Name = "Imported Gun Oil"
 ITEM.Desc = "High quality oil specially formulated for firearms."
-ITEM.Model = "models/props_lab/jar01b.mdl"
+ITEM.Model = "models/kek1ch/gun_oil.mdl"
 ITEM.Weight = 1
 ITEM.License = "T"
 ITEM.RaiseCondition = 15

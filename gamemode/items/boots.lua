@@ -1,7 +1,7 @@
 
-ITEM.Name =  "Timberlands";
-ITEM.Desc =  "A set of size 46 Timberland wheat boots.";
-ITEM.Model =  "models/props_junk/Shoe001a.mdl";
+ITEM.Name =  "Boots";
+ITEM.Desc =  "A pair of boots. Musty..";
+ITEM.Model =  "models/kek1ch/boots.mdl";
 ITEM.Weight =  1;
 ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );

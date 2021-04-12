@@ -23,14 +23,14 @@ function PANEL:Init()
 		
 		local y = 0;
 		
-		for k, v in pairs( GAMEMODE.ChatLines ) do
+		for k, v in ipairs( GAMEMODE.ChatLines ) do
 			
 			local start = v[1];
-			local filter = v[2];
+			local filter = v[2] or {};
 			local font = v[3];
 			local text = v[4];
 			
-			if( table.HasValue( filter or {}, GAMEMODE.ChatboxFilter ) ) then
+			if( filter[GAMEMODE.ChatboxFilter] ) then
 				
 				if( !v.MarkupObjCreated ) then
 				

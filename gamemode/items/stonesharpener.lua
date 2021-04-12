@@ -1,7 +1,7 @@
 
 ITEM.Name =  "Stone-sharpening Set";
 ITEM.Desc =  "A three-piece stone sharpening set suited to honing the blade of a knife.";
-ITEM.Model =  "models/box_condensers.mdl";
+ITEM.Model =  "models/kek1ch/sharpening_stones.mdl";
 ITEM.Weight =  2;
 ITEM.FOV =  9;
 ITEM.CamPos =  Vector( 50, 50, 50 );

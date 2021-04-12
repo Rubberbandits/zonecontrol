@@ -1,7 +1,7 @@
 
 ITEM.Name =  "Improvised Explosives";
 ITEM.Desc =  "A concealed explosive device made from looted explosives.";
-ITEM.Model =  "models/props_citizen_tech/ied_shoebox.mdl";
+ITEM.Model =  "models/kek1ch/explosive_charge.mdl";
 ITEM.Weight =  1;
 ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );

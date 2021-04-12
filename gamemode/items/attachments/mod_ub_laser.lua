@@ -1,6 +1,6 @@
 ITEM.Name = "High powered red laser"
 ITEM.Desc = "A generic visible light laser, in red."
-ITEM.Model = "models/props_junk/cardboard_box004a.mdl"
+ITEM.Model = "models/kek1ch/grooming.mdl"
 ITEM.Attachment = {
 	ins2_ub_laser = true,
 	ins2_ub_laser_railed_p99 = true,

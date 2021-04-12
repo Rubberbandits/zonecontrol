@@ -14,14 +14,14 @@ if CLIENT then
 	
 	function nConSay( str )
 
-		GAMEMODE:AddChat({ CB_ALL, CB_OOC }, "CombineControl.ChatNormal", Color( 200, 0, 0, 255 ), "Console: " .. str);
+		GAMEMODE:AddChat({[CB_ALL] = true, [CB_OOC] = true}, "CombineControl.ChatNormal", Color( 200, 0, 0, 255 ), "Console: " .. str);
 		
 	end
 	netstream.Hook( "nConSay", nConSay );
 	
 	function nConASay( str )
 
-		GAMEMODE:AddChat({ CB_ALL, CB_OOC }, "CombineControl.ChatNormal", Color(255, 107, 218), "[ADMIN] ", Color(255, 156, 230), "Console: " .. str);
+		GAMEMODE:AddChat({[CB_ALL] = true, [CB_OOC] = true}, "CombineControl.ChatNormal", Color(255, 107, 218), "[ADMIN] ", Color(255, 156, 230), "Console: " .. str);
 		
 	end
 	netstream.Hook( "nConASay", nConASay );
@@ -123,7 +123,10 @@ kingston.chat.default_type = {
 	chat_command = "",
 	chat_range = 400,
 	chat_font = "CombineControl.ChatNormal",
-	chat_filter = {CB_ALL, CB_IC},
+	chat_filter = {
+		[CB_ALL] = true, 
+		[CB_IC] = true,
+	},
 	text_color = Color(91, 166, 221),
 }
 
@@ -377,7 +380,10 @@ kingston.chat.register_type("localevent", {
 
 kingston.chat.register_type("ooc", {
 	chat_command = {"/ooc", "//"},
-	chat_filter = {CB_ALL, CB_OOC},
+	chat_filter = {
+		[CB_ALL] = true, 
+		[CB_OOC] = true
+	},
 	construct_string = function(chat_type, ply, text)
 		return {Color(200, 0, 0), "[OOC] ", team.GetColor(ply:Team()), ply, Color( 255, 255, 255, 255 ), ": ", text}
 	end,
@@ -399,7 +405,10 @@ kingston.chat.register_type("ooc", {
 
 kingston.chat.register_type("looc", {
 	chat_command = {"/looc", ".//", "[["},
-	chat_filter = {CB_ALL, CB_OOC},
+	chat_filter = {
+		[CB_ALL] = true, 
+		[CB_OOC] = true
+	},
 	no_console_print = true,
 	construct_string = function(chat_type, ply, text)
 		return {Color(138, 185, 209), "[LOOC] ", ply, ": ", text}
@@ -411,7 +420,10 @@ kingston.chat.register_type("looc", {
 
 kingston.chat.register_type("admin", {
 	chat_command = {"/a", "/admin"},
-	chat_filter = {CB_ALL, CB_OOC},
+	chat_filter = {
+		[CB_ALL] = true, 
+		[CB_OOC] = true
+	},
 	construct_string = function(chat_type, ply, text)
 		if ply.IsAdmin and ply:IsAdmin() or ply:IsEventCoordinator() then
 			return {Color(255, 107, 218), "[ADMIN] ", Color(255, 156, 230), ply, ": ", text}
@@ -430,7 +442,11 @@ kingston.chat.register_type("admin", {
 -- send regular chat to surrounding players
 kingston.chat.register_type("radio", {
 	chat_command = {"/r", "/radio"},
-	chat_filter = {CB_ALL, CB_RADIO, CB_IC},
+	chat_filter = {
+		[CB_ALL] = true, 
+		[CB_RADIO] = true,
+		[CB_IC] = true,
+	},
 	chat_font = "CombineControl.ChatRadio",
 	no_console_print = true,
 	construct_string = function(chat_type, ply, text)
@@ -489,7 +505,17 @@ if CLIENT then
 		local chat_data = kingston.chat.get(chat_type)
 	
 		kingston.log.write("chat", "[%s (%s)][radio_sur] %s", ply:RPName(), ply:Nick(), text)
-		GAMEMODE:AddChat({ CB_ALL, CB_IC }, "CombineControl.ChatNormal", chat_data.text_color, ply, ": ", text)
+		GAMEMODE:AddChat(
+			{ 
+				[CB_ALL] = true, 
+				[CB_IC] = true
+			}, 
+			"CombineControl.ChatNormal", 
+			chat_data.text_color, 
+			ply, 
+			": ", 
+			text
+		)
 	end)
 end
 

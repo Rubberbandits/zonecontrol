@@ -5,7 +5,6 @@ local ServerLocations = {
 	[LOCATION_GARBAGE] = IP_GENERAL .. ":" .. PORT_GARBAGE,
 	[LOCATION_RASPAD] = IP_GENERAL .. ":" .. PORT_RASPAD,
 	[LOCATION_AGROPROM] = IP_GENERAL .. ":" .. PORT_AGROPROM,
-	[LOCATION_DARKVALLEY] = IP_GENERAL .. ":" .. PORT_DARKVALLEY,
 	[LOCATION_ROSTOK] = IP_GENERAL .. ":" .. PORT_ROSTOK,
 }
 
@@ -13,6 +12,7 @@ function meta:GoToServer( location, port )
 	
 	self:UpdateCharacterField( "Location", location );
 	self:UpdateCharacterField( "EntryPort", port );
+	self:UpdateCharacterField("JustTransitioned", 1);
 	
 	local server = ServerLocations[location] or "";
 		

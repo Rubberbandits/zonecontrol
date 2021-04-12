@@ -65,3 +65,23 @@ function GM:PlayerNoClip( ply )
 	return true;
 	
 end
+
+local meta = FindMetaTable("Player")
+function meta:IsSuperAdmin()
+	if self:IsUserGroup("superadmin") and !self:HasCharFlag("Q") then return true end
+
+	return false
+end
+
+function meta:IsAdmin()
+	if self:IsSuperAdmin() then return true end
+	if self:IsUserGroup("admin") and !self:HasCharFlag("Q") then return true end
+
+	return false
+end
+
+function meta:IsEventCoordinator()
+	
+	return (self:GetUserGroup() == "gamemaster" or self:HasCharFlag( "G" )) and !self:HasCharFlag("Q")
+	
+end

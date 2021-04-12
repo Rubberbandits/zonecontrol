@@ -85,6 +85,8 @@ end
 
 function ITEM:QuickUse()
 	self:CallFunction("View")
+	
+	return true
 end
 function ITEM:CanQuickUse()
 	return self:GetVar("Activated", false)

@@ -368,11 +368,11 @@ function GM:CheckCharacterValidity( name, desc, titleone, titletwo, model, trait
 	end
 	
 	if( string.len( titleone ) > 128 ) then
-		return false, "Title one must be shorter than 128 characters.";
+		return false, "Description line one must be shorter than 128 characters.";
 	end
 	
 	if( string.len( titletwo ) > 128 ) then
-		return false, "Title two must be shorter than 128 characters.";
+		return false, "Description line two must be shorter than 128 characters.";
 	end
 	
 	if( !table.HasValue( self.CitizenModels, string.lower( model ) ) ) then
@@ -840,12 +840,6 @@ function meta:HasTrait( trait )
 	
 end
 
-function meta:IsEventCoordinator()
-	
-	return self:GetUserGroup() == "gamemaster" or self:HasCharFlag( "G" );
-	
-end
-
 function game.GetIP()
 	
 	local hostip = tonumber( GetConVarString( "hostip" ) );
@@ -1083,3 +1077,12 @@ PrecacheParticleSystem("bubble")
 PrecacheParticleSystem("teleport")
 PrecacheParticleSystem("tramplin_type2")
 PrecacheParticleSystem("striderbuster_shotdown_explosion_trail")
+
+if StormFox2 then
+	hook.Add("InitPostEntity", "StormFox2ChangeClear", function()
+		local weather = StormFox2.Weather.Get("clear")
+		if weather then
+			weather:Set("fogColor", Color(0,0,0,0))
+		end
+	end)
+end

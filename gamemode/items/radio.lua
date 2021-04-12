@@ -51,19 +51,19 @@ ITEM.functions.Use = {
 						
 						CCP.RadioSelector:Remove();
 						
-						GAMEMODE:AddChat( { CB_ALL, CB_IC }, "CombineControl.ChatNormal", Color( 200, 200, 200, 255 ), "Your radio channel is now " .. tostring( math.Round( val , 2 ) ) .. "." );
+						GAMEMODE:AddChat( {[CB_ALL] = true, [CB_IC] = true}, "CombineControl.ChatNormal", Color( 200, 200, 200, 255 ), "Your radio channel is now " .. tostring( math.Round( val , 2 ) ) .. "." );
 						
 						netstream.Start( "nChangeRadio", val );
 						
 					else
 						
-						GAMEMODE:AddChat( { CB_ALL, CB_IC }, "CombineControl.ChatNormal", Color( 200, 0, 0, 255 ), "Highest channel is 999." );
+						GAMEMODE:AddChat( {[CB_ALL] = true, [CB_IC] = true}, "CombineControl.ChatNormal", Color( 200, 0, 0, 255 ), "Highest channel is 999." );
 						
 					end
 					
 				else
 
-					GAMEMODE:AddChat( { CB_ALL, CB_IC }, "CombineControl.ChatNormal", Color( 200, 0, 0, 255 ), "Lowest channel is 0." );
+					GAMEMODE:AddChat( {[CB_ALL] = true, [CB_IC] = true}, "CombineControl.ChatNormal", Color( 200, 0, 0, 255 ), "Lowest channel is 0." );
 					
 				end
 				

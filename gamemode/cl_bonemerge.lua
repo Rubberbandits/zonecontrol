@@ -100,6 +100,7 @@ function s_Meta:CreateNewBonemerge(szModel, iBoneScale)
 end
 
 GM.BonemergeItems = GM.BonemergeItems or {}
+GM.BonemergeItemKeys = GM.BonemergeItemKeys or {}
 GM.BonemergeEntities = GM.BonemergeEntities or {}
 GM.BonemergeBodies = GM.BonemergeBodies or {}
 GM.BodyHidden = GM.BodyHidden or {}
@@ -114,6 +115,9 @@ function GM:OnReceiveDummyItem(s_iID, s_DummyItem)
 			CharID = s_DummyItem.CharID,
 			ID = s_iID,
 		}
+		
+		table.insert(self.BonemergeItemKeys, s_iID)
+		self.BonemergeItems[s_iID].Key = #self.BonemergeItemKeys
 	else
 		self.BonemergeItems[s_iID].Vars = s_DummyItem.Vars
 		self.BonemergeItems[s_iID].CharID = s_DummyItem.CharID
@@ -138,6 +142,9 @@ function GM:OnReceiveDummyItem(s_iID, s_DummyItem)
 			self.BodyHidden[s_DummyItem.Owner] = false
 
 			if s_DummyItem.Owner.Body then
+				local body = s_DummyItem.Owner:Body()
+				if !body or #body == 0 then return end
+
 				self.BonemergeBodies[s_DummyItem.Owner] = s_DummyItem.Owner:CreateNewBonemerge(s_DummyItem.Owner:Body())
 				self.BonemergeBodies[s_DummyItem.Owner]:SetSubMaterial(0, s_DummyItem.Owner:BodySubMat())
 			end
@@ -169,12 +176,17 @@ end
 
 local function ProcessBonemergeItems(ply)
 	local ent_found
-	for m,n in next, GAMEMODE.BonemergeItems do
+	for _,m in ipairs(GAMEMODE.BonemergeItemKeys) do
+		local n = GAMEMODE.BonemergeItems[m]
+
+		if !n then continue end
+
 		if n.Owner == ply and n.CharID != ply:CharID() then
 			if n.BonemergedEntity then
 				n.BonemergedEntity:Remove()
 			end
 			n.BonemergedEntity = nil
+			table.remove(GAMEMODE.BonemergeItemKeys, n.Key)
 			GAMEMODE.BonemergeItems[m] = nil
 			
 			continue
@@ -261,13 +273,14 @@ local function ProcessBody(ply)
 end
 
 local function BonemergeThink()
-	for k,v in next, player.GetAll() do
+	for k,v in ipairs(player.GetAll()) do
 		if !IsValid(v) then continue end
 		if !v.CharID then continue end
 		if v:CharID() <= 0 then continue end
 		if v:IsDormant() then continue end
 		if !GAMEMODE.EfficientModelCheck[v:GetModel()] and !v.CacheCleared then GAMEMODE:RemoveBonemergedItemCache(v) v.CacheCleared = true continue end
 		if v:GetNoDraw() then continue end
+		if #v:Body() == 0 then continue end
 		
 		ProcessBody(v)
 		local ent_found = ProcessBonemergeItems(v)
@@ -299,7 +312,11 @@ local function DrawBonemergedShadows(ply)
 		GAMEMODE.BonemergeBodies[ply]:CreateShadow()
 	end
 	
-	for m,n in next, GAMEMODE.BonemergeItems do
+	for _,m in ipairs(GAMEMODE.BonemergeItemKeys) do
+		local n = GAMEMODE.BonemergeItems[m]
+
+		if !n then continue end
+
 		if n.Owner == ply and IsValid(n.BonemergedEntity) and n.Vars["Equipped"] then
 			n.BonemergedEntity:CreateShadow()
 		end

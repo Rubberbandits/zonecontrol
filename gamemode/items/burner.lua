@@ -1,7 +1,7 @@
 
 ITEM.Name =  "Butane Stove";
 ITEM.Desc =  "An experienced STALKER's best friend.";
-ITEM.Model =  "models/z-o-m-b-i-e/ST/kitchen/st_gaz_plita_02.mdl";
+ITEM.Model =  "models/kek1ch/multi_fuel_stove.mdl";
 ITEM.Weight =  1;
 ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );

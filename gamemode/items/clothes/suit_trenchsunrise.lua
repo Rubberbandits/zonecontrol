@@ -9,7 +9,7 @@ ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  245000;
 ITEM.License =  "S";
 ITEM.Bonemerge = "models/tnb/stalker_2019/sunrise_trench.mdl";
-ITEM.DegradationProtection = 90
+ITEM.DegradationProtection = 97.5
 ITEM.Bodygroups = {
 	{1, 0}
 }

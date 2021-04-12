@@ -54,8 +54,9 @@ function GM:PlayerCheckFlag( ply, respawn )
 	ply:SetModelCC( ply.CharModel )
 	ply:SetSkin( ply:GetCharFromID( ply:CharID() ).Skingroup );
 	
-	if( ply.EntryPort and self.EntryPortSpawns[ply.EntryPort] ) then
+	if( ply.EntryPort and ply.JustTransitioned and self.EntryPortSpawns[ply.EntryPort] ) then
 		
+		ply:UpdateCharacterField("JustTransitioned", 0)
 		ply:SetPos( table.Random( self.EntryPortSpawns[ply.EntryPort] ) );
 		return;
 		
@@ -285,6 +286,7 @@ function meta:LoadCharacter( data )
 	self:SetHunger( tonumber( data.Hunger ) );
 
 	self.EntryPort = tonumber( data.EntryPort );
+	self.JustTransitioned = tobool(data.JustTransitioned)
 	
 	self:UpdateCharacterField( "LastOnline", os.date( "!%m/%d/%y %H:%M:%S" ) );
 	
@@ -546,7 +548,7 @@ function GM:EntityTakeDamage( ent, dmg )
 		    local nDmgScale = 1
 			for _,item in next, ent.Inventory do
 				if item.OnTakeDamage then
-					item:OnTakeDamage(dmg)
+					--item:OnTakeDamage(dmg)
 				end
 				
 			    if !item:GetVar("Equipped",false) then continue end
