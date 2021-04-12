@@ -1,6 +1,6 @@
 ITEM.Name = "Weapon Parts"
 ITEM.Desc = "An assortment of gun parts."
-ITEM.Model = "mmodels/kek1ch/waste_large.mdl"
+ITEM.Model = "models/kek1ch/waste_large.mdl"
 ITEM.Weight = 0.5
 ITEM.License = "T"
 ITEM.BulkPrice =  12500;
