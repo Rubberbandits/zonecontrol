@@ -8,6 +8,6 @@ ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  25000;
 ITEM.RaiseCondition = 15
-ITEM.License = "T"
+ITEM.License = "X"
 ITEM.W = 2
 ITEM.H = 1

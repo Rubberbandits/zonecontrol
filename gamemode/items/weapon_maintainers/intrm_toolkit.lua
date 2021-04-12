@@ -2,6 +2,7 @@ ITEM.Name = "Intermediate set of tools"
 ITEM.Desc = "A low end set of tools gathered for work on firearms, not particularly effective but common throughout the Zone."
 ITEM.Model = "models/props_junk/cardboard_box003a.mdl"
 ITEM.Weight = 2
+ITEM.License = "T"
 ITEM.RaiseCondition = 25
 ITEM.TechOnly		= true;
 ITEM.FOV 			= 20;

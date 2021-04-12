@@ -2,6 +2,7 @@ ITEM.Name = "Basic quality parts"
 ITEM.Desc = "A basic set of parts for working with firearms, does the job well enough."
 ITEM.Model = "models/props_junk/cardboard_box004a.mdl"
 ITEM.Weight = 2
+ITEM.License = "T"
 ITEM.RaiseCondition = 25
 ITEM.TechOnly		= true;
 ITEM.WeaponOnly		= true;

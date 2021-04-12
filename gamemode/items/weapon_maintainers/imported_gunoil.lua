@@ -2,6 +2,7 @@ ITEM.Name = "Imported Gun Oil"
 ITEM.Desc = "High quality oil specially formulated for firearms."
 ITEM.Model = "models/props_lab/jar01b.mdl"
 ITEM.Weight = 1
+ITEM.License = "T"
 ITEM.RaiseCondition = 15
 ITEM.WeaponOnly		= true
 ITEM.FOV 			= 20;
