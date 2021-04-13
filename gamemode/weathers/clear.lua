@@ -128,6 +128,7 @@ if SERVER then
 	clear:SetSunStamp("skyBox",t_night,		SF_SKY_NIGHT)
 else
 	local function ListSkynameChange(convar, old, new)
+		print(old, new)
 		if(old != new) then
 			local skybox = "skybox/"..new
 
