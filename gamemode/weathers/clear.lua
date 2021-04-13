@@ -184,7 +184,7 @@ else
 			render.PopRenderTarget()
 		end
 	end
-	cvars.AddChangeCallback("sv_skyname", ListSkynameChange)
+	cvars.AddChangeCallback("sv_skyname", ListSkynameChange, "updateskybox")
 
 	local function PostDraw2DSkyBox()
 		local color2 = Color(255, 255, 255, 255)
