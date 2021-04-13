@@ -117,8 +117,7 @@ end
 -- 2D skyboxes
 if SERVER then
 	local t_day, t_night, t_sunrise, t_sunset
-	--t_day = {"sky_day01_05", "hav"}
-	t_day = {"sky_ep01_00_hdr"}
+	t_day = {"sky_day01_05", "hav"}
 	t_sunrise = {"sky_day01_06_hdr", "sky_day03_06"}
 	t_sunset = {"sky_day01_08_hdr"}
 	t_night = {"sky_day01_09_hdr"}
