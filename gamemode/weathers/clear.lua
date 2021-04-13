@@ -117,7 +117,8 @@ end
 -- 2D skyboxes
 if SERVER then
 	local t_day, t_night, t_sunrise, t_sunset
-	t_day = {"sky_day01_05", "hav"}
+	--t_day = {"sky_day01_05", "hav"}
+	t_day = {"sky_ep01_00_hdr"}
 	t_sunrise = {"sky_day01_06_hdr", "sky_day03_06"}
 	t_sunset = {"sky_day01_08_hdr"}
 	t_night = {"sky_day01_09_hdr"}
@@ -189,13 +190,17 @@ else
 		local color2 = Color(255, 255, 255, 255)
 		local size = 16
 
-		self.Rotation = self.Rotation + 0.3 * (CurTime() - self.LastTime)
-		self.LastTime = CurTime()
+		GAMEMODE.Rotation = (GAMEMODE.Rotation or 0) + 0.3 * (CurTime() - (GAMEMODE.LastTime or 0))
+		GAMEMODE.LastTime = CurTime()
 		local mat = Matrix()
-		mat:SetAngles(Angle(0, self.Rotation, 0))
+		mat:SetAngles(Angle(0, GAMEMODE.Rotation, 0))
 		mat:SetTranslation(EyePos())
 
-		local materials = self.CubemapMats
+		if !GAMEMODE.CubemapMats then
+			ListSkynameChange("sv_skyname", "", GetConVarString("sv_skyname"))
+		end
+
+		local materials = GAMEMODE.CubemapMats
 
 		cam.Start3D(EyePos(), RenderAngles())
 			cam.PushModelMatrix(mat)
@@ -224,5 +229,5 @@ else
 			cam.PopModelMatrix()
 		cam.End3D()
 	end
-	hook.Add("PostDraw2DSkyBox", "STALKER.StormFox2SkyboxFix")
+	hook.Add("PostDraw2DSkyBox", "STALKER.StormFox2SkyboxFix", PostDraw2DSkyBox)
 end
