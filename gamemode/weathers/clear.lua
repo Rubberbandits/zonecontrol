@@ -116,6 +116,8 @@ end
 
 -- 2D skyboxes
 if SERVER then
+	util.AddNetworkString("UpdateSkybox")
+
 	local t_day, t_night, t_sunrise, t_sunset
 	t_day = {"sky_day01_05", "hav"}
 	t_sunrise = {"sky_day01_06_hdr", "sky_day03_06"}
@@ -128,68 +130,73 @@ if SERVER then
 	clear:SetSunStamp("skyBox",t_night,		SF_SKY_NIGHT)
 
 	local function BroadcastSkyboxChange(convar, old, new)
-		print(old, new)
+		net.Start("UpdateSkybox")
+			net.WriteString(new)
+		net.Broadcast()
 	end
 	cvars.AddChangeCallback("sv_skyname", BroadcastSkyboxChange, "updateskybox")
 else
-	local function ListSkynameChange(convar, old, new)
-		print(old, new)
-		if(old != new) then
-			local skybox = "skybox/"..new
+	local function ListSkynameChange(new)
+		local skybox = "skybox/"..new
 
-			GAMEMODE.CubemapMats = {
-				Material(skybox .. "ft"),
-				Material(skybox .. "rt"),
-				Material(skybox .. "bk"),
-				Material(skybox .. "lf"),
-				Material(skybox .. "up"),
-				Material(skybox .. "dn"),
-			}
+		GAMEMODE.CubemapMats = {
+			Material(skybox .. "ft"),
+			Material(skybox .. "rt"),
+			Material(skybox .. "bk"),
+			Material(skybox .. "lf"),
+			Material(skybox .. "up"),
+			Material(skybox .. "dn"),
+		}
 
-			local rt = GetRenderTarget("skybox_foggation_renderation", ScrW(), ScrH())
+		local rt = GetRenderTarget("skybox_foggation_renderation", ScrW(), ScrH())
 
-			render.PushRenderTarget(rt)
-			render.Clear(0, 0, 0, 0)
+		render.PushRenderTarget(rt)
+		render.Clear(0, 0, 0, 0)
 
-			cam.Start2D()
-				surface.SetDrawColor(255,255,255,255)
-				surface.SetMaterial(GAMEMODE.CubemapMats[1])
-				surface.DrawTexturedRect(0,0, ScrW() * 0.25, ScrH())
+		cam.Start2D()
+			surface.SetDrawColor(255,255,255,255)
+			surface.SetMaterial(GAMEMODE.CubemapMats[1])
+			surface.DrawTexturedRect(0,0, ScrW() * 0.25, ScrH())
 
-				surface.SetMaterial(GAMEMODE.CubemapMats[2])
-				surface.DrawTexturedRect(ScrW() * 0.25,0, ScrW() * 0.25, ScrH())
+			surface.SetMaterial(GAMEMODE.CubemapMats[2])
+			surface.DrawTexturedRect(ScrW() * 0.25,0, ScrW() * 0.25, ScrH())
 
-				surface.SetMaterial(GAMEMODE.CubemapMats[3])
-				surface.DrawTexturedRect(ScrW() * 0.5,0, ScrW() * 0.25, ScrH())
+			surface.SetMaterial(GAMEMODE.CubemapMats[3])
+			surface.DrawTexturedRect(ScrW() * 0.5,0, ScrW() * 0.25, ScrH())
 
-				surface.SetMaterial(GAMEMODE.CubemapMats[4])
-				surface.DrawTexturedRect(ScrW() * 0.75,0, ScrW() * 0.25, ScrH())
-			cam.End2D()
+			surface.SetMaterial(GAMEMODE.CubemapMats[4])
+			surface.DrawTexturedRect(ScrW() * 0.75,0, ScrW() * 0.25, ScrH())
+		cam.End2D()
 
-			render.CapturePixels()
+		render.CapturePixels()
 
-			local w = math.min(ScrW(), 16843009)
-			local avgcol = {
-				r = 0, g = 0, b = 0
-			}
+		local w = math.min(ScrW(), 16843009)
+		local avgcol = {
+			r = 0, g = 0, b = 0
+		}
 
-			for i = 1, w do
-				local r, g, b = render.ReadPixel(i, math.random(ScrH() * 0.5 - ScrH() * 0.2), ScrH() * 0.5)
-				avgcol.r = avgcol.r + r
-				avgcol.b = avgcol.b + b
-				avgcol.g = avgcol.g + g
-			end
-
-			avgcol.r = avgcol.r / w
-			avgcol.g = avgcol.g / w
-			avgcol.b = avgcol.b / w
-
-			StormFox2.Weather.GetCurrent():Set("fogColor", Color(avgcol.r, avgcol.g, avgcol.b, 255))
-
-			render.PopRenderTarget()
+		for i = 1, w do
+			local r, g, b = render.ReadPixel(i, math.random(ScrH() * 0.5 - ScrH() * 0.2), ScrH() * 0.5)
+			avgcol.r = avgcol.r + r
+			avgcol.b = avgcol.b + b
+			avgcol.g = avgcol.g + g
 		end
+
+		avgcol.r = avgcol.r / w
+		avgcol.g = avgcol.g / w
+		avgcol.b = avgcol.b / w
+
+		StormFox2.Weather.GetCurrent():Set("fogColor", Color(avgcol.r, avgcol.g, avgcol.b, 255))
+
+		render.PopRenderTarget()
 	end
-	cvars.AddChangeCallback("sv_skyname", ListSkynameChange, "updateskybox")
+
+	local function UpdateSkybox(len)
+		local new = net.ReadString()
+
+		ListSkynameChange(new)
+	end
+	net.Receive("UpdateSkybox", UpdateSkybox)
 
 	local function PostDraw2DSkyBox()
 		local color2 = Color(255, 255, 255, 255)
@@ -202,7 +209,7 @@ else
 		mat:SetTranslation(EyePos())
 
 		if !GAMEMODE.CubemapMats then
-			ListSkynameChange("sv_skyname", "", GetConVarString("sv_skyname"))
+			ListSkynameChange(GetConVarString("sv_skyname"))
 		end
 
 		local materials = GAMEMODE.CubemapMats
