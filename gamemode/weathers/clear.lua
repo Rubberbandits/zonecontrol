@@ -127,7 +127,7 @@ if SERVER then
 	clear:SetSunStamp("skyBox",t_sunset,	SF_SKY_SUNSET)
 	clear:SetSunStamp("skyBox",t_night,		SF_SKY_NIGHT)
 
-	local BroadcastSkyboxChange(convar, old, new)
+	local function BroadcastSkyboxChange(convar, old, new)
 		print(old, new)
 	end
 	cvars.AddChangeCallback("sv_skyname", BroadcastSkyboxChange, "updateskybox")
