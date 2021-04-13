@@ -27,6 +27,7 @@ if SERVER then
 			StormFox2.Weather.Set(lastWeather, isClear and 0 or 1)
 
 			RunConsoleCommand("sf_use_2dskybox", "1")
+			RunConsoleCommand("sf_time_speed", "3")
 		end
 	end)
 end
