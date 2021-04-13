@@ -122,7 +122,7 @@ if SERVER then
 	t_day = {"sky_day01_05", "hav"}
 	t_sunrise = {"sky_day01_06_hdr", "sky_day03_06"}
 	t_sunset = {"sky_day01_08_hdr"}
-	t_night = {"sky_day01_09_hdr"}
+	t_night = {"sky_day01_09_hdr", "painted"}
 
 	clear:SetSunStamp("skyBox",t_day,		SF_SKY_DAY)
 	clear:SetSunStamp("skyBox",t_sunrise,	SF_SKY_SUNRISE)
