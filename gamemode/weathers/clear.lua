@@ -202,10 +202,10 @@ else
 		local color2 = Color(255, 255, 255, 255)
 		local size = 16
 
-		GAMEMODE.Rotation = (GAMEMODE.Rotation or 0) + 0.3 * (CurTime() - (GAMEMODE.LastTime or 0))
+		--GAMEMODE.Rotation = (GAMEMODE.Rotation or 0) + 0.3 * (CurTime() - (GAMEMODE.LastTime or 0))
 		GAMEMODE.LastTime = CurTime()
 		local mat = Matrix()
-		mat:SetAngles(Angle(0, GAMEMODE.Rotation, 0))
+		--mat:SetAngles(Angle(0, GAMEMODE.Rotation, 0))
 		mat:SetTranslation(EyePos())
 
 		if !GAMEMODE.CubemapMats then
