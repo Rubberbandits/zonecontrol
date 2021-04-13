@@ -16,3 +16,9 @@ if( #files > 0 ) then
 	end
 
 end
+
+hook.Add("InitPostEntity", "STALKER.OverrideStormFox2", function()
+	if StormFox2 then
+		StormFox2.Setting.Set("use_2dskybox", true)
+	end
+end)

@@ -126,4 +126,103 @@ if SERVER then
 	clear:SetSunStamp("skyBox",t_sunrise,	SF_SKY_SUNRISE)
 	clear:SetSunStamp("skyBox",t_sunset,	SF_SKY_SUNSET)
 	clear:SetSunStamp("skyBox",t_night,		SF_SKY_NIGHT)
+else
+	local function ListSkynameChange(convar, old, new)
+		if(old != new) then
+			local skybox = "skybox/"..new
+
+			GAMEMODE.CubemapMats = {
+				Material(skybox .. "ft"),
+				Material(skybox .. "rt"),
+				Material(skybox .. "bk"),
+				Material(skybox .. "lf"),
+				Material(skybox .. "up"),
+				Material(skybox .. "dn"),
+			}
+
+			local rt = GetRenderTarget("skybox_foggation_renderation", ScrW(), ScrH())
+
+			render.PushRenderTarget(rt)
+			render.Clear(0, 0, 0, 0)
+
+			cam.Start2D()
+				surface.SetDrawColor(255,255,255,255)
+				surface.SetMaterial(GAMEMODE.CubemapMats[1])
+				surface.DrawTexturedRect(0,0, ScrW() * 0.25, ScrH())
+
+				surface.SetMaterial(GAMEMODE.CubemapMats[2])
+				surface.DrawTexturedRect(ScrW() * 0.25,0, ScrW() * 0.25, ScrH())
+
+				surface.SetMaterial(GAMEMODE.CubemapMats[3])
+				surface.DrawTexturedRect(ScrW() * 0.5,0, ScrW() * 0.25, ScrH())
+
+				surface.SetMaterial(GAMEMODE.CubemapMats[4])
+				surface.DrawTexturedRect(ScrW() * 0.75,0, ScrW() * 0.25, ScrH())
+			cam.End2D()
+
+			render.CapturePixels()
+
+			local w = math.min(ScrW(), 16843009)
+			local avgcol = {
+				r = 0, g = 0, b = 0
+			}
+
+			for i = 1, w do
+				local r, g, b = render.ReadPixel(i, math.random(ScrH() * 0.5 - ScrH() * 0.2), ScrH() * 0.5)
+				avgcol.r = avgcol.r + r
+				avgcol.b = avgcol.b + b
+				avgcol.g = avgcol.g + g
+			end
+
+			avgcol.r = avgcol.r / w
+			avgcol.g = avgcol.g / w
+			avgcol.b = avgcol.b / w
+
+			StormFox2.Weather.GetCurrent():Set("fogColor", Color(avgcol.r, avgcol.g, avgcol.b, 255))
+
+			render.PopRenderTarget()
+		end
+	end
+	cvars.AddChangeCallback("sv_skyname", ListSkynameChange)
+
+	local function PostDraw2DSkyBox()
+		local color2 = Color(255, 255, 255, 255)
+		local size = 16
+
+		self.Rotation = self.Rotation + 0.3 * (CurTime() - self.LastTime)
+		self.LastTime = CurTime()
+		local mat = Matrix()
+		mat:SetAngles(Angle(0, self.Rotation, 0))
+		mat:SetTranslation(EyePos())
+
+		local materials = self.CubemapMats
+
+		cam.Start3D(EyePos(), RenderAngles())
+			cam.PushModelMatrix(mat)
+
+			render.OverrideDepthEnable(false, true)
+			render.SetMaterial(materials[1])
+			render.DrawQuadEasy(Vector(1, 0, 0) * size, Vector(-1, 0, 0), size * 2, size * 2, color2, 180)
+
+			render.SetMaterial(materials[4])
+			render.DrawQuadEasy(Vector(0, -1, 0) * size, Vector(0, 1, 0), size * 2, size * 2, color2, 180)
+
+			render.SetMaterial(materials[3])
+			render.DrawQuadEasy(Vector(-1, 0, 0) * size, Vector(1, 0, 0), size * 2, size * 2, color2, 180)
+
+			render.SetMaterial(materials[2])
+			render.DrawQuadEasy(Vector(0, 1, 0) * size, Vector(0, -1, 0), size * 2, size * 2, color2, 180)
+
+			render.SetMaterial(materials[5])
+			render.DrawQuadEasy(Vector(0, 0, 1) * size, Vector(0, 0, -1), size * 2, size * 2, color2, 270)
+
+			render.SetMaterial(materials[6])
+			render.DrawQuadEasy(Vector(0, 0, -1) * size, Vector(0, 0, 1), size * 2, size * 2, color2, 90)
+
+			render.OverrideDepthEnable(false, false)
+
+			cam.PopModelMatrix()
+		cam.End3D()
+	end
+	hook.Add("PostDraw2DSkyBox", "STALKER.StormFox2SkyboxFix")
 end
