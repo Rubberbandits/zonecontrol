@@ -100,7 +100,7 @@ function GM:CreatePlayerMenu()
 	end
 	CCP.PlayerMenu.TopBar.Buttons[3]:PerformLayout();
 	
-	if !LocalPlayer():HasCharFlag("X") then
+	if !LocalPlayer():HasCharFlag("X") and !LocalPlayer():HasCharFlag("T") then
 		CCP.PlayerMenu.TopBar.Buttons[3]:SetEnabled(false)
 	end
 	
