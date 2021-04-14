@@ -1,6 +1,5 @@
-
-ITEM.Name =  "Spool of Wire";
-ITEM.Desc =  "A spool of thick fibers or wires utilized for equipment or electrical repair. Useful for the mechanically inclined.";
+ITEM.Name =  "Needle and Thread";
+ITEM.Desc =  "A large spool of thread with a needle tucked into the bundle. Useful for quick patchup jobs on a suit.";
 ITEM.Model =  "models/materials_wire.mdl";
 ITEM.Weight =  1;
 ITEM.FOV =  15;

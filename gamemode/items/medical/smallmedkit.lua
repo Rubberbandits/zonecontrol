@@ -7,7 +7,7 @@ ITEM.Weight =  0.5;
 ITEM.FOV =  9;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 5.02 );
-ITEM.BulkPrice =  1875;
+ITEM.BulkPrice =  1250;
 ITEM.License =  "D";
 ITEM.ItemSubmaterials = {
 	{ 0 , "models/stalkertextures/item/medkit1" }

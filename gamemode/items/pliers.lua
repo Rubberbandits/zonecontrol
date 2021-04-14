@@ -1,13 +1,13 @@
 
 ITEM.Name =  "Pliers";
-ITEM.Desc =  "A pair of pliers, handy for electronic work";
+ITEM.Desc =  "A rusty pair of pliers, handy for electronic work.";
 ITEM.Model =  "models/props_c17/tools_pliers01a.mdl";
-ITEM.Weight =  2;
+ITEM.Weight =  0.5;
 ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
-ITEM.BulkPrice =  30;
-ITEM.License =  "X"
+ITEM.BulkPrice =  500;
+ITEM.License =  "TX"
 ITEM.RaiseCondition = 5
 ITEM.W = 1
 ITEM.H = 2

@@ -1,0 +1,13 @@
+ITEM.Name =  "Scrap Fabric";
+ITEM.Desc =  "A pile of cloth ripped up into patch-size sheets.";
+ITEM.Model =  "models/props_lab/box01a.mdl";
+ITEM.Weight =  0.25;
+ITEM.FOV =  13;
+ITEM.CamPos =  Vector( 50, 50, 50 );
+ITEM.LookAt =  Vector( 0, 0, 0 );
+ITEM.BulkPrice =  50;
+ITEM.License =  "TX"
+ITEM.RaiseCondition = 3
+ITEM.SuitOnly = true
+ITEM.W = 1
+ITEM.H = 1

@@ -6,5 +6,6 @@ ITEM.License = "T"
 ITEM.BulkPrice =  12500;
 ITEM.RaiseCondition = 15
 ITEM.WeaponOnly = true
+ITEM.TechOnly = true
 ITEM.W = 1
 ITEM.H = 1

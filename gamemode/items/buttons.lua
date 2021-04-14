@@ -1,0 +1,13 @@
+ITEM.Name =  "Loose Buttons";
+ITEM.Desc =  "Some loose buttons. Maybe now you can fix your open fly problem.";
+ITEM.Model =  "models/stalker/item/medical/rad_pills.mdl";
+ITEM.Weight =  0.1;
+ITEM.License = "TX"
+ITEM.SuitOnly = true
+ITEM.RepairCondition = 2
+ITEM.FOV =  13;
+ITEM.CamPos =  Vector( 50, 50, 50 );
+ITEM.LookAt =  Vector( 0, 0, 0 );
+ITEM.W = 1
+ITEM.H = 1
+ITEM.BulkPrice =  1000;
