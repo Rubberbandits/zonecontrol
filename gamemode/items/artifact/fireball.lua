@@ -1,7 +1,7 @@
 
 ITEM.Base = "artifact"
 ITEM.Name =  "Fireball"
-ITEM.Desc =  "Living metal the color of iron encased in raw glass. The air around it warps and roils as if heated and light the color of a forge shines brightly through splits in its inner surface. Invigorates the wielder, and is known as a Stalker’s best friend. No known negative effects other than slight fatigue."
+ITEM.Desc =  "Living metal the color of iron encased in raw glass. Seems like it's on fire, but no noticeable flame can be seen. A Stalker's best friend with no negative effects other than slight fatigue."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/fireball.mdl"
 ITEM.Tier =  1
 ITEM.Weight =  1;

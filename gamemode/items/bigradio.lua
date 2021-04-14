@@ -1,7 +1,7 @@
 
 ITEM.Name =  "Radio";
-ITEM.Desc =  "A large radio.";
-ITEM.Model =  "models/props_lab/citizenradio.mdl";
+ITEM.Desc =  "A stationary radio.";
+ITEM.Model =  "models/z-o-m-b-i-e/st/el_tehnika/st_transiver_17.mdl";
 ITEM.Weight =  10;
 ITEM.FOV =  42;
 ITEM.W = 4
