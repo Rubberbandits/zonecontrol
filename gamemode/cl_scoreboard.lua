@@ -94,6 +94,7 @@ GM.ScoreboardBadges[BADGE_BETASCR] = { Material( "icon16/picture_edit.png" ), "S
 GM.ScoreboardBadges[BADGE_BIRTHDAY] = { Material( "icon16/cake.png" ), "Disseminate's Birthday" };
 GM.ScoreboardBadges[BADGE_WOKE] = { Material( "icon16/pill.png" ), "WOKE" };
 GM.ScoreboardBadges[BADGE_DEV] = { Material( "icon16/bug_add.png" ), "Developer" };
+GM.ScoreboardBadges[BADGE_DONATOR] = { Material( "icon16/medal_gold_1.png" ), "Donator" }
 
 function GM:ScoreboardAdd( ply, y, n )
 	
