@@ -659,10 +659,10 @@ function meta:SaveNewCharacter( name, title, titleone, titletwo, model, trait, s
 		
 	end
 	local add = "";
-	add = ", Money";
+	add = ", Money, Location";
 	
 	local str = "INSERT INTO cc_chars ( SteamID, RPName, TitleOne, TitleTwo, Title, Model, Body, Trait, Skingroup, Date" .. add;
-	str = str .. " ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );";
+	str = str .. " ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );";
 	
 	local query = CCSQL:prepare( str );
 	function query:onSuccess( ret )
@@ -693,6 +693,7 @@ function meta:SaveNewCharacter( name, title, titleone, titletwo, model, trait, s
 		tab["Date"] = d;
 		tab["LastOnline"] = d;
 		tab["Money"] = rublediff;
+		tab["Location"] = GAMEMODE.MainServerLocation;
 		
 		tab["id"] = tonumber( self:lastInsert() );
 		
@@ -734,6 +735,7 @@ function meta:SaveNewCharacter( name, title, titleone, titletwo, model, trait, s
 	query:setNumber( 9, skin );
 	query:setString( 10, d );
 	query:setNumber( 11, rublediff );
+	query:setNumber( 12, GAMEMODE.MainServerLocation );
 	query:start();
 	
 end
