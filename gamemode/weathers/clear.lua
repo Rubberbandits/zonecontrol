@@ -118,23 +118,27 @@ end
 if SERVER then
 	util.AddNetworkString("UpdateSkybox")
 
-	local t_day, t_night, t_sunrise, t_sunset
-	t_day = {"sky_day01_05", "hav"}
-	t_sunrise = {"sky_day01_06_hdr", "sky_day03_06"}
-	t_sunset = {"sky_day01_08_hdr"}
-	t_night = {"sky_day01_09_hdr", "painted"}
-
-	clear:SetSunStamp("skyBox",t_day,		SF_SKY_DAY)
-	clear:SetSunStamp("skyBox",t_sunrise,	SF_SKY_SUNRISE)
-	clear:SetSunStamp("skyBox",t_sunset,	SF_SKY_SUNSET)
-	clear:SetSunStamp("skyBox",t_night,		SF_SKY_NIGHT)
-
 	local function BroadcastSkyboxChange(convar, old, new)
 		net.Start("UpdateSkybox")
 			net.WriteString(new)
 		net.Broadcast()
 	end
 	cvars.AddChangeCallback("sv_skyname", BroadcastSkyboxChange, "updateskybox")
+
+	local function UpdateClearSkyboxes()
+		local clear = StormFox2.Weather.Get("Clear")
+		local t_day, t_night, t_sunrise, t_sunset
+		t_day = {"sky_day01_05", "hav"}
+		t_sunrise = {"sky_day01_06_hdr", "sky_day03_06"}
+		t_sunset = {"sky_day01_08_hdr"}
+		t_night = {"sky_day01_09_hdr", "painted"}
+
+		clear:SetSunStamp("skyBox",t_day,		SF_SKY_DAY)
+		clear:SetSunStamp("skyBox",t_sunrise,	SF_SKY_SUNRISE)
+		clear:SetSunStamp("skyBox",t_sunset,	SF_SKY_SUNSET)
+		clear:SetSunStamp("skyBox",t_night,		SF_SKY_NIGHT)
+	end
+	hook.Add("InitPostEntity", "STALKER.UpdateSkyboxes", UpdateClearSkyboxes)
 else
 	local function ListSkynameChange(new)
 		local skybox = "skybox/"..new
