@@ -441,3 +441,5 @@ GM.ToolTrustBlacklist = {
 	"radiation",
 	"duplicator",
 };
+
+GM.MainServerLocation = LOCATION_GARBAGE
