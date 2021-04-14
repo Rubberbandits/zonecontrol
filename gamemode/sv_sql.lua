@@ -608,7 +608,7 @@ end
 
 function meta:GetCharFromID( id )
 	
-	for _, v in pairs( self.SQLCharData ) do
+	for _, v in ipairs( self.SQLCharData ) do
 		
 		if( tonumber( v.id ) == id ) then
 			
@@ -622,7 +622,7 @@ end
 
 function meta:GetCharIndexFromID( id )
 	
-	for k, v in pairs( self.SQLCharData ) do
+	for k, v in ipairs( self.SQLCharData ) do
 		
 		if( tonumber( v.id ) == id ) then
 			
