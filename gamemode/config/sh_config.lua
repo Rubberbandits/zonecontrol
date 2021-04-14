@@ -133,8 +133,8 @@ GM.AFKTime = 600;
 -- Cross-Server Transfers
 
 IP_GENERAL = "play.100rads.bar";
-PORT_CORDON = 27015;
-PORT_GARBAGE = 27016;
+PORT_CORDON = 27016;
+PORT_GARBAGE = 27015;
 PORT_GREATSWAMP = 27017;
 PORT_DARKSCAPE = 27018;
 PORT_RASPAD = 27019;
@@ -441,3 +441,5 @@ GM.ToolTrustBlacklist = {
 	"radiation",
 	"duplicator",
 };
+
+GM.MainServerLocation = LOCATION_GARBAGE

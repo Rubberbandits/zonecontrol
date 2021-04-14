@@ -168,9 +168,7 @@ function GM:Initialize()
 	
 	RunConsoleCommand( "cl_showhints", "0" );
 	RunConsoleCommand( "gmod_mcore_test", "1" );
-	RunConsoleCommand( "con_filter_enable", "1" );
-	RunConsoleCommand( "con_filter_text_out", "Model '(null)' doesn't have attachment '' to attach particle system" );
-
+	
 	for k,v in next, self.ParticleFiles do
 	
 		game.AddParticles( v );

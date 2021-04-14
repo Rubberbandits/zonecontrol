@@ -8,6 +8,10 @@ util.IncludeDir("gui", false, true, "client")
 include("sh_npc_code.lua")
 include("sh_drugs.lua")
 
+if StormFox2 then
+	include("sh_loadweathers.lua")
+end
+
 GM.Name = "ZoneControl";
 GM.Author = "rusty";
 GM.Website = "";
@@ -1077,12 +1081,3 @@ PrecacheParticleSystem("bubble")
 PrecacheParticleSystem("teleport")
 PrecacheParticleSystem("tramplin_type2")
 PrecacheParticleSystem("striderbuster_shotdown_explosion_trail")
-
-if StormFox2 then
-	hook.Add("InitPostEntity", "StormFox2ChangeClear", function()
-		local weather = StormFox2.Weather.Get("clear")
-		if weather then
-			weather:Set("fogColor", Color(0,0,0,0))
-		end
-	end)
-end

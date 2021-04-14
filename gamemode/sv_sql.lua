@@ -488,7 +488,7 @@ function meta:PostLoadCharsInfo()
 		netstream.Start( self, "nCharacterList", self.SQLCharData );
 		
 		local nStartType = 0;
-		if( GAMEMODE.CurrentLocation != LOCATION_CORDON ) then
+		if( (GAMEMODE.CurrentLocation or 0) != GAMEMODE.MainServerLocation ) then
 			nStartType = CC_SELECT;
 		else
 			if( self:SQLGetNumChars() < GAMEMODE.MaxCharacters ) then
@@ -502,9 +502,9 @@ function meta:PostLoadCharsInfo()
 		
 	else
 		
-		if( GAMEMODE.CurrentLocation and GAMEMODE.CurrentLocation != LOCATION_CORDON ) then
+		if( GAMEMODE.CurrentLocation and GAMEMODE.CurrentLocation != GAMEMODE.MainServerLocation ) then
 
-			netstream.Start( self, "nConnect", IP_GENERAL..PORT_CITY );
+			netstream.Start( self, "nConnect", IP_GENERAL..PORT_GARBAGE );
 			return;
 			
 		end
@@ -608,7 +608,7 @@ end
 
 function meta:GetCharFromID( id )
 	
-	for _, v in pairs( self.SQLCharData ) do
+	for _, v in ipairs( self.SQLCharData ) do
 		
 		if( tonumber( v.id ) == id ) then
 			
@@ -622,7 +622,7 @@ end
 
 function meta:GetCharIndexFromID( id )
 	
-	for k, v in pairs( self.SQLCharData ) do
+	for k, v in ipairs( self.SQLCharData ) do
 		
 		if( tonumber( v.id ) == id ) then
 			
@@ -636,7 +636,7 @@ end
 
 function meta:SaveNewCharacter( name, title, titleone, titletwo, model, trait, skin, gear )
 	
-	if GAMEMODE.CurrentLocation and GAMEMODE.CurrentLocation != LOCATION_CORDON then return end
+	if (GAMEMODE.CurrentLocation or 0) != GAMEMODE.MainServerLocation then return end
 
 	local d = os.date( "!%m/%d/%y %H:%M:%S" );
 	local ply = self;

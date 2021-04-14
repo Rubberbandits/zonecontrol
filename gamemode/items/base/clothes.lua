@@ -17,7 +17,7 @@ BASE.Vars = {
 	SuitClass = "",
 }
 BASE.UseDurability = true;
-BASE.DegradationProtection = 75; -- a percentage: 100% allows no durability damage, 0% allows full durability damage.
+BASE.DegradationProtection = 97.5; -- a percentage: 100% allows no durability damage, 0% allows full durability damage.
 BASE.HandsModel = {
 	body = "100000000",
 	model = "models/poc/stalker_viewmodels/c_sunrise.mdl",
