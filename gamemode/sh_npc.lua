@@ -347,7 +347,7 @@ local dropItems = {
 	npc_wick_mutant_snork = {
 		chance = 40, 
 		items = {
-			"legsnork",
+			"footsnork",
 		},
 	},
 	vj_mutant_boar = {
