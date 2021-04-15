@@ -744,7 +744,15 @@ function GM:PMPopulateBusiness()
 
 		if !price or price == 0 then continue end
 		if !v.License then continue end
-		if !LocalPlayer():HasCharFlag(v.License) then continue end
+
+		local hasFlag = false
+		for i = 1, #v.License do
+			local flag = v.License[i]
+
+			if LocalPlayer():HasCharFlag(flag) then hasFlag = true break end
+		end
+
+		if !hasFlag then continue end
 
 		items_to_list[#items_to_list+1] = k
 	end
