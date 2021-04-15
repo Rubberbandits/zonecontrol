@@ -375,9 +375,16 @@ local RandomItemRelatedStrings = {
 	"I don't think I'm going to make it, man. I forgot to pack %s.",
 }
 
+local DisallowItems = {
+	suit_exo = true,
+}
+
 local RandomPDAMessageFuncs = {
 	[1] = function()
 		local randomItem = table.Random(GAMEMODE.Items)
+
+		if DisallowItems[randomItem.Class] then return end
+
 		local randomOpinion = table.Random(RandomItemOpinions)
 
 		return Format("I found a %s. %s", randomItem.Name, randomOpinion)
@@ -390,6 +397,8 @@ local RandomPDAMessageFuncs = {
 		local playerName = randomPlayer:CharID() > 0 and randomPlayer:RPName() or false
 		local randomItem = table.Random(GAMEMODE.Items)
 
+		if DisallowItems[randomItem.Class] then return end
+
 		if !playerName then
 			playerName = table.Random(RandomPDANames)
 		end
@@ -398,6 +407,7 @@ local RandomPDAMessageFuncs = {
 	end,
 	[4] = function()
 		local randomItem = table.Random(GAMEMODE.Items)
+		if DisallowItems[randomItem.Class] then return end
 
 		return Format(table.Random(RandomItemRelatedStrings), randomItem.Name)
 	end,
