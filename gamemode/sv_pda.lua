@@ -362,6 +362,8 @@ local RandomPlayerRelatedStrings = {
 	"Hey, %s! Duck.",
 	"Pssst, %s. Don't look behind you.",
 	"%s, watch out!",
+	"%s, your reputation seems well enough.",
+	"%s, are you new here?",
 }
 
 local RandomPDAMessageFuncs = {
