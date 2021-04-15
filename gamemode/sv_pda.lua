@@ -429,6 +429,12 @@ local RandomPDAMessageFuncs = {
 	end,
 }
 
+concommand.Add("randompda", function(ply, cmd, args)
+	if IsValid(ply) then return end
+
+	print(table.Random(RandomPDAMessageFuncs)())
+end)
+
 local function RandomPDAMessages()
 	if !GAMEMODE.NextRandomPDA then
 		GAMEMODE.NextRandomPDA = CurTime() + math.random(180, 300)
