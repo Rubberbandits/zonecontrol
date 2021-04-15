@@ -291,6 +291,7 @@ local RandomItemOpinions = {
 	"I hate these things.",
 	"Does anyone know any traders that'll take it?",
 	"He won't be needing this anymore.",
+	"That's all he had on him.",
 }
 
 local RandomTalking = {
@@ -407,6 +408,24 @@ local RandomPDAMessageFuncs = {
 		if !playerName then return end
 
 		return Format("%s just keeps on raising their prices. If it keeps on, I'll go to sleep starving.", playerName)
+	end,
+	[7] = function()
+		local randomNPC
+		for _,ent in ipairs(ents.GetAll()) do
+			if ent:IsNextBot() or ent:IsNPC() then
+				randomNPC = ent
+				break
+			end
+		end
+
+		if !randomNPC then return end
+
+		local npcData = scripted_ents.GetStored(randomNPC:GetClass())
+		
+		if !npcData then return end
+		if !npcData.PrintName then return end
+
+		return Format("Anyone seen a %s around here? Thought I heard one a minute ago.", npcData.PrintName)
 	end,
 }
 
