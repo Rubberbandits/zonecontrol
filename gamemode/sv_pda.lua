@@ -278,35 +278,6 @@ local function AuthenticatePDA(ply, pda, password)
 end
 netstream.Hook("AuthenticatePDA", AuthenticatePDA)
 
-local RandomItemOpinions = {
-	"I can't believe the Zone has done this to me.",
-	"I can finally retire!",
-	"Is this even worth anything?",
-	"Anyone looking to buy it?",
-	"Wow, what junk.",
-	"It's my lucky day!",
-	"Does anyone have any idea what this is?",
-	"First offer goes.",
-	"NO LOWBALL OFFERS, I KNOW WHAT I HAVE.",
-	"I hate these things.",
-	"Does anyone know any traders that'll take it?",
-	"He won't be needing this anymore.",
-	"That's all he had on him.",
-}
-
-local RandomTalking = {
-	"The Zone really is an evil bastard.",
-	"Why does it smell like someone died over here? Oh, there he is.",
-	"I really hate swamp water.",
-	"Uh oh, my dosimeter isn't reading anymore...",
-	"Uhh, guys, I dropped my Geiger Counter.",
-	"Why does my mouth taste like metal?",
-	"Hahah, I just watched a rookie shit his pants!",
-	"The boar and flesh really are going at it, it's like a nature documentary.",
-	"You people are all freaks, go to hell!",
-	"Just saw a fat bandit pass by Loner town. His poor mother!",
-}
-
 local RandomPDANames = {
 	"vitalikvisitor",
 	"vladvacuum",
@@ -357,6 +328,34 @@ local RandomPDANames = {
 	"Maltese",
 }
 
+local RandomItemOpinions = {
+	"I can't believe the Zone has done this to me.",
+	"I can finally retire!",
+	"Is this even worth anything?",
+	"Anyone looking to buy it?",
+	"Wow, what junk.",
+	"It's my lucky day!",
+	"Does anyone have any idea what this is?",
+	"First offer goes.",
+	"NO LOWBALL OFFERS, I KNOW WHAT I HAVE.",
+	"I hate these things.",
+	"Does anyone know any traders that'll take it?",
+	"He won't be needing this anymore.",
+}
+
+local RandomTalking = {
+	"The Zone really is an evil bastard.",
+	"Why does it smell like someone died over here? Oh, there he is.",
+	"I really hate swamp water.",
+	"Uh oh, my dosimeter isn't reading anymore...",
+	"Uhh, guys, I dropped my Geiger Counter.",
+	"Why does my mouth taste like metal?",
+	"Hahah, I just watched a rookie shit his pants!",
+	"The boar and flesh really are going at it, it's like a nature documentary.",
+	"You people are all freaks, go to hell!",
+	"Just saw a fat bandit pass by Loner town. His poor mother!",
+}
+
 local RandomPlayerRelatedStrings = {
 	"I think I passed %s earlier. Isn't there a bounty on their head?",
 	"%s seems kind of jittery lately. Anyone posted money on their head?",
@@ -365,6 +364,15 @@ local RandomPlayerRelatedStrings = {
 	"%s, watch out!",
 	"%s, your reputation seems well enough.",
 	"%s, are you new here?",
+}
+
+local RandomNPCRelatedStrings = {
+	"Anyone seen a %s around here? Thought I heard one a minute ago.",
+}
+
+local RandomItemRelatedStrings = {
+	"%s. That's all he had on him.",
+	"I don't think I'm going to make it, man. I forgot to pack %s.",
 }
 
 local RandomPDAMessageFuncs = {
@@ -391,7 +399,7 @@ local RandomPDAMessageFuncs = {
 	[4] = function()
 		local randomItem = table.Random(GAMEMODE.Items)
 
-		return Format("I don't think I'm going to make it, man. I forgot to pack %s.", randomItem.Name)
+		return Format(table.Random(RandomItemRelatedStrings), randomItem.Name)
 	end,
 	[5] = function()
 		local randomPlayer = table.Random(player.GetAll())
@@ -425,7 +433,7 @@ local RandomPDAMessageFuncs = {
 		if !npcData.t then return end
 		if !npcData.t.PrintName then return end
 
-		return Format("Anyone seen a %s around here? Thought I heard one a minute ago.", npcData.t.PrintName)
+		return Format(table.Random(RandomNPCRelatedStrings), npcData.t.PrintName)
 	end,
 }
 
