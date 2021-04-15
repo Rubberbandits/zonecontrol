@@ -410,16 +410,14 @@ local RandomPDAMessageFuncs = {
 		return Format("%s just keeps on raising their prices. If it keeps on, I'll go to sleep starving.", playerName)
 	end,
 	[7] = function()
-		local randomNPC
+		local allNPCs = {}
 		for _,ent in ipairs(ents.GetAll()) do
-			if ent:IsNextBot() or ent:IsNPC() and !ent.AlreadyUsedForPDA then
-				randomNPC = ent
-				ent.AlreadyUsedForPDA = true
-				break
+			if ent:IsNextBot() or ent:IsNPC() then
+				table.insert(allNPCs, ent)
 			end
 		end
 
-		if !randomNPC then return end
+		local randomNPC = table.Random(allNPCs)
 
 		local npcData = scripted_ents.GetStored(randomNPC:GetClass())
 		
@@ -427,7 +425,7 @@ local RandomPDAMessageFuncs = {
 		if !npcData.t then return end
 		if !npcData.t.PrintName then return end
 
-		return Format("Anyone seen a %s around here? Thought I heard one a minute ago.", npcData.PrintName)
+		return Format("Anyone seen a %s around here? Thought I heard one a minute ago.", npcData.t.PrintName)
 	end,
 }
 
