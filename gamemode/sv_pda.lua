@@ -277,3 +277,114 @@ local function AuthenticatePDA(ply, pda, password)
 	netstream.Start(ply, "AuthenticatePDA", pda)
 end
 netstream.Hook("AuthenticatePDA", AuthenticatePDA)
+
+local RandomItemOpinions = {
+	"I can't believe the Zone has done this to me.",
+	"I can finally retire!",
+	"Is this even worth anything?",
+	"Anyone looking to buy it?",
+	"Wow, what junk.",
+	"It's my lucky day!",
+	"Does anyone have any idea what this is?",
+	"First offer goes.",
+	"NO LOWBALL OFFERS, I KNOW WHAT I HAVE.",
+	"I hate these things.",
+	"Does anyone know any traders that'll take it?",
+	"He won't be needing this anymore.",
+}
+
+local RandomTalking = {
+	"The Zone really is an evil bastard.",
+	"Why does it smell like someone died over here? Oh, there he is.",
+	"I really hate swamp water.",
+	"Uh oh, my dosimeter isn't reading anymore...",
+	"Uhh, guys, I dropped my Geiger Counter.",
+	"Why does my mouth taste like metal?",
+	"Hahah, I just watched a rookie shit his pants!",
+	"The boar and flesh really are going at it, it's like a nature documentary.",
+	"You people are all freaks, go to hell!",
+}
+
+local RandomPDAMessages = {
+	function()
+		local randomItem = table.Random(GAMEMODE.Items)
+		local randomOpinion = table.Random(RandomItemOpinions)
+
+		return Format("I found a %s. %s", randomItem.Name, randomOpinion)
+	end,
+	function()
+		return table.Random(RandomTalking)
+	end,
+}
+
+local RandomPDANames = {
+	"vitalikvisitor",
+	"vladvacuum",
+	"kostikkamikaze",
+	"anton_ace",
+	"stepasnuggler",
+	"yurasyogi",
+	"shurikspade",
+	"vityukha_vandal",
+	"leva-lord",
+	"edikears",
+	"KolyaKnot",
+	"Vetal--Visitor",
+	"matveimachine",
+	"vladviking",
+	"temka-Typist",
+	"timka-tail",
+	"BodyaBusDriver",
+	"Borkabeaver",
+	"anatolyalligator",
+	"vasyavisigoth",
+	"yurasyankee",
+	"zheka-Zinger",
+	"VankaTycoon",
+	"Fedka Highlander",
+	"Mitka Axe",
+	"Mark Debater",
+	"Pavlukha Shortstop",
+	"Gena Courier",
+	"Sanya Boulder",
+	"Vitalik Shifter",
+	"Grisha Zinger",
+	"Sevka Atrocious",
+	"maxtrump",
+	"Zhenka Defunct",
+	"Dmitro Rook",
+	"Borya Madera",
+	"Vovka Nocturnal",
+	"Vovka Megabyte",
+	"Lekha Lethal",
+	"Tokha Skew",
+	"Vladimir Hungry",
+	"George Pigmy",
+	"Vulture Burbridge",
+	"Red",
+	"NormanFourEyes",
+	"TheSlug",
+	"Maltese",
+}
+
+local function RandomPDAMessages()
+	if !GAMEMODE.NextRandomPDA then
+		GAMEMODE.NextRandomPDA = CurTime() + math.random(60, 180)
+	end
+
+	if GAMEMODE.NextRandomPDA <= CurTime() then
+		local icon = {2,5}
+		local username = table.Random(RandomPDANames)
+		local randomMessage = table.Random(RandomPDAMessages)
+		local string = randomMessage()
+
+		for _,ply in ipairs(player.GetAll()) do
+			if ply:HasItem("pda") then
+				ply:PDANotify(username.." -> all", string, icon[1], icon[2])
+			end
+		end
+
+		GAMEMODE.NextRandomPDA = CurTime() + math.random(60, 180)
+	end
+end
+hook.Add("Think", "STALKER.RandomPDAMessages", RandomPDAMessages)
