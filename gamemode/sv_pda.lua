@@ -445,6 +445,23 @@ local function RandomPDAMessages()
 		end
 
 		for _,ply in ipairs(player.GetAll()) do
+			local pda = ply:HasItem("pda")
+
+			if !pda then continue end
+
+			local poweredOn 
+			if istable(pda) then
+				for _,item in ipairs(pda) do
+					if item:GetVar("Power", false) then
+						poweredOn = true
+					end
+				end
+			else
+				poweredOn = pda:GetVar("Power", false)
+			end
+
+			if !poweredOn then continue end
+
 			if ply:HasItem("pda") then
 				ply:PDANotify(username.." -> all", string, icon[1], icon[2])
 			end
