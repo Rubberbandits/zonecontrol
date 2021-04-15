@@ -14,7 +14,7 @@ ITEM.DrugType = "MEDKIT"
 GM:CreateDrugType("MEDKIT", {
 	Duration = 60,
 	Hooks = {
-		HUDPaint = function()
+		/*HUDPaint = function()
 			if GAMEMODE.DrugType and GAMEMODE.DrugType == "MEDKIT" then
 				local d = CurTime() - GAMEMODE.DrugStart;
 				
@@ -40,7 +40,7 @@ GM:CreateDrugType("MEDKIT", {
 					
 				end
 			end
-		end,
+		end,*/
 		Think = function()
 			if GAMEMODE.DrugType and GAMEMODE.DrugType == "MEDKIT" then
 				local d = CurTime() - GAMEMODE.DrugStart;
