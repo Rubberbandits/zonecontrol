@@ -303,18 +303,7 @@ local RandomTalking = {
 	"Hahah, I just watched a rookie shit his pants!",
 	"The boar and flesh really are going at it, it's like a nature documentary.",
 	"You people are all freaks, go to hell!",
-}
-
-local RandomPDAMessages = {
-	function()
-		local randomItem = table.Random(GAMEMODE.Items)
-		local randomOpinion = table.Random(RandomItemOpinions)
-
-		return Format("I found a %s. %s", randomItem.Name, randomOpinion)
-	end,
-	function()
-		return table.Random(RandomTalking)
-	end,
+	"Just saw a fat bandit pass by Loner town. His poor mother!",
 }
 
 local RandomPDANames = {
@@ -367,6 +356,58 @@ local RandomPDANames = {
 	"Maltese",
 }
 
+local RandomPlayerRelatedStrings = {
+	"I think I passed %s earlier. Isn't there a bounty on their head?",
+	"%s seems kind of jittery lately. Anyone posted money on their head?",
+	"Hey, %s! Duck.",
+	"Pssst, %s. Don't look behind you.",
+	"%s, watch out!",
+}
+
+local RandomPDAMessageFuncs = {
+	[1] = function()
+		local randomItem = table.Random(GAMEMODE.Items)
+		local randomOpinion = table.Random(RandomItemOpinions)
+
+		return Format("I found a %s. %s", randomItem.Name, randomOpinion)
+	end,
+	[2] = function()
+		return table.Random(RandomTalking)
+	end,
+	[3] = function()
+		local randomPlayer = table.Random(player.GetAll())
+		local playerName = randomPlayer:CharID() > 0 and randomPlayer:RPName() or false
+		local randomItem = table.Random(GAMEMODE.Items)
+
+		if !playerName then
+			playerName = table.Random(RandomPDANames)
+		end
+
+		return Format("%s just ripped me off on %s. I paid twice the price!", playerName, randomItem.Name)
+	end,
+	[4] = function()
+		local randomItem = table.Random(GAMEMODE.Items)
+
+		return Format("I don't think I'm going to make it, man. I forgot to pack %s.", randomItem.Name)
+	end,
+	[5] = function()
+		local randomPlayer = table.Random(player.GetAll())
+		local playerName = randomPlayer:CharID() > 0 and randomPlayer:RPName() or false
+
+		if !playerName then return end
+
+		return Format(table.Random(RandomPlayerRelatedStrings), playerName)
+	end,
+	[6] = function()
+		local randomPlayer = table.Random(player.GetAll())
+		local playerName = randomPlayer:CharID() > 0 and randomPlayer:HasCharFlag("X") and randomPlayer:RPName() or false
+
+		if !playerName then return end
+
+		return Format("%s just keeps on raising their prices. If it keeps on, I'll go to sleep starving.", playerName)
+	end,
+}
+
 local function RandomPDAMessages()
 	if !GAMEMODE.NextRandomPDA then
 		GAMEMODE.NextRandomPDA = CurTime() + math.random(60, 180)
@@ -375,8 +416,12 @@ local function RandomPDAMessages()
 	if GAMEMODE.NextRandomPDA <= CurTime() then
 		local icon = {2,5}
 		local username = table.Random(RandomPDANames)
-		local randomMessage = table.Random(RandomPDAMessages)
+		local randomMessage = table.Random(RandomPDAMessageFuncs)
 		local string = randomMessage()
+
+		if !string then 
+			return
+		end
 
 		for _,ply in ipairs(player.GetAll()) do
 			if ply:HasItem("pda") then
