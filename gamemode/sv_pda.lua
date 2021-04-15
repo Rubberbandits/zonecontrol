@@ -450,7 +450,7 @@ local function RandomPDAMessages()
 			if !pda then continue end
 
 			local poweredOn 
-			if istable(pda) then
+			if !pda.IsItem and istable(pda) then
 				for _,item in ipairs(pda) do
 					if item:GetVar("Power", false) then
 						poweredOn = true
