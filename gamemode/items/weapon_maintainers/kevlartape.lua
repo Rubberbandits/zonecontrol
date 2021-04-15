@@ -9,6 +9,6 @@ ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  2000;
 ITEM.License =  "TX";
 ITEM.SuitOnly = true
-ITEM.RaiseCondition = 15
+ITEM.RaiseCondition = 5
 ITEM.W = 1
 ITEM.H = 1
