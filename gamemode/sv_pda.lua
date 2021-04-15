@@ -412,8 +412,9 @@ local RandomPDAMessageFuncs = {
 	[7] = function()
 		local randomNPC
 		for _,ent in ipairs(ents.GetAll()) do
-			if ent:IsNextBot() or ent:IsNPC() then
+			if ent:IsNextBot() or ent:IsNPC() and !ent.AlreadyUsedForPDA then
 				randomNPC = ent
+				ent.AlreadyUsedForPDA = true
 				break
 			end
 		end
@@ -423,7 +424,8 @@ local RandomPDAMessageFuncs = {
 		local npcData = scripted_ents.GetStored(randomNPC:GetClass())
 		
 		if !npcData then return end
-		if !npcData.PrintName then return end
+		if !npcData.t then return end
+		if !npcData.t.PrintName then return end
 
 		return Format("Anyone seen a %s around here? Thought I heard one a minute ago.", npcData.PrintName)
 	end,
