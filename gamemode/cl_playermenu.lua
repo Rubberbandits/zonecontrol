@@ -744,6 +744,7 @@ function GM:PMPopulateBusiness()
 
 		if !price or price == 0 then continue end
 		if !v.License then continue end
+		if !isstring(v.License) then continue end
 
 		local hasFlag = false
 		for i = 1, #v.License do
