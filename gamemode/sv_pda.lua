@@ -431,7 +431,7 @@ local RandomPDAMessageFuncs = {
 
 local function RandomPDAMessages()
 	if !GAMEMODE.NextRandomPDA then
-		GAMEMODE.NextRandomPDA = CurTime() + math.random(60, 180)
+		GAMEMODE.NextRandomPDA = CurTime() + math.random(180, 300)
 	end
 
 	if GAMEMODE.NextRandomPDA <= CurTime() then
@@ -450,7 +450,7 @@ local function RandomPDAMessages()
 			end
 		end
 
-		GAMEMODE.NextRandomPDA = CurTime() + math.random(60, 180)
+		GAMEMODE.NextRandomPDA = CurTime() + math.random(180, 300)
 	end
 end
 hook.Add("Think", "STALKER.RandomPDAMessages", RandomPDAMessages)
