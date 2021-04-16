@@ -214,6 +214,10 @@ kingston.command.register("pda", {
 		if !selected_pda then
 			return false, "Your PDA isn't powered on, or there is no primary PDA!"
 		end
+
+		if !kingston.blowout.can_use_pda() then
+			return false, "There is currently an ongoing emission!"
+		end
 		
 		return true
 	end,
