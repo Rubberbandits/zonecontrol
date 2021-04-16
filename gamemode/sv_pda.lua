@@ -378,6 +378,9 @@ local RandomPlayerRelatedStrings = {
 	"%s, are you new here?",
 	"Hey %s, what happened to that Russian Playboy I loaned you?",
 	"%s",
+	"Watch out, %s. You will become a zombie and the last thing you will see is my shotgun barrel",
+	"Hey, %s. Want to be friends?",
+	"What the fuck did you just fucking say about me, %s?",
 }
 
 local RandomNPCRelatedStrings = {
@@ -397,6 +400,8 @@ local RandomItemRelatedStrings = {
 	"Heard from my buddy that %s is the hot new item to have.",
 	"Who was selling that %s? I've got the cash.",
 	"Price check on %s?",
+	"Anybody else get the message saying you won a %s in a raffle?",
+	"I'm trying to repair my ZAZ, and the manual says I need a %s. Anyone got one for sale?",
 }
 
 local DisallowItems = {
