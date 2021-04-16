@@ -82,7 +82,7 @@ function PANEL:Paint( w, h )
 					self.HoverStart = RealTime()
 				end
 
-				surface.SetDrawColor(200, 200, 200, 100)
+				surface.SetDrawColor(150, 150, 150, 30)
 				surface.DrawRect(0, 0, w, h)
 			end
 			
