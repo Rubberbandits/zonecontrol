@@ -77,8 +77,13 @@ function PANEL:Paint( w, h )
 	
 	if !self:IsDragging() then
 		if !self.NoHover then
-			if self:IsHovered() and !self.LastHovered then
-				self.HoverStart = RealTime()
+			if self:IsHovered() then
+				if !self.LastHovered then
+					self.HoverStart = RealTime()
+				end
+
+				surface.SetDrawColor(200, 200, 200, 100)
+				surface.DrawRect(0, 0, w, h)
 			end
 			
 			if self.HoverStart and self.HoverStart + 1 <= RealTime() then
