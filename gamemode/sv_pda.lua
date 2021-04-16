@@ -326,6 +326,7 @@ local RandomPDANames = {
 	"NormanFourEyes",
 	"TheSlug",
 	"Maltese",
+	"Filya Butt",
 }
 
 local RandomItemOpinions = {
@@ -359,10 +360,16 @@ local RandomTalking = {
 	"I'm watching you!",
 	"Oblivion awaits...",
 	"How the hell do you get laid in this place?",
+	"Let sleeping dogs lie.",
+	"Is there a trader around?",
+	"Is there a technician around?",
+	"That's life.",
+	"Anyone got an MP7 mag?",
+	"My suit broke. God damn it...",
 }
 
 local RandomPlayerRelatedStrings = {
-	"I think I passed %s earlier. Isn't there a bounty on their head?",
+	"I heard that somebody put a bounty on %'s head.",
 	"%s seems kind of jittery lately. Anyone posted money on their head?",
 	"Hey, %s! Duck.",
 	"Pssst, %s. Don't look behind you.",
@@ -370,11 +377,16 @@ local RandomPlayerRelatedStrings = {
 	"%s, your reputation seems well enough.",
 	"%s, are you new here?",
 	"Hey %s, what happened to that Russian Playboy I loaned you?",
+	"%s",
 }
 
 local RandomNPCRelatedStrings = {
 	"Anyone seen a %s around here? Thought I heard one a minute ago.",
 	"Just took down a %s. What a bastard.",
+	"Stay alert. I hear %s.",
+	"Seems like every day I wake up and find a %s in my tent.",
+	"Damn %ss! They left a mess all over the place.",
+	"Need help! We are pinned down by a %s!",
 }
 
 local RandomItemRelatedStrings = {
@@ -384,6 +396,7 @@ local RandomItemRelatedStrings = {
 	"Anybody seen my %s? I think I left it around here somewhere.",
 	"Heard from my buddy that %s is the hot new item to have.",
 	"Who was selling that %s? I've got the cash.",
+	"Price check on %s?",
 }
 
 local DisallowItems = {
@@ -731,7 +744,7 @@ local RandomPDAMessageFuncs = {
 			playerName = table.Random(RandomPDANames)
 		end
 
-		return Format("%s just ripped me off on %s. I paid twice the price!", playerName, randomItem.Name)
+		return Format("%s just ripped me off on %s. I paid twice the value!", playerName, randomItem.Name)
 	end,
 	[4] = function()
 		local randomItem = table.Random(GAMEMODE.Items)
