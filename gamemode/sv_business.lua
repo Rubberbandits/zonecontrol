@@ -2,7 +2,16 @@ function nBuyItem( ply, id, single )
 	
 	local item = GAMEMODE:GetItemByID( id );
 
-	if( item and item.License and ply:HasCharFlag(item.License) ) then
+	if( item and item.License ) then
+
+		local hasFlag
+		for i = 1, #item.License do
+			if ply:HasCharFlag(item.License[i]) then
+				hasFlag = true
+			end
+		end
+
+		if !hasFlag then return end
 
 		local price = hook.Run("GetBuyPrice", ply, id, single)
 
