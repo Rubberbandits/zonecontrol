@@ -875,25 +875,7 @@ function GM:PMPopulateBusiness()
 			buyone:SetSize( 46, 24 );
 			function buyone:DoClick()
 
-				if( LocalPlayer():Money() >= singlePrice ) then
-					
-					if( LocalPlayer():InventoryWeight() < LocalPlayer():InventoryMaxWeight() ) then
-						
-						netstream.Start( "nBuyItem", item, true );
-						
-						LocalPlayer():Notify(nil, Color(200,200,200,255), "You bought one.")
-						
-					else
-						
-						LocalPlayer():Notify(nil, COLOR_ERR, "Your inventory is full. You can't carry this.")
-						
-					end
-					
-				else
-					
-					LocalPlayer():Notify(nil, COLOR_ERR, "You need more money to buy this!")
-					
-				end
+				netstream.Start( "nBuyItem", item, true );
 				
 			end
 			buyone:PerformLayout();
@@ -905,25 +887,7 @@ function GM:PMPopulateBusiness()
 			buyfive:SetSize( 46, 24 );
 			function buyfive:DoClick()
 
-				if( LocalPlayer():Money() >= bulkPrice ) then
-					
-					if( LocalPlayer():InventoryWeight() < LocalPlayer():InventoryMaxWeight() ) then
-						
-						netstream.Start( "nBuyItem", item, false );
-						
-						LocalPlayer():Notify(nil, Color(200,200,200,255), "You bought five.")
-						
-					else
-						
-						LocalPlayer():Notify(nil, COLOR_ERR, "Your inventory is full. You can't carry this.")
-						
-					end
-					
-				else
-					
-					LocalPlayer():Notify(nil, COLOR_ERR, "You need more money to buy this!")
-					
-				end
+				netstream.Start( "nBuyItem", item, false );
 				
 			end
 			buyfive:PerformLayout();
