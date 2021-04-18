@@ -404,6 +404,10 @@ local RandomItemRelatedStrings = {
 	"I'm trying to repair my ZAZ, and the manual says I need a %s. Anyone got one for sale?",
 }
 
+local RandomTraderRelatedStrings = {
+	"%s just keeps on raising their prices. If it keeps on, I'll go to sleep starving.",
+}
+
 local DisallowItems = {
 	suit_exo = true,
 	suit_ssp = true,
@@ -771,7 +775,7 @@ local RandomPDAMessageFuncs = {
 
 		if !playerName then return end
 
-		return Format("%s just keeps on raising their prices. If it keeps on, I'll go to sleep starving.", playerName)
+		return Format(table.Random(RandomTraderRelatedStrings), playerName)
 	end,
 	[7] = function()
 		local allNPCs = {}
