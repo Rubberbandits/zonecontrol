@@ -15,7 +15,7 @@ local function nBuyItem( ply, id, single )
 			end
 		end
 
-		if !hasFlag then ply:Notify(nil, COLOR_ERR, "You don't have the connections to buy this.") return end
+		if !hasFlag then ply:Notify(nil, COLOR_ERROR, "You don't have the connections to buy this.") return end
 
 		local price = hook.Run("GetBuyPrice", ply, id, single)
 		if !price or price == 0 then return end
@@ -30,10 +30,10 @@ local function nBuyItem( ply, id, single )
 
 					ply:Notify(nil, COLOR_NOTIF, "You've purchased this single item.")
 				else
-					ply:Notify(nil, COLOR_ERR, "You're overencumbered and can't make purchases.")
+					ply:Notify(nil, COLOR_ERROR, "You're overencumbered and can't make purchases.")
 				end
 			else
-				ply:Notify(nil, COLOR_ERR, "You can't afford to buy this.")
+				ply:Notify(nil, COLOR_ERROR, "You can't afford to buy this.")
 			end
 		else
 			if ply:Money() >= price then
@@ -49,10 +49,10 @@ local function nBuyItem( ply, id, single )
 
 					ply:Notify(nil, COLOR_NOTIF, "You've purchased five of this item.")
 				else
-					ply:Notify(nil, COLOR_ERR, "You're overencumbered and can't make purchases.")
+					ply:Notify(nil, COLOR_ERROR, "You're overencumbered and can't make purchases.")
 				end
 			else
-				ply:Notify(nil, COLOR_ERR, "You can't afford to buy this.")
+				ply:Notify(nil, COLOR_ERROR, "You can't afford to buy this.")
 			end
 		end
 	end

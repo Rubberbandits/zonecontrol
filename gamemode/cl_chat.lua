@@ -518,7 +518,7 @@ function GM:PDANotificationAdded(notif)
 end
 
 local function nStockpileNameTaken()
-	LocalPlayer():Notify(nil, COLOR_ERR, "This stockpile name is already taken!")
+	LocalPlayer():Notify(nil, COLOR_ERROR, "This stockpile name is already taken!")
 end
 netstream.Hook( "nStockpileNameTaken", nStockpileNameTaken );
 

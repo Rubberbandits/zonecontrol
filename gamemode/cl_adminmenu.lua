@@ -1525,19 +1525,19 @@ function GM:AMCreateBanEntry()
 					
 				else
 
-					LocalPlayer():Notify(nil, COLOR_ERR, "Error: Negative duration specified.")
+					LocalPlayer():Notify(nil, COLOR_ERROR, "Error: Negative duration specified.")
 					
 				end
 				
 			else
 
-				LocalPlayer():Notify(nil, COLOR_ERR, "Error: Invalid duration specified.")
+				LocalPlayer():Notify(nil, COLOR_ERROR, "Error: Invalid duration specified.")
 				
 			end
 			
 		else
 			
-			LocalPlayer():Notify(nil, COLOR_ERR, "Error: Invalid SteamID specified.")
+			LocalPlayer():Notify(nil, COLOR_ERROR, "Error: Invalid SteamID specified.")
 			
 		end
 		

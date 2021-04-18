@@ -194,7 +194,7 @@ local function set_rank(ply, _, args)
 	elseif( string.find( args[1], "STEAM_" ) ) then
 		GAMEMODE:UpdatePlayerFieldOffline(args[1], "Rank", rank)
 	else
-		MsgC(COLOR_ERR, "Error: no target found.\n")
+		MsgC(COLOR_ERROR, "Error: no target found.\n")
 	end
 end
 concommand.Add( "rpa_serversetrank", set_rank );

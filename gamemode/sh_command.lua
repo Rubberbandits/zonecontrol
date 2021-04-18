@@ -128,7 +128,7 @@ kingston.command.register("mask", {
 		if changed then
 			return COLOR_NOTIF, "Helmet changed!"
 		else
-			return COLOR_ERR, "You don't have a suit equipped or it doesn't have a helmet!"
+			return COLOR_ERROR, "You don't have a suit equipped or it doesn't have a helmet!"
 		end
 	end
 })
@@ -306,7 +306,7 @@ kingston.command.register("pm", {
 	on_run = function(ply, args, raw)
 		local target = GAMEMODE:FindPlayer(args[1], ply)
 		if !target then
-			return COLOR_ERR, "Specified player not found."
+			return COLOR_ERROR, "Specified player not found."
 		end
 
 		local text = string.PatternSafe(raw)

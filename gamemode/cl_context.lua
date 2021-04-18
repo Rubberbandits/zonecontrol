@@ -223,7 +223,7 @@ function GM:GetCCOptions( ent, dist )
 						
 					else
 						
-						LocalPlayer():Notify(nil, COLOR_ERR, "You need more money to do that!")
+						LocalPlayer():Notify(nil, COLOR_ERROR, "You need more money to do that!")
 						
 					end
 					
@@ -448,13 +448,13 @@ function GM:GetCCOptions( ent, dist )
 							
 						else
 							
-							LocalPlayer():Notify(nil, COLOR_ERR, "Highest channel is 999.")
+							LocalPlayer():Notify(nil, COLOR_ERROR, "Highest channel is 999.")
 							
 						end
 						
 					else
 						
-						LocalPlayer():Notify(nil, COLOR_ERR, "Lowest channel is 0.")
+						LocalPlayer():Notify(nil, COLOR_ERROR, "Lowest channel is 0.")
 						
 					end
 					
@@ -630,7 +630,7 @@ function GM:CCCreateDoorNameEdit()
 			
 		else
 			
-			LocalPlayer():Notify(nil, COLOR_ERR, "Error: Name must be between 1 and 50 characters.")
+			LocalPlayer():Notify(nil, COLOR_ERROR, "Error: Name must be between 1 and 50 characters.")
 			
 		end
 		
@@ -788,7 +788,7 @@ function GM:CCCreateGiveCredits()
 			
 		else
 			
-			LocalPlayer():Notify(nil, COLOR_ERR, "You don't have this many rubles!")
+			LocalPlayer():Notify(nil, COLOR_ERROR, "You don't have this many rubles!")
 			
 		end
 		

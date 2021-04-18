@@ -873,7 +873,7 @@ if (SERVER and game.IsDedicated()) then
 
 			for k, v in ipairs(player.GetAll()) do
 				if (v:IsAdmin()) then
-					v:Notify(nil, COLOR_ERR, "%s [%s] has possibly attempted to crash the server with gm_save", client:Nick(), client:SteamID())
+					v:Notify(nil, COLOR_ERROR, "%s [%s] has possibly attempted to crash the server with gm_save", client:Nick(), client:SteamID())
 				end
 			end
 
@@ -977,7 +977,7 @@ function GM:OnGamemodeLoaded()
 	net.Receive("ArmDupe", function(len, ply)
 		for k, v in next, player.GetAll() do
 			if (v:IsAdmin()) then
-				v:Notify(nil, COLOR_ERR, "%s (%s) is using the ArmDupe exploit!", ply:Nick(), ply:SteamID())
+				v:Notify(nil, COLOR_ERROR, "%s (%s) is using the ArmDupe exploit!", ply:Nick(), ply:SteamID())
 			end
 		end
 	end)

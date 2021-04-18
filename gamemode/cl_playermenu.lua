@@ -64,7 +64,7 @@ function GM:CreatePlayerMenu()
 	CCP.PlayerMenu.TopBar.Buttons[2].m_bTitleButton = true;
 	CCP.PlayerMenu.TopBar.Buttons[2].DoClick = function( btn )
 		if LocalPlayer():TiedUp() then
-			LocalPlayer():Notify(nil, COLOR_ERR, "You can't switch characters while tied up.")
+			LocalPlayer():Notify(nil, COLOR_ERROR, "You can't switch characters while tied up.")
 			
 			return true
 		end
@@ -249,13 +249,13 @@ function GM:PMCreateNameEdit()
 				
 			else
 				
-				LocalPlayer():Notify(nil, COLOR_ERR, "Error: Name cannot include '#', '~' or '%'.")
+				LocalPlayer():Notify(nil, COLOR_ERROR, "Error: Name cannot include '#', '~' or '%'.")
 				
 			end
 			
 		else
 			
-			LocalPlayer():Notify(nil, COLOR_ERR, "Error: Name must be between " .. GAMEMODE.MinNameLength .. " and " .. GAMEMODE.MaxNameLength .. " characters.")
+			LocalPlayer():Notify(nil, COLOR_ERROR, "Error: Name must be between " .. GAMEMODE.MinNameLength .. " and " .. GAMEMODE.MaxNameLength .. " characters.")
 			
 		end
 		
@@ -337,7 +337,7 @@ function GM:PMCreateDescEdit()
 			
 		else
 			
-			LocalPlayer():Notify(nil, COLOR_ERR, "Error: Description must be less than " .. GAMEMODE.MaxDescLength .. " characters.")
+			LocalPlayer():Notify(nil, COLOR_ERROR, "Error: Description must be less than " .. GAMEMODE.MaxDescLength .. " characters.")
 			
 		end
 		
@@ -525,7 +525,7 @@ function GM:PMCreateTitleEdit()
 			
 		else
 			
-			LocalPlayer():Notify(nil, COLOR_ERR, "Error: Titles must be less than 128 characters.")
+			LocalPlayer():Notify(nil, COLOR_ERROR, "Error: Titles must be less than 128 characters.")
 			
 		end
 		
@@ -1419,13 +1419,13 @@ function GM:PMCreatePDANameEdit( item )
 				
 			else
 				
-				LocalPlayer():Notify(nil, COLOR_ERR, "Error: Name cannot include '#', '~' or '%'.")
+				LocalPlayer():Notify(nil, COLOR_ERROR, "Error: Name cannot include '#', '~' or '%'.")
 				
 			end
 			
 		else
 			
-			LocalPlayer():Notify(nil, COLOR_ERR, "Error: Name must be between " .. GAMEMODE.MinNameLength .. " and " .. GAMEMODE.MaxNameLength .. " characters.")
+			LocalPlayer():Notify(nil, COLOR_ERROR, "Error: Name must be between " .. GAMEMODE.MinNameLength .. " and " .. GAMEMODE.MaxNameLength .. " characters.")
 			
 		end
 		
