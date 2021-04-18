@@ -31,6 +31,7 @@ end
 if CLIENT then
 	function ENT:Draw()
 		if !LocalPlayer():IsAdmin() then return end
+		if !IsValid(LocalPlayer():GetActiveWeapon()) then return end
 		if LocalPlayer():GetActiveWeapon():GetClass() != "gmod_tool" then return end
 
 		render.SetColorMaterial()
