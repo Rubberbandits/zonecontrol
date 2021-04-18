@@ -443,3 +443,37 @@ GM.ToolTrustBlacklist = {
 };
 
 GM.MainServerLocation = LOCATION_ROSTOK
+
+GM.RandomMutantGroups = {
+	"vj_mutant_bloodsucker4",
+	{
+		"vj_mutant_boar", 
+		"vj_mutant_flesh",
+		"vj_mutant_flesh",
+		"vj_mutant_flesh",
+		"vj_mutant_flesh",
+		"vj_mutant_flesh",
+	},
+	{
+		"npc_wick_mutant_snork",
+		"npc_wick_mutant_snork",
+	},
+	{
+		"vj_mutant_cat",
+		"vj_mutant_cat",
+		"vj_mutant_cat",
+	},
+	{
+		"vj_mutant_psevdodog",
+		"npc_wick_mutant_dog",
+		"npc_wick_mutant_dog",
+		"npc_wick_mutant_dog",
+	},
+	{
+		"npc_wick_mutant_dog",
+		"npc_wick_mutant_dog",
+		"npc_wick_mutant_dog",
+		"npc_wick_mutant_dog",
+		"npc_wick_mutant_dog",
+	},
+}

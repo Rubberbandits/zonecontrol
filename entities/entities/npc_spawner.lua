@@ -51,12 +51,27 @@ end
 
 function ENT:Think()
 	if !self.NextMutantSpawn then
-		self.NextMutantSpawn = CurTime() + math.random(1200, 3600)
+		self.NextMutantSpawn = CurTime() + math.random(300, 1200)
 	end
 
 	if self.NextMutantSpawn <= CurTime() then
-		
-		self.NextMutantSpawn = CurTime() + math.random(1200, 3600)
+		local npcGroup = table.Random(GAMEMODE.RandomMutantGroups)
+
+		if istable(npcGroup) then
+			for _,npcClass in ipairs(npcGroup) do
+				local npc = ents.Create(npcClass)
+				npc:SetPos(self:GetPos() + Vector(math.random(0,100), math.random(0,100), 0))
+				npc.IdleAlwaysWander = true
+				npc:Spawn()
+			end
+		elseif isstring(npcGroup) then
+			local npc = ents.Create(npcGroup)
+			npc:SetPos(self:GetPos() + Vector(math.random(0,100), math.random(0,100), 0))
+			npc.IdleAlwaysWander = true
+			npc:Spawn()
+		end
+
+		self.NextMutantSpawn = CurTime() + math.random(300, 1200)
 	end
 end
 
