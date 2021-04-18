@@ -203,3 +203,12 @@ function GM:PMCreatePDAPassword(item)
 		end
 	)
 end
+
+function ITEM:QuickUse()
+	self:CallFunction("View")
+	
+	return true
+end
+function ITEM:CanQuickUse()
+	return self:GetVar("Power", false)
+end

@@ -53,4 +53,8 @@ BASE.functions.Use = {
 
 function BASE:QuickUse()
 	self:CallFunction("Use", true)
-end 
+
+	if IsValid(self) then
+		return true
+	end
+end
