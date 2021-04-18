@@ -96,7 +96,7 @@ if SERVER then
 			table.insert(
 				data,
 				{
-					Pos = spawn:GetPos()
+					Pos = spawn:GetPos(),
 					LootCategory = spawn.LootCategory
 				}
 			)
