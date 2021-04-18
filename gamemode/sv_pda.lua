@@ -800,6 +800,8 @@ concommand.Add("randompda", function(ply, cmd, args)
 end)
 
 local function RandomPDAMessages()
+	if !kingston.blowout.can_use_pda() then return end
+
 	if !GAMEMODE.NextRandomPDA then
 		GAMEMODE.NextRandomPDA = CurTime() + math.random(180, 300)
 	end

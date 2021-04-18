@@ -5,6 +5,10 @@ function kingston.blowout.get_var(type, key, default)
 	return Entity(0)["GetNW2"..type](Entity(0), "kingston.blowout_var."..key, default)
 end
 
+function kingston.blowout.can_use_pda()
+	return kingston.blowout.get_var("Bool", "connection_lost", false) == false
+end
+
 function kingston.blowout.is_protected(ent)
 	if ent:IsPlayer() then
 		if ent:CharID() == 0 then
