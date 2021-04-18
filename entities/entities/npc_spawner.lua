@@ -55,6 +55,18 @@ function ENT:Think()
 	end
 
 	if self.NextMutantSpawn <= CurTime() then
+		local npcCount = 0
+		for _,ent in ipairs(ents.GetAll()) do
+			if ent:IsNPC() or ent:IsNextBot() then
+				npcCount = npcCount + 1
+			end
+		end
+
+		if npcCount >= 30 then
+			self.NextMutantSpawn = CurTime() + math.random(300, 1200)
+			return
+		end
+
 		local npcGroup = table.Random(GAMEMODE.RandomMutantGroups)
 
 		if istable(npcGroup) then
