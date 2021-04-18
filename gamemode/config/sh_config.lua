@@ -451,8 +451,6 @@ GM.RandomMutantGroups = {
 		"vj_mutant_flesh",
 		"vj_mutant_flesh",
 		"vj_mutant_flesh",
-		"vj_mutant_flesh",
-		"vj_mutant_flesh",
 	},
 	{
 		"npc_wick_mutant_snork",

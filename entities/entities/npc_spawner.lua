@@ -60,15 +60,19 @@ function ENT:Think()
 		if istable(npcGroup) then
 			for _,npcClass in ipairs(npcGroup) do
 				local npc = ents.Create(npcClass)
-				npc:SetPos(self:GetPos() + Vector(math.random(0,200), math.random(0,200), 0))
-				npc.IdleAlwaysWander = true
+				npc:SetPos(self:GetPos() + Vector(math.random(25,200), math.random(25,200), 0))
 				npc:Spawn()
+
+				npc.DisableWandering = false
+				npc.IdleAlwaysWander = true
 			end
 		elseif isstring(npcGroup) then
 			local npc = ents.Create(npcGroup)
-			npc:SetPos(self:GetPos() + Vector(math.random(0,200), math.random(0,200), 0))
-			npc.IdleAlwaysWander = true
+			npc:SetPos(self:GetPos() + Vector(math.random(25,200), math.random(25,200), 0))
 			npc:Spawn()
+
+			npc.DisableWandering = false
+			npc.IdleAlwaysWander = true
 		end
 
 		self.NextMutantSpawn = CurTime() + math.random(300, 1200)
