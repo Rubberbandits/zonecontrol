@@ -43,6 +43,8 @@ function GM:PlayerInitialSpawnSafe( ply )
 	
 	ply:SetNotSolid( true );
 	ply:SetMoveType( MOVETYPE_NOCLIP );
+
+	ply:SetPos(Vector(10000,10000,10000))
 	
 end
 
