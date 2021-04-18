@@ -25,15 +25,16 @@ function ENT:Initialize()
 	
 	self:SetModel( "models/props_combine/breenglobe.mdl" );
 	self:SetCollisionGroup( COLLISION_GROUP_PASSABLE_DOOR );
+	self:DrawShadow(false)
 end
 
 if CLIENT then
 	function ENT:Draw()
 		if !LocalPlayer():IsAdmin() then return end
-		if !LocalPlayer():GetActiveWeapon():GetClass() == "gmod_tool" then return end
+		if LocalPlayer():GetActiveWeapon():GetClass() != "gmod_tool" then return end
 
 		render.SetColorMaterial()
-		render.DrawSphere(self:GetPos(), 50, 25, 25, Color(0,255,0))
+		render.DrawSphere(self:GetPos(), 25, 25, 25, Color(0,255,0, 100))
 	end
 end
 
@@ -70,6 +71,8 @@ function ENT:Think()
 end
 
 if SERVER then
+	local GM = gmod.GetGamemode()
+
 	function GM:LoadLootSpawns()
 		local data = file.Read("zonecontrol/lootspawns.txt", "DATA")
 

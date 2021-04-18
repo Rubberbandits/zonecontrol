@@ -23,4 +23,4 @@ local function CreateLootSpawner( ply, args )
 	end
 	
 end
-concommand.AddAdmin( "rpa_createlootspawner.lua", CreateLootSpawner );
+concommand.AddAdmin( "rpa_createlootspawner", CreateLootSpawner );
