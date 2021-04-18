@@ -406,7 +406,8 @@ function GM:AddBan( steam, len, reason, t )
 	
 	local function qF( err )
 		
-		self:AddBan( steam, len, mysqloo.Escape( reason ), t );
+		--self:AddBan( steam, len, mysqloo.Escape( reason ), t );
+		PRINT("BROKEN BAN")
 		
 	end
 	
