@@ -787,6 +787,8 @@ local RandomPDAMessageFuncs = {
 
 		local randomNPC = table.Random(allNPCs)
 
+		if !randomNPC then return end
+
 		local npcData = scripted_ents.GetStored(randomNPC:GetClass())
 		
 		if !npcData then return end
