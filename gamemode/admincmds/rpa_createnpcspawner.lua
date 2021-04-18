@@ -1,4 +1,4 @@
-local function CreateLootSpawner( ply, args )
+local function CreateNPCSpawner( ply, args )
 	local spawner = ents.Create("npc_spawner")
 	spawner:SetPos(ply:GetEyeTraceNoCursor().HitPos)
 	spawner:Spawn()
@@ -7,4 +7,4 @@ local function CreateLootSpawner( ply, args )
 	
 	GAMEMODE:LogAdmin( "[I] " .. ply:Nick() .. " created NPC spawner.", ply );
 end
-concommand.AddAdmin( "rpa_createlootspawner", CreateLootSpawner );
+concommand.AddAdmin( "rpa_createnpcspawner", CreateNPCSpawner );
