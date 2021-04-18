@@ -35,7 +35,7 @@ if CLIENT then
 		if LocalPlayer():GetActiveWeapon():GetClass() != "gmod_tool" then return end
 
 		render.SetColorMaterial()
-		render.DrawSphere(self:GetPos(), 50, 25, 25, Color(255,0,255, 100))
+		render.DrawSphere(self:GetPos(), 200, 25, 25, Color(255,0,255, 100))
 	end
 end
 
@@ -60,13 +60,13 @@ function ENT:Think()
 		if istable(npcGroup) then
 			for _,npcClass in ipairs(npcGroup) do
 				local npc = ents.Create(npcClass)
-				npc:SetPos(self:GetPos() + Vector(math.random(0,100), math.random(0,100), 0))
+				npc:SetPos(self:GetPos() + Vector(math.random(0,200), math.random(0,200), 0))
 				npc.IdleAlwaysWander = true
 				npc:Spawn()
 			end
 		elseif isstring(npcGroup) then
 			local npc = ents.Create(npcGroup)
-			npc:SetPos(self:GetPos() + Vector(math.random(0,100), math.random(0,100), 0))
+			npc:SetPos(self:GetPos() + Vector(math.random(0,200), math.random(0,200), 0))
 			npc.IdleAlwaysWander = true
 			npc:Spawn()
 		end
