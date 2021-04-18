@@ -2,8 +2,6 @@ local argtoenum = {
 	["worthless"] = LOOT_WORTHLESS,
 	["common"] = LOOT_COMMON,
 	["uncommon"] = LOOT_UNCOMMON,
-	["rare"] = LOOT_RARE,
-	["legendary"] = LOOT_LEGENDARY,
 }
 
 local function CreateLootSpawner( ply, args )

@@ -35,7 +35,7 @@ if CLIENT then
 		if LocalPlayer():GetActiveWeapon():GetClass() != "gmod_tool" then return end
 
 		render.SetColorMaterial()
-		render.DrawSphere(self:GetPos(), 25, 25, 25, Color(0,255,0, 100))
+		render.DrawSphere(self:GetPos(), 50, 25, 25, Color(0,255,0, 100))
 	end
 end
 
@@ -55,6 +55,18 @@ function ENT:Think()
 	end
 
 	if self.NextLootSpawn <= CurTime() then
+		local surroundItemCount = 0
+		for _,ent in ipairs(ents.FindInSphere(self:GetPos(), 100)) do
+			if ent:GetClass() == "cc_item" then
+				surroundItemCount = surroundItemCount + 1
+			end
+		end
+
+		if surroundItemCount >= 5 then
+			self.NextLootSpawn = CurTime() + math.random(1200,3600)
+			return
+		end
+
 		local lootItems = {}
 
 		for class,item in next, GAMEMODE.Items do
@@ -65,7 +77,7 @@ function ENT:Think()
 
 		local randomItem = table.Random(lootItems)
 
-		GAMEMODE:CreateNewItemEntity(randomItem, self:GetPos() + self:GetAngles():Up() * 10, Angle(0,0,0))
+		GAMEMODE:CreateNewItemEntity(randomItem, self:GetPos() + Vector(math.random(0,40), math.random(0,40), 0) + self:GetAngles():Up() * 10, Angle(0,0,0))
 
 		self.NextLootSpawn = CurTime() + math.random(1200, 3600)
 	end
@@ -75,7 +87,7 @@ if SERVER then
 	local GM = gmod.GetGamemode()
 
 	function GM:LoadLootSpawns()
-		local data = file.Read("zonecontrol/lootspawns.txt", "DATA")
+		local data = file.Read("zonecontrol/"..game.GetMap().."/lootspawns.txt", "DATA")
 
 		if !data or #data == 0 then return end
 
@@ -95,6 +107,10 @@ if SERVER then
 			file.CreateDir("zonecontrol")
 		end
 
+		if !file.IsDir("zonecontrol/"..game.GetMap(), "DATA") then
+			file.CreateDir("zonecontrol/"..game.GetMap())
+		end
+
 		local data = {}
 		for _,spawn in ipairs(ents.FindByClass("loot_spawner")) do
 			table.insert(
@@ -106,7 +122,7 @@ if SERVER then
 			)
 		end
 
-		file.Write("zonecontrol/lootspawns.txt", util.TableToJSON(data))
+		file.Write("zonecontrol/"..game.GetMap().."/lootspawns.txt", util.TableToJSON(data))
 	end
 
 	hook.Add("InitPostEntity", "STALKER.LoadLootSpawns", function()
