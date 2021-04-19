@@ -453,4 +453,21 @@ if SERVER then
 			end
 		end
 	end
+
+	hook.Add("Initialize", "STALKER.DetourVREJCode", function()
+		local ENT = scripted_ents.GetStored("npc_vj_creature_base").t
+
+		function ENT:VJ_TASK_IDLE_WANDER()
+			if self.MovementType == VJ_MOVETYPE_AERIAL or self.MovementType == VJ_MOVETYPE_AQUATIC then self:AA_IdleWander(true) return end
+			local act = VJ_PICK(self.AnimTbl_Walk)
+
+			if !isnumber(act) then
+				act = self:GetSequenceActivity(self:LookupSequence(act))
+			end
+
+			self:SetMovementActivity(act)
+			//self:SetLastPosition(self:GetPos() + self:GetForward() * 300)
+			self:StartSchedule(task_idleWander)
+		end
+	end)
 end
