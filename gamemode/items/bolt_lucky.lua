@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Lucky Bolt";
 ITEM.Desc =  "A single bolt. It's shine has worn down over time, after travel in someone's pocket for so long.";
 ITEM.Model =  "models/kali/miscstuff/stalker/bolt.mdl";
@@ -9,3 +8,5 @@ ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.W = 1
 ITEM.H = 1
 ITEM.BulkPrice =  500;
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

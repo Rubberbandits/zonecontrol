@@ -17,3 +17,4 @@ ITEM.BulkPrice = 937500
 ITEM.Slot = 2
 ITEM.NoDefaultAtts = true
 ITEM.Damage = 150
+ITEM.Rarity = 5

@@ -11,3 +11,5 @@ ITEM.License = "X"
 ITEM.ConsumeText = "You crunch down the crayons with ease. Whether you snack one at a time or all at once, these colorful treats are not so easy to get out as they were to get in."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = -5
+ITEM.Rarity = 1
+ITEM.AllowRandomSpawn = true

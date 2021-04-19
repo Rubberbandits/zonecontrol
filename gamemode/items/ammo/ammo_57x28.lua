@@ -7,3 +7,5 @@ ITEM.License = "A";
 ITEM.Vars = {
     Amount = 30,
 }
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

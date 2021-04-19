@@ -11,3 +11,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "You open and drink the entire can. The aftertaste of aluminum lingers in your mouth, but at least you're a little less parched."
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = 18
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

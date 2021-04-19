@@ -9,3 +9,5 @@ ITEM.LookAt =  Vector( 0, -1, 1 );
 ITEM.BulkPrice =  1000;
 ITEM.W = 1
 ITEM.H = 1
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

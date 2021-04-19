@@ -11,3 +11,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "The confection crumbles and crunches in your mouth. It's like being at the beach and gnawing on the sand, only it's in oily and rocky clumps. It's not much for a meal, and it's beyond sub-par for a dessert."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 15
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

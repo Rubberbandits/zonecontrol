@@ -10,3 +10,5 @@ ITEM.BulkPrice =  50;
 ITEM.License =  "X";
 ITEM.W = 1
 ITEM.H = 2
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

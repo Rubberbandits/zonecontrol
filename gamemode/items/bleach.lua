@@ -34,3 +34,5 @@ ITEM.functions.Use = {
 		return true
 	end,
 }
+ITEM.Rarity = 0
+ITEM.AllowRandomSpawn = true

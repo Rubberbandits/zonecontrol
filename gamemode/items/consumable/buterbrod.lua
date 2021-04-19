@@ -11,3 +11,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "Your teeth sink with a crunch into the wholesome snack. The bread and all of its tasty accoutrements are wonderfully warm and fresh. You've safely concluded that this is yet another one of life's invaluable little pleasures."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 80
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

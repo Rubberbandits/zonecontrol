@@ -14,3 +14,5 @@ ITEM.SelfRepairCondition = 40
 ITEM.License = "X"
 ITEM.BulkPrice = 9000
 ITEM.Slot = 1
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

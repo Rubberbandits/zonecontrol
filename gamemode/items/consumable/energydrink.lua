@@ -34,3 +34,5 @@ GM:CreateDrugType("ENERGYDRINK", {
 		end,
 	},
 })
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

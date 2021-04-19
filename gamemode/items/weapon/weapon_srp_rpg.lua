@@ -15,3 +15,4 @@ ITEM.AmmoType = "ammo_rpg"
 ITEM.License = "B"
 ITEM.BulkPrice = 175000
 ITEM.Slot = 2
+ITEM.Rarity = 3

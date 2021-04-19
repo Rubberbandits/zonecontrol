@@ -11,3 +11,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "It's about what you expected: bland, generally slimy, and stringy in all the wrong ways. At least it's a filling and potentially wholesome meal. There's never been a more perfect food analogy for Soviet rule."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 20
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

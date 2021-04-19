@@ -11,3 +11,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "Your teeth can just barely penetrate the rockhard crust of the bread. It was well worth it. You feel nourished to an extent."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 20
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

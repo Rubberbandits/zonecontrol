@@ -10,3 +10,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "The sweet liquid washes down your throat, and it's quite satisfying. The solid fruit itself is delightful as well. You remind yourself that such a happily refreshing culinary experience is rare and regret not adequately savoring this one. If only the summer fruits were warmer."
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = 37
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

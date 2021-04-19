@@ -6,3 +6,5 @@ ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  5000;
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = false

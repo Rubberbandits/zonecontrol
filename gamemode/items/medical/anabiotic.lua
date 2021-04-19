@@ -18,3 +18,5 @@ ITEM.FunctionHooks.PostUse = function(item)
 		timer.Simple( 5, function() ply:TakeCDamage( 100 ) end )	
 	end
 end
+ITEM.Rarity = 4
+ITEM.AllowRandomSpawn = true

@@ -9,3 +9,5 @@ ITEM.H = 1
 ITEM.Vars = {
     Amount = 30,
 }
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

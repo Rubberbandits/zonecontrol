@@ -11,3 +11,5 @@ ITEM.ConsumeText = "You pop the cap with your teeth and drink the beer. It's not
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = 15
 ITEM.RadiationHealAmount = 5
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

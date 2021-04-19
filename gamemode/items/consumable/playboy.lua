@@ -12,3 +12,5 @@ ITEM.ConsumeText = "You hungrily oogle the magazine. Page by page, you cram the 
 ITEM.UseText = "Use"
 ITEM.HungerReduce = -5
 ITEM.RadiationHealAmount = -1
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

@@ -53,3 +53,5 @@ ITEM.ArmorValues = {
 	-- "Psychic"
 	[DMG_PARALYZE] = .10,
 }
+ITEM.Rarity = 5
+ITEM.AllowRandomSpawn = false

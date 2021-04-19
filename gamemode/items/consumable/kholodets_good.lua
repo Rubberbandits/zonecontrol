@@ -11,3 +11,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "As your teeth sink into the meaty gelatin, you're surprised and delighted to taste hints of garlic and other hidden seasonings. It's a simple yet wholesome meal, and not as bad as you were expecting. Maybe USSR life wasn't so bad."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 40
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

@@ -23,3 +23,5 @@ GM:CreateDrugType("HERCULES", {
 		end,
 	}
 })
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

@@ -11,3 +11,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "The sweet confection crumbles and crunches in your mouth. It's not much for a meal, but it's a fine dessert."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 30
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

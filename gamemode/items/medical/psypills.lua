@@ -12,3 +12,5 @@ ITEM.UseText = "Swallow"
 ITEM.HealAmount = 0
 ITEM.BulkPrice =  2000;
 ITEM.License =  "D";
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

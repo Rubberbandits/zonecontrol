@@ -12,3 +12,5 @@ ITEM.UseText = "Drink"
 ITEM.HungerReduce = 20
 ITEM.RadiationHealAmount = 10
 ITEM.DrugType = "VODKA"
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

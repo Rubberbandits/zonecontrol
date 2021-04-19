@@ -11,3 +11,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "Although overly salty, the canned Spam is quite filling. The meat is wet, but it feels dry. The oily aftertaste lingers in your mouth."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 37
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

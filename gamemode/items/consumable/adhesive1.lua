@@ -11,3 +11,5 @@ ITEM.ConsumeText = "You squeeze out what perfectly fine, serviceable glue is lef
 ITEM.UseText = "Use"
 ITEM.HungerReduce = -10
 ITEM.RaiseCondition = 2
+ITEM.Rarity = 0
+ITEM.AllowRandomSpawn = true

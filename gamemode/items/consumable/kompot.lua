@@ -11,3 +11,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "The drink goes down like a thin syrup, tasting like a bad mix of artificial sweeteners and preservative. The taste lingers a while after you've gulped down your fill, and only sours the more your smack your lips to try and get it away."
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = 25
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

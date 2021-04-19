@@ -11,3 +11,5 @@ ITEM.License = "X"
 ITEM.ConsumeText = "You open and tip the can of cooked beans into your mouth. Ouch. They burn your mouth, but it's worth it for how damn good they are."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 37
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

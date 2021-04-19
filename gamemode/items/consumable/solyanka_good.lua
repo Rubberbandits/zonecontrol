@@ -11,3 +11,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "Luckily, the soup's a tolerable temperature. The different chunks of meal remind you of about every different dinner you've experienced over the past month. They say hot Solyanka is a cure for any sickness, and you find it hard to argue."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 75
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

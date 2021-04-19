@@ -11,3 +11,5 @@ ITEM.License =  "X"
 ITEM.ConsumeText = "You eat the whole fucking melon. Rind and all. You must have been hungry."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 80
+ITEM.Rarity = 4
+ITEM.AllowRandomSpawn = true

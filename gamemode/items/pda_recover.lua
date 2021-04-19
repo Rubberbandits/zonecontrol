@@ -10,3 +10,5 @@ ITEM.PhysicalMass	= 1;
 ITEM.BulkPrice =  31250;
 ITEM.W = 1
 ITEM.H = 1
+ITEM.Rarity = 5
+ITEM.AllowRandomSpawn = true

@@ -12,3 +12,5 @@ ITEM.H = 1
 ITEM.Vars = {
 	Stacked = 1,
 }
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

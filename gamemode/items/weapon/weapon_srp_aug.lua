@@ -24,3 +24,4 @@ ITEM.Vars = {
 	Clip1 = 0,
 };
 ITEM.Damage = 30
+ITEM.Rarity = 4

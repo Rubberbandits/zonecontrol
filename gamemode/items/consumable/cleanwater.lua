@@ -11,3 +11,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "You open and drink the entire bottle. Like a breath of fresh air, it refreshes you."
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = 20
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

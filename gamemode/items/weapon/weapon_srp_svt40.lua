@@ -15,3 +15,4 @@ ITEM.AmmoType = "ammo_762x54r"
 ITEM.License = "B"
 ITEM.BulkPrice = 142500
 ITEM.Damage = 70
+ITEM.Rarity = 3
