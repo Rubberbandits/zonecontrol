@@ -212,3 +212,4 @@ end
 function ITEM:CanQuickUse()
 	return self:GetVar("Power", false)
 end
+ITEM.Rarity = 2
