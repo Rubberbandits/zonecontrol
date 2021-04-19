@@ -442,6 +442,8 @@ local dropItems = {
 
 if SERVER then
 	function GM:OnNPCKilled(npc, attacker, inflictor, dmginfo)
+		if !attacker:IsPlayer() then return end
+
 		local possibleItems = dropItems[npc:GetClass()]
 		if possibleItems then
 			local chance = math.random(1, 100)
