@@ -327,6 +327,13 @@ local RandomPDANames = {
 	"TheSlug",
 	"Maltese",
 	"Filya Butt",
+	"direstraitsofficial",
+	"rambo",
+	"Legwarmer",
+	"strelokfan1999",
+	"aznsk8r1337",
+	"Iron Ivan",
+	"Fedya_Rice",
 }
 
 local RandomItemOpinions = {

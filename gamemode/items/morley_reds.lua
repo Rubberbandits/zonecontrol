@@ -25,3 +25,5 @@ ITEM.functions.unpack = {
         return true
     end,
 }
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

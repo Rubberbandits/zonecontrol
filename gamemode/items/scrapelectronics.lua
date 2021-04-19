@@ -12,3 +12,5 @@ ITEM.RaiseCondition = 3
 ITEM.WeaponOnly = true
 ITEM.W = 1
 ITEM.H = 1
+ITEM.Rarity = 1
+ITEM.AllowRandomSpawn = true

@@ -15,3 +15,4 @@ ITEM.AmmoType = "ammo_flare"
 ITEM.License = "X"
 ITEM.BulkPrice = 10000
 ITEM.Slot = 2
+ITEM.Rarity = 2

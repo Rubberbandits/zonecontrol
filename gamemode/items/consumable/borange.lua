@@ -11,3 +11,5 @@ ITEM.License =  "X"
 ITEM.ConsumeText = "You peel and eat the orange whole. Who needs transfusions?"
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 18
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = false

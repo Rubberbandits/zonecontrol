@@ -30,3 +30,5 @@ ITEM.functions.Unequip = {
 		return self:GetVar("Equipped", false)
 	end,
 }
+ITEM.Rarity = 5
+ITEM.AllowRandomSpawn = false

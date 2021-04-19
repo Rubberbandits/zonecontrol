@@ -11,3 +11,5 @@ ITEM.License =  "X"
 ITEM.ConsumeText = "You drink the jug of milk. Maybe not a great idea. That's coming back up in about thirty seconds."
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = -5
+ITEM.Rarity = 1
+ITEM.AllowRandomSpawn = true

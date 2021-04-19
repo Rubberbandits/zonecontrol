@@ -8,3 +8,5 @@ ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  3000;
 ITEM.ConsumeText = "Against your best intuition, you bite a chunk of the eye off and chew it. Your disgust only grows the more it's in your mouth. Eventually, you have to spit it out. Best to just give these to the eggheads."
 ITEM.UseText = "Eat"
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = false

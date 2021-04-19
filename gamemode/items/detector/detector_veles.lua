@@ -12,3 +12,5 @@ ITEM.Weight 		= 0.5;
 
 ITEM.BulkPrice		= 200000;
 ITEM.License		= "X";
+ITEM.Rarity = 5
+ITEM.AllowRandomSpawn = false

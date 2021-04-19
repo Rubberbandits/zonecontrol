@@ -10,3 +10,5 @@ ITEM.License =  "X"
 ITEM.ConsumeText = "You pull the tab on the can of uncooked beans and eat them. Soft, sweet, and only a slight aftertaste of aluminum."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 25
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

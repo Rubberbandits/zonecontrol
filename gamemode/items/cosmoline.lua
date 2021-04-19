@@ -13,3 +13,5 @@ ITEM.BulkPrice =  1250;
 ITEM.Vars = {
 	Uses = 1,
 };
+ITEM.Rarity = 1
+ITEM.AllowRandomSpawn = true

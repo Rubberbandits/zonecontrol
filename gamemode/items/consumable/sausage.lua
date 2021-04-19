@@ -12,3 +12,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "The sausage is very chewy. Every so often there is a speck of bone, but otherwise the meat is very flavorful. Very salty."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 25
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

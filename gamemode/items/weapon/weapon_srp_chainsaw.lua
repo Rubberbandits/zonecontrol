@@ -15,3 +15,5 @@ ITEM.License = "X"
 ITEM.BulkPrice = 15000
 ITEM.Slot = 1
 ITEM.AmmoType = "ammo_gas"
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

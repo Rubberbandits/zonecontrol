@@ -17,3 +17,4 @@ ITEM.BulkPrice = 39000
 ITEM.Slot = 2
 ITEM.SlotPos = 1
 ITEM.Damage = 33
+ITEM.Rarity = 2

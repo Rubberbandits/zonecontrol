@@ -13,3 +13,5 @@ ITEM.RequiredUpgrades = {
 }
 ITEM.AttachmentSlot = "barrel"
 ITEM.Weight = 0.25
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = false

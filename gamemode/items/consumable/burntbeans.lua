@@ -8,3 +8,5 @@ ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice = 5
 ITEM.ConsumeText = "You pick off the crusty, scorched lid of the can and scrape out the burnt remnants. You don't think you can even stomach a bite and choose to go hungry."
 ITEM.UseText = "Eat"
+ITEM.Rarity = 1
+ITEM.AllowRandomSpawn = true

@@ -11,3 +11,5 @@ ITEM.UseText = "Consume"
 ITEM.ConsumeText = "You swallow the two pills. Afterwards, you feel a tad dizzy and nauseous."
 ITEM.HealAmount = 0
 ITEM.RadiationHealAmount = 20
+ITEM.Rarity = 1
+ITEM.AllowRandomSpawn = true

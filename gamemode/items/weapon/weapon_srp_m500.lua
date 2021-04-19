@@ -15,3 +15,4 @@ ITEM.AmmoType = "ammo_12ga"
 ITEM.License = "B"
 ITEM.BulkPrice = 58000
 ITEM.Damage = 13
+ITEM.Rarity = 2

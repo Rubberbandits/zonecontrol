@@ -130,3 +130,5 @@ GM:CreateDrugType("MEDKIT", {
 		end,
 	},
 })
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

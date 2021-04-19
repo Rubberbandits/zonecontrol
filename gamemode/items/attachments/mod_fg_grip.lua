@@ -11,3 +11,5 @@ ITEM.RequiredUpgrades = {
 }
 ITEM.AttachmentSlot = "foregrip"
 ITEM.Weight = 0.25
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

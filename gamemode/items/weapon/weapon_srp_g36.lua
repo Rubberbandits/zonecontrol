@@ -15,3 +15,4 @@ ITEM.AmmoType = "ammo_556x45"
 ITEM.License = "B"
 ITEM.BulkPrice = 89000
 ITEM.Slot = 2
+ITEM.Rarity = 3

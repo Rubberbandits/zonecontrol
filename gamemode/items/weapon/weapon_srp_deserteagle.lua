@@ -15,3 +15,4 @@ ITEM.AmmoType = "ammo_357mag"
 ITEM.License = "B"
 ITEM.BulkPrice = 136000
 ITEM.Damage = 65
+ITEM.Rarity = 4

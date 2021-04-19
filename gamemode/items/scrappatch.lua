@@ -11,3 +11,5 @@ ITEM.RaiseCondition = 2
 ITEM.SuitOnly = true
 ITEM.W = 1
 ITEM.H = 1
+ITEM.Rarity = 1
+ITEM.AllowRandomSpawn = true

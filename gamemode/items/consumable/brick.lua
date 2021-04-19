@@ -11,3 +11,5 @@ ITEM.W = 2
 ITEM.H = 1
 ITEM.ConsumeText = "You crack off a corner of the brick and eat it. Crunchy and not satisfying at all. You chipped your tooth doing that, too. What were you thinking?"
 ITEM.UseText = "Eat"
+ITEM.Rarity = 1
+ITEM.AllowRandomSpawn = true

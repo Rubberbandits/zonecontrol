@@ -12,3 +12,5 @@ ITEM.H = 1
 ITEM.ConsumeText = "You pop a couple walnuts in your mouth and crunch down. Nutty and wholesome, a good little snack to tide you over."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 5
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

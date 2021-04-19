@@ -10,3 +10,5 @@ ITEM.License =  "TX";
 ITEM.RaiseCondition = 5
 ITEM.W = 1
 ITEM.H = 1
+ITEM.Rarity = 1
+ITEM.AllowRandomSpawn = true

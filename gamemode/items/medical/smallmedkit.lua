@@ -12,3 +12,5 @@ ITEM.License =  "D";
 ITEM.ItemSubmaterials = {
 	{ 0 , "models/stalkertextures/item/medkit1" }
 }
+ITEM.Rarity = 1
+ITEM.AllowRandomSpawn = true

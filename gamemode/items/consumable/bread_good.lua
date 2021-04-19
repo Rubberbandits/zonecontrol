@@ -10,3 +10,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "Your mouth confirms with joy that this is, indeed, good ass bread; pleasantly ordinary, and thankfully far from stale."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 50
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

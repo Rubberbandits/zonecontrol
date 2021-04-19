@@ -11,3 +11,5 @@ ITEM.HealAmount = 0
 ITEM.UseText = "Inject"
 ITEM.BulkPrice =  1500;
 ITEM.License =  "D";
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

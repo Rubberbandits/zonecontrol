@@ -15,3 +15,4 @@ ITEM.AmmoType = "ammo_9x39"
 ITEM.License = "B"
 ITEM.BulkPrice = 400000
 ITEM.Damage = 39
+ITEM.Rarity = 4

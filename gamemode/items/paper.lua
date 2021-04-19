@@ -78,3 +78,5 @@ ITEM.functions.Use = {
 		return true
 	end,
 }
+ITEM.Rarity = 1
+ITEM.AllowRandomSpawn = true

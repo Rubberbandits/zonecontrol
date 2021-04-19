@@ -14,3 +14,5 @@ ITEM.LookAt =  Vector( 0, 0, 5.02 );
 ITEM.BulkPrice =  3750;
 ITEM.License =  "D";
 ITEM.DrugType = "MEDKIT"
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

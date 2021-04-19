@@ -91,3 +91,6 @@ end
 function ITEM:CanQuickUse()
 	return self:GetVar("Activated", false)
 end
+
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

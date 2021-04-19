@@ -11,3 +11,5 @@ ITEM.License = "X"
 ITEM.ConsumeText = "You drink the hot tea. It soothes your throat."
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = 1
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

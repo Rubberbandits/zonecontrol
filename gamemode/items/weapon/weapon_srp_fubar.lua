@@ -14,3 +14,4 @@ ITEM.SelfRepairCondition = 40
 ITEM.License = "X"
 ITEM.BulkPrice = 37500
 ITEM.Slot = 1
+ITEM.Rarity = 4

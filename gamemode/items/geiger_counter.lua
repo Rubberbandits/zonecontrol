@@ -64,3 +64,5 @@ function ITEM:QuickUse()
 
 	return true
 end
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

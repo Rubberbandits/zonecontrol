@@ -35,3 +35,5 @@ function ITEM:DynamicFunctions()
         }
     }
 end
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

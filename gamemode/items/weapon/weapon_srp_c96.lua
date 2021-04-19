@@ -16,3 +16,4 @@ ITEM.License = "B"
 ITEM.BulkPrice = 182500
 ITEM.Slot = 2
 ITEM.Damage = 33
+ITEM.Rarity = 5

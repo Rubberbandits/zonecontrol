@@ -19,3 +19,4 @@ ITEM.TertiarySlot = true
 ITEM.Damage = 33
 ITEM.W = 2
 ITEM.H = 1
+ITEM.Rarity = 2

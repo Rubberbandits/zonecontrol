@@ -22,3 +22,5 @@ GM:CreateDrugType("RADIOPROTECT", {
 		end,
 	},
 })
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

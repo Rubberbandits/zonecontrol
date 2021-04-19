@@ -13,3 +13,5 @@ ITEM.H = 2
 ITEM.ConsumeText = "You take a couple coffee beans and pop them in your mouth. The strong coffee flavor lingers in your mouth as you chew. An unconventional snack, these would be great with some chocolate."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 1
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

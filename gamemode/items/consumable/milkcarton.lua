@@ -11,3 +11,5 @@ ITEM.License =  "X"
 ITEM.ConsumeText = "You drink the carton of rancid, chunky milk. You consider it lucky that you didn't throw it up immediately."
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = -5
+ITEM.Rarity = 1
+ITEM.AllowRandomSpawn = true

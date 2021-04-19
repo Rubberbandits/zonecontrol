@@ -11,3 +11,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "It's very dense, and it looks like a cake-and-fish Oreo. It has a bit of an acquired taste, and isn't as moist as you would like, but it is pretty filling."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 40
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true
