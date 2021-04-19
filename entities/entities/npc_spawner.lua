@@ -50,6 +50,8 @@ function ENT:CanPhysgun()
 end
 
 function ENT:Think()
+	if !SERVER then return end
+
 	if !self.NextMutantSpawn then
 		self.NextMutantSpawn = CurTime() + math.random(300, 1200)
 	end
