@@ -62,6 +62,8 @@ function GM:PlayerCheckFlag( ply, respawn )
 		ply:SetPos( table.Random( self.EntryPortSpawns[ply.EntryPort] ) );
 		return;
 		
+	elseif self.DefaultSpawnLocation then
+		ply:SetPos(self.DefaultSpawnLocation)
 	end
 	
 end
