@@ -25,4 +25,4 @@ ITEM.functions.unpack = {
     end,
 }
 ITEM.Rarity = 2
-ITEM.AllowRandomSpawn = true
+ITEM.AllowRandomSpawn = false
