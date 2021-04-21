@@ -385,7 +385,7 @@ kingston.chat.register_type("ooc", {
 		[CB_OOC] = true
 	},
 	construct_string = function(chat_type, ply, text)
-		return {Color(200, 0, 0), "[OOC] ", team.GetColor(ply:Team()), ply, Color( 255, 255, 255, 255 ), ": ", text}
+		return {Color(200, 0, 0), "[OOC] ", IsValid(ply) and team.GetColor(ply:Team()) or Color( 0, 120, 0, 255 ), ply, Color( 255, 255, 255, 255 ), ": ", text}
 	end,
 	can_hear = function(chat_type, speaker, listener)
 		return true
