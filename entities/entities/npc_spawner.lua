@@ -49,6 +49,14 @@ function ENT:CanPhysgun()
 	
 end
 
+local function FindValidSpawn(origin, ent)
+	local trace = {start = origin, endpos = origin, filter = ent}
+	local tr = util.TraceEntity(trace, ent) 
+	if tr.Hit then
+		ent:SetPos(origin + ent:GetAngles():Right() * 100)
+	end
+end
+
 function ENT:Think()
 	if !SERVER then return end
 
@@ -78,7 +86,7 @@ function ENT:Think()
 				-- ghetto fix for pseudorandomness issues
 				timer.Simple(i / 10, function()
 					local npc = ents.Create(npcClass)
-					npc:SetPos(self:GetPos() + Vector(math.random(25,200), math.random(25,200), 0))
+					FindValidSpawn(self:GetPos(), ent)
 					npc:Spawn()
 
 					npc.DisableWandering = false
