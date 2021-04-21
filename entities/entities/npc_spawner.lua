@@ -99,7 +99,7 @@ function ENT:Think()
 					if goodPos then
 						npc:SetPos(spawnPos)
 					else
-						npc:SetPos(spawnPos + npc:GetRight() * 100 + npc:GetUp() * 10)
+						npc:SetPos(spawnPos + npc:GetRight() * 150 + npc:GetUp() * 50)
 					end
 					npc:Spawn()
 
