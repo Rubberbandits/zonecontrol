@@ -499,26 +499,26 @@ if SERVER then
 			weapon.NextAlertFire = CurTime() + 5
 		end
 	end)
-end
 
-/*
-	This is some ghetto ass hack fix cus im tired of drvrej errors
-*/
+	/*
+		This is some ghetto ass hack fix cus im tired of drvrej errors
+	*/
 
-local meta = FindMetaTable("NPC")
-_G.oldSetMovementActivity = _G.oldSetMovementActivity or meta.SetMovementActivity
+	local meta = FindMetaTable("NPC")
+	_G.oldSetMovementActivity = _G.oldSetMovementActivity or meta.SetMovementActivity
 
-function meta:SetMovementActivity(act)
-	if isstring(act) then
-		local seq = self:LookupSequence(act)
-		if !seq then return end
+	function meta:SetMovementActivity(act)
+		if isstring(act) then
+			local seq = self:LookupSequence(act)
+			if !seq then return end
 
-		act = self:GetSequenceActivity(seq)
-	end
+			act = self:GetSequenceActivity(seq)
+		end
 
-	if !isnumber(act) then return end
+		if !isnumber(act) then return end
 
-	if act then
-		_G.oldSetMovementActivity(self, act)
+		if act then
+			_G.oldSetMovementActivity(self, act)
+		end
 	end
 end
