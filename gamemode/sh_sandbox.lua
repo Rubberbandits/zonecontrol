@@ -430,6 +430,7 @@ local anomalies = {
 	kingston_vortex = true,
 	loot_spawner = true,
 	npc_spawner = true,
+	kingston_radiation = true,
 }
 
 function GM:CanTool( ply, tr, tool )
