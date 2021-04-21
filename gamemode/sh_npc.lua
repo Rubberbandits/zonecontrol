@@ -455,6 +455,14 @@ if SERVER then
 	end
 
 	hook.Add("Initialize", "STALKER.DetourVREJCode", function()
+	local task_idleWander = ai_vj_schedule.New("vj_idle_wander")
+		task_idleWander:EngTask("TASK_GET_PATH_TO_RANDOM_NODE", 350)
+		task_idleWander:EngTask("TASK_WAIT_FOR_MOVEMENT", 0)
+		task_idleWander.ResetOnFail = true
+		task_idleWander.CanBeInterrupted = true
+		task_idleWander.IsMovingTask = true
+		task_idleWander.MoveType = 0
+
 		local ENT = scripted_ents.GetStored("npc_vj_creature_base").t
 
 		function ENT:VJ_TASK_IDLE_WANDER()
