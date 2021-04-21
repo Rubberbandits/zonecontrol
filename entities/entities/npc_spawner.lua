@@ -50,10 +50,18 @@ function ENT:CanPhysgun()
 end
 
 local function FindValidSpawn(origin, ent)
-	local trace = {start = origin, endpos = origin, filter = ent}
-	local tr = util.TraceEntity(trace, ent) 
-	if tr.Hit then
-		ent:SetPos(origin + ent:GetAngles():Right() * 100)
+	local tr = {
+		start = origin,
+		endpos = origin,
+		mins = ent:OBBMins(),
+		maxs = ent:OBBMaxs()
+	}
+
+	local hullTrace = util.TraceHull( tr )
+	if hullTrace.Hit then
+		return false
+	else
+		return true
 	end
 end
 
@@ -86,8 +94,13 @@ function ENT:Think()
 				-- ghetto fix for pseudorandomness issues
 				timer.Simple(i / 10, function()
 					local npc = ents.Create(npcClass)
-					npc:SetPos(self:GetPos() + Vector(math.random(25,200), math.random(25,200), 0))
-					--FindValidSpawn(ent)
+					local spawnPos = self:GetPos() + Vector(math.random(25,200), math.random(25,200), 0)
+					local goodPos = FindValidSpawn(spawnPos, npc)
+					if goodPos then
+						npc:SetPos(goodPos)
+					else
+						npc:SetPos(goodPos + npc:GetRight() * 100 + npc:GetUp() * 10)
+					end
 					npc:Spawn()
 
 					npc.DisableWandering = false
