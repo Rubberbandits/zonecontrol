@@ -480,10 +480,6 @@ if SERVER then
 	end)
 
 	hook.Add("TFA_PostPrimaryAttack", "STALKER.AlertNearbyNPCs", function(weapon)
-		if CLIENT then
-			if !IsFirstTimePredicted() then return end
-		end
-		
 		if !weapon.NextAlertFire then
 			weapon.NextAlertFire = CurTime()
 		end
