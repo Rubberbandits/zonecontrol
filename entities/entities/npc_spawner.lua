@@ -72,13 +72,16 @@ function ENT:Think()
 		local npcGroup = table.Random(GAMEMODE.RandomMutantGroups)
 
 		if istable(npcGroup) then
-			for _,npcClass in ipairs(npcGroup) do
-				local npc = ents.Create(npcClass)
-				npc:SetPos(self:GetPos() + Vector(math.random(25,200), math.random(25,200), 0))
-				npc:Spawn()
+			for i,npcClass in ipairs(npcGroup) do
+				-- ghetto fix for pseudorandomness issues
+				timer.Simple(i / 10, function()
+					local npc = ents.Create(npcClass)
+					npc:SetPos(self:GetPos() + Vector(math.random(25,200), math.random(25,200), 0))
+					npc:Spawn()
 
-				npc.DisableWandering = false
-				npc.IdleAlwaysWander = true
+					npc.DisableWandering = false
+					npc.IdleAlwaysWander = true
+				end)
 			end
 		elseif isstring(npcGroup) then
 			local npc = ents.Create(npcGroup)
