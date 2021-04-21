@@ -809,6 +809,14 @@ function meta:GetSpeeds()
 		if self:InventoryWeight() > self:InventoryMaxWeight() then
 			r = w
 		end
+
+		if self:InventoryWeight() > self:InventoryMaxWeight() + 10 then
+			r = 1
+			w = 1
+			c = 1
+
+			return r,w,c,j
+		end
 	end
 
 	w, r, j, c = hook.Run("GetPlayerSpeeds", self, w, r, j, c)
