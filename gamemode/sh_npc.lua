@@ -510,7 +510,7 @@ _G.oldSetMovementActivity = _G.oldSetMovementActivity or meta.SetMovementActivit
 
 function meta:SetMovementActivity(act)
 	if isstring(act) then
-		local seq = self:LookupActivity(act)
+		local seq = self:LookupSequence(act)
 		if !seq then return end
 
 		act = self:GetSequenceActivity(seq)
