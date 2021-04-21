@@ -97,9 +97,9 @@ function ENT:Think()
 					local spawnPos = self:GetPos() + Vector(math.random(25,200), math.random(25,200), 0)
 					local goodPos = FindValidSpawn(spawnPos, npc)
 					if goodPos then
-						npc:SetPos(goodPos)
+						npc:SetPos(spawnPos)
 					else
-						npc:SetPos(goodPos + npc:GetRight() * 100 + npc:GetUp() * 10)
+						npc:SetPos(spawnPos + npc:GetRight() * 100 + npc:GetUp() * 10)
 					end
 					npc:Spawn()
 
