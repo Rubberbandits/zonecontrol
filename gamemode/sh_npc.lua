@@ -484,7 +484,7 @@ if SERVER then
 			if !IsFirstTimePredicted() then return end
 		end
 		
-		if !weapon.NextAlertFire
+		if !weapon.NextAlertFire then
 			weapon.NextAlertFire = CurTime()
 		end
 
