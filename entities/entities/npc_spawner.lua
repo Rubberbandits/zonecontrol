@@ -86,7 +86,7 @@ function ENT:Think()
 				-- ghetto fix for pseudorandomness issues
 				timer.Simple(i / 10, function()
 					local npc = ents.Create(npcClass)
-					FindValidSpawn(self:GetPos(), ent)
+					FindValidSpawn(self:GetPos(), npc)
 					npc:Spawn()
 
 					npc.DisableWandering = false
