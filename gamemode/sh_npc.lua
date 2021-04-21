@@ -516,6 +516,8 @@ function meta:SetMovementActivity(act)
 		act = self:GetSequenceActivity(seq)
 	end
 
+	if !isnumber(act) then return end
+
 	if act then
 		_G.oldSetMovementActivity(self, act)
 	end
