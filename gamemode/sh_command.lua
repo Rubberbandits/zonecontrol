@@ -245,6 +245,7 @@ kingston.command.register("pda", {
 		end
 		
 		local start, finish = text:find(string.PatternSafe(args[1]))
+		if !finish then return end
 		local body = string.Replace(text:sub(finish + 2, #text), "%", "")
 		
 		if args[1] == "all" then
