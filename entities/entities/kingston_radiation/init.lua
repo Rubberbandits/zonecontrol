@@ -57,3 +57,56 @@ end
 
 function ENT:Touch( entity )
 end
+
+local GM = gmod.GetGamemode()
+
+function GM:LoadRadiationZones()
+	local data = file.Read("zonecontrol/"..game.GetMap().."/radiation.txt", "DATA")
+
+	if !data or #data == 0 then return end
+
+	local spawns = util.JSONToTable(data)
+	if spawns then
+		for _,data in ipairs(spawns) do
+			local rad = ents.Create("kingston_radiation")
+			rad:SetPos(data.Pos)
+			rad:SetSourceSize(data.SourceSize)
+			rad:SetSourceIntensity(data.SourceIntensity)
+			rad:SetZoneSize(data.ZoneSize)
+			rad:Spawn()
+		end
+	end
+end
+
+function GM:SaveRadiationZones()
+	if !file.IsDir("zonecontrol", "DATA") then
+		file.CreateDir("zonecontrol")
+	end
+
+	if !file.IsDir("zonecontrol/"..game.GetMap(), "DATA") then
+		file.CreateDir("zonecontrol/"..game.GetMap())
+	end
+
+	local data = {}
+	for _,rad in ipairs(ents.FindByClass("kingston_radiation")) do
+		table.insert(
+			data,
+			{
+				Pos = rad:GetPos(),
+				SourceSize = rad:GetSourceSize(),
+				SourceIntensity = rad:GetSourceIntensity(),
+				ZoneSize = rad:GetZoneSize(),
+			}
+		)
+	end
+
+	file.Write("zonecontrol/"..game.GetMap().."/radiation.txt", util.TableToJSON(data))
+end
+
+hook.Add("InitPostEntity", "STALKER.LoadRadiationZones", function()
+	hook.Run("LoadRadiationZones")
+end)
+
+hook.Add("ShutDown", "STALKER.SaveRadiationZones", function()
+	hook.Run("SaveRadiationZones")
+end)

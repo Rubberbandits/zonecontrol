@@ -49,6 +49,22 @@ function ENT:CanPhysgun()
 	
 end
 
+local function FindValidSpawn(origin, ent)
+	local tr = {
+		start = origin,
+		endpos = origin,
+		mins = ent:OBBMins(),
+		maxs = ent:OBBMaxs()
+	}
+
+	local hullTrace = util.TraceHull( tr )
+	if hullTrace.Hit then
+		return false
+	else
+		return true
+	end
+end
+
 function ENT:Think()
 	if !SERVER then return end
 
@@ -72,13 +88,35 @@ function ENT:Think()
 		local npcGroup = table.Random(GAMEMODE.RandomMutantGroups)
 
 		if istable(npcGroup) then
-			for _,npcClass in ipairs(npcGroup) do
-				local npc = ents.Create(npcClass)
-				npc:SetPos(self:GetPos() + Vector(math.random(25,200), math.random(25,200), 0))
-				npc:Spawn()
+			local totalNPCs = {}
 
-				npc.DisableWandering = false
-				npc.IdleAlwaysWander = true
+			for i,npcClass in ipairs(npcGroup) do
+				-- ghetto fix for pseudorandomness issues
+				timer.Simple(i / 10, function()
+					local npc = ents.Create(npcClass)
+					local spawnPos = self:GetPos() + Vector(math.random(25,200), math.random(25,200), 0)
+					local goodPos = FindValidSpawn(spawnPos, npc)
+					if goodPos then
+						npc:SetPos(spawnPos)
+					else
+						npc:SetPos(spawnPos + npc:GetRight() * 150 + npc:GetUp() * 50)
+					end
+					npc:Spawn()
+
+					npc.DisableWandering = false
+					npc.IdleAlwaysWander = true
+					npc.AlertFriendsOnDeath = true
+					table.insert(totalNPCs, npc)
+				end)
+			end
+
+			-- yuck
+			for _,ent in ipairs(totalNPCs) do
+				for _,otherEnt in ipairs(totalNPCs) do
+					if otherEnt == ent then continue end
+
+					ent:AddEntityRelationship(otherEnt, D_LI, 99)
+				end
 			end
 		elseif isstring(npcGroup) then
 			local npc = ents.Create(npcGroup)
@@ -87,6 +125,7 @@ function ENT:Think()
 
 			npc.DisableWandering = false
 			npc.IdleAlwaysWander = true
+			npc.AlertFriendsOnDeath = true
 		end
 
 		self.NextMutantSpawn = CurTime() + math.random(300, 1200)
