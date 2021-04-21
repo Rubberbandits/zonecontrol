@@ -50,6 +50,8 @@ function ENT:CanPhysgun()
 end
 
 function ENT:Think()
+	if !SERVER then return end
+
 	if !self.NextLootSpawn then
 		self.NextLootSpawn = CurTime() + math.random(1200, 3600)
 	end
@@ -63,6 +65,12 @@ function ENT:Think()
 		end
 
 		if surroundItemCount >= 5 then
+			self.NextLootSpawn = CurTime() + math.random(1200,3600)
+			return
+		end
+
+		local totalItemCount = #ents.FindByClass("cc_item")
+		if totalItemCount >= 50 then
 			self.NextLootSpawn = CurTime() + math.random(1200,3600)
 			return
 		end

@@ -109,7 +109,7 @@ function item:GetWeight()
 		local meta = GAMEMODE:GetItemByID(self.Class)
 		local start_amount = meta.Vars.Stacked
 		local start_weight = self:GetVar("Weight", self.Weight)
-		
+
 		return math.Round(start_weight * (self:GetVar("Stacked", 0) / start_amount), 2)
 	else
 		return self:GetVar("Weight", self.Weight)

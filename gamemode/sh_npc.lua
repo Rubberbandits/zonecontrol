@@ -442,6 +442,8 @@ local dropItems = {
 
 if SERVER then
 	function GM:OnNPCKilled(npc, attacker, inflictor, dmginfo)
+		if !attacker:IsPlayer() then return end
+
 		local possibleItems = dropItems[npc:GetClass()]
 		if possibleItems then
 			local chance = math.random(1, 100)
@@ -449,6 +451,74 @@ if SERVER then
 				local itemID = table.Random(possibleItems.items)
 				local ent = self:CreateNewItemEntity(itemID, npc:GetPos() + npc:GetAngles():Up() * 10, Angle())
 			end
+		end
+	end
+
+	hook.Add("Initialize", "STALKER.DetourVREJCode", function()
+	local task_idleWander = ai_vj_schedule.New("vj_idle_wander")
+		task_idleWander:EngTask("TASK_GET_PATH_TO_RANDOM_NODE", 350)
+		task_idleWander:EngTask("TASK_WAIT_FOR_MOVEMENT", 0)
+		task_idleWander.ResetOnFail = true
+		task_idleWander.CanBeInterrupted = true
+		task_idleWander.IsMovingTask = true
+		task_idleWander.MoveType = 0
+
+		local ENT = scripted_ents.GetStored("npc_vj_creature_base").t
+
+		function ENT:VJ_TASK_IDLE_WANDER()
+			if self.MovementType == VJ_MOVETYPE_AERIAL or self.MovementType == VJ_MOVETYPE_AQUATIC then self:AA_IdleWander(true) return end
+			local act = VJ_PICK(self.AnimTbl_Walk)
+
+			if !isnumber(act) then
+				act = self:GetSequenceActivity(self:LookupSequence(act))
+			end
+
+			self:SetMovementActivity(act)
+			//self:SetLastPosition(self:GetPos() + self:GetForward() * 300)
+			self:StartSchedule(task_idleWander)
+		end
+	end)
+
+	hook.Add("TFA_PostPrimaryAttack", "STALKER.AlertNearbyNPCs", function(weapon)
+		if !weapon.NextAlertFire then
+			weapon.NextAlertFire = CurTime()
+		end
+
+		if weapon.NextAlertFire <= CurTime() then
+			local weaponOwner = weapon:GetOwner()
+
+			for _,npc in ipairs(ents.GetAll()) do
+				if !npc.VJ_AddCertainEntityAsEnemy then continue end
+				if npc:GetPos():DistToSqr(weaponOwner:GetPos()) > 1000*1000 then continue end
+				if IsValid(npc:GetEnemy()) then continue end
+
+
+				npc:VJ_DoSetEnemy(weaponOwner)
+			end
+
+			weapon.NextAlertFire = CurTime() + 5
+		end
+	end)
+
+	/*
+		This is some ghetto ass hack fix cus im tired of drvrej errors
+	*/
+
+	local meta = FindMetaTable("NPC")
+	_G.oldSetMovementActivity = _G.oldSetMovementActivity or meta.SetMovementActivity
+
+	function meta:SetMovementActivity(act)
+		if isstring(act) then
+			local seq = self:LookupSequence(act)
+			if !seq then return end
+
+			act = self:GetSequenceActivity(seq)
+		end
+
+		if !isnumber(act) then return end
+
+		if act then
+			_G.oldSetMovementActivity(self, act)
 		end
 	end
 end

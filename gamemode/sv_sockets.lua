@@ -6,6 +6,7 @@ local ServerLocations = {
 	[LOCATION_RASPAD] = IP_GENERAL .. ":" .. PORT_RASPAD,
 	[LOCATION_AGROPROM] = IP_GENERAL .. ":" .. PORT_AGROPROM,
 	[LOCATION_ROSTOK] = IP_GENERAL .. ":" .. PORT_ROSTOK,
+	[LOCATION_TRUCKCEMETERY] = IP_GENERAL .. ":" .. PORT_TRUCKCEMETERY,
 }
 
 function meta:GoToServer( location, port )

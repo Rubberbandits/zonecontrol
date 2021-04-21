@@ -22,6 +22,7 @@ function GM:RefreshHelpMenuContent()
             /lev - Emotes world actions locally, for GM's and Admins
 
             /mask - Remove your mask or helmet, if you have a suit that also has a mask or helmet.
+			/anorak (gray, white, black, brown, green) - Changes the color of your anorak if you are wearing one.
 
             /pda all - Send a public message to all PDA users
             /pda username - Send a private message to a specific PDA username

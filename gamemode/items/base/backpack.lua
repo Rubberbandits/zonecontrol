@@ -19,7 +19,7 @@ BASE.functions.Equip = {
 		item:SetVar( "Equipped", true );
 		
 		if SERVER then
-			GAMEMODE:UpdateEncumberance(item:Owner(), item)
+			hook.Run("UpdateEncumberance", item:Owner(), item)
 		end
 		
 		return true
@@ -50,7 +50,7 @@ BASE.functions.Unequip = {
 		item:SetVar( "Equipped", false );
 		
 		if SERVER then
-			GAMEMODE:UpdateEncumberance(item:Owner(), item)
+			hook.Run("UpdateEncumberance", item:Owner(), item)
 		end
 		
 		return true

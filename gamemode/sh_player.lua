@@ -805,9 +805,17 @@ function meta:GetSpeeds()
 			c = c + (speeds["c"] or 0)
 			j = j + (speeds["j"] or 0)
 		end
-		
+
 		if self:InventoryWeight() > self:InventoryMaxWeight() then
 			r = w
+		end
+
+		if self:InventoryWeight() > self:InventoryMaxWeight() + 10 then
+			r = 1
+			w = 1
+			c = 1
+
+			return r,w,c,j
 		end
 	end
 

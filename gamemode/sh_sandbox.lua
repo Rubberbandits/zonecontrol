@@ -409,7 +409,7 @@ function GM:NoToolLog( ply, tr, tool )
 	
 end
 
-local anomalies = {
+local DeleteEntities = {
 	electra_anomaly = true,
 	electra_anomaly_type2 = true,
 	kometa_kisel = true,
@@ -430,7 +430,79 @@ local anomalies = {
 	kingston_vortex = true,
 	loot_spawner = true,
 	npc_spawner = true,
+	kingston_radiation = true,
 }
+
+if SERVER then
+	local anomalyClasses = {
+		electra_anomaly = true,
+		electra_anomaly_type2 = true,
+		kometa_kisel = true,
+		kometa_electra = true,
+		gazirovka_anomaly = true,
+		jarka = true,
+		tramplin_anomaly = true,
+		kisel_anomaly = true,
+		kometa = true,
+		space_anomaly = true,
+		par = true,
+		maysorubka_anomaly = true,
+		maysorubka_anomaly_type2 = true,
+		voronka_anomaly = true,
+		kingston_burner = true,
+		kingston_electro = true,
+		kingston_punch = true,
+		kingston_vortex = true,
+	}
+
+	function GM:LoadAnomalies()
+		local data = file.Read("zonecontrol/"..game.GetMap().."/anomalies.txt", "DATA")
+
+		if !data or #data == 0 then return end
+
+		local spawns = util.JSONToTable(data)
+		if spawns then
+			for _,data in ipairs(spawns) do
+				local spawn = ents.Create(data.Class)
+				spawn:SetPos(data.Pos)
+				spawn:Spawn()
+			end
+		end
+	end
+
+	function GM:SaveAnomalies()
+		if !file.IsDir("zonecontrol", "DATA") then
+			file.CreateDir("zonecontrol")
+		end
+
+		if !file.IsDir("zonecontrol/"..game.GetMap(), "DATA") then
+			file.CreateDir("zonecontrol/"..game.GetMap())
+		end
+
+		local data = {}
+		for class,_ in next, anomalyClasses do
+			for _,ent in ipairs(ents.FindByClass(class)) do
+				table.insert(
+					data,
+					{
+						Class = class,
+						Pos = ent:GetPos(),
+					}
+				)
+			end
+		end
+
+		file.Write("zonecontrol/"..game.GetMap().."/anomalies.txt", util.TableToJSON(data))
+	end
+
+	hook.Add("InitPostEntity", "STALKER.LoadAnomalies", function()
+		hook.Run("LoadAnomalies")
+	end)
+
+	hook.Add("ShutDown", "STALKER.SaveAnomalies", function()
+		hook.Run("SaveAnomalies")
+	end)
+end
 
 function GM:CanTool( ply, tr, tool )
 	
@@ -489,7 +561,7 @@ function GM:CanTool( ply, tr, tool )
 			local ents = ents.FindInSphere(tr.HitPos, 100)
 			if ents and #ents > 0 then
 				for k,v in next, ents do
-					if anomalies[v:GetClass()] then
+					if DeleteEntities[v:GetClass()] then
 						if SERVER then
 							v:Remove()
 						end
