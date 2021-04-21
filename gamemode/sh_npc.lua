@@ -500,3 +500,23 @@ if SERVER then
 		end
 	end)
 end
+
+/*
+	This is some ghetto ass hack fix cus im tired of drvrej errors
+*/
+
+local meta = FindMetaTable("Entity")
+_G.oldSetMovementActivity = _G.oldSetMovementActivity or meta.SetMovementActivity
+
+function meta:SetMovementActivity(act)
+	if isstring(act) then
+		local seq = self:LookupActivity(act)
+		if !seq then return end
+
+		act = self:GetSequenceActivity(seq)
+	end
+
+	if act then
+		_G.oldSetMovementActivity(self, act)
+	end
+end
