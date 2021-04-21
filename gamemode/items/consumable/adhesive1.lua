@@ -24,7 +24,7 @@ function ITEM:DynamicFunctions()
                 else
                     item:Owner():SetHealth(item:Owner():Health() - 5)
                 end
-            }
+			end
         }
     }
 end
