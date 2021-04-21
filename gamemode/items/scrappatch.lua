@@ -1,4 +1,4 @@
-ITEM.Name =  "Scrap Fabric";
+ITEM.Name =  "Scrap Patches";
 ITEM.Desc =  "A pile of cloth patches.";
 ITEM.Model =  "models/props_lab/box01a.mdl";
 ITEM.Weight =  0.25;
