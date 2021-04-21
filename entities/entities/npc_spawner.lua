@@ -72,6 +72,8 @@ function ENT:Think()
 		local npcGroup = table.Random(GAMEMODE.RandomMutantGroups)
 
 		if istable(npcGroup) then
+			local totalNPCs = {}
+
 			for i,npcClass in ipairs(npcGroup) do
 				-- ghetto fix for pseudorandomness issues
 				timer.Simple(i / 10, function()
@@ -82,7 +84,17 @@ function ENT:Think()
 					npc.DisableWandering = false
 					npc.IdleAlwaysWander = true
 					npc.AlertFriendsOnDeath = true
+					table.insert(totalNPCs, npc)
 				end)
+			end
+
+			-- yuck
+			for _,ent in ipairs(totalNPCs) do
+				for _,otherEnt in ipairs(totalNPCs) do
+					if otherEnt == ent then continue end
+
+					ent:AddEntityRelationship(otherEnt, D_LI, 99)
+				end
 			end
 		elseif isstring(npcGroup) then
 			local npc = ents.Create(npcGroup)

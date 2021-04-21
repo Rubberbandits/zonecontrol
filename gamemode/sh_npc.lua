@@ -478,4 +478,28 @@ if SERVER then
 			self:StartSchedule(task_idleWander)
 		end
 	end)
+
+	hook.Add("TFA_PostPrimaryAttack", "STALKER.AlertNearbyNPCs", function(weapon)
+		if CLIENT then
+			if !IsFirstTimePredicted() then return end
+		end
+		
+		if !weapon.NextAlertFire
+			weapon.NextAlertFire = CurTime()
+		end
+
+		if weapon.NextAlertFire <= CurTime() then
+			local weaponOwner = weapon:GetOwner()
+
+			for _,npc in ipairs(ents.GetAll()) do
+				if !npc.VJ_AddCertainEntityAsEnemy then continue end
+				if npc:GetPos():DistToSqr(weaponOwner:GetPos()) > 1000*1000 then continue end
+				if IsValid(npc:GetEnemy()) then continue end
+
+				self:VJ_DoSetEnemy(weaponOwner)
+			end
+
+			weapon.NextAlertFire = CurTime() + 5
+		end
+	end)
 end
