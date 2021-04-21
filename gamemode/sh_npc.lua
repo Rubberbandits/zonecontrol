@@ -505,7 +505,7 @@ end
 	This is some ghetto ass hack fix cus im tired of drvrej errors
 */
 
-local meta = FindMetaTable("Entity")
+local meta = FindMetaTable("NPC")
 _G.oldSetMovementActivity = _G.oldSetMovementActivity or meta.SetMovementActivity
 
 function meta:SetMovementActivity(act)
