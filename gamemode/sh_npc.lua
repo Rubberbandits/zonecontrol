@@ -492,7 +492,8 @@ if SERVER then
 				if npc:GetPos():DistToSqr(weaponOwner:GetPos()) > 1000*1000 then continue end
 				if IsValid(npc:GetEnemy()) then continue end
 
-				self:VJ_DoSetEnemy(weaponOwner)
+
+				npc:VJ_DoSetEnemy(weaponOwner)
 			end
 
 			weapon.NextAlertFire = CurTime() + 5
