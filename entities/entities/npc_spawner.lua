@@ -81,6 +81,7 @@ function ENT:Think()
 
 					npc.DisableWandering = false
 					npc.IdleAlwaysWander = true
+					npc.AlertFriendsOnDeath = true
 				end)
 			end
 		elseif isstring(npcGroup) then
@@ -90,6 +91,7 @@ function ENT:Think()
 
 			npc.DisableWandering = false
 			npc.IdleAlwaysWander = true
+			npc.AlertFriendsOnDeath = true
 		end
 
 		self.NextMutantSpawn = CurTime() + math.random(300, 1200)
