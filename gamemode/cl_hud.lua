@@ -1114,7 +1114,7 @@ local EntityRenderingFuncs = {
 			
 		end
 		
-		if( v.HUDAlpha > 0 and ) then
+		if( v.HUDAlpha > 0 ) then
 		
 			if( !self.SeeAll and (Entity_GetNoDraw(v) or eyeEnt != v) ) then
 			
