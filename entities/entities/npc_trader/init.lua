@@ -26,6 +26,11 @@ function ENT:Initialize()
 	end
 end
 
+function ENT:Think()
+	self:NextThink(CurTime())
+	return true
+end
+
 function ENT:SetAnim(animIndex)
 	if isstring(animIndex) then
 		animIndex = self:LookupSequence(animIndex)
@@ -42,7 +47,7 @@ function ENT:SetAnim(animIndex)
 
 	self:SetNW2Int("CurrentAnimation", animIndex)
 
-	return self:ResetSequence(animIndex)
+	self:SetSequence(animIndex)
 end
 
 local Entity_SetModel = FindMetaTable("Entity").SetModel
@@ -209,7 +214,7 @@ local function VendorChangeAnimation(len, ply)
 
 	if !vendor.Vendor then return end
 
-	vendor:SetAnim(net.ReadString())
+	vendor:SetAnim(net.ReadUInt(32))
 end
 net.Receive("VendorChangeAnimation", VendorChangeAnimation)
 

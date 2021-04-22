@@ -104,7 +104,7 @@ function PANEL:PopulateInventory()
 		
 		surface.SetFont( "CombineControl.LabelSmall" );
 		
-		local d, n = GAMEMODE:FormatLine( item:GetDesc(), "CombineControl.LabelTiny", itempane:GetWide() * 0.6 );
+		local d, n = GAMEMODE:FormatLine( item:GetDesc(), "CombineControl.LabelTiny", itempane:GetWide() * 0.5 );
 		
 		local desc = vgui.Create( "DLabel", itempane );
 		desc:SetText( d );
@@ -116,7 +116,7 @@ function PANEL:PopulateInventory()
 		local sell = vgui.Create( "DButton", itempane );
 		sell:SetFont( "CombineControl.LabelSmall" );
 		sell:SetText(Format("Sell for %d RU", hook.Run("CalculatePrice", item) * vendorData.BuyFactor));
-		sell:SetPos( plyInv:GetWide() - 106, itempane:GetTall() / 2 - 12 );
+		sell:SetPos( plyInv:GetWide() - 120, itempane:GetTall() / 2 - 12 );
 		sell:SetSize( 100, 24 );
 		sell.DoClick = function()
 			net.Start("VendorSellItem")
@@ -211,7 +211,7 @@ function PANEL:PopulateData(data)
 		
 		surface.SetFont( "CombineControl.LabelSmall" );
 		
-		local d, n = GAMEMODE:FormatLine( metaitem.Desc, "CombineControl.LabelTiny", itempane:GetWide() * 0.6 );
+		local d, n = GAMEMODE:FormatLine( metaitem.Desc, "CombineControl.LabelTiny", itempane:GetWide() * 0.5 );
 		
 		local desc = vgui.Create( "DLabel", itempane );
 		desc:SetText( d );
@@ -225,7 +225,7 @@ function PANEL:PopulateData(data)
 
 		buy:SetFont( "CombineControl.LabelSmall" );
 		buy:SetText(Format("Buy for %d RU", (hook.Run("GetBuyPrice", LocalPlayer(), class, true) * vendorData.SellFactor) * 1));
-		buy:SetPos( vendInv:GetWide() - 106, itempane:GetTall() * 0.5 );
+		buy:SetPos( vendInv:GetWide() - 120, itempane:GetTall() * 0.5 );
 		buy:SetSize( 100, 24 );
 		buy.DoClick = function(btn)
 			local quant = quantity:GetValue()
@@ -243,7 +243,7 @@ function PANEL:PopulateData(data)
 
 		quantity:SetFont("CombineControl.LabelSmall")
 		quantity:SetValue(1)
-		quantity:SetPos(vendInv:GetWide() - 106, itempane:GetTall() * 0.1)
+		quantity:SetPos(vendInv:GetWide() - 120, itempane:GetTall() * 0.1)
 		quantity:SetSize(100, 24)
 		quantity:SetDecimals(0)
 		quantity:SetMin(1)
@@ -380,7 +380,7 @@ function PANEL:OpenAdmin()
 	function panel.VendorAnimation:OnValueChange(newValue)
 		net.Start("VendorChangeAnimation")
 			net.WriteEntity(entity)
-			net.WriteString(newValue)
+			net.WriteUInt(entity:LookupSequence(newValue), 32)
 		net.SendToServer()
 	end
 	
@@ -432,7 +432,7 @@ function PANEL:OpenAdmin()
 						panel.EditedItems[itemClass] = table.Copy(GAMEMODE.VendorMenu.Items[itemClass])
 					end
 
-					adminMenu.EditedItems[itemClass].BuyFactor = buyFactor
+					panel.EditedItems[itemClass].BuyFactor = buyFactor
 					line:SetColumnText(3, buyFactor)
 				end)
 			end)
