@@ -104,7 +104,7 @@ function PANEL:PopulateInventory()
 		
 		surface.SetFont( "CombineControl.LabelSmall" );
 		
-		local d, n = GAMEMODE:FormatLine( item:GetDesc(), "CombineControl.LabelTiny", itempane:GetWide() * 0.6 );
+		local d, n = GAMEMODE:FormatLine( item:GetDesc(), "CombineControl.LabelTiny", itempane:GetWide() * 0.5 );
 		
 		local desc = vgui.Create( "DLabel", itempane );
 		desc:SetText( d );
@@ -211,7 +211,7 @@ function PANEL:PopulateData(data)
 		
 		surface.SetFont( "CombineControl.LabelSmall" );
 		
-		local d, n = GAMEMODE:FormatLine( metaitem.Desc, "CombineControl.LabelTiny", itempane:GetWide() * 0.6 );
+		local d, n = GAMEMODE:FormatLine( metaitem.Desc, "CombineControl.LabelTiny", itempane:GetWide() * 0.5 );
 		
 		local desc = vgui.Create( "DLabel", itempane );
 		desc:SetText( d );
