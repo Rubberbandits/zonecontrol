@@ -321,6 +321,7 @@ local function AddItemToVendor()
 
 	for class,metaitem in SortedPairs(GAMEMODE.Items) do
 		if !metaitem.BulkPrice then continue end
+		if GAMEMODE.VendorMenu.Items[class] or GAMEMODE.VendorMenu.AdminMenu.EditedItems[class] then continue end
 
 		local line = panel.ItemList:AddLine(class, metaitem.Name, hook.Run("GetBuyPrice", LocalPlayer(), class, true))
 		line.ClassName = class
