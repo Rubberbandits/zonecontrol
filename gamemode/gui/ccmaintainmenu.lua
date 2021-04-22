@@ -23,7 +23,6 @@ function PANEL:Init()
 	self.Repair:SetPos(self:GetWide() / 2 + 2, 368)
 	self.Repair:SetDisabled(true)
 	self.Repair.DoClick = function(button)
-		if !self.selected_maintainer then return end
 		netstream.Start("MaintainWeapon", self.selected_maintainer, self.selected_item, self.selected_support)
 		
 		self:Close()
@@ -111,7 +110,10 @@ function PANEL:SetItem(item_class, id)
 			
 			local maintainer_item = GAMEMODE.g_ItemTable[self.selected_maintainer]
 			local support_item = GAMEMODE.g_ItemTable[self.selected_support]
-			local repair_amt = maintainer_item.RaiseCondition
+			local repair_amt = 0
+			if maintainer_item then
+				repair_amt = repair_amt + maintainer_item.RaiseCondition
+			end
 			if support_item then
 				repair_amt = repair_amt + support_item.RaiseCondition
 			end
