@@ -232,8 +232,12 @@ function GAMEMODE:LoadVendors()
 			vendor:Spawn()
 
 			vendor:SetNW2Int("CurrentAnimation", data.SequenceIndex)
-			vendor:SetVendorModel(data.Model)
 			vendor.Items = data.Items
+
+			-- wait one tick to set model
+			timer.Simple(0, function()
+				vendor:SetVendorModel(data.Model)
+			end)
 		end
 	end
 end
