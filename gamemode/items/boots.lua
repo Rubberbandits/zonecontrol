@@ -1,7 +1,7 @@
 ITEM.Name =  "Boots";
 ITEM.Desc =  "A pair of boots. Musty, and conveniently just your size.";
 ITEM.Model =  "models/kek1ch/boots.mdl";
-ITEM.Weight =  1;
+ITEM.Weight =  0.6;
 ITEM.License = "TX"
 ITEM.SuitOnly = true
 ITEM.RepairCondition = 5

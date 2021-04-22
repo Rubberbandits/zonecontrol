@@ -1,7 +1,7 @@
 ITEM.Name =  "Nice Boots";
 ITEM.Desc =  "A nice, clean and unripped pair of boots. Conveniently just your size.";
 ITEM.Model =  "models/kek1ch/boots.mdl";
-ITEM.Weight =  1;
+ITEM.Weight =  0.6;
 ITEM.License = "TX"
 ITEM.SuitOnly = true
 ITEM.RepairCondition = 10
