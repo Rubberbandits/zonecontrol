@@ -203,9 +203,9 @@ function GAMEMODE:LoadVendors()
 			local vendor = ents.Create("npc_trader")
 			vendor:SetPos(data.Pos)
 			vendor:SetAngles(data.Angles)
-			vendor:SetModel(data.Model)
 			vendor:Spawn()
 
+			vendor:SetVendorModel(data.Model)
 			vendor.Items = data.Items
 		end
 	end
