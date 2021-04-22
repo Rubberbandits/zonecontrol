@@ -26,6 +26,11 @@ function ENT:Initialize()
 	end
 end
 
+function ENT:Think()
+	self:NextThink(CurTime())
+	return true
+end
+
 function ENT:SetAnim(animIndex)
 	if isstring(animIndex) then
 		animIndex = self:LookupSequence(animIndex)
