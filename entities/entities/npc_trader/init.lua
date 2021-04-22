@@ -27,8 +27,6 @@ function ENT:Initialize()
 end
 
 function ENT:setAnim()
-	PrintTable(self:GetSequenceList())
-
 	for k, v in next, self:GetSequenceList() do
 		if (v:lower():find("idle") and v ~= "idlenoise" and v ~= "idle") then
 			return self:ResetSequence(k)
