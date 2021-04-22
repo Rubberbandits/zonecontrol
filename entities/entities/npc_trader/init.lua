@@ -27,8 +27,10 @@ function ENT:Initialize()
 end
 
 function ENT:setAnim()
-	for k, v in ipairs(self:GetSequenceList()) do
-		if (v:lower():find("idle") and v ~= "idlenoise") then
+	PrintTable(self:GetSequenceList())
+
+	for k, v in next, self:GetSequenceList() do
+		if (v:lower():find("idle") and v ~= "idlenoise" and v ~= "idle") then
 			return self:ResetSequence(k)
 		end
 	end
@@ -38,7 +40,7 @@ end
 
 local Entity_SetModel = FindMetaTable("Entity").SetModel
 
-function ENT:SetModel(str)
+function ENT:SetVendorModel(str)
 	Entity_SetModel(self, str)
 
 	timer.Simple(1, function()
@@ -179,6 +181,18 @@ local function VendorModifyItems(len, ply)
 	table.Merge(vendor.Items, data)
 end
 net.Receive("VendorModifyItems", VendorModifyItems)
+
+util.AddNetworkString("VendorChangeModel")
+local function VendorChangeModel(len, ply)
+	if !ply:IsAdmin() then return end
+
+	local vendor = net.ReadEntity()
+
+	if !vendor.Vendor then return end
+
+	vendor:SetVendorModel(net.ReadString())
+end
+net.Receive("VendorChangeModel", VendorChangeModel)
 
 function GAMEMODE:LoadVendors()
 	local data = file.Read("zonecontrol/"..game.GetMap().."/vendors.txt", "DATA")

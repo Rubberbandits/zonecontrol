@@ -363,6 +363,12 @@ function PANEL:OpenAdmin()
 	panel.VendorModel:SetZPos(1)
 	panel.VendorModel:SetText(self.VendorEntity:GetModel())
 	panel.VendorModel:DockMargin(0, 0, 0, 10)
+	function panel.VendorModel:OnValueChange(newValue)
+		net.Start("VendorChangeModel")
+			net.WriteEntity(GAMEMODE.VendorMenu.VendorEntity)
+			net.WriteString(newValue)
+		net.SendToServer()
+	end
 	
 	panel.VendorItems = panel:Add("DListView")
 	panel.VendorItems:SetZPos(2)
