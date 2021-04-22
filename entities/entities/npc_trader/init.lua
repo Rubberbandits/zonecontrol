@@ -31,7 +31,7 @@ function ENT:SetAnim(animIndex)
 		animIndex = self:LookupSequence(animIndex)
 	end
 
-	if !animIndex then
+	if !animIndex or animIndex == -1 then
 		for k, v in next, self:GetSequenceList() do
 			if (v:lower():find("idle") and v ~= "idlenoise" and v ~= "idle") then
 				animIndex = k
@@ -209,10 +209,7 @@ local function VendorChangeAnimation(len, ply)
 
 	if !vendor.Vendor then return end
 
-	local seqIndex = vendor:LookupSequence(net.ReadString())
-	if !seqIndex or seqIndex == -1 then return end
-
-	vendor:SetAnim(seqIndex)
+	vendor:SetAnim(net.ReadString())
 end
 net.Receive("VendorChangeAnimation", VendorChangeAnimation)
 
