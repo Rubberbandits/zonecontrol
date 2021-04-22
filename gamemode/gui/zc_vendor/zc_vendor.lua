@@ -294,6 +294,7 @@ local function AddItemToVendor()
 	panel.ItemList = panel:Add("DListView")
 	panel.ItemList:Dock(FILL)
 	panel.ItemList:SetZPos(2)
+	panel.ItemList:AddColumn("Item Base")
 	panel.ItemList:AddColumn("Classname")
 	panel.ItemList:AddColumn("Item Name")
 	panel.ItemList:AddColumn("Item Price")
@@ -313,16 +314,16 @@ local function AddItemToVendor()
 
 				local line = adminMenu.VendorItems:AddLine(itemClass, sellFactor, buyFactor)
 				line.ClassName = itemClass
-
-				panel:Close()
+				self:RemoveLine(lineID)
 			end)
 		end)
 	end
 
 	for class,metaitem in SortedPairs(GAMEMODE.Items) do
 		if !metaitem.BulkPrice then continue end
+		if GAMEMODE.VendorMenu.Items[class] or GAMEMODE.VendorMenu.AdminMenu.EditedItems[class] then continue end
 
-		local line = panel.ItemList:AddLine(class, metaitem.Name, hook.Run("GetBuyPrice", LocalPlayer(), class, true))
+		local line = panel.ItemList:AddLine(metaitem.Base or "none", class, metaitem.Name, hook.Run("GetBuyPrice", LocalPlayer(), class, true))
 		line.ClassName = class
 	end
 end
