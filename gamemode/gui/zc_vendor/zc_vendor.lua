@@ -116,7 +116,7 @@ function PANEL:PopulateInventory()
 		local sell = vgui.Create( "DButton", itempane );
 		sell:SetFont( "CombineControl.LabelSmall" );
 		sell:SetText(Format("Sell for %d RU", hook.Run("CalculatePrice", item) * vendorData.BuyFactor));
-		sell:SetPos( plyInv:GetWide() - 106, itempane:GetTall() / 2 - 12 );
+		sell:SetPos( plyInv:GetWide() - 120, itempane:GetTall() / 2 - 12 );
 		sell:SetSize( 100, 24 );
 		sell.DoClick = function()
 			net.Start("VendorSellItem")
@@ -225,7 +225,7 @@ function PANEL:PopulateData(data)
 
 		buy:SetFont( "CombineControl.LabelSmall" );
 		buy:SetText(Format("Buy for %d RU", (hook.Run("GetBuyPrice", LocalPlayer(), class, true) * vendorData.SellFactor) * 1));
-		buy:SetPos( vendInv:GetWide() - 106, itempane:GetTall() * 0.5 );
+		buy:SetPos( vendInv:GetWide() - 120, itempane:GetTall() * 0.5 );
 		buy:SetSize( 100, 24 );
 		buy.DoClick = function(btn)
 			local quant = quantity:GetValue()
@@ -243,7 +243,7 @@ function PANEL:PopulateData(data)
 
 		quantity:SetFont("CombineControl.LabelSmall")
 		quantity:SetValue(1)
-		quantity:SetPos(vendInv:GetWide() - 106, itempane:GetTall() * 0.1)
+		quantity:SetPos(vendInv:GetWide() - 120, itempane:GetTall() * 0.1)
 		quantity:SetSize(100, 24)
 		quantity:SetDecimals(0)
 		quantity:SetMin(1)
