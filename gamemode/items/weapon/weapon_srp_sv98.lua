@@ -25,5 +25,5 @@ ITEM.Vars = {
 	Durability = 100,
 	Clip1 = 0,
 };
-ITEM.Damage = 70
+ITEM.Damage = 105
 ITEM.Rarity = 4

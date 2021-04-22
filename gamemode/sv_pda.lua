@@ -413,6 +413,9 @@ local RandomItemRelatedStrings = {
 
 local RandomTraderRelatedStrings = {
 	"%s just keeps on raising their prices. If it keeps on, I'll go to sleep starving.",
+	"%s has some great deals.",
+	"Finally, some decent prices. %s has the hookup.",
+	"%s is on their bullshit again. Buyer beware!",
 }
 
 local DisallowItems = {

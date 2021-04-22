@@ -1,6 +1,6 @@
 
 ITEM.Name =  "Global Positioning System";
-ITEM.Desc =  "A convenient way to store and transfer co-ordinate data. It's also secured by some kind of encryption.";
+ITEM.Desc =  "A conventional GPS tracking device. Not considered much use inside the Zone due to the region's defiance of Euclidean geometry.";
 ITEM.Model =  "models/kali/miscstuff/stalker/sensor_b.mdl";
 ITEM.Weight =  .5;
 ITEM.FOV =  8;
