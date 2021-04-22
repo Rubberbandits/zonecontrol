@@ -339,9 +339,12 @@ function PANEL:OpenAdmin()
 	self.AdminMenu.EditedItems = {}
 	self.AdminMenu.RemovedItems = {}
 
+	local panel = self.AdminMenu
+	local entity = GAMEMODE.VendorMenu.VendorEntity
+
 	function self.AdminMenu:OnClose()
 		net.Start("VendorModifyItems")
-			net.WriteEntity(GAMEMODE.VendorMenu.VendorEntity)
+			net.WriteEntity(entity)
 			net.WriteUInt(table.Count(self.EditedItems) + table.Count(self.RemovedItems), 32)
 
 			for class,removed in next, self.RemovedItems do
@@ -357,8 +360,6 @@ function PANEL:OpenAdmin()
 		net.SendToServer()
 	end
 
-	local panel = self.AdminMenu
-
 	panel.VendorModel = panel:Add("DTextEntry")
 	panel.VendorModel:Dock(TOP)
 	panel.VendorModel:SetZPos(1)
@@ -366,7 +367,19 @@ function PANEL:OpenAdmin()
 	panel.VendorModel:DockMargin(0, 0, 0, 10)
 	function panel.VendorModel:OnValueChange(newValue)
 		net.Start("VendorChangeModel")
-			net.WriteEntity(GAMEMODE.VendorMenu.VendorEntity)
+			net.WriteEntity(entity)
+			net.WriteString(newValue)
+		net.SendToServer()
+	end
+
+	panel.VendorAnimation = panel:Add("DTextEntry")
+	panel.VendorAnimation:Dock(TOP)
+	panel.VendorAnimation:SetZPos(1)
+	panel.VendorAnimation:SetText(self.VendorEntity:GetSequenceName(self.VendorEntity:GetSequence()))
+	panel.VendorAnimation:DockMargin(0, 0, 0, 10)
+	function panel.VendorAnimation:OnValueChange(newValue)
+		net.Start("VendorChangeAnimation")
+			net.WriteEntity(entity)
 			net.WriteString(newValue)
 		net.SendToServer()
 	end
@@ -437,7 +450,7 @@ function PANEL:OpenAdmin()
 	panel.SaveVendor:Dock(BOTTOM)
 	function panel.SaveVendor:DoClick()
 		net.Start("VendorModifyItems")
-			net.WriteEntity(GAMEMODE.VendorMenu.VendorEntity)
+			net.WriteEntity(entity)
 			net.WriteUInt(table.Count(panel.EditedItems) + table.Count(panel.RemovedItems), 32)
 
 			for class,removed in next, panel.RemovedItems do

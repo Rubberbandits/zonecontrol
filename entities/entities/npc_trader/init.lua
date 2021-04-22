@@ -13,7 +13,7 @@ function ENT:Initialize()
 
 	timer.Simple(1, function()
 		if (IsValid(self)) then
-			self:setAnim()
+			self:SetAnim()
 			self:DropToFloor()
 		end
 	end)
@@ -26,14 +26,23 @@ function ENT:Initialize()
 	end
 end
 
-function ENT:setAnim()
-	for k, v in next, self:GetSequenceList() do
-		if (v:lower():find("idle") and v ~= "idlenoise" and v ~= "idle") then
-			return self:ResetSequence(k)
+function ENT:SetAnim(animIndex)
+	if isstring(animIndex) then
+		animIndex = self:LookupSequence(animIndex)
+	end
+
+	if !animIndex then
+		for k, v in next, self:GetSequenceList() do
+			if (v:lower():find("idle") and v ~= "idlenoise" and v ~= "idle") then
+				animIndex = k
+				break
+			end
 		end
 	end
 
-	self:ResetSequence(4)
+	self:SetNW2Int("CurrentAnimation", animIndex)
+
+	return self:ResetSequence(animIndex)
 end
 
 local Entity_SetModel = FindMetaTable("Entity").SetModel
@@ -43,7 +52,7 @@ function ENT:SetVendorModel(str)
 
 	timer.Simple(1, function()
 		if (IsValid(self)) then
-			self:setAnim()
+			self:SetAnim(self:GetNW2Int("CurrentAnimation"))
 			self:DropToFloor()
 		end
 	end)
@@ -192,6 +201,21 @@ local function VendorChangeModel(len, ply)
 end
 net.Receive("VendorChangeModel", VendorChangeModel)
 
+util.AddNetworkString("VendorChangeAnimation")
+local function VendorChangeAnimation(len, ply)
+	if !ply:IsAdmin() then return end
+
+	local vendor = net.ReadEntity()
+
+	if !vendor.Vendor then return end
+
+	local seqIndex = vendor:LookupSequence(net.ReadString())
+	if !seqIndex then return end
+
+	vendor:SetAnim(seqIndex)
+end
+net.Receive("VendorChangeAnimation", VendorChangeAnimation)
+
 function GAMEMODE:LoadVendors()
 	local data = file.Read("zonecontrol/"..game.GetMap().."/vendors.txt", "DATA")
 
@@ -205,6 +229,7 @@ function GAMEMODE:LoadVendors()
 			vendor:SetAngles(data.Angles)
 			vendor:Spawn()
 
+			vendor:SetNW2Int("CurrentAnimation", data.SequenceIndex)
 			vendor:SetVendorModel(data.Model)
 			vendor.Items = data.Items
 		end
@@ -228,6 +253,7 @@ function GAMEMODE:SaveVendors()
 				Pos = vendor:GetPos(),
 				Angles = vendor:GetAngles(),
 				Model = vendor:GetModel(),
+				SequenceIndex = vendor:GetSequence(),
 				Items = vendor.Items,
 			}
 		)
