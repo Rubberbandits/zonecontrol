@@ -1,11 +1,11 @@
 ITEM.Name =  "PDA";
 ITEM.Desc =  "A run of the mill PDA common all through-out the Zone. Its usefulness has every stalker carrying one from here to the CNPP.";
 ITEM.Model =  "models/kali/miscstuff/stalker/pda.mdl";
-ITEM.Weight =  1;
+ITEM.Weight =  0.2;
 ITEM.FOV 			= 6;
 ITEM.CamPos 		= Vector( 0, 0, 90 );
 ITEM.LookAt 		= Vector( 0, 0, 0 );
-ITEM.BulkPrice =  10000;
+ITEM.BulkPrice =  5000
 ITEM.W = 1
 ITEM.H = 1
 -- explanation of PrivateVars key
