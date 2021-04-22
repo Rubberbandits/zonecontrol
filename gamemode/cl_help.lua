@@ -87,6 +87,7 @@ function GM:RefreshHelpMenuContent()
 			B - Firearms
 			D - Medical
 			S - Suits
+			U - BDUs (Suit Colors)
 
 			Player Flags
 			G - Gamemaster, per-character
@@ -168,7 +169,7 @@ function GM:RefreshHelpMenuContent()
 		
 		rpa_setdmgmult [number] - Change how much damage all weapons do, via a multiplier.
 		
-		/ev - Broadcast an IC event.]] } );
+		rpa_editvendor - Lets you edit the values of an NPC vendor such as sell and buy value, model, etc.]] } );
 		
 	end
 	
