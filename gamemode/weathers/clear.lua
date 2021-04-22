@@ -105,7 +105,7 @@ end
 	
 	clear:Set("fogDistance", 400000)
 	clear:Set("fogIndoorDistance", 3000)
-	clear:set("fogColor", Color(0,0,0,0))
+	clear:Set("fogColor", Color(0,0,0,0))
 	--clear:Set("fogEnd",90000)
 	--clear:Set("fogStart",0)
 
