@@ -214,7 +214,7 @@ local function VendorChangeAnimation(len, ply)
 
 	if !vendor.Vendor then return end
 
-	vendor:SetAnim(net.ReadString())
+	vendor:SetAnim(net.ReadUInt(32))
 end
 net.Receive("VendorChangeAnimation", VendorChangeAnimation)
 

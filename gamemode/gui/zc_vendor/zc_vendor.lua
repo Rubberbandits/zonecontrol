@@ -380,7 +380,7 @@ function PANEL:OpenAdmin()
 	function panel.VendorAnimation:OnValueChange(newValue)
 		net.Start("VendorChangeAnimation")
 			net.WriteEntity(entity)
-			net.WriteString(newValue)
+			net.WriteUInt(entity:LookupSequence(newValue), 32)
 		net.SendToServer()
 	end
 	
