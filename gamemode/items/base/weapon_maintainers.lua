@@ -4,6 +4,7 @@ BASE.Vars = {
 	Uses = 1,
 };
 BASE.RaiseCondition = 5 -- amount of points to fix on weapon
+BASE.IsSellable = true
 
 function BASE:GetDesc()
 	return Format("%s\n\nUses left: %d\nThis repairs %d%% of a weapon.\n", self.Desc, self:GetVar("Uses", 1), self.RaiseCondition)

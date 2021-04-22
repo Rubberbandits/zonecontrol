@@ -11,3 +11,8 @@ ITEM.W = 1
 ITEM.H = 1
 ITEM.Rarity = 4
 ITEM.AllowRandomSpawn = false
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+    return 5000
+end
