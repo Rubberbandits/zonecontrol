@@ -58,3 +58,7 @@ function BASE:QuickUse()
 		return true
 	end
 end
+
+function BASE:GetSellPrice()
+	return ((self.BulkPrice / 5) * (GAMEMODE.SellPercentage / 100)) * self:GetVar("Stacked", 1)
+end

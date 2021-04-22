@@ -33,6 +33,8 @@ netstream.Hook("ReceiveItem", function(class, id, vars, x, y)
 	if GAMEMODE.Inventory and IsValid(GAMEMODE.Inventory) then
 		GAMEMODE.Inventory:PopulateItems()
 	end
+
+	hook.Run("NetworkedItemReceived", s_Object)
 end)
 
 netstream.Hook( "ReceiveDummyItem", function( s_iID, s_szClass, s_Vars, s_Owner, s_CharID )

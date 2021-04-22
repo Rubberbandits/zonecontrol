@@ -70,7 +70,7 @@ function ENT:Think()
 		end
 
 		local totalItemCount = #ents.FindByClass("cc_item")
-		if totalItemCount >= 50 then
+		if totalItemCount >= 100 then
 			self.NextLootSpawn = CurTime() + math.random(1200,3600)
 			return
 		end
