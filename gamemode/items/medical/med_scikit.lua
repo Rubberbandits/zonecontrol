@@ -1,6 +1,6 @@
 
 ITEM.Name =  "Scientific Medkit";
-ITEM.Desc =  "A top shelf medkit designed especially for use in the Zone. Includes enough aerospace-grade tape to patch a sealed suit in an emergency.";
+ITEM.Desc =  "A top shelf medkit designed especially for use in the Zone. Includes enough potassium iodide to cure radiation exposure.";
 ITEM.Model =  "models/kali/miscstuff/stalker/aid/first aid kit.mdl";
 
 ITEM.ItemSubmaterials = {
