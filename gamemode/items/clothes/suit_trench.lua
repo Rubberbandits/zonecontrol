@@ -56,3 +56,8 @@ ITEM.ArmorValues = {
 }
 ITEM.Rarity = 2
 ITEM.AllowRandomSpawn = true
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+    return 6000
+end
