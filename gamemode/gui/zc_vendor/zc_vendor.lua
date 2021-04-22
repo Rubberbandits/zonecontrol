@@ -432,7 +432,7 @@ function PANEL:OpenAdmin()
 						panel.EditedItems[itemClass] = table.Copy(GAMEMODE.VendorMenu.Items[itemClass])
 					end
 
-					adminMenu.EditedItems[itemClass].BuyFactor = buyFactor
+					panel.EditedItems[itemClass].BuyFactor = buyFactor
 					line:SetColumnText(3, buyFactor)
 				end)
 			end)
