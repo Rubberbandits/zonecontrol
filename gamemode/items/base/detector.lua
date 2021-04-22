@@ -5,7 +5,6 @@ BASE.Vars = {
 }
 BASE.DetectorType = DETECTOR_ECHO;
 BASE.HasEquipSlot = true
-BASE.IsSellable = true
 BASE.functions = {};
 BASE.functions.Equip = {
 	SelectionName = "Equip",
