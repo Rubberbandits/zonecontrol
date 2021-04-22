@@ -210,7 +210,7 @@ local function VendorChangeAnimation(len, ply)
 	if !vendor.Vendor then return end
 
 	local seqIndex = vendor:LookupSequence(net.ReadString())
-	if !seqIndex then return end
+	if !seqIndex or seqIndex == -1 then return end
 
 	vendor:SetAnim(seqIndex)
 end
