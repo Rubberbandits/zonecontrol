@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Psy-block";
 ITEM.Desc =  "A tray of psychoreducive tabs. Much less shady than anabiotics.";
 ITEM.Model =  "models/stalker/item/medical/psy_pills.mdl";

@@ -5,7 +5,6 @@ BASE.W = 1;
 BASE.H = 1;
 BASE.CarryAdd =  0;
 BASE.HasEquipSlot = true
-BASE.IsSellable = true
 BASE.functions = {}
 BASE.functions.Equip = {
 	SelectionName = "Equip",

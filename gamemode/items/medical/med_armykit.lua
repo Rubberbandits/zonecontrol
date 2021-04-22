@@ -7,11 +7,11 @@ ITEM.ItemSubmaterials = {
 }
 ITEM.ConsumeText = "You tend to your wounds. That should hold for a while."
 ITEM.HealAmount = 70
-ITEM.Weight =  1.5;
+ITEM.Weight =  0.5;
 ITEM.FOV =  9;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 5.02 );
-ITEM.BulkPrice =  3750;
+ITEM.BulkPrice =  1050;
 ITEM.License =  "D";
 ITEM.DrugType = "MEDKIT"
 ITEM.Rarity = 3

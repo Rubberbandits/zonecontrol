@@ -11,3 +11,8 @@ ITEM.BulkPrice =  1000;
 ITEM.License =  "X";
 ITEM.Rarity = 2
 ITEM.AllowRandomSpawn = false
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+    return 200
+end

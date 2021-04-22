@@ -6,9 +6,9 @@ ITEM.FOV =  8;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.PhysicalMass	= 1;
-ITEM.ConsumeText = "You swallow the pills."
+ITEM.ConsumeText = "You swallow the pills dry. Hopefully this works."
 ITEM.UseText = "Swallow"
-ITEM.BulkPrice =  2500;
+ITEM.BulkPrice =  100;
 ITEM.License = "D"
 ITEM.DrugType = "RADIOPROTECT"
 
