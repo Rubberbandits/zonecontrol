@@ -15,5 +15,5 @@ ITEM.AmmoType = "ammo_792x57"
 ITEM.License = "B"
 ITEM.BulkPrice = 82500
 ITEM.Slot = 2
-ITEM.Damage = 80
+ITEM.Damage = 110
 ITEM.Rarity = 3
