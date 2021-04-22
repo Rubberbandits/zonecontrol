@@ -14,5 +14,5 @@ ITEM.SelfRepairCondition = 75
 ITEM.AmmoType = "ammo_762x54r"
 ITEM.License = "B"
 ITEM.BulkPrice = 142500
-ITEM.Damage = 70
+ITEM.Damage = 105
 ITEM.Rarity = 3
