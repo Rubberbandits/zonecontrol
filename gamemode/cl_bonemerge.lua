@@ -38,6 +38,10 @@ function s_Meta:CreateNewBonemerge(szModel, iBoneScale)
 				self:SetNoDraw(false)
 			end
 
+			if ply.pac_hide_entity then
+				self:SetNoDraw(true)
+			end
+
 			if !self.LastParent then
 				if !ply:Alive() and self.bLastAliveState then
 					self.LastParent = ply
