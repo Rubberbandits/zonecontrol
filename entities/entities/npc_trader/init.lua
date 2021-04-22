@@ -47,7 +47,7 @@ function ENT:SetAnim(animIndex)
 
 	self:SetNW2Int("CurrentAnimation", animIndex)
 
-	return self:ResetSequence(animIndex)
+	self:SetSequence(animIndex)
 end
 
 local Entity_SetModel = FindMetaTable("Entity").SetModel
