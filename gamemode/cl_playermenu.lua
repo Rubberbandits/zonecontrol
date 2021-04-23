@@ -99,9 +99,10 @@ function GM:CreatePlayerMenu()
 		
 	end
 	CCP.PlayerMenu.TopBar.Buttons[3]:PerformLayout();
+	CCP.PlayerMenu.TopBar.Buttons[3]:SetEnabled(false)
 	
-	if !LocalPlayer():HasCharFlag("X") and !LocalPlayer():HasCharFlag("T") then
-		CCP.PlayerMenu.TopBar.Buttons[3]:SetEnabled(false)
+	if (LocalPlayer():HasCharFlag("X") or LocalPlayer():HasCharFlag("T")) and InStockpileRange(LocalPlayer()) then
+		CCP.PlayerMenu.TopBar.Buttons[3]:SetEnabled(true)
 	end
 	
 	CCP.PlayerMenu.TopBar.Buttons[4] = vgui.Create( "DButton", CCP.PlayerMenu.TopBar );

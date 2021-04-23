@@ -23,6 +23,8 @@ BASE.HandsModel = {
 	model = "models/poc/stalker_viewmodels/c_sunrise.mdl",
 	skin = 0,
 }
+BASE.RepairCost = 10
+BASE.RepairPart = "parts_suit"
 BASE.W = 2
 BASE.H = 2
 BASE.HasEquipSlot = true
@@ -160,9 +162,8 @@ BASE.functions.Maintain = {
 		return true
 	end,
 	CanRun = function(item)
-		return (item:GetVar("Durability",0) != 100 
+		return item:GetVar("Durability",0) != 100 
 		and (item:GetVar("Durability",0) >= (item.SelfRepairCondition or GAMEMODE.DefaultSelfRepairCond)) 
-		or item:Owner():HasCharFlag("T"))
 	end,
 }
 BASE.functions.Upgrade = {
@@ -177,7 +178,7 @@ BASE.functions.Upgrade = {
 		return true
 	end,
 	CanRun = function(item)
-		return !item:GetVar("Equipped",false) and item:Owner():HasCharFlag("T") -- in range of tbl
+		return item:CanUpgrade()
 	end,
 }
 
@@ -198,7 +199,7 @@ function BASE:CanDrop()
 	return !self:GetVar( "Equipped", false );
 end
 function BASE:CanUpgrade()
-	return !self:GetVar( "Equipped", false );
+	return !self:GetVar( "Equipped", false ) and item:Owner():HasCharFlag("T") and InStockpileRange(ply)
 end
 function BASE:OnTakeDamage(dmginfo)
 	-- need to properly do this so it only saves when it needs to

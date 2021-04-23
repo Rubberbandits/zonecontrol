@@ -4,6 +4,8 @@
 */
 
 local function nBuyItem( ply, id, single )
+	if !InStockpileRange(ply) then return end
+
 	local item = GAMEMODE:GetItemByID( id );
 
 	if item and item.License then

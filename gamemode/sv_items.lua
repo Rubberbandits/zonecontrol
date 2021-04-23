@@ -287,3 +287,36 @@ netstream.Hook("AdminRequestedItems", function(ply)
 	
 	netstream.Start(ply, "AdminRequestedItems", kingston.item.item_requests)
 end)
+
+util.AddNetworkString("zcRepairItem")
+local function zcRepairItem(len, ply)
+	if !ply:HasCharFlag("T") then return end
+	if !InStockpileRange(ply) then return end
+
+	local itemID = net.ReadUInt(32)
+	local item = ply.Inventory[itemID]
+	if !item then return end
+
+	local repairAmount = net.ReadUInt(8)
+	local itemCondition = item:GetVar("Durability", 0)
+
+	if itemCondition + repairAmount > item.StartDurability then return end
+
+	local requiredItem = item.RepairPart
+	local partsRequired = math.ceil(item.RepairCost / (item.StartDurability / repairAmount))
+
+	local items = ply:HasItem(requiredItem)
+	if !items or (items.IsItem and partsRequired > 1) or (#items > partsRequired) then return end
+
+	item:SetVar("Durability", itemCondition + repairAmount, false, true)
+	if !items.IsItem then
+		for _,item in ipairs(items) do
+			item:RemoveItem(true)
+		end
+	else
+		items:RemoveItem(true)
+	end
+
+	ply:Notify(nil, COLOR_NOTIF, "Repair completed successfully.")
+end
+net.Receive("zcRepairItem", zcRepairItem)

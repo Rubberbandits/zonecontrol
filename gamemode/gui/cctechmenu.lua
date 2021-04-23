@@ -1,6 +1,93 @@
 local PANEL = {};
 
+local function PresentRepairDialog(panel, item)
+	local dialog = vgui.Create("DFrame")
+	dialog:SetTitle("Repair")
+	dialog:SetSize(ScrW() * 0.2, ScrH() * 0.2)
+	dialog:Center()
+	dialog:MakePopup()
+	dialog:DockPadding(10, 30, 10, 10)
+
+	local itemCondition = item:GetVar("Durability", 0)
+	local maxRepairAmount = item.StartDurability - itemCondition
+	local maxPartsRequired = math.ceil(item.RepairCost / (item.StartDurability / (maxRepairAmount)))
+	local partsRequired = maxPartsRequired
+
+	local currentCondition = dialog:Add("DLabel")
+	currentCondition:SetFont("CombineControl.LabelMedium")
+	currentCondition:SetZPos(1)
+	currentCondition:Dock(TOP)
+	currentCondition:SetContentAlignment(5)
+	currentCondition:SetText(Format("Current condition: %d%%", itemCondition))
+
+	local repairCost = dialog:Add("DLabel")
+	repairCost:SetFont("CombineControl.LabelMedium")
+	repairCost:SetTextColor(Color(255,0,0))
+	repairCost:SetZPos(2)
+	repairCost:Dock(TOP)
+	repairCost:DockMargin(0, 0, 0, 0)
+	repairCost:SetContentAlignment(5)
+	repairCost:SetText(Format("Required parts to repair: %d", maxPartsRequired))
+
+	local repairCondition = dialog:Add("DLabel")
+	repairCondition:SetFont("CombineControl.LabelMedium")
+	repairCondition:SetTextColor(Color(0,255,0))
+	repairCondition:SetZPos(3)
+	repairCondition:Dock(TOP)
+	repairCondition:DockMargin(0, 0, 0, 5)
+	repairCondition:SetContentAlignment(5)
+	repairCondition:SetText(Format("Condition will be repaired to: %d%%", itemCondition + maxRepairAmount))
+
+	local repairAmountLabel = dialog:Add("DLabel")
+	repairAmountLabel:SetFont("CombineControl.LabelMedium")
+	repairAmountLabel:SetZPos(4)
+	repairAmountLabel:Dock(TOP)
+	repairAmountLabel:DockMargin(0, 0, 0, 5)
+	repairAmountLabel:SetContentAlignment(4)
+	repairAmountLabel:SetText("Desired Repair Amount")
+
+	local repairAmount = dialog:Add("DTextEntry")
+	repairAmount:SetFont("CombineControl.LabelMedium")
+	repairAmount:SetZPos(5)
+	repairAmount:Dock(TOP)
+	repairAmount:DockMargin(0, 0, 0, 10)
+	repairAmount:SetText(maxRepairAmount)
+	function repairAmount:OnValueChange(newValue)
+		local repairAmt = tonumber(newValue)
+		if repairAmt > maxRepairAmount or repairAmt <= 0 then
+			self:SetText(maxRepairAmount)
+			return
+		end
+
+		partsRequired = math.ceil(item.RepairCost / (item.StartDurability / repairAmt))
+
+		repairCost:SetText(Format("Required parts to repair: %d", partsRequired))
+		repairCondition:SetText(Format("Condition will be repaired to: %d%%", itemCondition + repairAmt))
+	end
+
+	local doRepair = dialog:Add("DButton")
+	doRepair:SetFont("CombineControl.LabelMedium")
+	doRepair:SetText("Repair")
+	doRepair:SetZPos(6)
+	doRepair:Dock(TOP)
+	function doRepair:DoClick()
+		local items = LocalPlayer():HasItem(item.RepairPart)
+		if !items or (items.IsItem and partsRequired > 1) or (#items < partsRequired) then
+			LocalPlayer():Notify(nil, COLOR_ERROR, "You don't have enough parts to repair the item to this amount!")
+			return
+		end
+
+		net.Start("zcRepairItem")
+			net.WriteUInt(item:GetID(), 32)
+			net.WriteUInt(tonumber(repairAmount:GetText()), 8) -- since max is 100, technically only need 7 bits
+		net.SendToServer()
+	
+		dialog:Close()
+	end
+end
+
 function PANEL:Init()
+	local panel = self
 	self:SetSize( ScrW() / 3.7, ScrH() );
 	self:Center()
 	self:SetSkin( "STALKER" );
@@ -21,6 +108,7 @@ function PANEL:Init()
 	self.CloseButton = vgui.Create("DButton", self)
 	self.CloseButton:SetPos(16, self:GetTall() - 48)
 	self.CloseButton:SetSize(self:GetWide() - 32, 32)
+	self.CloseButton:SetFont("CombineControl.ChatBig")
 	self.CloseButton:SetText("Close")
 	self.CloseButton.DoClick = function(button)
 		self:Close()
@@ -38,6 +126,11 @@ function PANEL:Init()
 		kingston.gui.FindFunc(panel, "Paint", "RepairButton", w, h)
 	end
 	self.Repair:SetEnabled(false)
+	function self.Repair:DoClick()
+		if panel.ItemObject then
+			PresentRepairDialog(panel, panel.ItemObject)
+		end
+	end
 end
 
 function PANEL:SendToMenu( ItemObj )
@@ -73,6 +166,8 @@ function PANEL:SendToMenu( ItemObj )
 	if ItemObj:GetVar("Durability", 100) < 100 then
 		self.Repair:SetEnabled(true)
 	end
+
+	self.ItemObject = ItemObj
 end
 
 function PANEL:CreateUpgradeLayout(upgrades, item_obj)
