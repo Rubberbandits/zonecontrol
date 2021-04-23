@@ -205,6 +205,8 @@ function GM:InitPostEntity()
 	LocalPlayer():SetHullDuck(Vector(-8, -8, 0), Vector(8, 8, 36))
 	
 	_G.b_keyf7_pressed = true
+	
+	print("ahigksgijSEf")
 end
 
 KillVJ()
