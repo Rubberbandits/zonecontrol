@@ -929,6 +929,18 @@ function GM:GetPlayerRadiationResistance(ply, mult)
 	return mult
 end
 
+function meta:IsPDATech()
+	return self:HasCharFlag("H")
+end
+
+function meta:IsMaintainTech()
+	return self:HasCharFlag("T")
+end
+
+function meta:IsUpgradeTech()
+	return self:HasCharFlag("T")
+end
+
 gameevent.Listen("player_spawn")
 hook.Add("player_spawn", "STALKER.SetPlayerHulls", function(data)
 	local ply = Player(data.userid)

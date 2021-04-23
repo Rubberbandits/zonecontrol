@@ -127,7 +127,7 @@ ITEM.functions.Encrypt = {
 		return (
 			!item:GetVar("Encrypted", false) and 
 			!item:GetVar("HasPassword", false) and 
-			item:Owner():HasCharFlag("T") and
+			item:Owner():IsPDATech() and
 			item:Owner():HasItem("pda_encryption")
 		)
 	end,
@@ -149,7 +149,7 @@ ITEM.functions.Decrypt = {
 		return (
 			item:GetVar("Encrypted", false) and 
 			item:GetVar("HasPassword", false) and 
-			item:Owner():HasCharFlag("T") and
+			item:Owner():IsPDATech() and
 			item:Owner():HasItem("pda_decryption")
 		)
 	end,
@@ -171,7 +171,7 @@ ITEM.functions.RecoverJournal = {
 		return (
 			!item:GetVar("Encrypted", false) and 
 			!item:GetVar("HasPassword", false) and 
-			item:Owner():HasCharFlag("T") and
+			item:Owner():IsPDATech() and
 			item:Owner():HasItem("pda_recover")
 		)
 	end,

@@ -191,7 +191,7 @@ netstream.Hook("PDADeleteJournal", PDADeleteJournal)
 local function PDARecoverJournals(ply, pda)
 	local item = ply.Inventory[pda]
 	if !item then return end
-	if !ply:HasCharFlag("T") or !ply:HasItem("pda_recover") then return end
+	if !ply:IsPDATech() or !ply:HasItem("pda_recover") then return end
 	if item:GetVar("Encrypted", false) then return end
 	if ply.StartPDARecover + 119 > CurTime() then return end
 	
@@ -214,7 +214,7 @@ local function PDAEncrypt(ply, pda)
 	if !item then return end
 	if item:GetVar("Encrypted", false) then return end
 	if item:GetVar("HasPassword", false) then return end
-	if !ply:HasCharFlag("T") or !ply:HasItem("pda_encryption") then return end
+	if !ply:IsPDATech() or !ply:HasItem("pda_encryption") then return end
 	if ply.StartPDAEncrypt + 19 > CurTime() then return end
 	
 	local items = ply:HasItem("pda_encryption")
@@ -232,7 +232,7 @@ local function PDADecrypt(ply, pda)
 	local item = ply.Inventory[pda]
 	if !item then return end
 	if !item:GetVar("Encrypted", false) then return end
-	if !ply:HasCharFlag("T") or !ply:HasItem("pda_decryption") then return end
+	if !ply:IsPDATech() or !ply:HasItem("pda_decryption") then return end
 	if ply.StartPDADecrypt + 199 > CurTime() then return end
 	
 	local items = ply:HasItem("pda_decryption")

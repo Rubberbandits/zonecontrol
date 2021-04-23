@@ -101,7 +101,7 @@ function GM:CreatePlayerMenu()
 	CCP.PlayerMenu.TopBar.Buttons[3]:PerformLayout();
 	CCP.PlayerMenu.TopBar.Buttons[3]:SetEnabled(false)
 	
-	if (LocalPlayer():HasCharFlag("X") or LocalPlayer():HasCharFlag("T")) and InStockpileRange(LocalPlayer()) then
+	if (LocalPlayer():HasCharFlag("X") or LocalPlayer():IsMaintainTech()) and InStockpileRange(LocalPlayer()) then
 		CCP.PlayerMenu.TopBar.Buttons[3]:SetEnabled(true)
 	end
 	

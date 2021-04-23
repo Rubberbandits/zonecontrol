@@ -90,7 +90,7 @@ function PANEL:SetItem(item_class, id)
 		if v.Base != "weapon_maintainers" then continue end
 		if v.SuitOnly and metaitem.Base != "clothes" then continue end
 		if v.WeaponOnly and metaitem.Base != "weapon" then continue end
-		if v.TechOnly and !LocalPlayer():HasCharFlag("T") then continue end
+		if v.TechOnly and !LocalPlayer():IsMaintainTech() then continue end
 
 		local button = vgui.Create("DButton", self.MaintainItemsScroll)
 		button:SetSize(200, 24)

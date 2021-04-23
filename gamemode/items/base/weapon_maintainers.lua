@@ -20,7 +20,7 @@ if SERVER then
 		local repair_amt = 0
 		if item then
 			if item.Base != "weapon_maintainers" then return end
-			if item.TechOnly and !ply:HasCharFlag("T") then return end
+			if item.TechOnly and !ply:IsMaintainTech() then return end
 			if item.SuitOnly and weapon.Base != "clothes" then return end
 			if item.WeaponOnly and weapon.Base != "weapon" then return end
 
@@ -28,10 +28,7 @@ if SERVER then
 		end
 
 		if weapon:GetVar("Durability", 100) == 100 then return end
-		
-		if !ply:HasCharFlag("T") then
-			if weapon:GetVar("Durability", 100) < (weapon.SelfRepairCondition or GAMEMODE.DefaultSelfRepairCond) then return end
-		end
+		if weapon:GetVar("Durability", 100) < (weapon.SelfRepairCondition or GAMEMODE.DefaultSelfRepairCond) then return end
 
 		if support then
 			if support.SuitOnly and weapon.Base != "clothes" then return end
