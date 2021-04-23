@@ -290,7 +290,7 @@ end)
 
 util.AddNetworkString("zcRepairItem")
 local function zcRepairItem(len, ply)
-	if !ply:HasCharFlag("T") then return end
+	if !ply:IsMaintainTech() then return end
 	if !InStockpileRange(ply) then return end
 
 	local itemID = net.ReadUInt(32)
