@@ -181,7 +181,7 @@ function GM:PlayerSpawn( ply )
 	self:SpeedThink( ply );
 	
 	ply:SetHull(Vector(-16, -16, 0), Vector(16, 16, 72))
-	ply:SetHullDuck(Vector(-16, -16, 0), Vector(16, 16, 72))
+	ply:SetHullDuck(Vector(-16, -16, 0), Vector(16, 16, 48))
 	
 	ply.LastCharID = ply:CharID()
 end
