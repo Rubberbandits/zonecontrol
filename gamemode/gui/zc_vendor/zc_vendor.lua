@@ -104,7 +104,7 @@ function PANEL:PopulateInventory()
 		
 		surface.SetFont( "CombineControl.LabelSmall" );
 		
-		local d, n = GAMEMODE:FormatLine( item:GetDesc(), "CombineControl.LabelTiny", itempane:GetWide() * 0.6 );
+		local d, n = GAMEMODE:FormatLine( item:GetDesc(), "CombineControl.LabelTiny", itempane:GetWide() * 0.5 );
 		
 		local desc = vgui.Create( "DLabel", itempane );
 		desc:SetText( d );
@@ -116,7 +116,7 @@ function PANEL:PopulateInventory()
 		local sell = vgui.Create( "DButton", itempane );
 		sell:SetFont( "CombineControl.LabelSmall" );
 		sell:SetText(Format("Sell for %d RU", hook.Run("CalculatePrice", item) * vendorData.BuyFactor));
-		sell:SetPos( plyInv:GetWide() - 106, itempane:GetTall() / 2 - 12 );
+		sell:SetPos( plyInv:GetWide() - 120, itempane:GetTall() / 2 - 12 );
 		sell:SetSize( 100, 24 );
 		sell.DoClick = function()
 			net.Start("VendorSellItem")
@@ -211,7 +211,7 @@ function PANEL:PopulateData(data)
 		
 		surface.SetFont( "CombineControl.LabelSmall" );
 		
-		local d, n = GAMEMODE:FormatLine( metaitem.Desc, "CombineControl.LabelTiny", itempane:GetWide() * 0.6 );
+		local d, n = GAMEMODE:FormatLine( metaitem.Desc, "CombineControl.LabelTiny", itempane:GetWide() * 0.5 );
 		
 		local desc = vgui.Create( "DLabel", itempane );
 		desc:SetText( d );
@@ -225,7 +225,7 @@ function PANEL:PopulateData(data)
 
 		buy:SetFont( "CombineControl.LabelSmall" );
 		buy:SetText(Format("Buy for %d RU", (hook.Run("GetBuyPrice", LocalPlayer(), class, true) * vendorData.SellFactor) * 1));
-		buy:SetPos( vendInv:GetWide() - 106, itempane:GetTall() * 0.5 );
+		buy:SetPos( vendInv:GetWide() - 120, itempane:GetTall() * 0.5 );
 		buy:SetSize( 100, 24 );
 		buy.DoClick = function(btn)
 			local quant = quantity:GetValue()
@@ -243,7 +243,7 @@ function PANEL:PopulateData(data)
 
 		quantity:SetFont("CombineControl.LabelSmall")
 		quantity:SetValue(1)
-		quantity:SetPos(vendInv:GetWide() - 106, itempane:GetTall() * 0.1)
+		quantity:SetPos(vendInv:GetWide() - 120, itempane:GetTall() * 0.1)
 		quantity:SetSize(100, 24)
 		quantity:SetDecimals(0)
 		quantity:SetMin(1)
@@ -294,6 +294,7 @@ local function AddItemToVendor()
 	panel.ItemList = panel:Add("DListView")
 	panel.ItemList:Dock(FILL)
 	panel.ItemList:SetZPos(2)
+	panel.ItemList:AddColumn("Item Base")
 	panel.ItemList:AddColumn("Classname")
 	panel.ItemList:AddColumn("Item Name")
 	panel.ItemList:AddColumn("Item Price")
@@ -313,16 +314,16 @@ local function AddItemToVendor()
 
 				local line = adminMenu.VendorItems:AddLine(itemClass, sellFactor, buyFactor)
 				line.ClassName = itemClass
-
-				panel:Close()
+				self:RemoveLine(lineID)
 			end)
 		end)
 	end
 
 	for class,metaitem in SortedPairs(GAMEMODE.Items) do
 		if !metaitem.BulkPrice then continue end
+		if GAMEMODE.VendorMenu.Items[class] or GAMEMODE.VendorMenu.AdminMenu.EditedItems[class] then continue end
 
-		local line = panel.ItemList:AddLine(class, metaitem.Name, hook.Run("GetBuyPrice", LocalPlayer(), class, true))
+		local line = panel.ItemList:AddLine(metaitem.Base or "none", class, metaitem.Name, hook.Run("GetBuyPrice", LocalPlayer(), class, true))
 		line.ClassName = class
 	end
 end
@@ -338,9 +339,12 @@ function PANEL:OpenAdmin()
 	self.AdminMenu.EditedItems = {}
 	self.AdminMenu.RemovedItems = {}
 
+	local panel = self.AdminMenu
+	local entity = GAMEMODE.VendorMenu.VendorEntity
+
 	function self.AdminMenu:OnClose()
 		net.Start("VendorModifyItems")
-			net.WriteEntity(GAMEMODE.VendorMenu.VendorEntity)
+			net.WriteEntity(entity)
 			net.WriteUInt(table.Count(self.EditedItems) + table.Count(self.RemovedItems), 32)
 
 			for class,removed in next, self.RemovedItems do
@@ -356,8 +360,6 @@ function PANEL:OpenAdmin()
 		net.SendToServer()
 	end
 
-	local panel = self.AdminMenu
-
 	panel.VendorModel = panel:Add("DTextEntry")
 	panel.VendorModel:Dock(TOP)
 	panel.VendorModel:SetZPos(1)
@@ -365,13 +367,25 @@ function PANEL:OpenAdmin()
 	panel.VendorModel:DockMargin(0, 0, 0, 10)
 	function panel.VendorModel:OnValueChange(newValue)
 		net.Start("VendorChangeModel")
-			net.WriteEntity(GAMEMODE.VendorMenu.VendorEntity)
+			net.WriteEntity(entity)
 			net.WriteString(newValue)
+		net.SendToServer()
+	end
+
+	panel.VendorAnimation = panel:Add("DTextEntry")
+	panel.VendorAnimation:Dock(TOP)
+	panel.VendorAnimation:SetZPos(2)
+	panel.VendorAnimation:SetText(self.VendorEntity:GetSequenceName(self.VendorEntity:GetSequence()))
+	panel.VendorAnimation:DockMargin(0, 0, 0, 10)
+	function panel.VendorAnimation:OnValueChange(newValue)
+		net.Start("VendorChangeAnimation")
+			net.WriteEntity(entity)
+			net.WriteUInt(entity:LookupSequence(newValue), 32)
 		net.SendToServer()
 	end
 	
 	panel.VendorItems = panel:Add("DListView")
-	panel.VendorItems:SetZPos(2)
+	panel.VendorItems:SetZPos(3)
 	panel.VendorItems:Dock(FILL)
 	panel.VendorItems:AddColumn("Classname")
 	panel.VendorItems:AddColumn("Sell (to player) Multiplier")
@@ -418,7 +432,7 @@ function PANEL:OpenAdmin()
 						panel.EditedItems[itemClass] = table.Copy(GAMEMODE.VendorMenu.Items[itemClass])
 					end
 
-					adminMenu.EditedItems[itemClass].BuyFactor = buyFactor
+					panel.EditedItems[itemClass].BuyFactor = buyFactor
 					line:SetColumnText(3, buyFactor)
 				end)
 			end)
@@ -432,11 +446,11 @@ function PANEL:OpenAdmin()
 
 	panel.SaveVendor = panel:Add("DButton")
 	panel.SaveVendor:SetText("Save")
-	panel.SaveVendor:SetZPos(3)
+	panel.SaveVendor:SetZPos(4)
 	panel.SaveVendor:Dock(BOTTOM)
 	function panel.SaveVendor:DoClick()
 		net.Start("VendorModifyItems")
-			net.WriteEntity(GAMEMODE.VendorMenu.VendorEntity)
+			net.WriteEntity(entity)
 			net.WriteUInt(table.Count(panel.EditedItems) + table.Count(panel.RemovedItems), 32)
 
 			for class,removed in next, panel.RemovedItems do

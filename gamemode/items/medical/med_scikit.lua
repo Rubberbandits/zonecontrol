@@ -1,6 +1,6 @@
 
 ITEM.Name =  "Scientific Medkit";
-ITEM.Desc =  "A top shelf medkit designed especially for use in the Zone. Includes enough aerospace-grade tape to patch a sealed suit in an emergency.";
+ITEM.Desc =  "A top shelf medkit designed especially for use in the Zone. Includes enough potassium iodide to cure radiation exposure.";
 ITEM.Model =  "models/kali/miscstuff/stalker/aid/first aid kit.mdl";
 
 ITEM.ItemSubmaterials = {
@@ -10,11 +10,11 @@ ITEM.ConsumeText = "You tend to your wounds. By the power of science, you are he
 ITEM.UseText = "Use"
 ITEM.HealAmount = 65
 ITEM.RadiationHealAmount = 100
-ITEM.Weight =  1;
+ITEM.Weight =  0.5;
 ITEM.FOV =  9;
-ITEM.CamPos =  Vector( 0, 0, 50 );
-ITEM.LookAt =  Vector( 0, 0, 0 );
-ITEM.BulkPrice =  7500;
+ITEM.CamPos =  Vector( 50, 50, 50 );
+ITEM.LookAt =  Vector( 0, 0, 5.02 );
+ITEM.BulkPrice =  1050;
 ITEM.License =  "D";
 ITEM.DrugType = "MEDKIT"
 ITEM.Rarity = 4

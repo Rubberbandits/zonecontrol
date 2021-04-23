@@ -1102,8 +1102,9 @@ local EntityRenderingFuncs = {
 		local pos = Vector_ToScreen(entPos + PositionOffset)
 		local localply = self.LocalPlayer
 		local selfPos = Entity_GetPos(self.LocalPlayer)
+		local eyeEnt = Player_GetEyeTraceNoCursor(localply).Entity
 		
-		if self.SeeAll or (pos.visible and Player_CanSee(localply, v) and WithinRadius(selfPos, entPos, 256) and Player_GetEyeTraceNoCursor(localply).Entity == v) then
+		if self.SeeAll or (pos.visible and WithinRadius(selfPos, entPos, 256) and eyeEnt == v) then
 			
 			v.HUDAlpha = math_Clamp( v.HUDAlpha + FrameTime(), 0, 1 );
 			
@@ -1115,7 +1116,7 @@ local EntityRenderingFuncs = {
 		
 		if( v.HUDAlpha > 0 ) then
 		
-			if( !self.SeeAll and Entity_GetNoDraw(v) ) then
+			if( !self.SeeAll and (Entity_GetNoDraw(v) or eyeEnt != v) ) then
 			
 				return;
 				

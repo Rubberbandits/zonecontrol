@@ -1,7 +1,7 @@
 ITEM.Name =  "Loose Buttons";
 ITEM.Desc =  "Some loose buttons. Maybe now you can fix your open fly problem.";
 ITEM.Model =  "models/stalker/item/medical/rad_pills.mdl";
-ITEM.Weight =  0.1;
+ITEM.Weight =  0.05
 ITEM.License = "TX"
 ITEM.SuitOnly = true
 ITEM.RepairCondition = 2

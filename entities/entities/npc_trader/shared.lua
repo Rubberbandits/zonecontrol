@@ -1,7 +1,9 @@
 AddCSLuaFile()
 
+ENT.Base = "base_anim"
 ENT.Type = "anim"
 ENT.PrintName = "Vendor"
+ENT.AutomaticFrameAdvance = true
 ENT.Author = "rusty"
 ENT.Contact = ""
 ENT.Information		= ""

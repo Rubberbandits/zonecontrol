@@ -15,14 +15,14 @@ function GM:RefreshHelpMenuContent()
             /y - Yell
             /w - Whisper
             /me - Action
-			/lme - Loud action
+		    /lme - Loud action
             /it - World action
-			/lit - Loud world action
+		    /lit - Loud world action
             /ev - Emotes world actions globally, for GM's and Admins
             /lev - Emotes world actions locally, for GM's and Admins
 
             /mask - Remove your mask or helmet, if you have a suit that also has a mask or helmet.
-			/anorak (gray, white, black, brown, green) - Changes the color of your anorak if you are wearing one.
+		    /anorak (gray, white, black, brown, green) - Changes the color of your anorak if you are wearing one.
 
             /pda all - Send a public message to all PDA users
             /pda username - Send a private message to a specific PDA username
@@ -77,18 +77,21 @@ function GM:RefreshHelpMenuContent()
 		},
 		{ "Flags", 
 			[[ZoneControl uses a flag system. Most flags are automatic - you don't need to run a command to access them.
-			The trader flag will soon be divided into other flags.
 
 			Character Flags
 			T - Technician
-			X - Black Market Dealer (Trader)
-			G - Gamemaster, per-character
+			X - Trader
 		
-			Trader Flags (You must have X flags to have these.)
+			Trader Flags
 			A - Ammunition
 			B - Firearms
 			D - Medical
 			S - Suits
+			U - BDUs (Suit Colors)
+
+			Player Flags
+			G - Gamemaster, per-character
+			Q - Removes admin powers, per-character
 			]] 
 		},
 	};
@@ -166,7 +169,7 @@ function GM:RefreshHelpMenuContent()
 		
 		rpa_setdmgmult [number] - Change how much damage all weapons do, via a multiplier.
 		
-		/ev - Broadcast an IC event.]] } );
+		rpa_editvendor - Lets you edit the values of an NPC vendor such as sell and buy value, model, etc.]] } );
 		
 	end
 	

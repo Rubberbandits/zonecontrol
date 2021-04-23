@@ -9,7 +9,7 @@ local function ChangeLevel( ply, args )
 
 	if( table.HasValue( GAMEMODE:GetMaps(), args[1] ) ) then
 
-		GAMEMODE:Notify(nil, "CombineControl.ChatHuge", COLOR_ERROR, "%s is changing the map to %s in five seconds.", ply:Nick(), map)
+		GAMEMODE:Notify(nil, "CombineControl.ChatHuge", COLOR_ERROR, "%s is changing the map to %s in five seconds.", ply:Nick(), args[1])
 		
 		GAMEMODE:LogAdmin( "[R] " .. ply:Nick() .. " changed the map to " .. args[1] .. ".", ply );
 		

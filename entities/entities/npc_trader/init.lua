@@ -13,7 +13,7 @@ function ENT:Initialize()
 
 	timer.Simple(1, function()
 		if (IsValid(self)) then
-			self:setAnim()
+			self:SetAnim()
 			self:DropToFloor()
 		end
 	end)
@@ -26,14 +26,28 @@ function ENT:Initialize()
 	end
 end
 
-function ENT:setAnim()
-	for k, v in next, self:GetSequenceList() do
-		if (v:lower():find("idle") and v ~= "idlenoise" and v ~= "idle") then
-			return self:ResetSequence(k)
+function ENT:Think()
+	self:NextThink(CurTime())
+	return true
+end
+
+function ENT:SetAnim(animIndex)
+	if isstring(animIndex) then
+		animIndex = self:LookupSequence(animIndex)
+	end
+
+	if !animIndex or animIndex == -1 then
+		for k, v in next, self:GetSequenceList() do
+			if (v:lower():find("idle") and v ~= "idlenoise" and v ~= "idle") then
+				animIndex = k
+				break
+			end
 		end
 	end
 
-	self:ResetSequence(4)
+	self:SetNW2Int("CurrentAnimation", animIndex)
+
+	self:SetSequence(animIndex)
 end
 
 local Entity_SetModel = FindMetaTable("Entity").SetModel
@@ -43,7 +57,7 @@ function ENT:SetVendorModel(str)
 
 	timer.Simple(1, function()
 		if (IsValid(self)) then
-			self:setAnim()
+			self:SetAnim(self:GetNW2Int("CurrentAnimation"))
 			self:DropToFloor()
 		end
 	end)
@@ -192,6 +206,18 @@ local function VendorChangeModel(len, ply)
 end
 net.Receive("VendorChangeModel", VendorChangeModel)
 
+util.AddNetworkString("VendorChangeAnimation")
+local function VendorChangeAnimation(len, ply)
+	if !ply:IsAdmin() then return end
+
+	local vendor = net.ReadEntity()
+
+	if !vendor.Vendor then return end
+
+	vendor:SetAnim(net.ReadUInt(32))
+end
+net.Receive("VendorChangeAnimation", VendorChangeAnimation)
+
 function GAMEMODE:LoadVendors()
 	local data = file.Read("zonecontrol/"..game.GetMap().."/vendors.txt", "DATA")
 
@@ -203,10 +229,15 @@ function GAMEMODE:LoadVendors()
 			local vendor = ents.Create("npc_trader")
 			vendor:SetPos(data.Pos)
 			vendor:SetAngles(data.Angles)
-			vendor:SetModel(data.Model)
 			vendor:Spawn()
 
+			vendor:SetNW2Int("CurrentAnimation", data.SequenceIndex)
 			vendor.Items = data.Items
+
+			-- wait one tick to set model
+			timer.Simple(0, function()
+				vendor:SetVendorModel(data.Model)
+			end)
 		end
 	end
 end
@@ -228,6 +259,7 @@ function GAMEMODE:SaveVendors()
 				Pos = vendor:GetPos(),
 				Angles = vendor:GetAngles(),
 				Model = vendor:GetModel(),
+				SequenceIndex = vendor:GetSequence(),
 				Items = vendor.Items,
 			}
 		)

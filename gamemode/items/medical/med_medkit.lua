@@ -3,11 +3,11 @@ ITEM.Desc =  "General purpose medkit. Contains emergency first aid materials to 
 ITEM.Model =  "models/kali/miscstuff/stalker/aid/first aid kit.mdl";
 ITEM.ConsumeText = "You tend to your wounds. It'll do for now."
 ITEM.HealAmount = 45
-ITEM.Weight =  1;
+ITEM.Weight =  0.33;
 ITEM.FOV =  9;
 ITEM.CamPos =  Vector( 0, 0, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
-ITEM.BulkPrice =  2000;
+ITEM.BulkPrice =  675;
 ITEM.License =  "D";
 ITEM.DrugType = "MEDKIT"
 
