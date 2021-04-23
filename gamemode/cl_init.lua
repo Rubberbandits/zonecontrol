@@ -113,9 +113,10 @@ local cursor = Material("kingston/cursor")
 
 function GM:CreateCursor()
 	function hideCursor()
-		for _, pnl in next, vguiElements do
-			if pnl and pnl:IsValid() then
+		for _, pnl in ipairs(vguiElements) do
+			if pnl and pnl:IsValid() and !pnl.CursorSet then
 				pnl:SetCursor("blank")
+				pnl.CursorSet = true
 			end
 		end
 	end
