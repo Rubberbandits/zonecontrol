@@ -180,7 +180,7 @@ function GM:PlayerSpawn( ply )
 	self:PlayerCheckInventory( ply );
 	self:SpeedThink( ply );
 	
-	ply:SetHull(Vector(-16, -16, 0), Vector(16, 16, 72))
+	ply:SetHull(Vector(-16, -16, 0), Vector(16, 16, 64))
 	ply:SetHullDuck(Vector(-16, -16, 0), Vector(16, 16, 48))
 	
 	ply.LastCharID = ply:CharID()
