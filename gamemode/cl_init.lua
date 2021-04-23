@@ -200,6 +200,9 @@ function GM:InitPostEntity()
 	net.SendToServer()
 
 	self:CreateItemTooltipPanel()
+
+	LocalPlayer():SetHull(Vector(-8, -8, 0), Vector(8, 8, 72))
+	LocalPlayer():SetHullDuck(Vector(-8, -8, 0), Vector(8, 8, 36))
 	
 	_G.b_keyf7_pressed = true
 end

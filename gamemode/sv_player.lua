@@ -128,6 +128,8 @@ function GM:PlayerSpawn( ply )
 	ply:SetConsciousness( 100 );
 	ply:WakeUp( true );
 	
+	self:PlayerSize(ply);
+	
 	ply.DrownDamage = 0;
 	
 	ply.Uniform = nil;
@@ -181,6 +183,13 @@ function GM:PlayerSpawn( ply )
 	self:SpeedThink( ply );
 	
 	ply.LastCharID = ply:CharID()
+end
+
+function GM:PlayerSize( ply )
+
+	ply:SetHull( Vector( -8, -8, 0), Vector(8, 8, 72) )
+	ply:SetHullDuck( Vector( -8, -8, 0), Vector(8, 8, 36) )
+	
 end
 
 function GM:PlayerLoadout( ply )
