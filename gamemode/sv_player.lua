@@ -30,6 +30,8 @@ function GM:PlayerInitialSpawn( ply )
 	
 	ply:SetHolstered( true );
 	
+	self:PlayerSize(ply);
+	
 end
 
 function GM:PlayerInitialSpawnSafe( ply )
@@ -127,8 +129,6 @@ function GM:PlayerSpawn( ply )
 	
 	ply:SetConsciousness( 100 );
 	ply:WakeUp( true );
-	
-	self:PlayerSize(ply);
 	
 	ply.DrownDamage = 0;
 	
