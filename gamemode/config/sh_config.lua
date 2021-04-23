@@ -329,7 +329,7 @@ GM.GearSelection = {
 	["weapon_srp_f1"] = 2200,
 }
 
-GM.DefaultSelfRepairCond = 70
+GM.DefaultSelfRepairCond = 90
 
 GM.RubleBudget = 9500;
 GM.SellPercentage = 70;
