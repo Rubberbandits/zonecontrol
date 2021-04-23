@@ -6,6 +6,7 @@ ITEM.Weight =  1;
 ITEM.License = "TX"
 ITEM.FOV =  13;
 ITEM.RaiseCondition = 5
+ITEM.WeaponOnly = true
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  1500;
