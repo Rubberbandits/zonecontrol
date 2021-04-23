@@ -928,3 +928,12 @@ end
 function GM:GetPlayerRadiationResistance(ply, mult)
 	return mult
 end
+
+gameevent.Listen("player_spawn")
+hook.Add("player_spawn", "STALKER.SetPlayerHulls", function(data)
+	local ply = Player(data.userid)
+	if IsValid(ply) then
+		ply:SetHull(Vector( -8, -8, 0), Vector(8, 8, 72))
+		ply:SetHullDuck(Vector( -8, -8, 0), Vector(8, 8, 36))
+	end
+end)
