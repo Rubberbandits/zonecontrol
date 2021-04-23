@@ -312,7 +312,7 @@ local meta = FindMetaTable( "Player" );
 
 function InStockpileRange( ply )
 
-	for k,v in next, ents.FindByClass( "cc_stockpile" ) do
+	for k,v in ipairs(ents.FindByClass( "cc_stockpile" )) do
 	
 		if( v:GetPos():Distance( ply:GetPos() ) <= 300 ) then
 		
@@ -321,6 +321,8 @@ function InStockpileRange( ply )
 		end
 	
 	end
+
+	return false
 
 end
 
