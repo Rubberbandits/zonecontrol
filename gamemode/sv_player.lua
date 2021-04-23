@@ -30,6 +30,8 @@ function GM:PlayerInitialSpawn( ply )
 	
 	ply:SetHolstered( true );
 	
+	self:PlayerSize(ply);
+	
 end
 
 function GM:PlayerInitialSpawnSafe( ply )
@@ -181,6 +183,13 @@ function GM:PlayerSpawn( ply )
 	self:SpeedThink( ply );
 	
 	ply.LastCharID = ply:CharID()
+end
+
+function GM:PlayerSize( ply )
+
+	ply:SetHull( Vector( -8, -8, 0), Vector(8, 8, 72) )
+	ply:SetHullDuck( Vector( -8, -8, 0), Vector(8, 8, 36) )
+	
 end
 
 function GM:PlayerLoadout( ply )

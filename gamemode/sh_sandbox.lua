@@ -662,6 +662,12 @@ function GM:CanTool( ply, tr, tool )
 	
 end
 
+local PhysgunBlacklist = {
+	npc_trader = true,
+	loot_spawner = true,
+	npc_spawner = true,
+}
+
 function GM:OnPhysgunFreeze( wep, phys, ent, ply )
 	
 	if( table.HasValue( self.SandboxBlacklist, ent:GetClass() ) and !ent.BlacklistException ) then return false end
@@ -689,6 +695,8 @@ function GM:OnPhysgunFreeze( wep, phys, ent, ply )
 	if( ent:IsNPC() ) then return false end
 	if( ent:GetClass() == "prop_vehicle_apc" ) then return false end
 	if( ent:IsPlayer() ) then return false end
+
+	if PhysgunBlacklist[ent:GetClass()] then return false end
 	
 	if( ply:PhysTrust() == 0 ) then return false end
 	
@@ -747,6 +755,8 @@ function GM:OnPhysgunReload( physgun, ply )
 		end
 		
 		if( ply:IsAdmin() ) then return self.BaseClass:OnPhysgunReload( physgun, ply ) end
+
+		if PhysgunBlacklist[ent:GetClass()] then return false end
 		
 		if( ply:PhysTrust() == 0 ) then return false end
 		
@@ -852,6 +862,8 @@ function GM:PhysgunPickup( ply, ent )
 	if( ent:GetClass() == "obj_izlom_boom" ) then return false end
 	if( ent:GetClass() == "tramplin_anomaly" ) then return false end
 	if( ent:GetClass() == "voronka_anomaly" ) then return false end
+
+	if PhysgunBlacklist[ent:GetClass()] then return false end
 	
 	if( ply:PhysTrust() == 0 ) then return false end
 	
