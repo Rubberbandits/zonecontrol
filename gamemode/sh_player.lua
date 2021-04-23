@@ -261,6 +261,13 @@ function GM:Move( ply, move )
 end
 
 function GM:SetupMove( ply, move )
+	if !ply.HasSetup then
+		ply:SetHull(Vector(-8, -8, 0), Vector(8, 8, 72))
+		ply:SetHullDuck(Vector(-8, -8, 0), Vector(8, 8, 36))
+
+		ply.HasSetup = true
+	end
+
 	
 	if( ply.FreezeTime and CurTime() < ply.FreezeTime ) then
 		
