@@ -83,3 +83,50 @@ hook.Add("Initialize", "LoadItemPrices", function()
 
 	GAMEMODE.ItemPrice = data and util.JSONToTable(data) or {}
 end)
+
+function GM:LoadStockpiles()
+	local data = file.Read("zonecontrol/"..game.GetMap().."/stockpiles.txt", "DATA")
+
+	if !data or #data == 0 then return end
+
+	local stockpiles = util.JSONToTable(data)
+	if stockpiles then
+		for _,data in ipairs(stockpiles) do
+			local stockpile = ents.Create("cc_stockpile")
+			stockpile:SetPos(data.Pos)
+			stockpile:SetAngles(data.Angles)
+			stockpile:Spawn()
+		end
+	end
+end
+
+function GM:SaveStockpiles()
+	if !file.IsDir("zonecontrol", "DATA") then
+		file.CreateDir("zonecontrol")
+	end
+
+	if !file.IsDir("zonecontrol/"..game.GetMap(), "DATA") then
+		file.CreateDir("zonecontrol/"..game.GetMap())
+	end
+
+	local data = {}
+	for _,stockpile in ipairs(ents.FindByClass("cc_stockpile")) do
+		table.insert(
+			data,
+			{
+				Pos = stockpile:GetPos(),
+				Angles = stockpile:GetAngles(),
+			}
+		)
+	end
+
+	file.Write("zonecontrol/"..game.GetMap().."/stockpiles.txt", util.TableToJSON(data))
+end
+
+hook.Add("InitPostEntity", "STALKER.LoadStockpiles", function()
+	hook.Run("LoadStockpiles")
+end)
+
+hook.Add("ShutDown", "STALKER.SaveStockpiles", function()
+	hook.Run("SaveStockpiles")
+end)
