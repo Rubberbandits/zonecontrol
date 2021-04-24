@@ -247,7 +247,7 @@ function BASE:CanDrop()
 end
 function BASE:CanUpgrade()
 
-	return !self:GetVar( "Equipped", false ) and item:Owner():IsUpgradeTech() and InStockpileRange(ply)
+	return !self:GetVar( "Equipped", false ) and self:Owner():IsUpgradeTech() and InStockpileRange(ply)
 	
 end
 function BASE:OnGamemodeLoaded()
