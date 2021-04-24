@@ -49,20 +49,11 @@ function ENT:CanPhysgun()
 	
 end
 
-local function FindValidSpawn(origin, ent)
-	local tr = {
-		start = origin,
-		endpos = origin,
-		mins = ent:OBBMins(),
-		maxs = ent:OBBMaxs()
-	}
-
-	local hullTrace = util.TraceHull( tr )
-	if hullTrace.Hit then
-		return false
-	else
-		return true
-	end
+local function PointOnCircle(ang, radius, offX, offY)
+	ang =  math.rad(ang)
+	local x = math.cos(ang) * radius + offX
+	local y = math.sin(ang) * radius + offY
+	return x, y
 end
 
 function ENT:Think()
@@ -89,34 +80,21 @@ function ENT:Think()
 
 		if istable(npcGroup) then
 			local totalNPCs = {}
+			local interval = 360 / #npcGroup
+			local pos = self:GetPos()
+			local radius = 200
 
 			for i,npcClass in ipairs(npcGroup) do
-				-- ghetto fix for pseudorandomness issues
-				timer.Simple(i / 10, function()
-					local npc = ents.Create(npcClass)
-					local spawnPos = self:GetPos() + Vector(math.random(25,200), math.random(25,200), 0)
-					local goodPos = FindValidSpawn(spawnPos, npc)
-					if goodPos then
-						npc:SetPos(spawnPos)
-					else
-						npc:SetPos(spawnPos + npc:GetRight() * 150 + npc:GetUp() * 50)
-					end
-					npc:Spawn()
+				local x, y = PointOnCircle(i * interval, radius, pos.x, pos.y)
 
-					npc.DisableWandering = false
-					npc.IdleAlwaysWander = true
-					npc.AlertFriendsOnDeath = true
-					table.insert(totalNPCs, npc)
-				end)
-			end
+				local npc = ents.Create(npcClass)
+				npc:SetPos(Vector(x, y, pos.z + 10))
+				npc:Spawn()
 
-			-- yuck
-			for _,ent in ipairs(totalNPCs) do
-				for _,otherEnt in ipairs(totalNPCs) do
-					if otherEnt == ent then continue end
-
-					ent:AddEntityRelationship(otherEnt, D_LI, 99)
-				end
+				npc.DisableWandering = false
+				npc.IdleAlwaysWander = true
+				npc.AlertFriendsOnDeath = true
+				table.insert(totalNPCs, npc)
 			end
 		elseif isstring(npcGroup) then
 			local npc = ents.Create(npcGroup)
