@@ -85,7 +85,7 @@ function ENT:Think()
 			local radius = 200
 
 			for i,npcClass in ipairs(npcGroup) do
-				local x, y = PointOnCircle(i * interval, radius, pos.x, pos.y)
+				local x, y = PointOnCircle(i * interval, math.random(50,200), pos.x, pos.y)
 
 				local npc = ents.Create(npcClass)
 				npc:SetPos(Vector(x, y, pos.z + 10))
