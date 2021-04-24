@@ -83,6 +83,7 @@ local function nRequestDoorData( ply, ent )
 end
 netstream.Hook( "nRequestDoorData", nRequestDoorData );
 
+/*
 function GM:NetworkEntityCreated( ent )
 	
 	if( ent:IsNPC() ) then
@@ -98,6 +99,7 @@ function GM:NetworkEntityCreated( ent )
 	end
 	
 end
+*/
 
 function pmeta:OwnedBuildings()
 	
