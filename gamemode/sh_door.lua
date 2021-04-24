@@ -93,7 +93,7 @@ function GM:NetworkEntityCreated( ent )
 	
 	if( ent:GetClass() == "prop_physics" ) then
 
-		netstream.Start( "nRequestPropData", ent );
+		--netstream.Start( "nRequestPropData", ent );
 		
 	end
 	
