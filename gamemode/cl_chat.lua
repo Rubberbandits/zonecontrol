@@ -318,13 +318,13 @@ function GM:CreateChatbox()
 			
 			if( LocalPlayer():Typing() == 1 ) then return end
 
-			netstream.Start( "nSetTyping", 1 );
+			--netstream.Start( "nSetTyping", 1 );
 		
 		else
 		
 			if( LocalPlayer():Typing() == 0 ) then return end
 			
-			netstream.Start( "nSetTyping", 0 );
+			--netstream.Start( "nSetTyping", 0 );
 			
 		end
 			
