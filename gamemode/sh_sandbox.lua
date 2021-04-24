@@ -10,75 +10,16 @@ GM.PropAccessors = {
 };
 
 for k, v in ipairs( GM.PropAccessors ) do
-	
-	meta["SetProp" .. v[1]] = function( self, val )
-		
-		if( CLIENT ) then return end
-		
-		if( self["Prop" .. v[1] .. "Val"] == val ) then return end
-		
-		self["Prop" .. v[1] .. "Val"] = val;
-
-		netstream.Start( nil, "nSetProp"..v[1], self, val );
-		
+	if SERVER then
+		meta["SetProp" .. v[1]] = function( self, val )
+			self["SetNW2"..v[2]](self, v[1], val)
+		end
 	end
 	
 	meta["Prop" .. v[1]] = function( self )
-		
-		if( self["Prop" .. v[1] .. "Val"] == false ) then
-			
-			return false;
-			
-		end
-		
-		return self["Prop" .. v[1] .. "Val"] or v[3];
-		
+		return self["GetNW2"..v[2]](self, v[1], v[3])
 	end
-	
-	if( CLIENT ) then
-
-		local function nRecvData( prop, val )
-			
-			if( prop and prop:IsValid() ) then
-				
-				prop["Prop" .. v[1] .. "Val"] = val;
-				
-				hook.Run("PropAccessorChanged", prop, v[1], val)
-			end
-			
-		end
-		netstream.Hook( "nSetProp" .. v[1], nRecvData );
-		
-	end
-	
 end
-
-function meta:InitializePropAccessors()
-	
-	for _, v in pairs( GAMEMODE.PropAccessors ) do
-		
-		self[v[1] .. "Val"] = v[3];
-		
-	end
-	
-end
-
-function meta:SyncPropData( ply )
-	
-	for _, n in ipairs( GAMEMODE.PropAccessors ) do
-		
-		netstream.Start( ply, "nSetProp"..n[1], self, self["Prop" .. n[1]]( self ) );
-		
-	end
-	
-end
-
-function nRequestPropData( ply, ent )
-	
-	ent:SyncPropData( ply );
-	
-end
-netstream.Hook( "nRequestPropData", nRequestPropData );
 
 GM.SandboxBlacklist = {
 	"prop_door_rotating",
