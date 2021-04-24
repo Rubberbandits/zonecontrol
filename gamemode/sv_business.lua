@@ -187,8 +187,29 @@ function kingston.shipment.fail_delivery(id)
 
 end
 
-function kingston.shipment.spawn_threat(id)
+local function PointOnCircle(ang, radius, offX, offY)
+	ang =  math.rad(ang)
+	local x = math.cos(ang) * radius + offX
+	local y = math.sin(ang) * radius + offY
+	return x, y
+end
 
+function kingston.shipment.spawn_threat(id)
+	local shipment = kingston.shipment.in_progress[id]
+	if !shipment then return
+
+
+	local totalNPCs = {}
+	local interval = 360 / #npcGroup
+	local pos = self:GetPos()
+	local radius = 200
+
+	for i,npcClass in ipairs(npcGroup) do
+		local x, y = PointOnCircle(i * interval, math.random(50,200), pos.x, pos.y)
+
+		local npc = ents.Create(npcClass)
+		npc:SetPos(Vector(x, y, pos.z + 10))
+		npc:Spawn()
 end
 
 function kingston.shipment.create(ply, items)
@@ -198,6 +219,10 @@ function kingston.shipment.create(ply, items)
 		Items = items,
 		DeliveryTime = CurTime() + math.random(kingston.shipment.min_delivery_time, kingston.shipment.max_delivery_time)
 	}
+
+	for _, itemClass in ipairs(items) do
+		local price = hook.Run("GetBuyPrice", ply, itemClass)
+	end
 
 	table.insert(kingston.shipment.in_progress, shipment)
 
