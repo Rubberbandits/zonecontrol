@@ -12,6 +12,7 @@ ITEM.Bonemerge = "models/stalker_2019/psz.mdl";
 ITEM.DegradationProtection = 97.5
 ITEM.BulkPrice = 245000
 ITEM.License = "S"
+ITEM.RepairCost = 20
 ITEM.Bodygroups = {
 	{0, 1}
 }

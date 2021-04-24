@@ -12,6 +12,7 @@ ITEM.Bonemerge = "models/tnb/stalker_2019/io7a.mdl";
 ITEM.DegradationProtection = 97.5
 ITEM.BulkPrice = 110000
 ITEM.License = "S"
+ITEM.RepairCost = 15
 ITEM.Bodygroups = {
 	{1, 0}
 }

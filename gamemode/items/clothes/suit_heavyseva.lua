@@ -11,6 +11,7 @@ ITEM.DegradationProtection = 97.5
 ITEM.BulkPrice = 475000
 ITEM.License = "S"
 ITEM.ArtifactSlots = 2
+ITEM.RepairCost = 50
 ITEM.RemoveBody = true
 ITEM.Vars = {
 	Equipped = false,

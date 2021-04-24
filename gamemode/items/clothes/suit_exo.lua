@@ -11,6 +11,7 @@ ITEM.Bonemerge = "models/stalker_2019/exosuit.mdl";
 ITEM.DegradationProtection = 97.5
 ITEM.BulkPrice = 1250000
 ITEM.License = "S"
+ITEM.RepairCost = 50
 ITEM.Bodygroups = {
 	{1, 0}
 }

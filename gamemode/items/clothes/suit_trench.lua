@@ -14,6 +14,7 @@ ITEM.Bodygroups = {
 	{0, 1}
 }
 ITEM.RemoveBody = true
+ITEM.RepairCost = 5
 ITEM.HelmetBodygroup = {0,0}
 ITEM.ScaleForGender = 0.8
 ITEM.Vars = {

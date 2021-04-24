@@ -10,6 +10,7 @@ ITEM.BulkPrice =  400000;
 ITEM.License =  "S";
 ITEM.Bonemerge = "models/tnb/stalker_2019/seva.mdl";
 ITEM.DegradationProtection = 97.5
+ITEM.RepairCost = 30
 ITEM.Bodygroups = {
 	{1, 0}
 }
