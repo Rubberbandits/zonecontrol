@@ -196,7 +196,7 @@ end
 
 function kingston.shipment.spawn_threat(id)
 	local shipment = kingston.shipment.in_progress[id]
-	if !shipment then return
+	if !shipment then return end
 
 
 	local totalNPCs = {}
@@ -210,6 +210,7 @@ function kingston.shipment.spawn_threat(id)
 		local npc = ents.Create(npcClass)
 		npc:SetPos(Vector(x, y, pos.z + 10))
 		npc:Spawn()
+	end
 end
 
 function kingston.shipment.create(ply, items)
@@ -217,11 +218,13 @@ function kingston.shipment.create(ply, items)
 		StartTime = CurTime(),
 		Owner = ply:CharID(),
 		Items = items,
+		TotalPrice = 0,
 		DeliveryTime = CurTime() + math.random(kingston.shipment.min_delivery_time, kingston.shipment.max_delivery_time)
 	}
 
 	for _, itemClass in ipairs(items) do
-		local price = hook.Run("GetBuyPrice", ply, itemClass)
+		local price = hook.Run("GetBuyPrice", ply, itemClass, true)
+		shipment.TotalPrice = shipment.TotalPrice + price
 	end
 
 	table.insert(kingston.shipment.in_progress, shipment)
