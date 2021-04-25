@@ -373,6 +373,11 @@ local RandomTalking = {
 	"That's life.",
 	"Anyone got an MP7 mag?",
 	"My suit broke. God damn it...",
+	"What the fuck...",
+	"Why does my PDA keep saying my reputation has worsened?",
+	"I wiped this zone and why did I just come here? Money. Yes, we have fattened with our blood and sweat the cocksuckers in the government, that earn while doing fucking shit, and we are here, obliged to crawl for pathetic crumbs.",
+	"feelin pretty shit. Who cares, Ima have myself a beer, HEHE.",
+	"I feel like sleeping",
 }
 
 local RandomPlayerRelatedStrings = {
@@ -388,6 +393,7 @@ local RandomPlayerRelatedStrings = {
 	"Watch out, %s. You will become a zombie and the last thing you will see is my shotgun barrel",
 	"Hey, %s. Want to be friends?",
 	"What the fuck did you just fucking say about me, %s?",
+	"I think I just saw %s. Are the stories true?",
 }
 
 local RandomNPCRelatedStrings = {
@@ -397,6 +403,9 @@ local RandomNPCRelatedStrings = {
 	"Seems like every day I wake up and find a %s in my tent.",
 	"Damn %ss! They left a mess all over the place.",
 	"Need help! We are pinned down by a %s!",
+	"Check that out, %s is  getting closer.",
+	"Is that... a %s over there?...",
+	"To anyone reading this, a large group of %s is surrounding my position, I really need some help...",
 }
 
 local RandomItemRelatedStrings = {
@@ -409,6 +418,10 @@ local RandomItemRelatedStrings = {
 	"Price check on %s?",
 	"Anybody else get the message saying you won a %s in a raffle?",
 	"I'm trying to repair my ZAZ, and the manual says I need a %s. Anyone got one for sale?",
+	"I needed this %s. Thanks for saving me from spending money, my dead friend.",
+	"That bastard was carrying %s, I will keep it.",
+	"Would you look at this! He had  %s. It's mine now.",
+	"Sidorovich will want his hands on this %s!",
 }
 
 local RandomTraderRelatedStrings = {
