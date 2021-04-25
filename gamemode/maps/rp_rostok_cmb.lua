@@ -7,7 +7,8 @@ end
 function GM:MapInitPostEntity()
 	
 	--self:CreateLocationPoint( Vector( -13051.937500, -8850.031250, 118.061867 ), LOCATION_GARBAGE, 200, TRANSITPORT_ROSTOK_GARBAGE );
-	self:CreateLocationPoint( Vector( -3113.026611, -12049.968750, 64.031250 ), LOCATION_TRUCKCEMETERY, 200, TRANSITPORT_ROSTOK_TRUCKCEMETERY );
+	--self:CreateLocationPoint( Vector( -3113.026611, -12049.968750, 64.031250 ), LOCATION_TRUCKCEMETERY, 200, TRANSITPORT_ROSTOK_TRUCKCEMETERY );
+	self:CreateLocationPoint( Vector( -6636.538574, -1984.968750, -259.968750 ), LOCATION_CROSSROADS, 200, TRANSITPORT_ROSTOK_CROSSROADS );
 	
 end
 
@@ -15,6 +16,7 @@ GM.EnableAreaportals = true;
 
 GM.ConnectMessages[TRANSITPORT_ROSTOK_GARBAGE] = "Continuing down this road takes you to the Garbage, an area of forgotten treasures and heaps of trash.";
 GM.ConnectMessages[TRANSITPORT_ROSTOK_TRUCKCEMETERY] = "Continuing down this road takes you to the Truck Cemetery, where most of vehicles used in the containment of the initial Chernobyl incident ended their lives. Highly dangerous, fortunes are made and lost there."
+GM.ConnectMessages[TRANSITPORT_ROSTOK_CROSSROADS] = "Continuing down this road takes you to the Crossroads, a point in the center of the Zone that connects some of the most dangerous areas to the more civilized parts."
 
 GM.EntryPortSpawns[TRANSITPORT_GARBAGE_ROSTOK] = {
 	Vector(-13183.833008, -9363.562500, 126.480820),
@@ -35,6 +37,16 @@ GM.EntryPortSpawns[TRANSITPORT_TRUCKCEMETERY_ROSTOK] = {
 	Vector(-3078.635498, -11164.687500, 64.031250),
 	Vector(-3081.602539, -11089.993164, 64.031250),
 	Vector(-3146.930664, -11089.606445, 64.031250),
+}
+GM.EntryPortSpawns[TRANSITPORT_CROSSROADS_ROSTOK] = {
+	Vector(-6636, -1984, -323),
+	Vector(-6831, -1590, -323),
+	Vector(-6766, -1591, -323),
+	Vector(-6696, -1591, -323),
+	Vector(-6621, -1591, -323),
+	Vector(-6515, -1592, -323),
+	Vector(-6416, -1592, -323),
+	Vector(-6347, -1593, -323),
 }
 
 GM.DefaultSpawnLocation = Vector(-5507.044922, -10487.567383, 64.031250)
