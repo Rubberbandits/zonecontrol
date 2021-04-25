@@ -276,7 +276,7 @@ local function ShipmentThink()
 		GAMEMODE.NextShipmentThink = CurTime()
 	end
 
-	if GAMEMODE.NextShipmentThink <= CurTime() do
+	if GAMEMODE.NextShipmentThink <= CurTime() then
 		for id,shipment in ipairs(kingston.shipment.in_progress) do
 			if shipment.DeliveryTime <= CurTime() then
 				kingston.shipment.roll_fail_chance(id)
