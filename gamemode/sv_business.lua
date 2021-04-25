@@ -232,16 +232,16 @@ local function PointOnCircle(ang, radius, offX, offY)
 end
 
 function kingston.shipment.spawn_threat(pos, threats)
-	local npcGroup = table.Random(threats)
+	local threatGroup = table.Random(threats)
 	local totalNPCs = {}
-	local interval = 360 / #npcGroup
+	local interval = 360 / #threatGroup
 	local pos = self:GetPos()
 	local radius = 200
 
-	for i,npcClass in ipairs(npcGroup) do
+	for i,entClass in ipairs(threatGroup) do
 		local x, y = PointOnCircle(i * interval, math.random(100,300), pos.x, pos.y)
 
-		local npc = ents.Create(npcClass)
+		local npc = ents.Create(entClass)
 		npc:SetPos(Vector(x, y, pos.z + 10))
 		npc:Spawn()
 	end
