@@ -1240,7 +1240,7 @@ local EntityRenderingFuncs = {
 					end
 				end
 				
-				if( v:Typing() > 0 ) then
+				if( v:Typing() ) then
 					
 					draw_DrawTextShadow( "Typing...", "CombineControl.LabelSmallItalic", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
 					pos.y = pos.y + 20;
