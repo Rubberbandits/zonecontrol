@@ -43,5 +43,5 @@ function ITEM:OnThrow(weapon)
 	self:Owner().EquippedWeapons[self.WeaponClass] = nil
 	self:RemoveItem()
 end
-ITEM.Rarity = 2
+ITEM.Rarity = 3
 ITEM.AllowRandomSpawn = true
