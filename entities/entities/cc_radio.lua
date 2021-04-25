@@ -30,7 +30,7 @@ function ENT:Initialize()
 	
 	if( CLIENT ) then return; end
 	
-	self:SetModel( "models/props_lab/citizenradio.mdl" );
+	self:SetModel( "models/z-o-m-b-i-e/st/el_tehnika/st_transiver_17.mdl" );
 	self:PhysicsInit( SOLID_VPHYSICS );
 	
 	local phys = self:GetPhysicsObject();
