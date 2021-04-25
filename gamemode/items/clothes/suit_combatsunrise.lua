@@ -13,6 +13,7 @@ ITEM.License = "S"
 ITEM.RemoveBody = true
 ITEM.AllowGender = true
 ITEM.HelmetBodygroup = {0,1}
+ITEM.RepairCost = 25
 ITEM.Vars = {
 	Equipped = false,
 	Upgrades = {},

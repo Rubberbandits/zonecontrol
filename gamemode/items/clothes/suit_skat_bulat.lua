@@ -10,6 +10,7 @@ ITEM.Bonemerge = "models/tnb/stalker_2019/skat9_bulat.mdl";
 ITEM.DegradationProtection = 97.5
 ITEM.BulkPrice = 625000
 ITEM.License = "S"
+ITEM.RepairCost = 45
 ITEM.Bodygroups = {
 	{1, 0}
 }

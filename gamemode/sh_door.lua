@@ -83,6 +83,7 @@ local function nRequestDoorData( ply, ent )
 end
 netstream.Hook( "nRequestDoorData", nRequestDoorData );
 
+/*
 function GM:NetworkEntityCreated( ent )
 	
 	if( ent:IsNPC() ) then
@@ -93,11 +94,12 @@ function GM:NetworkEntityCreated( ent )
 	
 	if( ent:GetClass() == "prop_physics" ) then
 
-		netstream.Start( "nRequestPropData", ent );
+		--netstream.Start( "nRequestPropData", ent );
 		
 	end
 	
 end
+*/
 
 function pmeta:OwnedBuildings()
 	

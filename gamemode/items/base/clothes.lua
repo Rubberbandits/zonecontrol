@@ -199,7 +199,7 @@ function BASE:CanDrop()
 	return !self:GetVar( "Equipped", false );
 end
 function BASE:CanUpgrade()
-	return !self:GetVar( "Equipped", false ) and item:Owner():IsUpgradeTech() and InStockpileRange(ply)
+	return !self:GetVar( "Equipped", false ) and self:Owner():IsUpgradeTech() and InStockpileRange(self:Owner())
 end
 function BASE:OnTakeDamage(dmginfo)
 	-- need to properly do this so it only saves when it needs to

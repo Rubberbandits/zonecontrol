@@ -942,12 +942,11 @@ function meta:WaterThink()
 	
 end
 
-function nSetTyping( ply, val )
-	
-	ply:SetTyping( val );
-	
+util.AddNetworkString("nSetTyping")
+local function nSetTyping(len, ply)
+	ply:SetTyping(net.ReadBool())
 end
-netstream.Hook( "nSetTyping", nSetTyping );
+net.Receive("nSetTyping", nSetTyping)
 
 function GM:PlayerButtonDown( ply, button )
 	

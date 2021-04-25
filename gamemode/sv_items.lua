@@ -297,13 +297,14 @@ local function zcRepairItem(len, ply)
 	local item = ply.Inventory[itemID]
 	if !item then return end
 
+	local metaitem = GAMEMODE:GetItemByID(item:GetClass())
 	local repairAmount = net.ReadUInt(8)
 	local itemCondition = item:GetVar("Durability", 0)
 
-	if itemCondition + repairAmount > item.StartDurability then return end
+	if itemCondition + repairAmount > metaitem.Vars.Durability then return end
 
 	local requiredItem = item.RepairPart
-	local partsRequired = math.ceil(item.RepairCost / (item.StartDurability / repairAmount))
+	local partsRequired = math.ceil(item.RepairCost / (metaitem.Vars.Durability / repairAmount))
 
 	local items = ply:HasItem(requiredItem)
 	if !items or (items.IsItem and partsRequired > 1) or (#items > partsRequired) then return end

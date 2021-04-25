@@ -11,7 +11,7 @@ BASE.StartDurability = 100; -- would not recommend you modify, modify DegrateRat
 BASE.UseDurability = true;
 BASE.NoDefaultAtts = true
 BASE.SellDurability = 50;
-BASE.RepairCost = 10
+BASE.RepairCost = 25
 BASE.RepairPart = "parts_weapon"
 BASE.W = 4
 BASE.H = 2
@@ -247,7 +247,7 @@ function BASE:CanDrop()
 end
 function BASE:CanUpgrade()
 
-	return !self:GetVar( "Equipped", false ) and item:Owner():IsUpgradeTech() and InStockpileRange(ply)
+	return !self:GetVar( "Equipped", false ) and self:Owner():IsUpgradeTech() and InStockpileRange(self:Owner())
 	
 end
 function BASE:OnGamemodeLoaded()

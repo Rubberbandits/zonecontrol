@@ -1,4 +1,8 @@
 /*
+	Networking
+*/
+
+/*
 	nested garbage
 	thanks disseminate
 */
@@ -62,7 +66,6 @@ end
 netstream.Hook( "nBuyItem", nBuyItem );
 
 util.AddNetworkString("zcSendCustomPrices")
-
 local function zcSendCustomPrices(len, ply)
 	if ply.RetrievedItemPrices then return end
 
@@ -77,6 +80,10 @@ local function zcSendCustomPrices(len, ply)
 	ply.RetrievedItemPrices = true
 end
 net.Receive("zcSendCustomPrices", zcSendCustomPrices)
+
+/*
+	Hooks
+*/
 
 hook.Add("Initialize", "LoadItemPrices", function()
 	local data = file.Read("zonecontrol/itemprices.txt", "DATA")
@@ -130,3 +137,107 @@ end)
 hook.Add("ShutDown", "STALKER.SaveStockpiles", function()
 	hook.Run("SaveStockpiles")
 end)
+
+/*
+	Functions
+*/
+
+kingston = kingston or {}
+kingston.shipment = kingston.shipment or {}
+kingston.shipment.in_progress = kingston.shipment.in_progress or {}
+
+kingston.shipment.min_delivery_time = 600
+kingston.shipment.max_delivery_time = 1200
+
+kingston.shipment.use_spawn_ent = true
+-- if false, uses locations defined in table below
+kingston.shipment.spawns = {
+	rp_rostok_cmb = {
+		Vector(0,0,0),
+	}
+}
+
+kingston.shipment.threat_price_ranges = {
+	[14000] = {
+		chance = 10,
+		threats = {
+			{
+				"npc_wick_mutant_dog",
+				"npc_wick_mutant_dog",
+				"npc_wick_mutant_dog",
+				"npc_wick_mutant_dog",
+				"npc_wick_mutant_dog",
+			},
+			{
+				"kingston_electro",
+			},
+		},
+	},
+}
+
+function kingston.shipment.roll_chance(id)
+
+end
+
+function kingston.shipment.deliver(id)
+
+end
+
+function kingston.shipment.fail_delivery(id)
+
+end
+
+local function PointOnCircle(ang, radius, offX, offY)
+	ang =  math.rad(ang)
+	local x = math.cos(ang) * radius + offX
+	local y = math.sin(ang) * radius + offY
+	return x, y
+end
+
+function kingston.shipment.spawn_threat(id)
+	local shipment = kingston.shipment.in_progress[id]
+	if !shipment then return end
+
+
+	local totalNPCs = {}
+	local interval = 360 / #npcGroup
+	local pos = self:GetPos()
+	local radius = 200
+
+	for i,npcClass in ipairs(npcGroup) do
+		local x, y = PointOnCircle(i * interval, math.random(50,200), pos.x, pos.y)
+
+		local npc = ents.Create(npcClass)
+		npc:SetPos(Vector(x, y, pos.z + 10))
+		npc:Spawn()
+	end
+end
+
+function kingston.shipment.create(ply, items)
+	local shipment = {
+		StartTime = CurTime(),
+		Owner = ply:CharID(),
+		Items = items,
+		TotalPrice = 0,
+		DeliveryTime = CurTime() + math.random(kingston.shipment.min_delivery_time, kingston.shipment.max_delivery_time)
+	}
+
+	for _, itemClass in ipairs(items) do
+		local price = hook.Run("GetBuyPrice", ply, itemClass, true)
+		shipment.TotalPrice = shipment.TotalPrice + price
+	end
+
+	table.insert(kingston.shipment.in_progress, shipment)
+
+	hook.Run("ShipmentCreated", ply, shipment)
+end
+
+function kingston.shipment.remove(id)
+	table.remove(kingston.shipment.in_progress, shipment)
+	hook.Run("ShipmentRemoved")
+end
+
+local function ShipmentThink()
+
+end
+hook.Add("Think", "STALKER.Shipments", ShipmentThink)
