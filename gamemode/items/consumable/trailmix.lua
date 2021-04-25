@@ -1,0 +1,13 @@
+ITEM.Name =  "Trail Mix"
+ITEM.Desc =  "A small paper bag with assorted nuts. Often these can be gotten in salty, sweet, or spicy variations. Considered a delicacy by certain folks."
+ITEM.Model =  "models/kek1ch/dev_nuts.mdl"
+ITEM.Weight =  0.25
+ITEM.FOV = 20
+ITEM.CamPos = Vector( 50, 50, 50 )
+ITEM.LookAt = Vector( 0, 0, 0 )
+ITEM.PhysicalMass    = 1
+ITEM.BulkPrice =  120
+ITEM.License =  "X"
+ITEM.ConsumeText = "You notice these assorted nuts have very unique textures to each one. Some crunchy, some soft."
+ITEM.UseText = "Eat"
+ITEM.HungerReduce = 12

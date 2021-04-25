@@ -1,0 +1,13 @@
+ITEM.Name =  "Altoids (Peppermint)"
+ITEM.Desc =  "An imported tin of a popular Western treat. These ones are peppermint flavored, and quite refreshing."
+ITEM.Model =  "models/kek1ch/dev_mint.mdl"
+ITEM.Weight =  0.1
+ITEM.FOV = 20
+ITEM.CamPos = Vector( 50, 50, 50 )
+ITEM.LookAt = Vector( 0, 0, 0 )
+ITEM.PhysicalMass    = 1
+ITEM.BulkPrice =  40
+ITEM.License =  "X"
+ITEM.ConsumeText = "You eat some of the tablets. You salivate as they melt, slightly reducing your thirst for water."
+ITEM.UseText = "Eat"
+ITEM.HungerReduce = 4
