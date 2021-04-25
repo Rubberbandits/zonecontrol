@@ -420,7 +420,7 @@ local RandomItemRelatedStrings = {
 	"I'm trying to repair my ZAZ, and the manual says I need a %s. Anyone got one for sale?",
 	"I needed this %s. Thanks for saving me from spending money, my dead friend.",
 	"That bastard was carrying %s, I will keep it.",
-	"Would you look at this! He had  %s. It's mine now.",
+	"Would you look at this! He had %s. It's mine now.",
 	"Sidorovich will want his hands on this %s!",
 }
 
