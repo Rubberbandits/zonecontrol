@@ -316,7 +316,7 @@ function GM:CreateChatbox()
 		
 		if( string.len( self:GetValue() ) > 0 ) then
 			
-			if( LocalPlayer():Typing() == 1 ) then return end
+			if( LocalPlayer():Typing() ) then return end
 
 			net.Start("nSetTyping")
 				net.WriteBool(true)
@@ -324,7 +324,7 @@ function GM:CreateChatbox()
 		
 		else
 		
-			if( LocalPlayer():Typing() == 0 ) then return end
+			if( !LocalPlayer():Typing() ) then return end
 			
 			net.Start("nSetTyping")
 				net.WriteBool(false)

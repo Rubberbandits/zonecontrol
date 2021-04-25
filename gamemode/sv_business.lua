@@ -175,16 +175,53 @@ kingston.shipment.threat_price_ranges = {
 	},
 }
 
-function kingston.shipment.roll_chance(id)
+function kingston.shipment.roll_fail_chance(id)
+	local shipment = kingston.shipment.in_progress[id]
+	if !shipment then return end
 
+	local priceData
+	for price,data in next, kingston.shipment.threat_price_ranges do
+		if price <= shipment.TotalValue then
+			priceData = data
+		end
+	end
+
+	if !priceData then return false end
+
+	local chance = math.random(0, 100)
+	if chance < priceData.chance then
+		return threats
+	end
+	
+	return false
 end
 
 function kingston.shipment.deliver(id)
+	local shipment = kingston.shipment.in_progress[id]
+	if !shipment then return end
 
+	local owner = shipment.Owner
+	if !IsValid(owner) then return end
+
+	for _,itemClass in ipairs(shipment.Items) do
+		owner:GiveItem(itemClass)
+	end
+
+	hook.Run("ShipmentDelivered", shipment)
+
+	kingston.shipment.remove(id)
 end
 
-function kingston.shipment.fail_delivery(id)
+function kingston.shipment.fail_delivery(id, threats)
+	local shipment = kingston.shipment.in_progress[id]
+	if !shipment then return end
 
+	local owner = shipment.Owner
+	if !IsValid(owner) then return end
+
+	hook.Run("ShipmentDeliveryFailed", shipment)
+
+	kingston.shipment.remove(id)
 end
 
 local function PointOnCircle(ang, radius, offX, offY)
@@ -194,20 +231,17 @@ local function PointOnCircle(ang, radius, offX, offY)
 	return x, y
 end
 
-function kingston.shipment.spawn_threat(id)
-	local shipment = kingston.shipment.in_progress[id]
-	if !shipment then return end
-
-
+function kingston.shipment.spawn_threat(pos, threats)
+	local threatGroup = table.Random(threats)
 	local totalNPCs = {}
-	local interval = 360 / #npcGroup
+	local interval = 360 / #threatGroup
 	local pos = self:GetPos()
 	local radius = 200
 
-	for i,npcClass in ipairs(npcGroup) do
-		local x, y = PointOnCircle(i * interval, math.random(50,200), pos.x, pos.y)
+	for i,entClass in ipairs(threatGroup) do
+		local x, y = PointOnCircle(i * interval, math.random(100,300), pos.x, pos.y)
 
-		local npc = ents.Create(npcClass)
+		local npc = ents.Create(entClass)
 		npc:SetPos(Vector(x, y, pos.z + 10))
 		npc:Spawn()
 	end
@@ -234,10 +268,22 @@ end
 
 function kingston.shipment.remove(id)
 	table.remove(kingston.shipment.in_progress, shipment)
-	hook.Run("ShipmentRemoved")
+	hook.Run("ShipmentRemoved", id)
 end
 
 local function ShipmentThink()
+	if !GAMEMODE.NextShipmentThink then
+		GAMEMODE.NextShipmentThink = CurTime()
+	end
 
+	if GAMEMODE.NextShipmentThink <= CurTime() then
+		for id,shipment in ipairs(kingston.shipment.in_progress) do
+			if shipment.DeliveryTime <= CurTime() then
+				kingston.shipment.roll_fail_chance(id)
+			end
+		end
+
+		GAMEMODE.NextShipmentThink = CurTime() + 10
+	end
 end
 hook.Add("Think", "STALKER.Shipments", ShipmentThink)

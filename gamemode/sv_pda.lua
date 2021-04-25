@@ -767,6 +767,8 @@ local RandomPDAMessageFuncs = {
 	end,
 	[3] = function()
 		local randomPlayer = table.Random(player.GetAll())
+		if !IsValid(randomPlayer) then return end
+
 		local playerName = randomPlayer:CharID() > 0 and randomPlayer:RPName() or false
 		local randomItem = table.Random(GAMEMODE.Items)
 

@@ -30,7 +30,7 @@ GM.PlayerAccessors = { -- these third values dont matter anymore
 	{ "LastLegShot",		false,	"Float",	-20 },
 	{ "InAttack2",			false,	"Bit",		false },
 	{ "BusinessLicenses",	false,	"Float",	0 },
-	{ "Typing",				false,	"UInt",		0, 3 },
+	{ "Typing",				false,	"Bool",		false },
 	{ "MountedGun",			false,	"Entity",	NULL },
 	{ "ScoreboardTitle",	false,	"String",	"" },
 	{ "ScoreboardTitleC",	false,	"Vector",	Vector( 200, 200, 200 ) },
