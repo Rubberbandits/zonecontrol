@@ -8,9 +8,10 @@ local function PresentRepairDialog(panel, item)
 	dialog:MakePopup()
 	dialog:DockPadding(10, 30, 10, 10)
 
+	local metaitem = GAMEMODE:GetItemByID(item:GetClass())
 	local itemCondition = item:GetVar("Durability", 0)
-	local maxRepairAmount = item.StartDurability - itemCondition
-	local maxPartsRequired = math.ceil(item.RepairCost / (item.StartDurability / (maxRepairAmount)))
+	local maxRepairAmount = metaitem.Vars.Durability - itemCondition
+	local maxPartsRequired = math.ceil(item.RepairCost / (metaitem.Vars.Durability / (maxRepairAmount)))
 	local partsRequired = maxPartsRequired
 
 	local currentCondition = dialog:Add("DLabel")
@@ -59,7 +60,7 @@ local function PresentRepairDialog(panel, item)
 			return
 		end
 
-		partsRequired = math.ceil(item.RepairCost / (item.StartDurability / repairAmt))
+		partsRequired = math.ceil(item.RepairCost / (metaitem.Vars.Durability / repairAmt))
 
 		repairCost:SetText(Format("Required parts to repair: %d", partsRequired))
 		repairCondition:SetText(Format("Condition will be repaired to: %d%%", itemCondition + repairAmt))
