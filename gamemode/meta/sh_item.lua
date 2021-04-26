@@ -24,8 +24,6 @@ local blacklist = {
 }
 
 function item:New( owner, metaitem, id, vars, x, y )
-	if( !owner ) then return end
-	if( !IsValid( owner ) ) then return end
 	if( !metaitem ) then return end
 	if( isstring( metaitem ) ) then
 	
@@ -53,8 +51,10 @@ function item:New( owner, metaitem, id, vars, x, y )
 	
 	end
 	
-	itemdata["owner"] = owner;
-	itemdata["CharID"] = owner:CharID();
+	if IsValid(owner) then
+		itemdata["owner"] = owner;
+		itemdata["CharID"] = owner:CharID();
+	end
 	
 	if( id ) then
 	
@@ -172,7 +172,7 @@ function item:Initialize() -- maybe we can use hook.Run
 end
 
 function item:GetCharID()
-	return self.CharID
+	return self.CharID or 0
 end
 
 function item:GetClass()
@@ -423,7 +423,9 @@ function item:SaveNewObject( cb )
 		table.Merge(self, insertTable)
 		
 		GAMEMODE.g_ItemTable[query:lastInsert()] = self
-		self:Owner().Inventory[query:lastInsert()] = self
+		if IsValid(self:Owner()) then
+			self:Owner().Inventory[query:lastInsert()] = self
+		end
 		
 		if self.OnNewCreation then
 			self:OnNewCreation()
