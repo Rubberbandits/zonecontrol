@@ -54,7 +54,7 @@ if SERVER then
 		local item = ply.Inventory[id]
 		if !item then return end
 		if !ply:IsPDATech() or !ply:HasItem("pda_decryption") then return end
-		if ply.StartSafeOpen + 199 > CurTime() then return end
+		if ply.StartSafeOpen + 119 > CurTime() then return end
 		
 		local items = ply:HasItem("pda_decryption")
 		if istable(items) and !items.IsItem then
