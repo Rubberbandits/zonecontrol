@@ -170,7 +170,38 @@ kingston.shipment.threat_price_ranges = {
 				"npc_wick_mutant_dog",
 			},
 			{
+				"vj_mutant_cat",
+				"vj_mutant_cat",
+				"vj_mutant_cat",
+				"vj_mutant_cat",
+			},
+			{
+				"vj_mutant_boar",
+				"vj_mutant_boar",
+				"vj_mutant_boar",
+				"vj_mutant_boar",
+			},
+			{
 				"kingston_electro",
+				"kingston_electro",
+			},
+			{
+				"kingston_punch",
+				"kingston_punch",
+				"kingston_punch",
+			},
+			{
+				"par",
+				"par",
+				"par",
+				"par",
+				"par",
+			},
+			{
+				"npc_wick_mutant_snork",
+				"npc_wick_mutant_snork",
+				"npc_wick_mutant_snork",
+				"npc_wick_mutant_snork",
 			},
 		},
 	},
