@@ -159,6 +159,12 @@ kingston.shipment.spawns = {
 }
 
 kingston.shipment.threat_price_ranges = {
+	[1] = {
+		chance = 1,
+		threats = {},
+		min_time = 30,
+		max_time = 90,
+	},
 	[14000] = {
 		chance = 50,
 		threats = {
@@ -222,17 +228,22 @@ kingston.shipment.threat_price_ranges = {
 	}
 }
 
-function kingston.shipment.roll_fail_chance(id)
-	local shipment = kingston.shipment.in_progress[id]
-	if !shipment then return end
-
+local function SelectPriceData(totalValue)
 	local priceData
 	for price,data in next, kingston.shipment.threat_price_ranges do
-		if price <= shipment.TotalValue then
+		if price <= totalValue then
 			priceData = data
 		end
 	end
 
+	return priceData or false
+end
+
+function kingston.shipment.roll_fail_chance(id)
+	local shipment = kingston.shipment.in_progress[id]
+	if !shipment then return end
+
+	local priceData = SelectPriceData(shipment.TotalValue)
 	if !priceData then return false end
 
 	local chance = math.random(0, 100)
@@ -261,7 +272,7 @@ end
 
 local function FindShipmentSpawn()
 	local ent = table.Random(ents.FindByClass("shipment_spawner"))
-	if !IsValid(ent) then print("cant find spawn!") return false end
+	if !IsValid(ent) then return false end
 
 	return ent:GetPos() + ent:GetUp() * 10
 end
@@ -333,6 +344,11 @@ function kingston.shipment.create(ply, items)
 	for _, itemClass in ipairs(items) do
 		local price = hook.Run("GetBuyPrice", ply, itemClass, true)
 		shipment.TotalValue = shipment.TotalValue + price
+	end
+
+	local priceData = SelectPriceData(shipment.TotalValue)
+	if priceData and priceData.min_time then
+		shipment.DeliveryTime = CurTime() + math.random(priceData.min_time, priceData.max_time or kingston.shipment.max_delivery_time)
 	end
 
 	table.insert(kingston.shipment.in_progress, shipment)
