@@ -160,7 +160,7 @@ kingston.shipment.spawns = {
 
 kingston.shipment.threat_price_ranges = {
 	[14000] = {
-		chance = 10,
+		chance = 50,
 		threats = {
 			{
 				"npc_wick_mutant_dog",
