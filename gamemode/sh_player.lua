@@ -838,7 +838,7 @@ end
 
 function player.GetByCharID( id )
 	
-	for _, v in pairs( player.GetAll() ) do
+	for _, v in ipairs( player.GetAll() ) do
 		
 		if( v:CharID() == id ) then
 			

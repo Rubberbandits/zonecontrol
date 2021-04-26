@@ -372,6 +372,7 @@ local DeleteEntities = {
 	loot_spawner = true,
 	npc_spawner = true,
 	kingston_radiation = true,
+	shipment_spawner = true,
 }
 
 if SERVER then

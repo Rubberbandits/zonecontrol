@@ -32,7 +32,7 @@ local function nBuyItem( ply, id, single )
 					ply:AddMoney( -1 * price );
 					ply:UpdateCharacterField( "Money", tostring( ply:Money() ) );
 					
-					ply:GiveItem( id, item.Vars or {} );
+					kingston.shipment.create(ply, {id})
 
 					ply:Notify(nil, COLOR_NOTIF, "You've purchased this single item.")
 				else
@@ -47,11 +47,12 @@ local function nBuyItem( ply, id, single )
 					ply:AddMoney( -1 * price );
 					ply:UpdateCharacterField( "Money", tostring( ply:Money() ) );
 					
-					ply:GiveItem( id, item.Vars or {} );
-					ply:GiveItem( id, item.Vars or {} );
-					ply:GiveItem( id, item.Vars or {} );
-					ply:GiveItem( id, item.Vars or {} );
-					ply:GiveItem( id, item.Vars or {} );
+					local items = {}
+					for i = 1, 5 do
+						table.insert(items, id)
+					end
+
+					kingston.shipment.create(ply, items)
 
 					ply:Notify(nil, COLOR_NOTIF, "You've purchased five of this item.")
 				else
@@ -159,7 +160,53 @@ kingston.shipment.spawns = {
 
 kingston.shipment.threat_price_ranges = {
 	[14000] = {
-		chance = 10,
+		chance = 50,
+		threats = {
+			{
+				"npc_wick_mutant_dog",
+				"npc_wick_mutant_dog",
+				"npc_wick_mutant_dog",
+				"npc_wick_mutant_dog",
+				"npc_wick_mutant_dog",
+			},
+			{
+				"vj_mutant_cat",
+				"vj_mutant_cat",
+				"vj_mutant_cat",
+				"vj_mutant_cat",
+			},
+			{
+				"vj_mutant_boar",
+				"vj_mutant_boar",
+				"vj_mutant_boar",
+				"vj_mutant_boar",
+			},
+			{
+				"kingston_electro",
+				"kingston_electro",
+			},
+			{
+				"kingston_punch",
+				"kingston_punch",
+				"kingston_punch",
+			},
+			{
+				"par",
+				"par",
+				"par",
+				"par",
+				"par",
+			},
+			{
+				"npc_wick_mutant_snork",
+				"npc_wick_mutant_snork",
+				"npc_wick_mutant_snork",
+				"npc_wick_mutant_snork",
+			},
+		},
+	},
+	[250000] = {
+		chance = 100,
 		threats = {
 			{
 				"npc_wick_mutant_dog",
@@ -172,7 +219,7 @@ kingston.shipment.threat_price_ranges = {
 				"kingston_electro",
 			},
 		},
-	},
+	}
 }
 
 function kingston.shipment.roll_fail_chance(id)
@@ -189,8 +236,8 @@ function kingston.shipment.roll_fail_chance(id)
 	if !priceData then return false end
 
 	local chance = math.random(0, 100)
-	if chance < priceData.chance then
-		return threats
+	if chance <= priceData.chance then
+		return priceData.threats
 	end
 	
 	return false
@@ -200,7 +247,7 @@ function kingston.shipment.deliver(id)
 	local shipment = kingston.shipment.in_progress[id]
 	if !shipment then return end
 
-	local owner = shipment.Owner
+	local owner = player.GetByCharID(shipment.Owner)
 	if !IsValid(owner) then return end
 
 	for _,itemClass in ipairs(shipment.Items) do
@@ -212,14 +259,42 @@ function kingston.shipment.deliver(id)
 	kingston.shipment.remove(id)
 end
 
+local function FindShipmentSpawn()
+	local ent = table.Random(ents.FindByClass("shipment_spawner"))
+	if !IsValid(ent) then print("cant find spawn!") return false end
+
+	return ent:GetPos() + ent:GetUp() * 10
+end
+
 function kingston.shipment.fail_delivery(id, threats)
 	local shipment = kingston.shipment.in_progress[id]
 	if !shipment then return end
 
-	local owner = shipment.Owner
+	local owner = player.GetByCharID(shipment.Owner)
 	if !IsValid(owner) then return end
 
-	hook.Run("ShipmentDeliveryFailed", shipment)
+	local spawnPos = FindShipmentSpawn()
+	if spawnPos then
+		local object = item(nil, "item_crate", nil, {Items = shipment.Items, Buyer = owner:CharID()}, 0, 0)
+		local function cb()
+			local ent = ents.Create( "cc_item" );
+			ent:SetVarString(util.TableToJSON(object:GetVars()))
+			object.owner = ent
+			object:SetCharID(0)
+			ent.ItemObj = object
+			object:UpdateSave()
+			ent:SetItemClass(object:GetClass())
+			ent:SetPos(spawnPos)
+			ent:SetAngles(Angle(0,0,0))
+			ent:Spawn()
+			ent:Activate()
+		end
+		object:SaveNewObject(cb)
+
+		kingston.shipment.spawn_threat(spawnPos, threats)
+
+		hook.Run("ShipmentDeliveryFailed", shipment, spawnPos)
+	end
 
 	kingston.shipment.remove(id)
 end
@@ -235,7 +310,6 @@ function kingston.shipment.spawn_threat(pos, threats)
 	local threatGroup = table.Random(threats)
 	local totalNPCs = {}
 	local interval = 360 / #threatGroup
-	local pos = self:GetPos()
 	local radius = 200
 
 	for i,entClass in ipairs(threatGroup) do
@@ -252,13 +326,13 @@ function kingston.shipment.create(ply, items)
 		StartTime = CurTime(),
 		Owner = ply:CharID(),
 		Items = items,
-		TotalPrice = 0,
+		TotalValue = 0,
 		DeliveryTime = CurTime() + math.random(kingston.shipment.min_delivery_time, kingston.shipment.max_delivery_time)
 	}
 
 	for _, itemClass in ipairs(items) do
 		local price = hook.Run("GetBuyPrice", ply, itemClass, true)
-		shipment.TotalPrice = shipment.TotalPrice + price
+		shipment.TotalValue = shipment.TotalValue + price
 	end
 
 	table.insert(kingston.shipment.in_progress, shipment)
@@ -279,7 +353,12 @@ local function ShipmentThink()
 	if GAMEMODE.NextShipmentThink <= CurTime() then
 		for id,shipment in ipairs(kingston.shipment.in_progress) do
 			if shipment.DeliveryTime <= CurTime() then
-				kingston.shipment.roll_fail_chance(id)
+				local threats = kingston.shipment.roll_fail_chance(id)
+				if threats then
+					kingston.shipment.fail_delivery(id, threats)
+				else
+					kingston.shipment.deliver(id)
+				end
 			end
 		end
 
@@ -287,3 +366,45 @@ local function ShipmentThink()
 	end
 end
 hook.Add("Think", "STALKER.Shipments", ShipmentThink)
+
+local function ShipmentFailed(shipment, pos)
+	local ply = player.GetByCharID(shipment.Owner)
+	if !IsValid(ply) then return end
+
+	ply:PDANotify("Courier -> you", "I ran into a lot of trouble and had to drop your stuff! Here's the fee back for the delivery. It's somewhere out there... you best send someone to get it! I've fired a flare into the air, good luck!", 6, 3)
+
+	local amount = shipment.TotalValue / 20
+	ply:AddMoney(amount);
+	ply:UpdateCharacterField("Money", tostring(ply:Money()))
+
+	timer.Simple(5, function()
+		local receiver_msg = Format("You've received %d RU from %s", amount, "Courier")
+		ply:PDANotify("Message", receiver_msg, 5, 8)
+	end)
+
+	local flare = ents.Create("tfa_mats_flare_shipment")
+	flare:SetPos(pos + Vector(0,0,100))
+	flare:Spawn()
+
+	-- next tick
+	timer.Simple(0, function()
+		local phys = flare:GetPhysicsObject()
+		if IsValid(phys) then
+			phys:ApplyForceCenter(Vector(0,0,6000))
+		end
+	end)
+end
+hook.Add("ShipmentDeliveryFailed", "STALKER.ShipmentFailed", ShipmentFailed)
+
+local function SuccessfulShipment(shipment)
+	local ply = player.GetByCharID(shipment.Owner)
+	if !IsValid(ply) then return end
+
+	ply:PDANotify("Courier -> you", "Here you are, all your stuff!", 6, 3)
+end
+hook.Add("ShipmentDelivered", "STALKER.ShipmentSuccess", SuccessfulShipment)
+
+local function ShipmentStarted(ply, shipment)
+	ply:PDANotify("Courier -> you", "I'll make sure to get all this stuff to you as fast as I can!", 6, 3)
+end
+hook.Add("ShipmentCreated", "STALKER.ShipmentStarted", ShipmentStarted)
