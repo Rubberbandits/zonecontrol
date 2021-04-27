@@ -1,145 +1,4 @@
 /*
-	Networking
-*/
-
-/*
-	nested garbage
-	thanks disseminate
-*/
-
-local function nBuyItem( ply, id, single )
-	if !InStockpileRange(ply) then return end
-
-	local item = GAMEMODE:GetItemByID( id );
-
-	if item and item.License then
-		local hasFlag
-
-		for i = 1, #item.License do
-			if ply:HasCharFlag(item.License[i]) then
-				hasFlag = true
-			end
-		end
-
-		if !hasFlag then ply:Notify(nil, COLOR_ERROR, "You don't have the connections to buy this.") return end
-
-		local price = hook.Run("GetBuyPrice", ply, id, single)
-		if !price or price == 0 then return end
-
-		if single then
-			if ply:Money() >= price then
-				if ply:InventoryWeight() < ply:InventoryMaxWeight() then
-					ply:AddMoney( -1 * price );
-					ply:UpdateCharacterField( "Money", tostring( ply:Money() ) );
-					
-					kingston.shipment.create(ply, {id})
-
-					ply:Notify(nil, COLOR_NOTIF, "You've purchased this single item.")
-				else
-					ply:Notify(nil, COLOR_ERROR, "You're overencumbered and can't make purchases.")
-				end
-			else
-				ply:Notify(nil, COLOR_ERROR, "You can't afford to buy this.")
-			end
-		else
-			if ply:Money() >= price then
-				if ply:InventoryWeight() < ply:InventoryMaxWeight() then
-					ply:AddMoney( -1 * price );
-					ply:UpdateCharacterField( "Money", tostring( ply:Money() ) );
-					
-					local items = {}
-					for i = 1, 5 do
-						table.insert(items, id)
-					end
-
-					kingston.shipment.create(ply, items)
-
-					ply:Notify(nil, COLOR_NOTIF, "You've purchased five of this item.")
-				else
-					ply:Notify(nil, COLOR_ERROR, "You're overencumbered and can't make purchases.")
-				end
-			else
-				ply:Notify(nil, COLOR_ERROR, "You can't afford to buy this.")
-			end
-		end
-	end
-end
-netstream.Hook( "nBuyItem", nBuyItem );
-
-util.AddNetworkString("zcSendCustomPrices")
-local function zcSendCustomPrices(len, ply)
-	if ply.RetrievedItemPrices then return end
-
-	net.Start("zcSendCustomPrices")
-		net.WriteUInt(table.Count(GAMEMODE.ItemPrice), 32)
-		for id,price in next, GAMEMODE.ItemPrice do
-			net.WriteString(id)
-			net.WriteUInt(price, 32)
-		end
-	net.Send(ply)
-
-	ply.RetrievedItemPrices = true
-end
-net.Receive("zcSendCustomPrices", zcSendCustomPrices)
-
-/*
-	Hooks
-*/
-
-hook.Add("Initialize", "LoadItemPrices", function()
-	local data = file.Read("zonecontrol/itemprices.txt", "DATA")
-
-	GAMEMODE.ItemPrice = data and util.JSONToTable(data) or {}
-end)
-
-function GM:LoadStockpiles()
-	local data = file.Read("zonecontrol/"..game.GetMap().."/stockpiles.txt", "DATA")
-
-	if !data or #data == 0 then return end
-
-	local stockpiles = util.JSONToTable(data)
-	if stockpiles then
-		for _,data in ipairs(stockpiles) do
-			local stockpile = ents.Create("cc_stockpile")
-			stockpile:SetPos(data.Pos)
-			stockpile:SetAngles(data.Angles)
-			stockpile:Spawn()
-		end
-	end
-end
-
-function GM:SaveStockpiles()
-	if !file.IsDir("zonecontrol", "DATA") then
-		file.CreateDir("zonecontrol")
-	end
-
-	if !file.IsDir("zonecontrol/"..game.GetMap(), "DATA") then
-		file.CreateDir("zonecontrol/"..game.GetMap())
-	end
-
-	local data = {}
-	for _,stockpile in ipairs(ents.FindByClass("cc_stockpile")) do
-		table.insert(
-			data,
-			{
-				Pos = stockpile:GetPos(),
-				Angles = stockpile:GetAngles(),
-			}
-		)
-	end
-
-	file.Write("zonecontrol/"..game.GetMap().."/stockpiles.txt", util.TableToJSON(data))
-end
-
-hook.Add("InitPostEntity", "STALKER.LoadStockpiles", function()
-	hook.Run("LoadStockpiles")
-end)
-
-hook.Add("ShutDown", "STALKER.SaveStockpiles", function()
-	hook.Run("SaveStockpiles")
-end)
-
-/*
 	Functions
 */
 
@@ -424,3 +283,156 @@ local function ShipmentStarted(ply, shipment)
 	ply:PDANotify("Courier -> you", "I'll make sure to get all this stuff to you as fast as I can!", 6, 3)
 end
 hook.Add("ShipmentCreated", "STALKER.ShipmentStarted", ShipmentStarted)
+
+/*
+	Networking
+*/
+
+/*
+	nested garbage
+	thanks disseminate
+*/
+
+local function nBuyItem( ply, id, single )
+	if !InStockpileRange(ply) then return end
+
+	local item = GAMEMODE:GetItemByID( id );
+
+	if item and item.License then
+		local hasFlag
+
+		for i = 1, #item.License do
+			if ply:HasCharFlag(item.License[i]) then
+				hasFlag = true
+			end
+		end
+
+		if !hasFlag then ply:Notify(nil, COLOR_ERROR, "You don't have the connections to buy this.") return end
+
+		local price = hook.Run("GetBuyPrice", ply, id, single)
+		if !price or price == 0 then return end
+
+		if single then
+			if ply:Money() >= price then
+				if ply:InventoryWeight() < ply:InventoryMaxWeight() then
+					ply:AddMoney( -1 * price );
+					ply:UpdateCharacterField( "Money", tostring( ply:Money() ) );
+					
+					if SelectPriceData(price) then
+						kingston.shipment.create(ply, {id})
+					else
+						ply:GiveItem(id, item.Vars or {})
+					end
+
+					ply:Notify(nil, COLOR_NOTIF, "You've purchased this single item.")
+				else
+					ply:Notify(nil, COLOR_ERROR, "You're overencumbered and can't make purchases.")
+				end
+			else
+				ply:Notify(nil, COLOR_ERROR, "You can't afford to buy this.")
+			end
+		else
+			if ply:Money() >= price then
+				if ply:InventoryWeight() < ply:InventoryMaxWeight() then
+					ply:AddMoney( -1 * price );
+					ply:UpdateCharacterField( "Money", tostring( ply:Money() ) );
+					
+					if SelectPriceData(price) then
+						local items = {}
+						for i = 1, 5 do
+							table.insert(items, id)
+						end
+
+						kingston.shipment.create(ply, items)
+					else
+						ply:GiveItem(id, item.Vars or {})
+						ply:GiveItem(id, item.Vars or {})
+						ply:GiveItem(id, item.Vars or {})
+						ply:GiveItem(id, item.Vars or {})
+						ply:GiveItem(id, item.Vars or {})
+					end
+
+					ply:Notify(nil, COLOR_NOTIF, "You've purchased five of this item.")
+				else
+					ply:Notify(nil, COLOR_ERROR, "You're overencumbered and can't make purchases.")
+				end
+			else
+				ply:Notify(nil, COLOR_ERROR, "You can't afford to buy this.")
+			end
+		end
+	end
+end
+netstream.Hook( "nBuyItem", nBuyItem );
+
+util.AddNetworkString("zcSendCustomPrices")
+local function zcSendCustomPrices(len, ply)
+	if ply.RetrievedItemPrices then return end
+
+	net.Start("zcSendCustomPrices")
+		net.WriteUInt(table.Count(GAMEMODE.ItemPrice), 32)
+		for id,price in next, GAMEMODE.ItemPrice do
+			net.WriteString(id)
+			net.WriteUInt(price, 32)
+		end
+	net.Send(ply)
+
+	ply.RetrievedItemPrices = true
+end
+net.Receive("zcSendCustomPrices", zcSendCustomPrices)
+
+/*
+	Hooks
+*/
+
+hook.Add("Initialize", "LoadItemPrices", function()
+	local data = file.Read("zonecontrol/itemprices.txt", "DATA")
+
+	GAMEMODE.ItemPrice = data and util.JSONToTable(data) or {}
+end)
+
+function GM:LoadStockpiles()
+	local data = file.Read("zonecontrol/"..game.GetMap().."/stockpiles.txt", "DATA")
+
+	if !data or #data == 0 then return end
+
+	local stockpiles = util.JSONToTable(data)
+	if stockpiles then
+		for _,data in ipairs(stockpiles) do
+			local stockpile = ents.Create("cc_stockpile")
+			stockpile:SetPos(data.Pos)
+			stockpile:SetAngles(data.Angles)
+			stockpile:Spawn()
+		end
+	end
+end
+
+function GM:SaveStockpiles()
+	if !file.IsDir("zonecontrol", "DATA") then
+		file.CreateDir("zonecontrol")
+	end
+
+	if !file.IsDir("zonecontrol/"..game.GetMap(), "DATA") then
+		file.CreateDir("zonecontrol/"..game.GetMap())
+	end
+
+	local data = {}
+	for _,stockpile in ipairs(ents.FindByClass("cc_stockpile")) do
+		table.insert(
+			data,
+			{
+				Pos = stockpile:GetPos(),
+				Angles = stockpile:GetAngles(),
+			}
+		)
+	end
+
+	file.Write("zonecontrol/"..game.GetMap().."/stockpiles.txt", util.TableToJSON(data))
+end
+
+hook.Add("InitPostEntity", "STALKER.LoadStockpiles", function()
+	hook.Run("LoadStockpiles")
+end)
+
+hook.Add("ShutDown", "STALKER.SaveStockpiles", function()
+	hook.Run("SaveStockpiles")
+end)
