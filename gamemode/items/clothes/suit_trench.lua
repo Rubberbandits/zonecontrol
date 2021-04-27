@@ -62,3 +62,4 @@ ITEM.IsSellable = true
 function ITEM:GetSellPrice()
     return 6000
 end
+ITEM.SelfRepairCondition = 20

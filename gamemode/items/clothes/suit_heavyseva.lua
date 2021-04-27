@@ -53,3 +53,4 @@ ITEM.ArmorValues = {
 }
 ITEM.Rarity = 5
 ITEM.AllowRandomSpawn = false
+ITEM.SelfRepairCondition = 95
