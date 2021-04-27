@@ -18,12 +18,6 @@ kingston.shipment.spawns = {
 }
 
 kingston.shipment.threat_price_ranges = {
-	[1] = {
-		chance = 1,
-		threats = {},
-		min_time = 30,
-		max_time = 90,
-	},
 	[14000] = {
 		chance = 50,
 		threats = {
