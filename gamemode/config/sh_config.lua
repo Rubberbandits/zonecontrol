@@ -48,7 +48,7 @@ GM.MaxNameLength = 40;
 
 GM.MaxDescLength = 2000;
 
-GM.MaxCharacters = 10;
+GM.MaxCharacters = 3;
 
 GM.CitizenModels = {
 	"models/tnb/techcom/male_01.mdl",
@@ -342,7 +342,7 @@ GM.GearSelection = {
 	["weapon_srp_f1"] = 2200,
 }
 
-GM.DefaultSelfRepairCond = 90
+GM.DefaultSelfRepairCond = 80
 
 GM.RubleBudget = 9500;
 GM.SellPercentage = 70;
