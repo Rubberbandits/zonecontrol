@@ -28,7 +28,7 @@ if CLIENT then
 else
 	-- nSay: carryover from old CC system
 	netstream.Hook("nSay", function(ply, text)
-		ply:SetTyping( 0 );
+		ply:SetTyping( false );
 		
 		if ply:CharID() < 1 then return end
 		if !ply.LastChat then ply.LastChat = 0 end

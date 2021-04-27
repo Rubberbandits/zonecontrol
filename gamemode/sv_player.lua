@@ -944,7 +944,9 @@ end
 
 util.AddNetworkString("nSetTyping")
 local function nSetTyping(len, ply)
-	ply:SetTyping(net.ReadBool())
+	local isTyping = net.ReadBool()
+
+	ply:SetTyping(isTyping)
 end
 net.Receive("nSetTyping", nSetTyping)
 

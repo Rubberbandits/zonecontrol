@@ -455,7 +455,7 @@ GM.ToolTrustBlacklist = {
 	"duplicator",
 };
 
-GM.MainServerLocation = LOCATION_ROSTOK
+GM.MainServerLocation = LOCATION_CROSSROADS
 
 GM.RandomMutantGroups = {
 	"vj_mutant_bloodsucker4",
