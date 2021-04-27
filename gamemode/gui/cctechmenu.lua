@@ -73,7 +73,19 @@ local function PresentRepairDialog(panel, item)
 	doRepair:Dock(TOP)
 	function doRepair:DoClick()
 		local items = LocalPlayer():HasItem(item.RepairPart)
-		if !items or (items.IsItem and partsRequired > 1) or (#items < partsRequired) then
+		local canRepair = true
+		if !items then canRepair = false end
+		if items.IsItem then
+			if partsRequired > 1 then
+				canRepair = false
+			end
+		else
+			if #items < partsRequired then
+				canRepair = false
+			end
+		end
+
+		if !canRepair then
 			LocalPlayer():Notify(nil, COLOR_ERROR, "You don't have enough parts to repair the item to this amount!")
 			return
 		end
