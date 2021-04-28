@@ -6,7 +6,7 @@ end
 
 function GM:MapInitPostEntity()
 	
-	self:CreateLocationPoint( Vector(1497, 14991, -47), LOCATION_ROSTOK, 200, TRANSITPORT_CROSSROADS_ROSTOK );
+	--self:CreateLocationPoint( Vector(1497, 14991, -47), LOCATION_ROSTOK, 200, TRANSITPORT_CROSSROADS_ROSTOK );
 	self:CreateLocationPoint( Vector(-13645, -9643, -212), LOCATION_SWAMP, 200, TRANSITPORT_CROSSROADS_SWAMP );
 
 end
