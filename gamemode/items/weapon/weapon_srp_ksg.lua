@@ -25,3 +25,4 @@ ITEM.Vars = {
 	Clip1 = 0,
 };
 ITEM.Rarity = 5
+ITEM.RepairCost = 14

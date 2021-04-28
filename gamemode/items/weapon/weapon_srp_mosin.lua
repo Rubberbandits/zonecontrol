@@ -18,3 +18,4 @@ ITEM.Slot = 2
 ITEM.SlotPos = 1
 ITEM.Damage = 105
 ITEM.Rarity = 2
+ITEM.RepairCost = 6

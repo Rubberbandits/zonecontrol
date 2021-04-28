@@ -25,3 +25,4 @@ ITEM.Vars = {
 };
 ITEM.Damage = 30
 ITEM.Rarity = 4
+ITEM.RepairCost = 16

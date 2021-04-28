@@ -18,3 +18,4 @@ ITEM.Slot = 2
 ITEM.NoDefaultAtts = true
 ITEM.Damage = 150
 ITEM.Rarity = 5
+ITEM.RepairCost = 75

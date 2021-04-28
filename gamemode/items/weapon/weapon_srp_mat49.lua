@@ -17,3 +17,4 @@ ITEM.BulkPrice = 67000
 ITEM.Slot = 2
 ITEM.Damage = 33
 ITEM.Rarity = 3
+ITEM.RepairCost = 6

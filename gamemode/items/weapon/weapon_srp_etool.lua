@@ -16,3 +16,4 @@ ITEM.BulkPrice = 3500
 ITEM.Slot = 1
 ITEM.Rarity = 2
 ITEM.AllowRandomSpawn = true
+ITEM.RepairCost = 1

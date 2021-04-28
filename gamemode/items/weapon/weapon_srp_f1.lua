@@ -45,3 +45,4 @@ function ITEM:OnThrow(weapon)
 end
 ITEM.Rarity = 3
 ITEM.AllowRandomSpawn = true
+ITEM.RepairCost = 1
