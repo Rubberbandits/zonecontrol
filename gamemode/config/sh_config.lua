@@ -48,7 +48,7 @@ GM.MaxNameLength = 40;
 
 GM.MaxDescLength = 2000;
 
-GM.MaxCharacters = 3;
+GM.MaxCharacters = 10;
 
 GM.CitizenModels = {
 	"models/tnb/techcom/male_01.mdl",
