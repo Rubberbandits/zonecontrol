@@ -1,11 +1,11 @@
 ITEM.Base = "clothes"
 ITEM.Name =  "SSP-99M";
 ITEM.Desc =  "An advanced scientific suit designed for ecological work within the Exclusion Zone. Upgraded with kevlar padding for emergency protection.";
-ITEM.Model =  "models/kek1ch/ecolog_outfit_orange.mdl";
+ITEM.Model =  "models/kek1ch/ecolog_outfit_green.mdl";
 ITEM.Weight =  12;
-ITEM.FOV =  20;
-ITEM.CamPos =  Vector( 50, 50, 50 );
-ITEM.LookAt =  Vector( 0, 0, 0 );
+ITEM.FOV = 20;
+ITEM.CamPos = Vector( 51.79, 58.93, 50 );
+ITEM.LookAt = Vector( -1.6, -4.82, 1.61 );
 ITEM.Bonemerge = "models/tnb/stalker_2019/ssp.mdl";
 ITEM.DegradationProtection = 97.5
 ITEM.BulkPrice = 500000
