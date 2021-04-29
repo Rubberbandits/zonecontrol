@@ -20,3 +20,4 @@ ITEM.W = 2
 ITEM.H = 1
 ITEM.Damage = 33
 ITEM.Rarity = 4
+ITEM.RepairCost = 5

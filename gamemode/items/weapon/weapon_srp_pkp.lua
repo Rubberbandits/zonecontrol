@@ -15,5 +15,5 @@ ITEM.AmmoType = "ammo_762x54r"
 ITEM.License = "B"
 ITEM.BulkPrice = 310000
 ITEM.Damage = 65
-
 ITEM.Rarity = 4
+ITEM.RepairCost = 25

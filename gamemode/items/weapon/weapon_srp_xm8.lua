@@ -16,3 +16,4 @@ ITEM.License = "B"
 ITEM.BulkPrice = 89000
 ITEM.Slot = 2
 ITEM.Rarity = 4
+ITEM.RepairCost = 34

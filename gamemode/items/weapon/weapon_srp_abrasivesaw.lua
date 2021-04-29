@@ -19,3 +19,4 @@ ITEM.W = 2
 ITEM.H = 2
 ITEM.Rarity = 3
 ITEM.AllowRandomSpawn = true
+ITEM.RepairCost = 1

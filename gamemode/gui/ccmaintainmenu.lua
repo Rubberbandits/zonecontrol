@@ -66,6 +66,7 @@ function PANEL:SetItem(item_class, id)
 				v:SetToggle(false)
 			end
 			
+			self.Repair:SetDisabled(false)
 			self.selected_support = button.id
 			button:SetToggle(true)
 			
