@@ -13,7 +13,7 @@ ITEM.RemoveBody = true
 ITEM.AllowGender = true
 ITEM.HelmetBodygroup = {1,1}
 ITEM.DegradationProtection = 97.5
-ITEM.RepairCost = 20
+ITEM.RepairCost = 16
 ITEM.Bodygroups = {
 	{1, 0}
 }
