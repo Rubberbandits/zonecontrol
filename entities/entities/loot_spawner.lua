@@ -57,6 +57,12 @@ function ENT:Think()
 	end
 
 	if self.NextLootSpawn <= CurTime() then
+		local chance = math.random(0, 100)
+		if chance > GAMEMODE.ItemSpawnChance then
+			self.NextLootSpawn = CurTime() + math.random(1200,3600)
+			return
+		end
+
 		local surroundItemCount = 0
 		for _,ent in ipairs(ents.FindInSphere(self:GetPos(), 100)) do
 			if ent:GetClass() == "cc_item" then

@@ -488,3 +488,5 @@ GM.RandomMutantGroups = {
 		"npc_wick_mutant_dog",
 	},
 }
+
+GM.ItemSpawnChance = 10
