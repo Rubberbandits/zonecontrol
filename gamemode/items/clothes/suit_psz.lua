@@ -6,13 +6,12 @@ ITEM.Weight =  8;
 ITEM.FOV =  20;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
-ITEM.BulkPrice =  90000;
 ITEM.License =  "X";
 ITEM.Bonemerge = "models/stalker_2019/psz.mdl";
 ITEM.DegradationProtection = 97.5
 ITEM.BulkPrice = 245000
 ITEM.License = "S"
-ITEM.RepairCost = 20
+ITEM.RepairCost = 16
 ITEM.Bodygroups = {
 	{0, 1}
 }

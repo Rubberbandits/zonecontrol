@@ -2,6 +2,12 @@ kingston = kingston or {}
 kingston.pda = kingston.pda or {}
 kingston.pda.has_authenticated = kingston.pda.has_authenticated or {}
 kingston.pda.tabs = {
+	Map = {
+		order = 4,
+		func = function(pnl)
+
+		end
+	},
 	Journal = {
 		order = 3,
 		default = true,
