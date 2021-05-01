@@ -17,6 +17,6 @@ ITEM.Slot = 1
 ITEM.AmmoType = "ammo_gas"
 ITEM.W = 2
 ITEM.H = 2
-ITEM.Rarity = 3
+ITEM.Rarity = 4
 ITEM.AllowRandomSpawn = true
 ITEM.RepairCost = 1

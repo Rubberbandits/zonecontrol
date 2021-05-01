@@ -1,7 +1,7 @@
 ITEM.Name = "AK-74"
 ITEM.Desc = "The 1970s replacement for the AKM, firing an intermediate high velocity round. It achieves greater effective range, accuracy, and reliability than its predecessor. Fires 5.45x39mm."
-ITEM.Model = "models/weapons/w_tfa_dm_ak74.mdl"
-ITEM.WeaponClass = "tfa_dm_ak74"
+ITEM.Model = "models/smc/ak74m/w_ak74m_farengar.mdl"
+ITEM.WeaponClass = "tfa_ins2_ak74m"
 ITEM.Weight = 4
 ITEM.SafetyPos = Vector(0,0,0)
 ITEM.SafetyAng = Vector(-12.4, 0, 0)

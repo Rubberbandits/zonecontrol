@@ -1,5 +1,5 @@
-ITEM.Name = "Makarov PM"
-ITEM.Desc = "A ubiquitous 9x18 sidearm used in military, police, and civillian applications since the Iron Curtain. While highly reliable, its weight and low magazine capacity have relegated it to rear line status."
+ITEM.Name = "Honorary PMm"
+ITEM.Desc = "An embellished PMm issued as a reward for 'Succesful execution of highly dangerous state orders, as well as valor and courage shown in the line of duty.'"
 ITEM.Model = "models/weapons/tfa_ins2/w_pm.mdl"
 ITEM.WeaponClass = "tfa_ins2_pm"
 ITEM.Weight = 1.2
@@ -13,9 +13,18 @@ ITEM.LookAt 		= Vector( 0, -5, 0 );
 ITEM.SelfRepairCondition = 75
 ITEM.AmmoType = "ammo_9x18"
 ITEM.License = "B"
-ITEM.BulkPrice = 39000
+ITEM.BulkPrice = 69000
 ITEM.Slot = 2
 ITEM.SlotPos = 1
+ITEM.Vars = {
+	Equipped = false,
+	CurrentAttachments = {},
+	Upgrades = {
+		makarov_honorary = true,
+	},
+	Durability = 100,
+	Clip1 = 0,
+};
 ITEM.Damage = 33
-ITEM.Rarity = 2
+ITEM.Rarity = 4
 ITEM.RepairCost = 4
