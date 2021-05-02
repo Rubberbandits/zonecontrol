@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Military Maps";
 ITEM.Desc =  "Manila folder full of important military maps. Somewhat redundant to anyone who owns a PDA, but these can be sold for a reward.";
 ITEM.Model =  "models/kek1ch/mili_maps.mdl";
@@ -11,3 +10,8 @@ ITEM.W = 2
 ITEM.H = 2
 ITEM.Rarity = 4
 ITEM.AllowRandomSpawn = false
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 300
+end

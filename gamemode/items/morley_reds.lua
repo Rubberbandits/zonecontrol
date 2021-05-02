@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Morley Reds";
 ITEM.Desc =  "A pack of cigarettes from the west with a stark red label. Such a stylish packaging, they belong in the blazer pocket of someone with black lungs.";
 ITEM.Model =  "models/kek1ch/drink_cigar0.mdl";

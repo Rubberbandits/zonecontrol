@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Katkovite Victorys";
 ITEM.Desc =  "A local pack of premium smokes produced in the Zone. You swore you thought this guy made booze, too.";
 ITEM.Model =  "models/kek1ch/drink_cigar1.mdl";

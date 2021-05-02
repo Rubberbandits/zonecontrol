@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Case";
 ITEM.Desc =  "A locked case. No clue what's inside, but it sure is heavy. Hopefully this is worth your trouble.";
 ITEM.Model =  "models/z-o-m-b-i-e/st/box/st_box_metall_01.mdl";
@@ -11,3 +10,8 @@ ITEM.W = 2
 ITEM.H = 2
 ITEM.Rarity = 3
 ITEM.AllowRandomSpawn = false
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 500
+end

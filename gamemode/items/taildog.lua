@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Blind dog tail";
 ITEM.Desc =  "The tail of a mutated mutt, chopped clean from the base. Makes for a less-than-impressive trophy.";
 ITEM.Model =  "models/dogtail.mdl";
@@ -12,3 +11,7 @@ ITEM.H = 1
 ITEM.Rarity = 2
 ITEM.AllowRandomSpawn = false
 ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 400
+end

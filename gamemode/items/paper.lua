@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Paper";
 ITEM.Desc =  "A blank piece of paper.";
 ITEM.Model =  "models/props_c17/paper01.mdl";
@@ -80,3 +79,8 @@ ITEM.functions.Use = {
 }
 ITEM.Rarity = 1
 ITEM.AllowRandomSpawn = true
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 20
+end

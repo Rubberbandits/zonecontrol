@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Centrifuge";
 ITEM.Desc =  "An American-branded centrifuge. This seems expensive.";
 ITEM.Model =  "models/z-o-m-b-i-e/ST/technica/st_transiver_15.mdl";
@@ -11,3 +10,8 @@ ITEM.W = 2
 ITEM.H = 2
 ITEM.Rarity = 4
 ITEM.AllowRandomSpawn = true
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 15000
+end

@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Dolg Case";
 ITEM.Desc =  "A suitcase with an airport security lock on the handle. DUTY emblem stenciled onto it's face. You'll need help or a key to crack it open.";
 ITEM.Model =  "models/kek1ch/dev_merger.mdl";
@@ -11,3 +10,8 @@ ITEM.W = 2
 ITEM.H = 2
 ITEM.Rarity = 4
 ITEM.AllowRandomSpawn = false
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 2000
+end

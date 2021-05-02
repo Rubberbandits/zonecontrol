@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Improvised Explosives";
 ITEM.Desc =  "A concealed explosive device made from looted explosives.";
 ITEM.Model =  "models/kek1ch/explosive_charge.mdl";
@@ -12,3 +11,8 @@ ITEM.W = 1
 ITEM.H = 2
 ITEM.Rarity = 3
 ITEM.AllowRandomSpawn = true
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 300
+end

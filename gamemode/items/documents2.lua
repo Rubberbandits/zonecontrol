@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Military Documents";
 ITEM.Desc =  "Manila folder full of important military documents. These can be sold for a reward.";
 ITEM.Model =  "models/stalker/item/handhelds/files2.mdl";
@@ -11,3 +10,8 @@ ITEM.W = 2
 ITEM.H = 2
 ITEM.Rarity = 4
 ITEM.AllowRandomSpawn = false
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 1000
+end

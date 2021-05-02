@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Key";
 ITEM.Desc =  "A small wrought-iron key. It probably opens a door somewhere, maybe.";
 ITEM.Model =  "models/key.mdl";
@@ -11,3 +10,8 @@ ITEM.W = 1
 ITEM.H = 1
 ITEM.Rarity = 1
 ITEM.AllowRandomSpawn = true
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 100
+end

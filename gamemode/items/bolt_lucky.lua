@@ -10,3 +10,8 @@ ITEM.H = 1
 ITEM.BulkPrice =  500;
 ITEM.Rarity = 2
 ITEM.AllowRandomSpawn = true
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 100
+end

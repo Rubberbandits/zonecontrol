@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Tea Leaves";
 ITEM.Desc =  "A box of tea leaves. Boil some water and add these.";
 ITEM.Model =  "models/props_lab/box01a.mdl";
@@ -12,3 +11,8 @@ ITEM.W = 1
 ITEM.H = 1
 ITEM.Rarity = 1
 ITEM.AllowRandomSpawn = true
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 6
+end

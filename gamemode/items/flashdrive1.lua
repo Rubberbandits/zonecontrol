@@ -1,4 +1,3 @@
-
 ITEM.Name =  "8gb Flash drive";
 ITEM.Desc =  "A convenient way to store and transfer data. 8 gigs of storage, whatever that means.";
 ITEM.Model =  "models/kali/miscstuff/stalker/usb_a.mdl";
@@ -9,5 +8,10 @@ ITEM.LookAt =  Vector( 0, 0, 0.25 );
 ITEM.BulkPrice =  2000
 ITEM.W = 1
 ITEM.H = 1
-ITEM.Rarity = 2
+ITEM.Rarity = 3
 ITEM.AllowRandomSpawn = false
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 400
+end

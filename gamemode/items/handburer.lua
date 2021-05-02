@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Burer hand";
 ITEM.Desc =  "The dry, ashy hand of a Burer. Burer's hand seems to play a vital role in the creature's use of the telekinetic powers. It's probably worth a lot to someone.";
 ITEM.Model =  "models/handburer.mdl";
@@ -12,3 +11,8 @@ ITEM.H = 1
 ITEM.Rarity = 4
 ITEM.AllowRandomSpawn = false
 ITEM.IsSellable = true
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 4000
+end

@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Guitar";
 ITEM.Desc =  "A string instrument widely used by stalkers of all factions throughout the Zone.";
 ITEM.Model =  "models/stalkertnb/acoustic.mdl";
@@ -12,3 +11,8 @@ ITEM.W = 2
 ITEM.H = 3
 ITEM.Rarity = 2
 ITEM.AllowRandomSpawn = true
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 200
+end

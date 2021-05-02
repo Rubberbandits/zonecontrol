@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Jerry-Can of Water";
 ITEM.Desc =  "A can filled with drinking water.";
 ITEM.Model =  "models/z-o-m-b-i-e/st/balon/st_kanistra_01.mdl";

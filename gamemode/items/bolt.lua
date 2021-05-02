@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Box of Bolts";
 ITEM.Desc =  "A box of bolts. Cheap and light, good for probing the path ahead.";
 ITEM.Model =  "models/kali/miscstuff/stalker/bolt.mdl";

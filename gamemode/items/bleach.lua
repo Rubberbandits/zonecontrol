@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Bleach";
 ITEM.Desc =  "It's used to take the stains out of clothes. Highly toxic.";
 ITEM.Model =  "models/props_junk/garbage_plasticbottle002a.mdl";
@@ -36,3 +35,8 @@ ITEM.functions.Use = {
 }
 ITEM.Rarity = 0
 ITEM.AllowRandomSpawn = true
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 20
+end

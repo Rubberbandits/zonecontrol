@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Hookah";
 ITEM.Desc =  "A makeshift hookah made from a teapot and some gas mask components. This is right up Freedom's alley.";
 ITEM.Model =  "models/z-o-m-b-i-e/ST/relax_room/st_kalyan_01.mdl";
@@ -12,3 +11,8 @@ ITEM.W = 1
 ITEM.H = 2
 ITEM.Rarity = 3
 ITEM.AllowRandomSpawn = true
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 300
+end

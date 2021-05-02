@@ -1,4 +1,3 @@
-
 ITEM.Name =  "LifePak EKG";
 ITEM.Desc =  "An electrocardiogram machine. All the controls are in English.";
 ITEM.Model =  "models/z-o-m-b-i-e/ST/technica/st_transiver_13.mdl";
@@ -11,3 +10,8 @@ ITEM.W = 2
 ITEM.H = 2
 ITEM.Rarity = 3
 ITEM.AllowRandomSpawn = true
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 1000
+end

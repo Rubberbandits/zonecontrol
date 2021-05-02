@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Scrap Electronics";
 ITEM.Desc =  "A pile of circuit boards and wires. Useless by itself, but bits and bobs can be used for repairs.";
 ITEM.Model =  "models/props_lab/reciever01c.mdl";

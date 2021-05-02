@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Controller hand";
 ITEM.Desc =  "The grimy mitt of a Controller. These mutants seem to utilize their hand in some way to attack its prey, making them worth holding onto as trophies or lab specimens. Smells like old socks and bad kimchi.";
 ITEM.Model =  "models/kek1ch/hand_kontroler.mdl";
@@ -12,3 +11,7 @@ ITEM.H = 1
 ITEM.Rarity = 5
 ITEM.AllowRandomSpawn = false
 ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 10000
+end

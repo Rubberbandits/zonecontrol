@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Bar";
 ITEM.Desc =  "A heavy, tarnished chunk of metal.";
 ITEM.Model =  "models/props_debris/concrete_chunk05g.mdl";
@@ -11,3 +10,8 @@ ITEM.W = 2
 ITEM.H = 1
 ITEM.Rarity = 5
 ITEM.AllowRandomSpawn = false
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 1500
+end

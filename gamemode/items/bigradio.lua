@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Radio";
 ITEM.Desc =  "A stationary radio.";
 ITEM.Model =  "models/z-o-m-b-i-e/st/el_tehnika/st_transiver_17.mdl";
@@ -44,3 +43,8 @@ ITEM.functions.Use = {
 }
 ITEM.Rarity = 2
 ITEM.AllowRandomSpawn = false
+ITEM.IsSellable = true
+
+function ITEM:GetSellPrice()
+	return 80
+end
