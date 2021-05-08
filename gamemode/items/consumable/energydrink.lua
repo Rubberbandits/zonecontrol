@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Energy Drink";
 ITEM.Desc =  "Canned energy drink. One of many things that keep a stalker awake during the night.";
 ITEM.Model =  "models/stalker/item/food/drink.mdl";

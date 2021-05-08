@@ -1,6 +1,6 @@
 ITEM.Name =  "Scrap Electronics";
 ITEM.Desc =  "A pile of circuit boards and wires. Useless by itself, but bits and bobs can be used for repairs.";
-ITEM.Model =  "models/props_lab/reciever01c.mdl";
+ITEM.Model =  "models/kek1ch/materials_textolite.mdl";
 ITEM.Weight =  0.25;
 ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );

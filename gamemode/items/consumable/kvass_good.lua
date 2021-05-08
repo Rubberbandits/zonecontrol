@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Homemade Kvass";
 ITEM.Desc =  "Homemade bread-beer, from raisins and black bread. The contents are a thick and appetizing dark orange.";
 ITEM.Model =  "models/kali/miscstuff/stalker/food/cossacks vodka.mdl";

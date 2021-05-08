@@ -1,6 +1,6 @@
 ITEM.Name =  "Adhesive";
 ITEM.Desc =  "A bottle of glue to stick things together.";
-ITEM.Model =  "models/props_junk/garbage_plasticbottle001a.mdl";
+ITEM.Model =  "models/kek1ch/gun_oil_ru.mdl";
 ITEM.Weight =  0.33;
 ITEM.FOV =  14;
 ITEM.CamPos =  Vector( 50, 50, 50 );

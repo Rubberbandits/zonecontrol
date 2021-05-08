@@ -1,6 +1,6 @@
 ITEM.Name = "Intermediate set of tools"
 ITEM.Desc = "A low end set of tools gathered for work on firearms, not particularly effective but common throughout the Zone."
-ITEM.Model = "models/kek1ch/box_toolkit_2.mdl"
+ITEM.Model = "models/kek1ch/cleaning_kit_r7.mdl"
 ITEM.Weight = 1.5
 ITEM.License = "T"
 ITEM.RaiseCondition = 30

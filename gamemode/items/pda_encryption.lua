@@ -1,6 +1,6 @@
 ITEM.Name =  "PDA Encryption System";
 ITEM.Desc =  "A custom FPGA with an unlocked CPU, no thermal limits and a chance of frying itself after use. The custom firmware on it is a derivative of VeraCrypt. Requires some specialist knowledge.";
-ITEM.Model =  "models/stalker/item/handhelds/mini_pda.mdl";
+ITEM.Model =  "models/kek1ch/dev_datchik_2.mdl";
 ITEM.Weight =  0.5
 ITEM.License = "T"
 ITEM.FOV =  12;

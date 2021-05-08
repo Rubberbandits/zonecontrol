@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Tourist's Delight";
 ITEM.Desc =  "Tinned ham. The kind of cheap stuff Stalkers grab at a gas station just before slipping into the Cordon.";
 ITEM.Model =  "models/kali/miscstuff/stalker/food/tourist's breakfast.mdl";

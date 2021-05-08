@@ -1,6 +1,6 @@
 ITEM.Name =  "Needle and Thread";
 ITEM.Desc =  "A large spool of thread with a needle tucked into the bundle. Useful for quick patchup jobs on a suit.";
-ITEM.Model =  "models/materials_wire.mdl";
+ITEM.Model =  "models/kek1ch/nitka_sint.mdl";
 ITEM.Weight =  0.1
 ITEM.FOV =  15;
 ITEM.CamPos =  Vector( 50, 50, 50 );

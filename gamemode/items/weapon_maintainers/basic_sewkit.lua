@@ -1,6 +1,6 @@
 ITEM.Name =  "Basic Sewing Kit";
 ITEM.Desc =  "A picked-through collection of sewing supplies. It's not great, but works for a quick patch-up job.";
-ITEM.Model =  "models/kek1ch/sewing_kit_b.mdl";
+ITEM.Model =  "models/kek1ch/cleaning_kit_p.mdl";
 ITEM.Weight =  0.5
 ITEM.License = "T"
 ITEM.FOV =  10;

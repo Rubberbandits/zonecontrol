@@ -1,10 +1,10 @@
 ITEM.Name =  "Nice Boots";
 ITEM.Desc =  "A nice, clean and unripped pair of boots. Conveniently just your size.";
 ITEM.Model =  "models/kek1ch/boots.mdl";
-ITEM.Weight =  0.6;
+ITEM.Weight =  0.5
 ITEM.License = "TX"
 ITEM.SuitOnly = true
-ITEM.RepairCondition = 10
+ITEM.RaiseCondition = 10
 ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );

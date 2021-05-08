@@ -7,7 +7,6 @@ ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 3 );
 ITEM.BulkPrice =  100;
 ITEM.License =  "X";
-ITEM.RaiseCondition = 2
 ITEM.W = 1
 ITEM.H = 1
 ITEM.Rarity = 1

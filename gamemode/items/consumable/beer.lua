@@ -1,6 +1,6 @@
 ITEM.Name =  "Beer";
 ITEM.Desc =  "A bottle of skunky Czech beer.";
-ITEM.Model =  "models/props_junk/garbage_glassbottle003a.mdl";
+ITEM.Model =  "models/kek1ch/dev_beer.mdl";
 ITEM.Weight =  0.33;
 ITEM.FOV =  11;
 ITEM.CamPos =  Vector( 50, 50, 50 );

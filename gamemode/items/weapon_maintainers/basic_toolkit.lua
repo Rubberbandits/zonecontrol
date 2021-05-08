@@ -1,6 +1,6 @@
 ITEM.Name = "Basic set of tools"
 ITEM.Desc = "A basic set of tools for working with machinery, while not built for firearms specifically it works well enough."
-ITEM.Model = "models/kek1ch/box_toolkit_1.mdl"
+ITEM.Model = "models/kek1ch/cleaning_kit_r5.mdl"
 ITEM.Weight = 1
 ITEM.License = "Tx"
 ITEM.RaiseCondition = 10

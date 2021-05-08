@@ -1,6 +1,6 @@
 ITEM.Name =  "Prehospital Trauma";
 ITEM.Desc =  "A Western publication on trauma-based emergency medical care.";
-ITEM.Model =  "models/props_lab/bindergreen.mdl";
+ITEM.Model =  "models/kek1ch/notes_document_case_2.mdl";
 ITEM.Weight =  1;
 ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );

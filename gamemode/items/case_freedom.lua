@@ -1,6 +1,6 @@
 ITEM.Name =  "Svoboda Case";
 ITEM.Desc =  "A suitcase with an airport security lock on the handle. FREEDOM emblem stenciled onto it's face. You'll need help or a key to crack it open.";
-ITEM.Model =  "models/kek1ch/dev_merger.mdl";
+ITEM.Model =  "models/kek1ch/case.mdl";
 ITEM.Weight =  5;
 ITEM.FOV =  22;
 ITEM.CamPos =  Vector( 50, 50, 50 );

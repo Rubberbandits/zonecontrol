@@ -1,7 +1,6 @@
-
 ITEM.Name =  "Advanced Sewing Kit";
 ITEM.Desc =  "An unopened, plastic-sealed box of imported sewing supplies, used by the finest quilt-knitting babushkas and professional seamsters alike.";
-ITEM.Model =  "models/kek1ch/sewing_kit_b.mdl";
+ITEM.Model =  "models/kek1ch/sewing_kit_a.mdl";
 ITEM.Weight =  1.5
 ITEM.License = "T"
 ITEM.FOV =  10;

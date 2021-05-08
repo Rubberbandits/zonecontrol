@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Homemade Halva";
 ITEM.Desc =  "The crumbly working mans' treat, made from semechki and sugar.";
 ITEM.Model =  "models/kali/miscstuff/stalker/food/tourist's breakfast.mdl";

@@ -1,7 +1,6 @@
-
 ITEM.Name =  "Coffee Beans";
 ITEM.Desc =  "A box of coffee beans - rare to find these days. Boil some water and add these.";
-ITEM.Model =  "models/props_lab/box01a.mdl";
+ITEM.Model =  "models/kek1ch/dev_caffeine.mdl";
 ITEM.Weight =  0.5;
 ITEM.FOV =  9;
 ITEM.CamPos =  Vector( 50, 50, 50 );

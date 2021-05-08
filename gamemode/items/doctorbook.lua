@@ -1,6 +1,6 @@
 ITEM.Name =  "Pneumothorax in a Clinical Environment";
 ITEM.Desc =  "Russian medical literature.";
-ITEM.Model =  "models/props_lab/binderblue.mdl";
+ITEM.Model =  "models/kek1ch/notes_writing_book_1.mdl";
 ITEM.Weight =  1;
 ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );

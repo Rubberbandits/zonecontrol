@@ -1,6 +1,6 @@
 ITEM.Name =  "Scrap Fabric";
 ITEM.Desc =  "A pile of cloth ripped up into patch-size sheets.";
-ITEM.Model =  "models/props_lab/box01a.mdl";
+ITEM.Model =  "models/kek1ch/textile_patch_m.mdl"
 ITEM.Weight =  0.25;
 ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );

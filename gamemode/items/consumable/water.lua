@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Canned Water";
 ITEM.Desc =  "Purified water in a can.";
 ITEM.Model =  "models/props_junk/PopCan01a.mdl";

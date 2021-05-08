@@ -1,6 +1,6 @@
 ITEM.Name =  "PDA Decryption System";
 ITEM.Desc =  "A custom FPGA with an unlocked CPU, no thermal limits and extremely high chance of frying itself after use. Uses the latest in secret government research to defeat high level encryption. Requires some specialist knowledge.";
-ITEM.Model =  "models/stalker/item/handhelds/mini_pda.mdl";
+ITEM.Model =  "models/kek1ch/dev_decoder.mdl";
 ITEM.Weight =  0.5;
 ITEM.License = "T"
 ITEM.FOV =  12;

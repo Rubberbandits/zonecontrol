@@ -1,6 +1,6 @@
 ITEM.Name = "Basic quality parts"
-ITEM.Desc = "A basic set of weapon and suit parts gathered in a storage container. It does the job well enough."
-ITEM.Model = "models/props_junk/cardboard_box004a.mdl"
+ITEM.Desc = "A basic set of weapon and suit parts gathered in a duffelbag. It does the job well enough."
+ITEM.Model = "models/kek1ch/conventer_grenade_box.mdl"
 ITEM.Weight = 1
 ITEM.License = "T"
 ITEM.RaiseCondition = 25

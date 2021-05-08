@@ -1,6 +1,6 @@
 ITEM.Name =  "Mini Sewing Machine";
 ITEM.Desc =  "A portable sewing machine, luckily still intact.";
-ITEM.Model =  "models/props_lab/harddrive01.mdl";
+ITEM.Model =  "models/kek1ch/dev_merger.mdl"
 ITEM.Weight =  1.5;
 ITEM.License = "TX"
 ITEM.SuitOnly = true

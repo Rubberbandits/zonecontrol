@@ -1,6 +1,6 @@
 ITEM.Name =  "Dosimeter";
 ITEM.Desc =  "One of the many civilian dosimeters that were widely handed out when the world feared nuclear annihilation. Used to track exposure to radiation.";
-ITEM.Model =  "models/props_c17/TrapPropeller_Lever.mdl";
+ITEM.Model =  "models/kek1ch/dev_detector_0_samodel.mdl";
 ITEM.Weight =  0.1;
 ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );

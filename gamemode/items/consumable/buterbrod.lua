@@ -1,7 +1,6 @@
-
 ITEM.Name =  "Buterbrod";
 ITEM.Desc =  "Butterbread. Rye bread slathered with butter, stacked with cheese and sausage, and topped finally by a generous dollop of mayonez.";
-ITEM.Model =  "models/kali/miscstuff/stalker/food/bread.mdl";
+ITEM.Model =  "models/kek1ch/snork_food.mdl";
 ITEM.Weight =  0.5;
 ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );

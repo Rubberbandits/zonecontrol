@@ -1,6 +1,6 @@
 ITEM.Name =  "Heavy Case";
 ITEM.Desc =  "A locked case. You can only guess what's inside, but it's heavy as all hell. This must be worth your trouble.";
-ITEM.Model =  "models/z-o-m-b-i-e/st/box/st_box_metall_01.mdl";
+ITEM.Model =  "models/z-o-m-b-i-e/st/equipment_cache/st_equipment_seif_04.mdl";
 ITEM.Weight =  5;
 ITEM.FOV =  20;
 ITEM.CamPos =  Vector( 50, 50, 50 );

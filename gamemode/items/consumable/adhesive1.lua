@@ -1,6 +1,6 @@
 ITEM.Name =  "Zviezda Glue";
 ITEM.Desc =  "A half-empty tube of glue most commonly used for suit and weapon repairs.";
-ITEM.Model =  "models/box_condensers.mdl";
+ITEM.Model =  "models/kek1ch/glue_e.mdl";
 ITEM.Weight =  0.1;
 ITEM.FOV =  9;
 ITEM.CamPos =  Vector( 50, 50, 50 );

@@ -5,7 +5,6 @@ ITEM.Weight =  0.5;
 ITEM.FOV =  9;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
-ITEM.BulkPrice =  12500
 ITEM.W = 1
 ITEM.H = 1
 ITEM.Rarity = 4
@@ -13,5 +12,5 @@ ITEM.AllowRandomSpawn = false
 ITEM.IsSellable = true
 
 function ITEM:GetSellPrice()
-	return 2500
+	return 600
 end

@@ -1,6 +1,6 @@
 ITEM.Name =  "Beans";
 ITEM.Desc =  "A dinged-up can of baked beans. It's still perfectly sealed.";
-ITEM.Model =  "models/props_junk/garbage_metalcan001a.mdl";
+ITEM.Model =  "models/kek1ch/dev_beans.mdl";
 ITEM.Weight =  0.5;
 ITEM.FOV =  7;
 ITEM.CamPos =  Vector( 50, 50, 50 );
