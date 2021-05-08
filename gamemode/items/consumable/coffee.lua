@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Coffee";
 ITEM.Desc =  "A stone cold mug of black coffee.";
 ITEM.Model =  "models/props_junk/garbage_coffeemug001a.mdl";
