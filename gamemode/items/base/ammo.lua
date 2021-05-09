@@ -2,6 +2,7 @@
 BASE.W = 2
 BASE.H = 1
 BASE.Stackable = true
+BASE.IsSellable = true
 BASE.Vars = {
 	Amount = 30,
 }
