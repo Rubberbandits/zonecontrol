@@ -347,7 +347,7 @@ GM.GearSelection = {
 GM.DefaultSelfRepairCond = 80
 
 GM.RubleBudget = 9500;
-GM.SellPercentage = 70;
+GM.SellPercentage = 80;
 
 GM.StalkerCursorEnabled = false
 

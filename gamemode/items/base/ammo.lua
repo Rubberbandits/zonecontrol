@@ -67,3 +67,7 @@ function BASE:AddItemToStack(item)
 		self:SetVar("Amount", self:GetVar("Amount", 0) + metaitem.Vars.Amount, nil, true)
 	end
 end
+
+function BASE:GetSellPrice()
+	return (self.BulkPrice / 5) * (GAMEMODE.SellPercentage / 100) * (self:GetVar("Amount", 0) / GAMEMODE:GetItemByID(self:GetClass()).Vars.Amount)
+end
