@@ -1,6 +1,6 @@
 ITEM.Name = "Low quality parts"
 ITEM.Desc = "A low end set of weapon and suit parts gathered in a small duffel. Not particularly effective for firearms but common throughout the Zone."
-ITEM.Model = "models/kek1ch/armor_repair_pro.mdl"
+ITEM.Model = "models/kek1ch/helmet_repair.mdl"
 ITEM.Weight = 0.75
 ITEM.License = "T"
 ITEM.RaiseCondition = 20
