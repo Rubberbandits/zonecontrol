@@ -8,7 +8,6 @@ ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.BulkPrice =  50;
 ITEM.License = "TX"
 ITEM.RaiseCondition = 3;
-ITEM.WeaponOnly = true
 ITEM.W = 1
 ITEM.H = 2
 ITEM.Rarity = 1

@@ -50,6 +50,7 @@ UPGRADE.RequiredUpgrade = "psz_weight_distro";
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "intrm_toolkit", 1, false },
-	{ "parts_suit", 3, true },
+	{ "intrm_sewkit", 1, false },
+	{ "sewing_machine", 1, false },
+	{ "kevlartape", 2, true },
 };

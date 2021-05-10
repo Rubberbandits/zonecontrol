@@ -36,6 +36,7 @@ UPGRADE.RequiredUpgrade = "io7_synth_mats"
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "adv_toolkit", 1, false },
-	{ "parts_suit", 3, true },
+	{ "adv_sewkit", 1, false },
+	{ "scrapmetal", 2, true },
+	{ "thread", 1, true },
 };

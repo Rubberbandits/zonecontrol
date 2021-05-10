@@ -31,6 +31,8 @@ UPGRADE.Incompatible = {
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "intrm_toolkit", 1, false },
-	{ "parts_suit", 2, true },
+	{ "intrm_sewkit", 1, false },
+	{ "sewing_machine", 1, false },
+	{ "kevlartape", 3, true },
+	{ "boots_good", 1, true },
 };

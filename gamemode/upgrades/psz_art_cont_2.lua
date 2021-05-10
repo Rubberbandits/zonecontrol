@@ -26,6 +26,7 @@ UPGRADE.RequiredUpgrade = "psz_art_cont_1"
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "adv_toolkit", 1, false },
-	{ "parts_suit", 3, true },
+	{ "adv_sewkit", 1, false },
+	{ "solder", 1, false },
+	{ "scrapmetal", 3, true},
 };

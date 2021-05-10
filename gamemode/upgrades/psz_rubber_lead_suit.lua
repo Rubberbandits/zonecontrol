@@ -33,6 +33,8 @@ UPGRADE.RequiredUpgrade = "psz_rubber_suit";
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "adv_toolkit", 1, false },
-	{ "parts_suit", 4, true },
+	{ "adv_sewkit", 1, false },
+	{ "sewing_machine", 1, false },
+	{ "scrapmetal", 3, true },
+	{ "boots", 1, true },
 };

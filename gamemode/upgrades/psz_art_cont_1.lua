@@ -29,6 +29,7 @@ UPGRADE.Incompatible = {
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "intrm_toolkit", 1, false },
-	{ "parts_suit", 2, true },
+	{ "intrm_sewkit", 1, false },
+	{ "solder", 1, false },
+	{ "scrapmetal", 3, true},
 };
