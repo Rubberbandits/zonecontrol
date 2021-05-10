@@ -35,3 +35,4 @@ UPGRADE.RequiredItems = {
 	{ "intrm_sewkit", 1, false },
 	{ "sewing_machine", 1, false },
 	{ "thread", 3, true },
+}

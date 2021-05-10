@@ -38,7 +38,6 @@ UPGRADE.RequiredUpgrade = "psz_trauma_pad"
 UPGRADE.RequiredItems = {
 	{ "adv_sewkit", 1, false },
 	{ "sewing_machine", 1, false },
-	{ "thread", 2, true }
+	{ "thread", 2, true },
 	{ "kevlartape", 2, true },
-
 };
