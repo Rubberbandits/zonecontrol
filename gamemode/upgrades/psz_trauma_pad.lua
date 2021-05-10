@@ -32,6 +32,6 @@ UPGRADE.RequiredUpgrade = "psz_poly_layers"
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "intrm_toolkit", 1, false },
-	{ "parts_suit", 2, true },
-};
+	{ "intrm_sewkit", 1, false },
+	{ "sewing_machine", 1, false },
+	{ "thread", 3, true },

@@ -36,6 +36,9 @@ UPGRADE.RequiredUpgrade = "psz_trauma_pad"
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "adv_toolkit", 1, false },
-	{ "parts_suit", 3, true },
+	{ "adv_sewkit", 1, false },
+	{ "sewing_machine", 1, false },
+	{ "thread", 2, true }
+	{ "kevlartape", 2, true },
+
 };
