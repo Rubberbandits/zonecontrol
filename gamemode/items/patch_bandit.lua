@@ -1,5 +1,5 @@
 ITEM.Name			= "Bandit Patch";
-ITEM.Description	= "A patch representing the Brotherhood faction. Many disorganized clans fall under this familiar banner.";
+ITEM.Desc	= "A patch representing the Brotherhood faction. Many disorganized clans fall under this familiar banner.";
 ITEM.Model			= "models/kek1ch/tfw_badge_bandit.mdl";
 ITEM.Weight 		= 0.1
 ITEM.FOV 			= 5;

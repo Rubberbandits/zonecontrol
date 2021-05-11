@@ -1,5 +1,5 @@
 ITEM.Name			= "Ecologist Patch";
-ITEM.Description	= "A patch representing the Ecologist faction. Funded by and operating on behalf of the Ukrainian government, the Ekolog study the Zone and it's anomalies.";
+ITEM.Desc	= "A patch representing the Ecologist faction. Funded by and operating on behalf of the Ukrainian government, the Ekolog study the Zone and it's anomalies.";
 ITEM.Model			= "models/kek1ch/tfw_scientist.mdl";
 ITEM.Weight 		= 0.1;
 ITEM.FOV 			= 5;

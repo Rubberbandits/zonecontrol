@@ -28,6 +28,8 @@ UPGRADE.RequiredUpgrade = "sunrise_segmented_armor"
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "adv_toolkit", 1, false },
-	{ "parts_suit", 3, true },
+	{ "adv_sewkit", 1, false },
+	{ "scrapmetal", 2, true },
+	{ "kevlartape", 1, true },
+	{ "thread", 1, true },
 };
