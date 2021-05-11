@@ -12,6 +12,7 @@ ITEM.UseText = "Eat"
 ITEM.HungerReduce = -1
 ITEM.Rarity = 3
 ITEM.AllowRandomSpawn = false
+ITEM.BulkPrice = 1250
 ITEM.IsSellable = true
 
 function ITEM:GetSellPrice()
