@@ -28,6 +28,8 @@ UPGRADE.RequiredUpgrade = "sunrise_extra_kevlar_layers"
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "intrm_toolkit", 1, false },
-	{ "parts_suit", 2, true },
+	{ "intrm_sewkit", 1, false },
+	{ "scrapmetal", 2, true },
+	{ "scrapfabric", 2, true },
+	{ "thread", 1, true },
 };

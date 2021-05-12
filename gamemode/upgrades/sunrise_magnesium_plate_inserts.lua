@@ -36,6 +36,7 @@ UPGRADE.RequiredUpgrade = "sunrise_synthetic_materials_replacement";
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "intrm_toolkit", 1, false },
-	{ "parts_suit", 3, true },
+	{ "intrm_sewkit", 1, false },
+	{ "scrapmetal", 4, true },
+	{ "thread", 3, true },
 };

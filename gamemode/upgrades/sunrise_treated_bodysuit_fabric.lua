@@ -37,6 +37,8 @@ UPGRADE.RequiredUpgrade = "sunrise_magnesium_plate_inserts";
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "adv_toolkit", 1, false },
-	{ "parts_suit", 3, true },
+	{ "adv_sewkit", 1, false },
+	{ "scrapfabric", 4, true },
+	{ "thread", 3, true },
+	{ "kevlartape", 1, true },
 };
