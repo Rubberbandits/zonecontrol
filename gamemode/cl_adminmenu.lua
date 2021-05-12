@@ -284,9 +284,7 @@ function GM:AdminCreateStockpileMenu( name, inv, id )
 	CCP.StockpileMenu.InvButtons = {};
 	CCP.StockpileMenu.ID = id;
 
-	SortedPairsByMemberValue(inv, "Name")
-
-	for k,v in SortedPairsByMemberValue(inv, "Name") do
+	for k,v in SortedPairsByMemberValue(inv, "ItemClass") do
 	
 		local i = GAMEMODE:GetItemByID( v.ItemClass );
 		local vars = util.JSONToTable(v.Vars)
