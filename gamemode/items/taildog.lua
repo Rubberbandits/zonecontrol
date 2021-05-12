@@ -9,6 +9,7 @@ ITEM.W = 1
 ITEM.H = 1
 ITEM.Rarity = 2
 ITEM.AllowRandomSpawn = false
+ITEM.BulkPrice = 500
 ITEM.IsSellable = true
 
 function ITEM:GetSellPrice()

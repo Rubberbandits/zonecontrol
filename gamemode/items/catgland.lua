@@ -7,6 +7,7 @@ ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.Rarity = 3
 ITEM.AllowRandomSpawn = false
+ITEM.BulkPrice = 500
 ITEM.IsSellable = true
 
 function ITEM:GetSellPrice()
