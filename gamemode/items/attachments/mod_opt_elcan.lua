@@ -11,3 +11,5 @@ ITEM.AttachmentSlot = "optic"
 ITEM.Weight = 0.25
 ITEM.Rarity = 5
 ITEM.AllowRandomSpawn = false
+ITEM.IsSellable = true
+ITEM.BulkPrice = 37500
