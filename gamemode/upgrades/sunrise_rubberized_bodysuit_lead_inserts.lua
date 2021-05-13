@@ -35,6 +35,7 @@ UPGRADE.RequiredUpgrade = "sunrise_polymer_internal_layer";
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "adv_toolkit", 1, false },
-	{ "parts_suit", 4, true },
+	{ "adv_sewkit", 1, false },
+	{ "scrapfabric", 4, true },
+	{ "thread", 3, true },
 };

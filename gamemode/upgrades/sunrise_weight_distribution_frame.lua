@@ -28,6 +28,7 @@ UPGRADE.RequiredUpgrade = "sunrise_artifact_container_1";
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "intrm_toolkit", 1, false },
-	{ "parts_suit", 2, true },
+	{ "intrm_sewkit", 1, false },
+	{ "buckleparts", 2, true },
+	{ "scrapfabric", 2, true },
 };

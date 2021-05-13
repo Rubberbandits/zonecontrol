@@ -15,3 +15,5 @@ ITEM.AttachmentSlot = "barrel"
 ITEM.Weight = 0.25
 ITEM.Rarity = 3
 ITEM.AllowRandomSpawn = false
+ITEM.IsSellable = true
+ITEM.BulkPrice = 37500

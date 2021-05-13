@@ -13,3 +13,5 @@ ITEM.AttachmentSlot = "foregrip"
 ITEM.Weight = 0.25
 ITEM.Rarity = 3
 ITEM.AllowRandomSpawn = true
+ITEM.IsSellable = true
+ITEM.BulkPrice = 7500
