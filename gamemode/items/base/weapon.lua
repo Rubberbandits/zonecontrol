@@ -329,7 +329,7 @@ function BASE:GetSellPrice()
 	local mods_modifier = (GAMEMODE.ModSalesModifier / 100) * table.Count(self:GetVar("Upgrades", {}))
 	local attach_modifier = (GAMEMODE.ModSalesModifier / 100) * table.Count(self:GetVar("CurrentAttachments", {}))
 	local mods_attach_modifier = mods_modifier + attach_modifier
-	local liquid_price = ((GAMEMODE.SellPercentage / 100) * (base_price + (base_price * mods_attach_modifier))) * (self:GetVar("Durability", 0) / 100)
+	local liquid_price = (( 0.33 ) * (base_price + (base_price * mods_attach_modifier))) * (self:GetVar("Durability", 0) / 100)
 	
 	return math.Round(liquid_price)
 end
