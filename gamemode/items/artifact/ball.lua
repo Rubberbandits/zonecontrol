@@ -4,9 +4,9 @@ ITEM.Desc =  "An agile and bouncy artifact. Not much data on it's formation, but
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/flame.mdl"
 
 ITEM.ItemSubmaterials = {
-{ 0 , "models/shadertest/predator" }
-{ 1 , "models/tnb/artifacts/jellyfish1" }
-{ 2 , "Models/effects/vol_light001" }
+	{ 0 , "models/shadertest/predator" },
+	{ 1 , "models/tnb/artifacts/jellyfish1" },
+	{ 2 , "Models/effects/vol_light001" }
 }
 
 ITEM.Tier =  1

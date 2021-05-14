@@ -17,6 +17,10 @@ BASE.functions.Equip = {
 		end
 
 		item:SetVar( "Equipped", true );
+
+		if SERVER then
+			hook.Run("UpdateEncumberance", item:Owner(), item)
+		end
 		
 		return true
 		
@@ -49,6 +53,10 @@ BASE.functions.Unequip = {
 		end
 	
 		item:SetVar( "Equipped", false );
+		if SERVER then
+			hook.Run("UpdateEncumberance", item:Owner(), item)
+		end
+
 		return true
 		
 	end,
@@ -91,4 +99,7 @@ function BASE:GetSellPrice()
 end
 function BASE:GetArmorValues()
 	return self.ArmorValues or {}
+end
+function BASE:GetCarryWeight()
+	return (self:GetVar("Equipped", false) and self.CarryAdd) or 0
 end
