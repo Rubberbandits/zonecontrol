@@ -92,3 +92,6 @@ end
 function BASE:GetArmorValues()
 	return self.ArmorValues or {}
 end
+function BASE:GetCarryWeight()
+	return (self:GetVar("Equipped", false) and self.CarryAdd) or 0
+end
