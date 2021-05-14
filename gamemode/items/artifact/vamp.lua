@@ -1,10 +1,10 @@
 ITEM.Base = "artifact"
 ITEM.Name =  "Vamp"
-ITEM.Desc =  "A gold ring set in stone. You feel cold with it in your possession. After short periods of use, users become anaemic. It is a tested insulator, with experimentation proving it to have anti-psychotic properties."
+ITEM.Desc =  "A gold ring set in stone. You feel cold with it in your possession, protected from harsh hot elements. After short periods of use, users become anaemic. It is a tested insulator, with experimentation proving it to have anti-psychotic properties."
 ITEM.Model =  "models/tnb/stalker/artifacts/slime.mdl"
 ITEM.Tier =  1
-ITEM.Weight =  .5;
-
+ITEM.Weight =  0.5;
+ITEM.BulkPrice = 24000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

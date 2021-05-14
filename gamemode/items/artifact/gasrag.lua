@@ -3,6 +3,7 @@ ITEM.Name =  "Gas Rag"
 ITEM.Desc =  "A piece of cloth that smells strongly of gasoline. By nature, hanging onto this makes those who equip it very susceptible to being lit ablaze; conversely, its insulative properties are the only perceived benefit."
 ITEM.Model =  "models/kali/miscstuff/stalker/aid/bandage.mdl"
 ITEM.Tier =  2
+ITEM.BulkPrice = 30000
 ITEM.Weight =  0.5;
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
