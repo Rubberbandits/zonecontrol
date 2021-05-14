@@ -12,37 +12,37 @@ function GM:RefreshHelpMenuContent()
 		{ "Chat",
 			[[Just entering something in the chatbox will make you say it in character.
 
-        	/y - Yell
-        	/w - Whisper
+			/y - Yell
+			/w - Whisper
 			/r - Talk on your radio if you have one
-    		/me - Action
+			/me - Action
 			/lme - Loud action
-        	/it - World action
+			/it - World action
 			/lit - Loud world action
 
-        	/mask - Remove your mask or helmet, if you have a suit that also has a mask or helmet.
+			/mask - Remove your mask or helmet, if you have a suit that also has a mask or helmet.
 			/anorak (gray, white, black, brown, green) - Changes the color of your anorak if you are wearing one.
 
-        	/pda all - Send a public message to all PDA users
-        	/pda username - Send a private message to a specific PDA username (must be lowercase)
+			/pda all - Send a public message to all PDA users
+			/pda username - Send a private message to a specific PDA username (must be lowercase)
 
-        	/roll 1d20 - Roll one, twenty sided die.
-        	/roll nds - Without changing variable d, replace n for number of dice and s for number of sides.
+			/roll 1d20 - Roll one, twenty sided die.
+			/roll nds - Without changing variable d, replace n for number of dice and s for number of sides.
 
-        	// - Global OOC
-        	[[, .// - Local OOC
-        	/a - Talk to admins
-        	/pm [name] [text] - PM another player
+			// - Global OOC
+			[[, .// - Local OOC
+			/a - Talk to admins
+			/pm [name] [text] - PM another player
 
-        	/eng - Speak English.
-        	/pol - Speak Polish.
-        	/chi - Speak Chinese.
-        	/jap - Speak Japanese.
-        	/spa - Speak Spanish.
-        	/fre - Speak French.
-        	/ger - Speak German.
-        	/ita - Speak Italian.
-			
+			/eng - Speak English.
+			/pol - Speak Polish.
+			/chi - Speak Chinese.
+			/jap - Speak Japanese.
+			/spa - Speak Spanish.
+			/fre - Speak French.
+			/ger - Speak German.
+			/ita - Speak Italian.
+
 			Adding variables w and y behind language or radio commands will react accordingly, i.e. /engy to yell in English and /rw to whisper over radio.]] },
 		{ "Binds", [[F1 - Open help menu.
 		F2 - Open character menu.
