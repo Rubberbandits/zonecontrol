@@ -390,7 +390,7 @@ local RandomPlayerRelatedStrings = {
 	"%s, are you new here?",
 	"Hey %s, what happened to that Russian Playboy I loaned you?",
 	"%s",
-	"Watch out, %s. You will become a zombie and the last thing you will see is my shotgun barrel",
+	"Watch out, %s. You will become a zombie and the last thing you will see is my shotgun barrel.",
 	"Hey, %s. Want to be friends?",
 	"What the fuck did you just fucking say about me, %s?",
 	"I think I just saw %s. Are the stories true?",
@@ -399,13 +399,11 @@ local RandomPlayerRelatedStrings = {
 local RandomNPCRelatedStrings = {
 	"Anyone seen a %s around here? Thought I heard one a minute ago.",
 	"Just took down a %s. What a bastard.",
-	"Stay alert. I hear %s.",
+	"Stay alert. I hear a %s.",
 	"Seems like every day I wake up and find a %s in my tent.",
-	"Damn %ss! They left a mess all over the place.",
-	"Need help! We are pinned down by a %s!",
+	"Damn %s! It left a mess all over the place.",
 	"Check that out, %s is  getting closer.",
 	"Is that... a %s over there?...",
-	"To anyone reading this, a large group of %s is surrounding my position, I really need some help...",
 }
 
 local RandomItemRelatedStrings = {
@@ -834,7 +832,7 @@ local function RandomPDAMessages()
 	if !kingston.blowout.can_use_pda() then return end
 
 	if !GAMEMODE.NextRandomPDA then
-		GAMEMODE.NextRandomPDA = CurTime() + math.random(180, 300)
+		GAMEMODE.NextRandomPDA = CurTime() + math.random(300, 600)
 	end
 
 	if GAMEMODE.NextRandomPDA <= CurTime() then
