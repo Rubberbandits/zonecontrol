@@ -1,7 +1,6 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Sword"
-ITEM.Desc =  "This jealous thing's passion is to poke you -- in fact, so much so, it toughens skin prior to puncture from exterior sources."
+ITEM.Desc =  "This jealous thing's passion is to poke you; in fact, so much so, it toughens skin prior to puncture from exterior sources."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/night star.mdl"
 
 ITEM.ItemSubmaterials = {
@@ -9,8 +8,8 @@ ITEM.ItemSubmaterials = {
 { 1 , "models/props_debris/plasterwall039c" }
 }
 
-ITEM.Tier =  2
-ITEM.Weight =  1;
+ITEM.Tier =  1
+ITEM.Weight =  0.5;
 ITEM.BulkPrice =  7500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
@@ -19,7 +18,7 @@ ITEM.ArmorValues = {
     [DMG_CLUB] = 1,
     [DMG_VEHICLE] = 1,
     -- "Rupture" (sharp)
-    [DMG_SLASH] = .6,
+    [DMG_SLASH] = 0.5,
     -- "Bulletproof"
     [DMG_BULLET] = 1,
     -- "Explosion"
@@ -28,9 +27,9 @@ ITEM.ArmorValues = {
     [DMG_BURN] = 1,
     [DMG_SLOWBURN] = 1,
     -- "Chemical Burn"
-    [DMG_ACID] = .7,
-    [DMG_POISON] = .7,
-    [DMG_NERVEGAS] = .7,
+    [DMG_ACID] = 1,
+    [DMG_POISON] = 1,
+    [DMG_NERVEGAS] = 1,
     -- "Electric Shock"
     [DMG_SHOCK] = 1,
     -- "Radiation"

@@ -1,19 +1,19 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Goldfish"
-ITEM.Desc =  "A deadspace pocket of focused gravitational energy turned in on itself. Physically it is almost indescribable; the closest one can come is its superficial resemblance to a human stomach. Its surface is grey and reflective, yet shimmers with vigor like a disturbed pool of water. Emits radiation."
+ITEM.Desc =  "A deadspace pocket of focused gravitational energy turned in on itself. Physically it is almost indescribable; the closest one can come is its superficial resemblance to a human stomach. Its surface is grey and reflective, yet shimmers with vigor like a disturbed pool of water. Known to make users sensitive to radiation, though it invigorates them with an unrealized strength."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/goldfish.mdl"
 ITEM.Tier =  2
-ITEM.Weight =  1;
-ITEM.BulkPrice =  75000
+ITEM.Weight =  0.5;
+ITEM.BulkPrice =  50000
+ITEM.CarryAdd		= 10;
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
-    [DMG_CRUSH] = .95,
-    [DMG_FALL] = .95,
-    [DMG_CLUB] = .95,
-    [DMG_VEHICLE] = .95,
+    [DMG_CRUSH] = 1,
+    [DMG_FALL] = 1,
+    [DMG_CLUB] = 1,
+    [DMG_VEHICLE] = 1,
     -- "Rupture" (sharp)
-    [DMG_SLASH] = .8,
+    [DMG_SLASH] = 1,
     -- "Bulletproof"
     [DMG_BULLET] = 1,
     -- "Explosion"

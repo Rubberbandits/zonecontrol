@@ -1,10 +1,9 @@
-
 ITEM.Base = "artifact"
-ITEM.Name =  "Rag"
-ITEM.Desc =  "A piece of cloth. Smells of gasoline."
+ITEM.Name =  "Gas Rag"
+ITEM.Desc =  "A piece of cloth that smells strongly of gasoline. By nature, hanging onto this makes those who equip it very susceptible to being lit ablaze; conversely, its insulative properties are the only perceived benefit."
 ITEM.Model =  "models/kali/miscstuff/stalker/aid/bandage.mdl"
-ITEM.Tier =  0
-ITEM.Weight =  .5;
+ITEM.Tier =  2
+ITEM.Weight =  0.5;
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -25,7 +24,7 @@ ITEM.ArmorValues = {
     [DMG_POISON] = 1,
     [DMG_NERVEGAS] = 1,
     -- "Electric Shock"
-    [DMG_SHOCK] = 2,
+    [DMG_SHOCK] = 0.5,
     -- "Radiation"
     [DMG_RADIATION] = 1,
     -- "Psychic"

@@ -1,11 +1,10 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Snowflake"
-ITEM.Desc =  "A convincing facsimile of serrated, bluish-white ice crystals. Constantly emits a numbing mist of cold and causes condensation all around it. Reacts violently with other artifacts and saps the warmth from the body. Emits radiation."
+ITEM.Desc =  "A convincing facsimile of serrated, bluish-white ice crystals. Constantly emits a numbing mist of cold and causes condensation all around it. Reacts violently with other artifacts and saps the warmth from the body, especially helpful for Burner spelunking. Makes users more prone to radiation."
 ITEM.Model =  "models/tnb/stalker/artifacts/snowflake.mdl"
-ITEM.Tier =  1
-ITEM.Weight =  1;
-ITEM.BulkPrice =  75000
+ITEM.Tier =  2
+ITEM.Weight =  0.5;
+ITEM.BulkPrice =  50000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -19,8 +18,8 @@ ITEM.ArmorValues = {
     -- "Explosion"
     [DMG_BLAST] = 1.1,
     -- "Thermal"
-    [DMG_BURN] = .85,
-    [DMG_SLOWBURN] = .85,
+    [DMG_BURN] = 0.85,
+    [DMG_SLOWBURN] = 0.85,
     -- "Chemical Burn"
     [DMG_ACID] = 1,
     [DMG_POISON] = 1,

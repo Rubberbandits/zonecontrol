@@ -1,7 +1,6 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Cro-Magnon"
-ITEM.Desc =  "Flesh-coated remainder of an ancient being. When close, you can hear it's whispers."
+ITEM.Desc =  "Flesh-coated remainder of an ancient being. When close, you can hear it's whispers. Ironically, it's rumoured that its only benefit are anti-psychic properties."
 ITEM.Model =  "models/Gibs/HGIBS.mdl"
 
 ITEM.ItemSubmaterials = {
@@ -9,7 +8,7 @@ ITEM.ItemSubmaterials = {
 }
 
 ITEM.Tier =  1
-ITEM.Weight =  1;
+ITEM.Weight =  0.5
 ITEM.BulkPrice =  22500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
@@ -35,5 +34,5 @@ ITEM.ArmorValues = {
     -- "Radiation"
     [DMG_RADIATION] = 1,
     -- "Psychic"
-    [DMG_PARALYZE] = .75,
+    [DMG_PARALYZE] = 0.75,
 }

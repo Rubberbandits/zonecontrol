@@ -1,10 +1,9 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Pellicle"
 ITEM.Desc =  "An unidentifiable aqua-colored substrate with iridescent properties. Its surface is striated and contoured, stretched thin by anomalous processes. Exhibits gravimetric properties and insulates from acid burns by changing the makeup of the skin."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/bubble.mdl"
 ITEM.Tier =  2
-ITEM.Weight =  1;
+ITEM.Weight =  0.5;
 ITEM.BulkPrice =  40000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
@@ -22,9 +21,9 @@ ITEM.ArmorValues = {
     [DMG_BURN] = 1,
     [DMG_SLOWBURN] = 1,
     -- "Chemical Burn"
-    [DMG_ACID] = .7,
-    [DMG_POISON] = .7,
-    [DMG_NERVEGAS] = .7,
+    [DMG_ACID] = 0.65,
+    [DMG_POISON] = 0.65,
+    [DMG_NERVEGAS] = 0.65,
     -- "Electric Shock"
     [DMG_SHOCK] = 1,
     -- "Radiation"

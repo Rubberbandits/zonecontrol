@@ -1,10 +1,9 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Sparkler"
-ITEM.Desc =  "Hardened brown discharge preserved by anomalous forces. Generates strong electromagnetic forces and a static field. Bright energy currents flow across its surface at varying speeds and then dissipate. Emanates occasional metallic ringing noises."
-ITEM.Model =  "models/tnb/stalker/artifacts/sparkler.mdl"
+ITEM.Desc =  "Hardened discharge preserved by anomalous forces. Generates strong electromagnetic forces and a static field, attracting electricity to itself and slightly protecting the wielder. Bright energy currents flow across its surface at varying speeds and then dissipate. Emanates occasional metallic ringing noises. Users are slightly more conductive to radiation with this."
+ITEM.Model =  "models/tnb/stalker/artifacts/static.mdl"
 ITEM.Tier =  1
-ITEM.Weight =  1;
+ITEM.Weight =  0.5;
 ITEM.BulkPrice =  7500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
@@ -26,7 +25,7 @@ ITEM.ArmorValues = {
     [DMG_POISON] = 1,
     [DMG_NERVEGAS] = 1,
     -- "Electric Shock"
-    [DMG_SHOCK] = .8,
+    [DMG_SHOCK] = 0.8,
     -- "Radiation"
     [DMG_RADIATION] = 1.2,
     -- "Psychic"

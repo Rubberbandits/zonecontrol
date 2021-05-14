@@ -1,10 +1,9 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Kolobok"
-ITEM.Desc =  "A spiky ball of bristles seemingly held together by nothing. The spines vary in color, usually black or brown and can be smooth and hair-like or as sharp and rigid as spikes. On occasion, a necrotic green glow can be seen in the center. Possesses incredible healing capabilities. Emits radiation."
-ITEM.Model =  "models/tnb/stalker/artifacts/kolobok.mdl"
-ITEM.Tier =  1
-ITEM.Weight =  1;
+ITEM.Desc =  "A relatively rare artifact which forms in areas contaminated with chemicals, Kolobok is highly valued for its ability to heal wounds of any kind in mere minutes. For unknown reasons, scientists are spreading rumors among stalkers that the artifact interacts with the bearer's genetic code. Toughens skin."
+ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/kolobok.mdl"
+ITEM.Tier =  2
+ITEM.Weight =  0.5;
 ITEM.BulkPrice =  30000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
@@ -13,7 +12,7 @@ ITEM.ArmorValues = {
     [DMG_CLUB] = 1,
     [DMG_VEHICLE] = 1,
     -- "Rupture" (sharp)
-    [DMG_SLASH] = .8,
+    [DMG_SLASH] = 0.8,
     -- "Bulletproof"
     [DMG_BULLET] = 1,
     -- "Explosion"
@@ -28,7 +27,7 @@ ITEM.ArmorValues = {
     -- "Electric Shock"
     [DMG_SHOCK] = 1,
     -- "Radiation"
-    [DMG_RADIATION] = 1.15,
+    [DMG_RADIATION] = 1,
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }

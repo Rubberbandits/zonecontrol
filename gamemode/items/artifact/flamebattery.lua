@@ -1,10 +1,9 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Flame Battery"
-ITEM.Desc =  "A Battery burned to a cinder. Vaguely shaped like a harp, thin strands of electrostatic material stretch to connect each curve. The texture is rough and corrugated like metal, yet quite light. The surface is lined with glowing reddish cracks that emit ash and embers."
+ITEM.Desc =  "A Battery burned to a cinder. Seemingly a vessel for radiation, this Zone beauty is vaguely shaped like a harp, thin strands of electrostatic material stretch to connect each curve decorating it. The texture is rough and corrugated like metal, yet light and lined with glowing reddish cracks that emit ash and embers on its surface. Rumoured to offer burn protection."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/battery.mdl"
-ITEM.Tier =  1
-ITEM.Weight =  1;
+ITEM.Tier =  2
+ITEM.Weight =  0.5;
 ITEM.BulkPrice =  40000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
@@ -19,8 +18,8 @@ ITEM.ArmorValues = {
     -- "Explosion"
     [DMG_BLAST] = 1,
     -- "Thermal"
-    [DMG_BURN] = .7,
-    [DMG_SLOWBURN] = .7,
+    [DMG_BURN] = 0.7,
+    [DMG_SLOWBURN] = 0.7,
     -- "Chemical Burn"
     [DMG_ACID] = 1,
     [DMG_POISON] = 1,

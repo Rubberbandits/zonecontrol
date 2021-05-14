@@ -1,10 +1,9 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Urchin"
 ITEM.Desc =  "A rare byproduct of the Burnt Fuzz anomaly. A tiny ball of ashen-brown quills formed around a zero-density core. Theorized to be formed from the ionization and polarization of anomalous materials at a critical stability. Filters away radiation at the expense of high blood pressure and hemophilia."
 ITEM.Model =  "models/tnb/stalker/artifacts/urchin.mdl"
-ITEM.Tier =  1
-ITEM.Weight =  1;
+ITEM.Tier =  2
+ITEM.Weight =  0.5;
 ITEM.BulkPrice =  40000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
@@ -13,11 +12,11 @@ ITEM.ArmorValues = {
     [DMG_CLUB] = 1,
     [DMG_VEHICLE] = 1,
     -- "Rupture" (sharp)
-    [DMG_SLASH] = 1,
+    [DMG_SLASH] = 2,
     -- "Bulletproof"
     [DMG_BULLET] = 1.2,
     -- "Explosion"
-    [DMG_BLAST] = 1,
+    [DMG_BLAST] = 1.2,
     -- "Thermal"
     [DMG_BURN] = 1,
     [DMG_SLOWBURN] = 1,
@@ -28,7 +27,7 @@ ITEM.ArmorValues = {
     -- "Electric Shock"
     [DMG_SHOCK] = 1,
     -- "Radiation"
-    [DMG_RADIATION] = .7,
+    [DMG_RADIATION] = 0.7,
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }

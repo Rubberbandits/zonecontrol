@@ -1,11 +1,10 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Jellyfish"
-ITEM.Desc =  "One of the most common artifacts in the Zone. An intertwining web of ossified matter that has a strange energy emanating from its center. Widespread and not very valuable, but has the pleasant quality of something familiar. Emits radiation."
+ITEM.Desc =  "This gravitational artifact attracts and absorbs radioactive particles, reducing the effects of radiation on the body. Very common in the Zone and not very valuable, it is unofficially used outside the Zone for treating acute radiation sickness in exceptional circumstances. Holders report pleasant thoughts and show unbothered demeanors with it, but are capable of withdrawing from those positive effects if exposed for long periods of time."
 ITEM.Model =  "models/tnb/stalker/artifacts/jellyfish.mdl"
 ITEM.Tier =  1
-ITEM.Weight =  1;
-ITEM.BulkPrice =  4000
+ITEM.Weight =  0.5;
+ITEM.BulkPrice =  5000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -15,7 +14,7 @@ ITEM.ArmorValues = {
     -- "Rupture" (sharp)
     [DMG_SLASH] = 1,
     -- "Bulletproof"
-    [DMG_BULLET] = .95,
+    [DMG_BULLET] = 1,
     -- "Explosion"
     [DMG_BLAST] = 1,
     -- "Thermal"
@@ -28,7 +27,7 @@ ITEM.ArmorValues = {
     -- "Electric Shock"
     [DMG_SHOCK] = 1,
     -- "Radiation"
-    [DMG_RADIATION] = 1,
+    [DMG_RADIATION] = 0.85,
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }

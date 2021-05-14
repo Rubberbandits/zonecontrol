@@ -1,7 +1,6 @@
-
 ITEM.Base = "artifact"
-ITEM.Name =  "Fabergé egg"
-ITEM.Desc =  "An elaborately decorated testament to vanity dating to the late 1800s."
+ITEM.Name =  "Fabergé Egg"
+ITEM.Desc =  "An elaborately decorated testament to Russian vanity dating to the late 1800s. It's unknown whether or not this fine ornament was birthed by the Zone, but it is reported to send users into royal delusions, perceiving themselves to be grandiose royalty or czars."
 ITEM.Model =  "models/props_phx/misc/egg.mdl"
 
 ITEM.ItemSubmaterials = {
@@ -9,7 +8,8 @@ ITEM.ItemSubmaterials = {
 }
 
 ITEM.Tier =  1
-ITEM.Weight =  .5;
+ITEM.Weight =  0.5;
+ITEM.BulkPrice = 7500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -34,5 +34,5 @@ ITEM.ArmorValues = {
     -- "Radiation"
     [DMG_RADIATION] = 1,
     -- "Psychic"
-    [DMG_PARALYZE] = 1,
+    [DMG_PARALYZE] = 2,
 }

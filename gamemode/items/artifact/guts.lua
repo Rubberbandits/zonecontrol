@@ -1,7 +1,6 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Guts"
-ITEM.Desc =  "A semi-organic amalgam of tissue and debris. Somehow, it tends to absorb supersonic shock waves."
+ITEM.Desc =  "A semi-organic amalgam of tissue and debris. Stalkers tell stories about them being the remains of victims from the first CNPP meltdowns. Somehow, it's useful in absorbing supersonic shock waves."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/stone flower.mdl"
 
 ITEM.ItemSubmaterials = {
@@ -9,8 +8,8 @@ ITEM.ItemSubmaterials = {
 { 1 , "models/props_lab/cornerunit_cloud"}
 }
 
-ITEM.Tier =  1
-ITEM.Weight =  1;
+ITEM.Tier =  2
+ITEM.Weight =  0.50;
 ITEM.BulkPrice =  40000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
@@ -23,7 +22,7 @@ ITEM.ArmorValues = {
     -- "Bulletproof"
     [DMG_BULLET] = 1,
     -- "Explosion"
-    [DMG_BLAST] = .6,
+    [DMG_BLAST] = 0.6,
     -- "Thermal"
     [DMG_BURN] = 1,
     [DMG_SLOWBURN] = 1,

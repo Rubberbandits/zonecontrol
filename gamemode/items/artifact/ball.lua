@@ -1,15 +1,17 @@
 ITEM.Base = "artifact"
-ITEM.Name =  "Snot"
-ITEM.Desc =  "An irregular-shaped ball of biotic material. It visibly suctions in radioactive particulates, wheezing like a person with a terrible could would."
+ITEM.Name =  "Ball"
+ITEM.Desc =  "An agile and bouncy artifact. Not much data on it's formation, but, is known to be found in places of electrical activity. It has no useful properties, but is not radioactive."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/flame.mdl"
 
 ITEM.ItemSubmaterials = {
-{ 0 , "models/barnacle/roots" }
+{ 0 , "models/shadertest/predator" }
+{ 1 , "models/tnb/artifacts/jellyfish1" }
+{ 2 , "Models/effects/vol_light001" }
 }
 
 ITEM.Tier =  1
-ITEM.Weight =  0.5;
-ITEM.BulkPrice =  8000
+ITEM.Weight =  0.50;
+ITEM.BulkPrice =  17500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -32,7 +34,7 @@ ITEM.ArmorValues = {
     -- "Electric Shock"
     [DMG_SHOCK] = 1,
     -- "Radiation"
-    [DMG_RADIATION] = 0.75,
+    [DMG_RADIATION] = 1,
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }

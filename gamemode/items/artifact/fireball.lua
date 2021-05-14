@@ -1,11 +1,10 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Fireball"
-ITEM.Desc =  "Living metal the color of iron encased in raw glass. Seems like it's on fire, but no noticeable flame can be seen. A Stalker's best friend with no negative effects other than slight fatigue."
-ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/fireball.mdl"
-ITEM.Tier =  1
-ITEM.Weight =  1;
-ITEM.BulkPrice =  10000
+ITEM.Desc =  "Even though the Fireball is a thermal artifact, it can be handled without fear of being burned. This artifact is valued for its ability to maintain a temperature of 75 degrees Fahrenheit within a small radius, virtually regardless of its surroundings. Seems to make holders sensitive to radiation."
+ITEM.Model =  "models/tnb/stalker/artifacts/fireball.mdl"
+ITEM.Tier =  2
+ITEM.Weight =  0.66;
+ITEM.BulkPrice =  32500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -19,8 +18,8 @@ ITEM.ArmorValues = {
     -- "Explosion"
     [DMG_BLAST] = 1,
     -- "Thermal"
-    [DMG_BURN] = .8,
-    [DMG_SLOWBURN] = .8,
+    [DMG_BURN] = 0.75,
+    [DMG_SLOWBURN] = 0.75,
     -- "Chemical Burn"
     [DMG_ACID] = 1,
     [DMG_POISON] = 1,
@@ -28,7 +27,7 @@ ITEM.ArmorValues = {
     -- "Electric Shock"
     [DMG_SHOCK] = 1,
     -- "Radiation"
-    [DMG_RADIATION] = 1.3,
+    [DMG_RADIATION] = 1.6,
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }

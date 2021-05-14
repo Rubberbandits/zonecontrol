@@ -1,10 +1,9 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Droplets"
-ITEM.Desc =  "Formed from the Burner anomaly, this artifact is tear-shaped and has a cracked, glossy substance similar to remains from a fire. Absorbs light, heat, and radiation from the environment. It has been attributed to erratic or manic-depressive behavior in Stalkers all of whom exhibit extreme fatigue."
+ITEM.Desc =  "Formed from the Burner anomaly, this artifact is tear-shaped and has a cracked, glossy substance similar to remains from a fire. Absorbs radiation from the environment, though making the holder more conductive to electricity. It has been attributed to erratic or manic-depressive behavior in Stalkers, all of whom exhibit extreme fatigue."
 ITEM.Model =  "models/tnb/stalker/artifacts/droplet.mdl"
 ITEM.Tier =  1
-ITEM.Weight =  1;
+ITEM.Weight =  0.5;
 ITEM.BulkPrice =  7500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
@@ -28,7 +27,7 @@ ITEM.ArmorValues = {
     -- "Electric Shock"
     [DMG_SHOCK] = 1.1,
     -- "Radiation"
-    [DMG_RADIATION] = .9,
+    [DMG_RADIATION] = 0.9,
     -- "Psychic"
     [DMG_PARALYZE] = 1.1,
 }

@@ -1,15 +1,15 @@
 ITEM.Base = "artifact"
-ITEM.Name =  "Snot"
-ITEM.Desc =  "An irregular-shaped ball of biotic material. It visibly suctions in radioactive particulates, wheezing like a person with a terrible could would."
-ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/flame.mdl"
+ITEM.Name =  "Cocoon"
+ITEM.Desc =  "A formation of gravitational nature. It has no useful properties, but is not radioactive and is sought after by merchants and jewellers."
+ITEM.Model =  "models/tnb/stalker/artifacts/wrenched.mdl"
 
 ITEM.ItemSubmaterials = {
-{ 0 , "models/barnacle/roots" }
+{ 0 , "models/tnb/artifacts/volt1" }
 }
 
-ITEM.Tier =  1
-ITEM.Weight =  0.5;
-ITEM.BulkPrice =  8000
+ITEM.Tier =  2
+ITEM.Weight =  0.50;
+ITEM.BulkPrice =  25000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -32,7 +32,7 @@ ITEM.ArmorValues = {
     -- "Electric Shock"
     [DMG_SHOCK] = 1,
     -- "Radiation"
-    [DMG_RADIATION] = 0.75,
+    [DMG_RADIATION] = 1,
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }

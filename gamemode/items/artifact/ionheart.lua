@@ -1,7 +1,6 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Ion's Heart"
-ITEM.Desc =  "The calcified, radioactive heart of the legendary loner Ion."
+ITEM.Desc =  "The calcified, radioactive heart of the legendary loner Ion. Those lucky enough to hold it are filled with loops of his last thoughts."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/goldfish.mdl"
 
 ITEM.ItemSubmaterials = {
@@ -9,8 +8,8 @@ ITEM.ItemSubmaterials = {
 }
 
 ITEM.Tier =  1
-ITEM.Weight =  1;
-ITEM.BulkPrice =  5000
+ITEM.Weight =  0.66;
+ITEM.BulkPrice =  100000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -33,7 +32,7 @@ ITEM.ArmorValues = {
     -- "Electric Shock"
     [DMG_SHOCK] = 1,
     -- "Radiation"
-    [DMG_RADIATION] = 1,
+    [DMG_RADIATION] = 2,
     -- "Psychic"
-    [DMG_PARALYZE] = .5,
+    [DMG_PARALYZE] = 2,
 }

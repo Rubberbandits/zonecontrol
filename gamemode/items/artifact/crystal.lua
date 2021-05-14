@@ -1,11 +1,10 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Crystal"
-ITEM.Desc =  "This artifact is formed in anomalous zones with intense thermal activity. Actively consumes excessive heat, remaining cool to the touch throughout. Emits radiation."
+ITEM.Desc =  "This artifact is formed in anomalous zones with intense thermal activity. Actively consumes excessive heat, remaining cool to the touch throughout. Seems to make the user susceptible to radiation."
 ITEM.Model =  "models/tnb/stalker/artifacts/crystal.mdl"
 ITEM.Tier =  2
-ITEM.Weight =  1;
-ITEM.BulkPrice =  7500
+ITEM.Weight =  0.50
+ITEM.BulkPrice =  24000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -15,12 +14,12 @@ ITEM.ArmorValues = {
     -- "Rupture" (sharp)
     [DMG_SLASH] = 1,
     -- "Bulletproof"
-    [DMG_BULLET] = 1.2,
+    [DMG_BULLET] = 1,
     -- "Explosion"
-    [DMG_BLAST] = 1.2,
+    [DMG_BLAST] = 1,
     -- "Thermal"
-    [DMG_BURN] = 1,
-    [DMG_SLOWBURN] = 1,
+    [DMG_BURN] = 0.7,
+    [DMG_SLOWBURN] = 0.7,
     -- "Chemical Burn"
     [DMG_ACID] = 1,
     [DMG_POISON] = 1,
@@ -28,7 +27,7 @@ ITEM.ArmorValues = {
     -- "Electric Shock"
     [DMG_SHOCK] = 1,
     -- "Radiation"
-    [DMG_RADIATION] = .7,
+    [DMG_RADIATION] = 1.3,
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }

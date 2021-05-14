@@ -1,11 +1,10 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Flash"
-ITEM.Desc =  "Pure light, stuck out of time. Encased in a dull, yet lustrous shell, it is extremely bright and scorches false after-images into the retinas when looked at. Produces light even when placed in containers or covered up. Conducts electricity away from the wielder."
+ITEM.Desc =  "Pure light, almost impossible to grasp - physically and philosophically. Encased in a dull, yet lustrous shell, it is extremely bright and scorches false after-images into the retinas when looked at. Produces light even when placed in containers or covered up. Conducts electricity away from the wielder, simultaneously suscepting them to radiation."
 ITEM.Model =  "models/tnb/stalker/artifacts/flash.mdl"
 ITEM.Tier =  1
-ITEM.Weight =  1;
-ITEM.BulkPrice =  10000 
+ITEM.Weight =  0.5;
+ITEM.BulkPrice =  22500 
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -13,9 +12,9 @@ ITEM.ArmorValues = {
     [DMG_CLUB] = 1,
     [DMG_VEHICLE] = 1,
     -- "Rupture" (sharp)
-    [DMG_SLASH] = .8,
+    [DMG_SLASH] = 1,
     -- "Bulletproof"
-    [DMG_BULLET] = .95,
+    [DMG_BULLET] = 1,
     -- "Explosion"
     [DMG_BLAST] = 1,
     -- "Thermal"
@@ -26,9 +25,9 @@ ITEM.ArmorValues = {
     [DMG_POISON] = 1,
     [DMG_NERVEGAS] = 1,
     -- "Electric Shock"
-    [DMG_SHOCK] = 1.2,
+    [DMG_SHOCK] = 0.6,
     -- "Radiation"
-    [DMG_RADIATION] = 1,
+    [DMG_RADIATION] = 1.2,
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }

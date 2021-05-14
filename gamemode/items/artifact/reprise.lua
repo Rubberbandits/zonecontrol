@@ -1,7 +1,7 @@
 
 ITEM.Base = "artifact"
 ITEM.Name =  "Reprise"
-ITEM.Desc =  "May you never know peace."
+ITEM.Desc =  "An artifact of times before the Zone. Those who wield it are typically thought-looped with a singular phrase, 'Pust' ty nikogda ne uznayesh' istinnyy mir', or 'may you never know the true world'. Stalkers with this in their belt are known to be goal-oriented, organized, and deadset on achievement. A slight brush of the blade causes one to gush blood like a waterfall."
 ITEM.Model =  "models/props/de_cbble/old_weapons/single_sword.mdl"
 
 ITEM.ItemSubmaterials = {
@@ -10,7 +10,7 @@ ITEM.ItemSubmaterials = {
 
 ITEM.Tier =  2
 ITEM.Weight =  2;
-ITEM.BulkPrice =  7500
+ITEM.BulkPrice =  24000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -35,5 +35,5 @@ ITEM.ArmorValues = {
     -- "Radiation"
     [DMG_RADIATION] = 1,
     -- "Psychic"
-    [DMG_PARALYZE] = .7,
+    [DMG_PARALYZE] = 0.7,
 }

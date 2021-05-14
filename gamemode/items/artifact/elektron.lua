@@ -1,11 +1,10 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Elektron"
-ITEM.Desc =  "A hunk of acrid crust formed around two double A batteries. They have a negative charge."
+ITEM.Desc =  "A hunk of acrid crust formed around two double A batteries with a negative charge. Users report increased skin sensitivity with acid and electricity; it possesses cooling effects and strengthens their wits, making them more sensitive to radiation."
 ITEM.Model =  "models/kali/miscstuff/stalker/aid/anti-rad.mdl"
-ITEM.Tier =  0
-ITEM.Weight =  1;
-ITEM.BulkPrice =  10000
+ITEM.Tier =  1
+ITEM.Weight =  0.50;
+ITEM.BulkPrice =  7500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -28,7 +27,7 @@ ITEM.ArmorValues = {
     -- "Electric Shock"
     [DMG_SHOCK] = 0.8,
     -- "Radiation"
-    [DMG_RADIATION] = 1.0,
+    [DMG_RADIATION] = 1.2,
     -- "Psychic"
     [DMG_PARALYZE] = 0.9,
 }

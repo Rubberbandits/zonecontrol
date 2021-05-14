@@ -1,23 +1,22 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Eye"
-ITEM.Desc =  "A tubular shaped, magma-like artifact that resembles a bright yellow- human eye on one end and darkens and tapers off on the other. The eye-portion glows brightly from within. It is pleasantly warm when held and vastly increases the user’s metabolism. It is also said to bring good luck. "
+ITEM.Desc =  "This artifact, which resembles the human eye, is known to considerably increases the body's metabolism, helping wounds heal quicker and protecting skin from lacerations. These are uncommonly found in burner anomalies. Many speculate that it brings good luck, making this a highly collectable artifact. Seems to absorb radiation."
 ITEM.Model =  "models/tnb/stalker/artifacts/eye.mdl"
 ITEM.Tier =  1
-ITEM.Weight =  1;
-ITEM.BulkPrice =  40000
+ITEM.Weight =  0.50
+ITEM.BulkPrice =  20000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
-    [DMG_CRUSH] = 1.1,
-    [DMG_FALL] = 1.1,
-    [DMG_CLUB] = 1.1,
-    [DMG_VEHICLE] = 1.1,
+    [DMG_CRUSH] = 1,
+    [DMG_FALL] = 1,
+    [DMG_CLUB] = 1,
+    [DMG_VEHICLE] = 1,
     -- "Rupture" (sharp)
-    [DMG_SLASH] = 1.1,
+    [DMG_SLASH] = 0.85,
     -- "Bulletproof"
-    [DMG_BULLET] = 1.1,
+    [DMG_BULLET] = 1,
     -- "Explosion"
-    [DMG_BLAST] = 1.1,
+    [DMG_BLAST] = 1,
     -- "Thermal"
     [DMG_BURN] = 1,
     [DMG_SLOWBURN] = 1,
@@ -28,7 +27,7 @@ ITEM.ArmorValues = {
     -- "Electric Shock"
     [DMG_SHOCK] = 1,
     -- "Radiation"
-    [DMG_RADIATION] = .85,
+    [DMG_RADIATION] = 1.2,
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }

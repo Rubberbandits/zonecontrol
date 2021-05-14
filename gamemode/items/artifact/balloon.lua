@@ -1,15 +1,14 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Balloon"
 ITEM.Desc =  "A tiny crystal known to absorb aerosolized neurotoxins, chemicals and poisons."
-ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/eye.mdl"
+ITEM.Model =  "models/tnb/stalker/artifacts/droplet.mdl"
 
 ITEM.ItemSubmaterials = {
 { 0 , "models/props/cs_office/clouds" }
 }
 
 ITEM.Tier =  1
-ITEM.Weight =  1;
+ITEM.Weight =  0.33;
 ITEM.BulkPrice =  7500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
@@ -27,9 +26,9 @@ ITEM.ArmorValues = {
     [DMG_BURN] = 1,
     [DMG_SLOWBURN] = 1,
     -- "Chemical Burn"
-    [DMG_ACID] = .7,
-    [DMG_POISON] = .7,
-    [DMG_NERVEGAS] = .7,
+    [DMG_ACID] = 0.85,
+    [DMG_POISON] = 0.85,
+    [DMG_NERVEGAS] = 0.85,
     -- "Electric Shock"
     [DMG_SHOCK] = 1,
     -- "Radiation"

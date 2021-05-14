@@ -1,7 +1,6 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Charger"
-ITEM.Desc =  "A metallic shell containing an electric arc. STALKERs are rumored to charge batteries with it."
+ITEM.Desc =  "A metallic shell containing an electric arc. While it has no insulating properties and makes the user more prone to radiation, it is speculated to offer some protection in event of electrocution. It's named after it's useful ability to provide a unidirectional electrical charge, able to sustainably trickle-charge small electronics."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/shell.mdl"
 
 ITEM.ItemSubmaterials = {
@@ -9,7 +8,7 @@ ITEM.ItemSubmaterials = {
 }
 
 ITEM.Tier =  1
-ITEM.Weight =  1;
+ITEM.Weight =  0.50;
 ITEM.BulkPrice =  10000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
@@ -31,9 +30,9 @@ ITEM.ArmorValues = {
     [DMG_POISON] = 1,
     [DMG_NERVEGAS] = 1,
     -- "Electric Shock"
-    [DMG_SHOCK] = .8,
+    [DMG_SHOCK] = 0.8,
     -- "Radiation"
-    [DMG_RADIATION] = 1,
+    [DMG_RADIATION] = 1.2,
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }
