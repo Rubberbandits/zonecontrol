@@ -12,38 +12,38 @@ function GM:RefreshHelpMenuContent()
 		{ "Chat",
 			[[Just entering something in the chatbox will make you say it in character.
 
-            /y - Yell
-            /w - Whisper
-            /me - Action
-		    /lme - Loud action
-            /it - World action
-		    /lit - Loud world action
-            /ev - Emotes world actions globally, for GM's and Admins
-            /lev - Emotes world actions locally, for GM's and Admins
+        	/y - Yell
+        	/w - Whisper
+			/r - Talk on your radio if you have one
+    		/me - Action
+			/lme - Loud action
+        	/it - World action
+			/lit - Loud world action
 
-            /mask - Remove your mask or helmet, if you have a suit that also has a mask or helmet.
-		    /anorak (gray, white, black, brown, green) - Changes the color of your anorak if you are wearing one.
+        	/mask - Remove your mask or helmet, if you have a suit that also has a mask or helmet.
+			/anorak (gray, white, black, brown, green) - Changes the color of your anorak if you are wearing one.
 
-            /pda all - Send a public message to all PDA users
-            /pda username - Send a private message to a specific PDA username
+        	/pda all - Send a public message to all PDA users
+        	/pda username - Send a private message to a specific PDA username (must be lowercase)
 
-            /roll 1d20 - Roll one, twenty sided die.
-            /roll nds - Without changing variable d, replace n for number of dice and s for number of sides.
+        	/roll 1d20 - Roll one, twenty sided die.
+        	/roll nds - Without changing variable d, replace n for number of dice and s for number of sides.
 
-            // - Global OOC
-            [[, .// - Local OOC
-            /a - Talk to admins
-            /pm [name] [text] - PM another player
-            /r - Talk on your radio if you have one
+        	// - Global OOC
+        	[[, .// - Local OOC
+        	/a - Talk to admins
+        	/pm [name] [text] - PM another player
 
-            /eng - Speak English.
-            /pol - Speak Polish.
-            /chi - Speak Chinese.
-            /jap - Speak Japanese.
-            /spa - Speak Spanish.
-            /fre - Speak French.
-            /ger - Speak German.
-            /ita - Speak Italian.]] },
+        	/eng - Speak English.
+        	/pol - Speak Polish.
+        	/chi - Speak Chinese.
+        	/jap - Speak Japanese.
+        	/spa - Speak Spanish.
+        	/fre - Speak French.
+        	/ger - Speak German.
+        	/ita - Speak Italian.
+			
+			Adding variables w and y behind language or radio commands will react accordingly, i.e. /engy to yell in English and /rw to whisper over radio.]] },
 		{ "Binds", [[F1 - Open help menu.
 		F2 - Open character menu.
 		F3 - Open player menu.
@@ -81,18 +81,19 @@ function GM:RefreshHelpMenuContent()
 			Character Flags
 			T - Technician
 			X - Trader
+			P - PAC3 Access (Donator or Screenshot Contest Winner Only)
 		
 			Trader Flags
 			A - Ammunition
 			B - Firearms
 			D - Medical
+			H - PDA Encryption/Decryption
 			S - Suits
 			U - BDUs (Suit Colors)
 
 			Player Flags
 			G - Gamemaster, per-character
-			Q - Removes admin powers, per-character
-			]] 
+			Q - Removes admin powers, per-character]] 
 		},
 	};
 
@@ -113,18 +114,22 @@ function GM:RefreshHelpMenuContent()
 		rpa_ko [player] - Knock out a player.
 		rpa_wake [player] - Wake up a player.
 		rpa_explode [player] - Explode a player.
+
 		rpa_kick [player] (reason) - Kick a player.
 		rpa_ban [player] [time] (reason) - Ban a player. A time of 0 is a permaban.
 		rpa_unban [SteamID] - Unban a player.
 		rpa_changebanlength [SteamID] [duration] - Change a ban's length for a player.
+		
 		rpa_goto [player] - Teleport to a player.
 		rpa_bring [player] - Teleport a player to you.
 		rpa_send [target] [destination] - Teleport targeted player to destination player.
+		
 		rpa_namewarn [player] - Give a player a name warning.
 		rpa_setname [player] [new name] - Change a player's name.
 		rpa_setcharmodel [player] [model] - Change a player's model. You can use citizen IDs ("male_01", for example) instead of the full path.
 		rpa_givestockpile [player] - Gives a player the ability to create a stockpile.
 		rpa_setrank [player] [rank] - Sets a player's rank. Possible arguments: "user" "eventcoordinator" "admin"
+		
 		rpa_togglewatched [player] - Makes it so a player's every action will be logged in all admins' consoles.
 		
 		rpa_seeall - Toggle admin ESP mode.
@@ -189,6 +194,7 @@ function GM:RefreshHelpMenuContent()
 		rpg_hidden - Hide yourself from the scoreboard.
 		rpg_createitem - Open the item request menu.
 		
+		/lev - Broadcast a local IC event.
 		/ev - Broadcast an IC event.]] } );
 	end
 	
