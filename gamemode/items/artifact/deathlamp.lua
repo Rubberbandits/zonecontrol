@@ -4,10 +4,10 @@ ITEM.Desc =  "Big, red, and cursed. Otherwise known as the Seed of Satan, many t
 ITEM.Model =  "models/kek1ch/crystal_plant.mdl"
 
 ITEM.ItemSubmaterials = {
-{ 0 , "models/props_combine/tprings_globe"},
-{ 1 , "models/props_combine/tprings_globe"}
-{ 2 , "models/props_combine/tprings_globe"}
-{ 3 , "Models/effects/vol_light001"}
+	{ 0 , "models/props_combine/tprings_globe"},
+	{ 1 , "models/props_combine/tprings_globe"},
+	{ 2 , "models/props_combine/tprings_globe"},
+	{ 3 , "Models/effects/vol_light001"}
 }
 
 ITEM.Tier =  2

@@ -4,8 +4,8 @@ ITEM.Desc =  "A rare and interesting formation, greatly resembling an atom. It h
 ITEM.Model =  "models/tnb/stalker/artifacts/thorn.mdl"
 
 ITEM.ItemSubmaterials = {
-{ 0 , "models/shadertest/predator" }
-{ 1 , "models/tnb/artifacts/elec1" }
+	{ 0 , "models/shadertest/predator" },
+	{ 1 , "models/tnb/artifacts/elec1" }
 }
 
 ITEM.Tier =  1
