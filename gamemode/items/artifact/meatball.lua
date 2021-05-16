@@ -8,7 +8,7 @@ ITEM.ItemSubmaterials = {
 { 1 , "debug/env_cubemap_model" }
 }
 
-ITEM.Tier =  1
+ITEM.Tier =  2
 ITEM.Weight =  0.5;
 ITEM.BulkPrice =  20000
 ITEM.ArmorValues = {

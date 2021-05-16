@@ -8,7 +8,6 @@ ITEM.ItemSubmaterials = {
 { 0 , "models/props_wasteland/metal_tram001a" }
 }
 
-ITEM.Tier =  2
 ITEM.Weight =  2;
 ITEM.BulkPrice =  24000
 ITEM.ArmorValues = {

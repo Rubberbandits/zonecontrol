@@ -7,7 +7,6 @@ ITEM.ItemSubmaterials = {
 { 0 , "models/weapons/v_crowbar/crowbar_cyl" }
 }
 
-ITEM.Tier =  1
 ITEM.Weight =  0.66;
 ITEM.BulkPrice =  100000
 ITEM.ArmorValues = {

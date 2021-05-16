@@ -13,7 +13,6 @@ ITEM.CamPos 		= Vector( 100, 100, 25 );
 ITEM.LookAt 		= Vector( 2, 0, 1 );
 ITEM.SelfRepairCondition = 80
 ITEM.AmmoType = "ammo_12ga"
-ITEM.License = "B"
 ITEM.BulkPrice = 171000
 ITEM.Vars = {
 	Equipped = false,

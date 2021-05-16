@@ -8,7 +8,7 @@ ITEM.ItemSubmaterials = {
 	{ 1 , "models/tnb/artifacts/sponge2" }
 }
 
-ITEM.Tier =  2
+ITEM.Tier =  3
 ITEM.Weight =  0.50;
 ITEM.BulkPrice =  48000
 ITEM.ArmorValues = {

@@ -10,7 +10,7 @@ ITEM.ItemSubmaterials = {
 	{ 3 , "Models/effects/vol_light001"}
 }
 
-ITEM.Tier =  2
+ITEM.BulkPrice = 150000
 ITEM.Weight =  9;
 ITEM.ArmorValues = {
     -- "Impact" (blunt)

@@ -7,7 +7,7 @@ ITEM.ItemSubmaterials = {
 { 0 , "models/flesh" }
 }
 
-ITEM.Tier =  1
+ITEM.Tier =  3
 ITEM.Weight =  0.5
 ITEM.BulkPrice =  22500
 ITEM.ArmorValues = {

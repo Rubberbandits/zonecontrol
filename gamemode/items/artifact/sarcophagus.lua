@@ -2,7 +2,6 @@ ITEM.Base = "artifact"
 ITEM.Name =  "Sarcophagus"
 ITEM.Desc =  "An ecologist's lunchbox. Green light seeps through from inside, but you cannot open it. A sense of power and clarity comes to those who possess it, despite experiencing dry and fragile skin to contradict. Limbs tend to resist harm when exposed to chemical damage, only turning a slight green upon impact. Extremely radioactive."
 ITEM.Model =  "models/instrument.mdl"
-ITEM.Tier =  2
 ITEM.Weight =  2;
 ITEM.BulkPrice =  50000
 ITEM.ArmorValues = {

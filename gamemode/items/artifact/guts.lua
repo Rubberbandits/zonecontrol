@@ -8,7 +8,7 @@ ITEM.ItemSubmaterials = {
 { 1 , "models/props_lab/cornerunit_cloud"}
 }
 
-ITEM.Tier =  2
+ITEM.Tier =  3
 ITEM.Weight =  0.50;
 ITEM.BulkPrice =  40000
 ITEM.ArmorValues = {

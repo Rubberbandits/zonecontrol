@@ -7,9 +7,8 @@ ITEM.ItemSubmaterials = {
 { 0 , "models/synth/backcyl" }
 }
 
-ITEM.Tier =  1
 ITEM.Weight =  0.5;
-ITEM.BulkPrice = 7500
+ITEM.BulkPrice = 75000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
