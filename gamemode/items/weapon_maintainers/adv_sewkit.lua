@@ -13,3 +13,6 @@ ITEM.TechOnly = true
 ITEM.RaiseCondition = 40
 ITEM.W = 1
 ITEM.H = 1
+ITEM.Vars = {
+	Uses = 5,
+};

@@ -8,9 +8,9 @@ ITEM.RaiseCondition = 8
 ITEM.WeaponOnly = true
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
-ITEM.BulkPrice =  1250;
-ITEM.Vars = {
-	Uses = 1,
-};
+ITEM.BulkPrice =  2000;
 ITEM.Rarity = 1
 ITEM.AllowRandomSpawn = true
+ITEM.Vars = {
+	Uses = 5,
+};

@@ -5,10 +5,13 @@ ITEM.Weight =  1;
 ITEM.FOV 			= 30;
 ITEM.CamPos 		= Vector( 50, 50, 50 );
 ITEM.LookAt 		= Vector( 0, 0, 0 );
-ITEM.BulkPrice =  7500;
-ITEM.RaiseCondition = 15
+ITEM.BulkPrice =  10000
+ITEM.RaiseCondition = 10
 ITEM.WeaponOnly = true
 ITEM.TechOnly = true
 ITEM.License = "T"
 ITEM.W = 2
 ITEM.H = 1
+ITEM.Vars = {
+	Uses = 20,
+};

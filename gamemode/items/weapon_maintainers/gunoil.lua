@@ -8,7 +8,7 @@ ITEM.WeaponOnly		= true
 ITEM.FOV 			= 23;
 ITEM.CamPos 		= Vector( 50, 50, 50 );
 ITEM.LookAt 		= Vector( 0, 0, 4.83 );
-ITEM.BulkPrice =  1000;
+ITEM.BulkPrice =  750;
 ITEM.Vars = {
 	Uses = 3,
 };

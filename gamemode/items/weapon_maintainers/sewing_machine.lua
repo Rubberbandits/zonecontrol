@@ -10,4 +10,7 @@ ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.W = 1
 ITEM.H = 1
-ITEM.BulkPrice =  5000;
+ITEM.BulkPrice =  10000
+ITEM.Vars = {
+	Uses = 20,
+};

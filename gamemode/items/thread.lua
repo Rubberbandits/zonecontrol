@@ -5,11 +5,14 @@ ITEM.Weight =  0.1
 ITEM.FOV =  15;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
-ITEM.BulkPrice =  500;
+ITEM.BulkPrice =  50
 ITEM.License =  "TX";
-ITEM.RaiseCondition = 5
+ITEM.RaiseCondition = 1
 ITEM.SuitOnly = true
 ITEM.W = 1
 ITEM.H = 1
 ITEM.Rarity = 1
 ITEM.AllowRandomSpawn = true
+ITEM.Vars = {
+	Uses = 10,
+};

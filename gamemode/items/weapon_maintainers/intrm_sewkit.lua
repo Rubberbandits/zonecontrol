@@ -6,10 +6,13 @@ ITEM.License = "T"
 ITEM.FOV =  10;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 2, -2, 0 );
-ITEM.BulkPrice =  15000;
+ITEM.BulkPrice =  12000;
 ITEM.License =  "T";
 ITEM.SuitOnly = true
 ITEM.TechOnly = true
-ITEM.RaiseCondition = 30
+ITEM.RaiseCondition = 25
 ITEM.W = 1
 ITEM.H = 1
+ITEM.Vars = {
+	Uses = 4,
+};

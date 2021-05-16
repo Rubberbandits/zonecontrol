@@ -5,7 +5,7 @@ ITEM.Weight =  0.33;
 ITEM.FOV =  14;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
-ITEM.BulkPrice =  500   ;
+ITEM.BulkPrice =  250
 ITEM.License =  "TX"
 ITEM.RaiseCondition = 5
 function ITEM:DynamicFunctions()
