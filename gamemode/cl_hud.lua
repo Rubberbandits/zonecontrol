@@ -1316,13 +1316,10 @@ hook.Add("Think", "MaintainHUDEntList", function()
 end)
 
 function GM:DrawEntities()
-	
-	if( self.SeeAll and ( !LocalPlayer():IsAdmin() and !LocalPlayer():IsEventCoordinator() ) ) then
-		
-		self.SeeAll = false;
-		
-		return;
-		
+	if self.SeeAll and LocalPlayer():IsEventCoordinator() and LocalPlayer():GetMoveType() != MOVETYPE_NOCLIP then
+		self.SeeAll = false
+
+		return
 	end
 
 	local entsToLoop = self.SeeAll and self.HUDEntList or ents.FindInSphere(LocalPlayer():GetPos(), 700)
