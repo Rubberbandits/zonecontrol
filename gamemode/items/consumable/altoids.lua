@@ -11,3 +11,5 @@ ITEM.License =  "X"
 ITEM.ConsumeText = "You eat some of the tablets. You salivate as they melt, slightly reducing your thirst for water."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 4
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

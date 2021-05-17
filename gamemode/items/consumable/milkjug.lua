@@ -1,14 +1,13 @@
-
 ITEM.Name =  "Milk Jug";
-ITEM.Desc =  "A jug of spoiled milk. Tastes like lemons, if lemons were creamy.";
+ITEM.Desc =  "A jug of spoiled milk. Tastes like lemons, if lemons were creamy and chunky.";
 ITEM.Model =  "models/props_junk/garbage_milkcarton001a.mdl";
 ITEM.Weight =  2;
 ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
-ITEM.BulkPrice =  100
+ITEM.BulkPrice =  10
 ITEM.License =  "X"
-ITEM.ConsumeText = "You drink the jug of milk. Maybe not a great idea. That's coming back up in about thirty seconds."
+ITEM.ConsumeText = "You drink the jug of milk. Maybe not a great idea. That's coming back up in about ten seconds."
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = -5
 ITEM.Rarity = 1

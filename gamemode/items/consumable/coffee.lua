@@ -10,5 +10,5 @@ ITEM.License = "X"
 ITEM.ConsumeText = "You sip the coffee. Earthy, with notes of hazelnut, chocolate, and dirt."
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = 1
-ITEM.Rarity = 2
+ITEM.Rarity = 1
 ITEM.AllowRandomSpawn = false

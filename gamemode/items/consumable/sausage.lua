@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Sausage";
 ITEM.Desc =  "Preserved and packaged roll of ground pork. A high protein meal that is tastier than bread.";
 ITEM.Model =  "models/stalker/item/food/sausage.mdl";

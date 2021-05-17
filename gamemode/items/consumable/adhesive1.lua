@@ -9,7 +9,7 @@ ITEM.BulkPrice =  100
 ITEM.License =  "TX"
 ITEM.UseText = "Use"
 ITEM.RaiseCondition = 2
-ITEM.Rarity = 0
+ITEM.Rarity = 1
 ITEM.AllowRandomSpawn = true
 function ITEM:DynamicFunctions()
     return {

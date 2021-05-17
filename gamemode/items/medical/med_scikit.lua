@@ -8,7 +8,7 @@ ITEM.ItemSubmaterials = {
 }
 ITEM.ConsumeText = "You tend to your wounds. By the power of science, you are healed."
 ITEM.UseText = "Use"
-ITEM.HealAmount = 65
+ITEM.HealAmount = 60
 ITEM.RadiationHealAmount = 100
 ITEM.Weight =  0.5;
 ITEM.FOV =  9;

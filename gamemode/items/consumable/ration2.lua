@@ -11,3 +11,5 @@ ITEM.License =  "X"
 ITEM.ConsumeText = "You enjoy one of the ration's individual meal portions." 
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 20
+ITEM.Rarity = 3
+ITEM.AllowRandomSpawn = true

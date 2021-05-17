@@ -1,6 +1,5 @@
-
 ITEM.Name =  "Tea";
-ITEM.Desc =  "A mug of green tea, made with tea leaves and water.";
+ITEM.Desc =  "A thermos of green tea, made with tea leaves and water.";
 ITEM.Model =  "models/props_junk/garbage_coffeemug001a.mdl";
 ITEM.Weight =  0.1;
 ITEM.FOV =  6;
@@ -11,5 +10,5 @@ ITEM.License = "X"
 ITEM.ConsumeText = "You drink the hot tea. It soothes your throat."
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = 1
-ITEM.Rarity = 2
+ITEM.Rarity = 1
 ITEM.AllowRandomSpawn = true

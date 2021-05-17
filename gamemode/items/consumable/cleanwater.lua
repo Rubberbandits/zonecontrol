@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Clean Water";
 ITEM.Desc =  "A bottle of water, purified and boiled before being sealed.";
 ITEM.Model =  "models/kek1ch/dev_mineral_water.mdl";
@@ -11,5 +10,5 @@ ITEM.License =  "X";
 ITEM.ConsumeText = "You open and drink the entire bottle. Like a breath of fresh air, it refreshes you."
 ITEM.UseText = "Drink"
 ITEM.HungerReduce = 20
-ITEM.Rarity = 2
+ITEM.Rarity = 3
 ITEM.AllowRandomSpawn = true

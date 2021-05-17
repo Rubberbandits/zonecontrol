@@ -1,4 +1,3 @@
-
 ITEM.Name =  "Berry Kompot";
 ITEM.Desc =  "A sweet fruity drink, served hot or cold depending on the season. This kompot is made with blueberries, strawberries, and cherries. The saturated slices of fruit float at the top.";
 ITEM.Model =  "models/kali/miscstuff/stalker/food/energy drink.mdl";
