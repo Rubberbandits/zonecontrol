@@ -11,3 +11,5 @@ ITEM.License =  "X"
 ITEM.ConsumeText = "You notice these assorted nuts have very unique textures to each one. Some crunchy, some soft."
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 12
+ITEM.Rarity = 2
+ITEM.AllowRandomSpawn = true

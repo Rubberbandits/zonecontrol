@@ -327,7 +327,6 @@ GM.GearSelection = {
 	["gunoil"] = 200,
 	["geiger_counter"] = 2500,
 	["dosimeter"] = 100,
-	["weapon_srp_makarov"] = 4400,
 	["ammo_9x18"] = 200,
 	["weapon_srp_tokarev"] = 5500,
 	["ammo_762x25"] = 350,
