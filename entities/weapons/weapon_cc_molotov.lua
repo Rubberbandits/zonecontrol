@@ -27,7 +27,7 @@ SWEP.ItemFOV = 11;
 SWEP.ItemCamPos = Vector( 50, 50, 50 );
 SWEP.ItemLookAt = Vector( 0, 0, 0 );
 
-SWEP.ItemBulkPrice		= 10000
+SWEP.ItemBulkPrice		= 3500
 SWEP.ItemLicense		= "X"
 
 function SWEP:CheckThrowPosition( eye, src )

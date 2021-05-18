@@ -13,7 +13,7 @@ SWEP.Firearm				= true
 
 SWEP.Primary.ClipSize 		= 10
 SWEP.Primary.DefaultClip 	= 0
-SWEP.Primary.Ammo			= "gauss"
+SWEP.Primary.Ammo			= "ammo_gauss"
 SWEP.Primary.InfiniteAmmo	= true
 SWEP.Primary.Automatic		= false
 SWEP.Primary.Sound			= "kingston_wpn/gauss_shoot.ogg"

@@ -24,7 +24,7 @@ SWEP.ItemCamPos = Vector(50, 50, 50)
 SWEP.ItemLookAt = Vector(0, 0, 0)
 
 SWEP.ItemBulkAmount 	= 5
-SWEP.ItemBulkPrice		= 40000
+SWEP.ItemBulkPrice		= 10000
 SWEP.ItemLicense		= "X"
 
 function SWEP:PreDrawViewModel(vm, wep, ply)
