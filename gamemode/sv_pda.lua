@@ -764,7 +764,7 @@ local RandomPDAMessageFuncs = {
 		return table.Random(RandomTalking)
 	end,
 	[3] = function()
-		local randomPlayer = table.Random(player.GetAll())
+		local randomPlayer = table.Random(player.GetHumans())
 		if !IsValid(randomPlayer) then return end
 
 		local playerName = randomPlayer:CharID() > 0 and randomPlayer:RPName() or false
@@ -785,7 +785,9 @@ local RandomPDAMessageFuncs = {
 		return Format(table.Random(RandomItemRelatedStrings), randomItem.Name)
 	end,
 	[5] = function()
-		local randomPlayer = table.Random(player.GetAll())
+		local randomPlayer = table.Random(player.GetHumans())
+		if !IsValid(randomPlayer) then return end
+
 		local playerName = randomPlayer:CharID() > 0 and randomPlayer:RPName() or false
 
 		if !playerName then return end
@@ -793,7 +795,9 @@ local RandomPDAMessageFuncs = {
 		return Format(table.Random(RandomPlayerRelatedStrings), playerName)
 	end,
 	[6] = function()
-		local randomPlayer = table.Random(player.GetAll())
+		local randomPlayer = table.Random(player.GetHumans())
+		if !IsValid(randomPlayer) then return end
+
 		local playerName = randomPlayer:CharID() > 0 and randomPlayer:HasCharFlag("X") and randomPlayer:RPName() or false
 
 		if !playerName then return end
