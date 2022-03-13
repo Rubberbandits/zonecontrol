@@ -142,6 +142,8 @@ end
 netstream.Hook( "nQuizBan", nQuizBan );
 
 function kingston.security.check_family_share(ply)
+	if !GAMEMODE.EnableFamilySharingDetection then return end
+
 	http.Fetch(
 		Format("http://api.steampowered.com/IPlayerService/IsPlayingSharedGame/v0001/?key=%s&format=json&steamid=%s&appid_playing=4000",
 			kingston.security.api_key,
