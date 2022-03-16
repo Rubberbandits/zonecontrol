@@ -1,5 +1,5 @@
--- 4/28/2020
--- honestly this gamemode has been recoded so massively im hesistant to call it combinecontrol
+-- 3/16/2022
+-- two years since the date was updated in this file. this shit too old
 
 DeriveGamemode( "sandbox" );
 
@@ -31,11 +31,6 @@ local emeta = FindMetaTable( "Entity" );
 function GM:CreateTeams()
 
 	team.SetUp( TEAM_CITIZEN, "Stalkers", Color( 0, 120, 0, 255 ), false );
-	team.SetUp( TEAM_COMBINE, "Combine", Color( 33, 106, 196, 255 ), false );
-	team.SetUp( TEAM_OFFCOMBINE, "Off-Duty Combine", Color( 0, 120, 0, 255 ), false );
-	team.SetUp( TEAM_STALKER, "Also Stalkers", Color( 86, 86, 86, 255 ), false );
-	team.SetUp( TEAM_VORTIGAUNT, "Vortigaunts", Color( 65, 204, 118, 255 ), false );
-	team.SetUp( TEAM_OVERWATCH, "Overwatch", Color( 200, 200, 200, 255 ), false );
 	
 end
 
