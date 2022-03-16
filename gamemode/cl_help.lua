@@ -108,6 +108,8 @@ function GM:RefreshHelpMenuContent()
 		If the command needs a player, you can specify "^" to target yourself and "-" to target the player you're looking at.
 		
 		rpa_restart - Restart the server.
+
+		rpa_changelevel [x] - List the available maps on server.
 		
 		rpa_kill [player] - Kill a player.
 		rpa_slap [player] - Slap a player.
@@ -128,7 +130,7 @@ function GM:RefreshHelpMenuContent()
 		rpa_setname [player] [new name] - Change a player's name.
 		rpa_setcharmodel [player] [model] - Change a player's model. You can use citizen IDs ("male_01", for example) instead of the full path.
 		rpa_givestockpile [player] - Gives a player the ability to create a stockpile.
-		rpa_setrank [player] [rank] - Sets a player's rank. Possible arguments: "user" "eventcoordinator" "admin"
+		rpa_setrank [player] [rank] - Sets a player's rank.
 		
 		rpa_togglewatched [player] - Makes it so a player's every action will be logged in all admins' consoles.
 		
@@ -147,20 +149,19 @@ function GM:RefreshHelpMenuContent()
 		
 		rpa_playmusic [music/0/1/2] - Play music. 0 is calm, 1 is alert, 2 is action. Alternatively you can specify a song by filename.
 		rpa_stopmusic - Stop any playing music.
+		rpa_stopsound - Stop all playing sounds for everyone.
 		
 		rpa_createitem [item] - Spawn an item.
-		rpa_createartifact [item] - Spawn an artifact. You can still use rpa_createitem for non-hidden artifacts.
+		rpa_createartifact [item] - Spawn an artifact that will be invisible until revealed by a detector. You can still use rpa_createitem for non-hidden artifacts.
 		rpa_givemoney [player] [amount] - Give a player rubles.
 		
 		rpa_createexplosion - Create an explosion where you're looking at.
 		rpa_createfire [duration] - Create a fire where you're looking at.
 		
-		rpa_stopsound - Stop all playing sounds for everyone.
-		
-		rpa_blowout_enabled [number] - Enable the occurance of blowouts.
+		rpa_blowout_enabled [0/1] - Disable/Enable the occurance of blowouts.
 		rpa_blowout_auto_schedule [duration] - Whether or not blowouts should occur randomly.
-		rpa_blowout_interval [duration] - the minimum time in between blowouts.
-		rpa_announcing_duration [duration] - the duration or the pre-blowout period, before the first announcement.
+		rpa_blowout_interval [duration] - The minimum time in between blowouts.
+		rpa_announcing_duration [duration] - The duration or the pre-blowout period before the first announcement.
 		rpa_triggerblowoutinstant - Instantly trigger a blowout, only about 30 seconds before it actually starts.
 		rpa_triggerblowout - Trigger a blowout, which will start at the designated announcing duration after this command has ran.
 		rpa_cancelblowout - Cancel ongoing blowout.
@@ -174,7 +175,9 @@ function GM:RefreshHelpMenuContent()
 		
 		rpa_setdmgmult [number] - Change how much damage all weapons do, via a multiplier.
 		
-		rpa_editvendor - Lets you edit the values of an NPC vendor such as sell and buy value, model, etc.]] } );
+		rpa_editvendor - Lets you edit the values of an NPC vendor such as sell and buy value, model, etc.
+		
+		rpa_createlootspawner [worthless/common/uncommon] - Create an area where loot will automatically spawn at random intervals.]] } );
 		
 	end
 	
