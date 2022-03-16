@@ -361,7 +361,7 @@ local RandomTalking = {
 	"Hahah, I just watched a rookie shit his pants!",
 	"The boar and flesh really are going at it, it's like a nature documentary.",
 	"You people are all freaks, go to hell!",
-	"Just saw a fat bandit pass by Loner town. His poor mother!",
+	"Just saw a fat bandit pass by Lonertown. His poor mother!",
 	"Is it supposed to make that sound?",
 	"Anyone else hear that?",
 	"I'm watching you!",
