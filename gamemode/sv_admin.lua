@@ -1,233 +1,85 @@
 kingston = kingston or {}
-kingston.AdminCommands = kingston.AdminCommands or {}
-kingston.GamemasterCommands = kingston.GamemasterCommands or {}
+kingston.admin = kingston.admin or {}
 
-function nGetBansList( ply )
-	
-	if( !ply:IsAdmin() ) then return end
-	
-	if( !GAMEMODE.BanTable ) then GAMEMODE.BanTable = { } end
-	
-	netstream.Start( ply, "nBansList", GAMEMODE.BanTable );
-	
-end
-netstream.Hook( "nGetBansList", nGetBansList );
+kingston.admin.commands = kingston.admin.commands or {}
+kingston.admin.groups = kingston.admin.groups or {}
 
-function GM:AdminThink( ply )
-	
-	if( DEBUG_PAUSEAPPS ) then return end
-	
-end
+local ARGTYPE_TARGET 	= 0
+local ARGTYPE_STRING 	= 1
+local ARGTYPE_BOOL 		= 2
+local ARGTYPE_NUMBER 	= 3
 
-function concommand.AddGamemaster( cmd, func, sa, playertarget )
-	
-	local function c( ply, _, args )
-		
-		if( !ply:IsEventCoordinator() ) then
-			
-			ply:Notify( nil, COLOR_ERROR, "You need to be a gamemaster to do this.")
-			
-			return;
-			
+local ArgTypeMap = {
+	ARGTYPE_TARGET = {
+		READ = function()
+			return net.ReadEntity()
 		end
-		
-		func( ply, args );
-		
-	end
-	concommand.Add( cmd, c );
-
-	kingston.GamemasterCommands[cmd] = {}
-	
-end
-
-function concommand.AddAdmin( cmd, func, sa, playertarget )
-	
-	local function c( ply, _, args )
-
-		if !ply:IsValid() then
-			ply = Entity(0)
+	},
+	ARGTYPE_STRING = {
+		READ = function()
+			return net.ReadString()
 		end
-		
-		if( ply:EntIndex() != 0 and !ply:IsAdmin() ) then
-			
-			ply:Notify( nil, COLOR_ERROR, "You need to be an admin to do this.")
-			
-			return;
-			
+	},
+	ARGTYPE_BOOL = {
+		READ = function()
+			return new.ReadBool()
 		end
-		
-		if( ply:EntIndex() != 0 and sa and !ply:IsSuperAdmin() ) then
+	},
+	ARGTYPE_NUMBER = {
+		READ = function()
+			return net.ReadInt(32)
+		end
+	}
+}
 
-			ply:Notify( nil, COLOR_ERROR, "You need to be a superadmin to do this.")
-			
-			return;
-			
-		end
-		
-		func( ply, args );
-		
-	end
-	concommand.Add( cmd, c );
-	
-	kingston.AdminCommands[cmd] = {}
+function kingston.admin.load()
 
 end
 
-function concommand.AddAdminVariable( cmd, var, default, friendlyvar, sa )
-	
-	local function c( ply, _, args )
-		
-		if( !ply:IsAdmin() ) then
-			
-			ply:Notify( nil, COLOR_ERROR, "You need to be an admin to do this.")
-			return;
-			
-		end
-		
-		if( sa and !ply:IsSuperAdmin() ) then
+// Networking
+util.AddNetworkString("zcRunCommand")
+util.AddNetworkString("zcUpdateGroup")
+util.AddNetworkString("zcGetGroups")
 
-			ply:Notify( nil, COLOR_ERROR, "You need to be a superadmin to do this.")
-			return;
-			
-		end
-		
-		if( !args[1] ) then
-			
-			ply:Notify(nil, COLOR_ERROR, "Error: no value specified.")
-			return;
-			
-		end
-		
-		GAMEMODE["Set" .. var]( GAMEMODE, tonumber( args[1] ) );
-		
-		GAMEMODE:LogAdmin( "[V] " .. ply:Nick() .. " set variable \"" .. var .. "\" to \"" .. tonumber( args[1] ) .. "\".", ply );
-		GAMEMODE:Notify(nil, nil, Color(255,255,255,255), "%s set %s to %s.", ply:Nick(), friendlyvar, tostring(args[1]))
-		
-	end
-	concommand.Add( cmd, c );
-	
-end
+local function zcRunCommand(len, ply)
+	local cmd = net.ReadString()
 
-concommand.AddAdminVariable( "rpa_oocdelay", "OOCDelay", 0, "OOC delay" );
-concommand.AddAdminVariable( "rpa_flashlights", "Flashlight", 0, "flashlight" );
-concommand.AddAdminVariable( "rpa_blowout_enabled", "BlowoutEnabled", 1, "Blowout enabled" );
-concommand.AddAdminVariable( "rpa_blowout_auto_schedule", "BlowoutAutoShedule", 1, "Blowout auto-schedule" );
-concommand.AddAdminVariable( "rpa_blowout_interval", "BlowoutInterval", 7200, "Blowout interval" );
-concommand.AddAdminVariable( "rpa_announcing_duration", "BlowoutAnnounceDuration", 300, "Blowout announce duration" );
-
-local cmd_files = file.Find( GM.FolderName.."/gamemode/admincmds/*.lua", "LUA", "namedesc" );
-if #cmd_files > 0 then
-	for _, v in ipairs(cmd_files) do
-		include("admincmds/"..v)
-	end
-end
-
-local cmd_files = file.Find( GM.FolderName.."/gamemode/gmcmds/*.lua", "LUA", "namedesc" );
-if #cmd_files > 0 then
-	for _, v in ipairs(cmd_files) do
-		include("gmcmds/"..v)
-	end
-end
-
-local GoodTraceVectors = {
-	Vector( 40, 0, 0 ),
-	Vector( -40, 0, 0 ),
-	Vector( 0, 40, 0 ),
-	Vector( 0, -40, 0 ),
-	Vector( 0, 0, 40 )
-};
-
-function FindGoodTeleportPos( ply )
-	
-	local trace = { };
-	trace.start = ply:GetShootPos();
-	trace.endpos = trace.start + ply:GetAimVector() * 50;
-	trace.mins = Vector( -16, -16, 0 );
-	trace.maxs = Vector( 16, 16, 72 );
-	trace.filter = ply;
-	local tr = util.TraceHull( trace );
-	
-	if( !tr.Hit ) then
-		
-		return tr.HitPos;
-		
-	end
-	
-	local pos = ply:GetPos();
-	
-	for _, v in pairs( GoodTraceVectors ) do
-		
-		local trace = { };
-		trace.start = ply:GetPos();
-		trace.endpos = trace.start + v;
-		trace.mins = Vector( -16, -16, 0 );
-		trace.maxs = Vector( 16, 16, 72 );
-		trace.filter = ply;
-		local tr = util.TraceHull( trace );
-		
-		if( tr.Fraction == 1.0 ) then
-			
-			pos = ply:GetPos() + v;
-			break;
-			
-		end
-		
-	end
-	
-	return pos;
-	
-end
-
-local function set_rank(ply, _, args)
-	if ply:IsValid() then
+	local commandData = kingston.admin.commands[cmd]
+	if !commandData then
+		Error("[Admin] Invalid command was sent to zcRunCommand!")
 		return
 	end
+
+	local passedArguments = {};
+	for _,argType in pairs(commandData.arguments) do
+		table.insert(passedArguments, ArgTypeMap[argType].READ())
+	end
+
+	kingston.admin.runCommand(ply, cmd, passedArguments)
+end
+
+net.Receive("zcRunCommand", zcRunCommand)
+
+// Database
+
+kingston.admin.groups_db_struct = {
+	{ "UniqueID", "VARCHAR(128)" },
+	{ "Permissions", "JSON"},
+	{ "Priority", "INT(3)" },
+	{ "IsAdmin", "BOOL" },
+	{ "IsSuperAdmin", "BOOL" }
+}
+
+local function init_log_admin_tbl(db)
+	mysqloo.Query("CREATE TABLE IF NOT EXISTS cc_groups (`UniqueID` VARCHAR(128), PRIMARY KEY (`UniqueID`));")
+	GAMEMODE:InitSQLTable(kingston.admin.groups_db_struct, "cc_groups")
 	
-	local targ = GAMEMODE:FindPlayer(args[1])
-	local rank = args[2] or "user"
-	if targ and targ:IsValid() then
-		targ:SetUserGroup(rank)
-		targ:UpdatePlayerField("Rank", rank)
-		
-		MsgC(COLOR_NOTIF, Format("%s's rank has been set to %s.\n", targ:Nick(), rank))
-		targ:Notify(nil, COLOR_NOTIF, "Console set your rank to %s.", rank)
-	elseif( string.find( args[1], "STEAM_" ) ) then
-		GAMEMODE:UpdatePlayerFieldOffline(args[1], "Rank", rank)
-	else
-		MsgC(COLOR_ERROR, "Error: no target found.\n")
-	end
+	// Prepare queries
+	// Create group
+	// Modify group functions
+	// Delete group
+	// Add permissions to group
+	// Take permissions from group
+	// Load all groups
 end
-concommand.Add( "rpa_serversetrank", set_rank );
-
-/*
-	Console command running support
-*/
-
-hook.Add("InitPostEntity", "RCONCommandSupport", function()
-	Entity(0).Notify = function(ent, font, color, text, ...)
-		MsgC(color, Format(text, ...).."\n")
-	end
-	Entity(0).Nick = function(self)
-		return "Console"
-	end
-	Entity(0).SteamID = function(self)
-		return "STEAM_0:0:CONSOLE"
-	end
-end)
-
-local function SetEntityDesc( ply, cmd, args, szArgs )
-	local targ = ply:GetEyeTraceNoCursor().Entity
-	local szDesc = szArgs
-
-	if !ply:IsAdmin() then
-		if #szDesc > 512 then return end
-		if targ.PropSteamID and targ:PropSteamID() != ply:SteamID() then return end
-	end
-
-	if targ and IsValid(targ) and targ:GetClass() == "prop_physics" or targ:GetClass() == "prop_ragdoll" then
-		if targ.PropDesc and SERVER then
-			targ:SetPropDesc(szDesc)
-		end
-	end
-end
-concommand.Add( "rp_propdesc", SetEntityDesc );
+hook.Add("InitSQLTables", "STALKER.InitAdminDBTable", init_log_admin_tbl)
