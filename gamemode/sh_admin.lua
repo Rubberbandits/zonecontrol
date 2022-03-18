@@ -54,6 +54,13 @@ function GM:CheckArgumentTypes(cmd, args)
 
 end
 
+local GROUP_ADDPERM 	= 0
+local GROUP_TAKEPERM 	= 1
+local GROUP_PRIORITY 	= 2
+local GROUP_UNIQUEID	= 3
+local GROUP_SETADMIN	= 4
+local GROUP_SETSA		= 5
+
 // Group object
 // Structure:
 // permissions - mapping, defines what commands a group can run
@@ -62,8 +69,11 @@ end
 // priority - integer, level of seniority when comparing to other groups
 local GROUP = {}
 
-function GROUP:init(data)
+function GROUP:init(uniqueID, data)
 	table.Merge(self, data)
+
+	self.permissions = isstring(data.permissions) && util.JSONToTable(data.permissions) || data.permissions
+	self.uniqueID = uniqueID
 end
 
 function GROUP:set(key, value)
@@ -74,7 +84,17 @@ function GROUP:givePermission(cmd)
 	self.permissions[cmd] = true
 
 	if SERVER then
-		//save and broadcast
+		kingston.admin.queries.addperm:clearParameters()
+			kingston.admin.queries.addperm:setString(1, Format("$.%s", cmd))
+			kingston.admin.queries.addperm:setString(2, self.uniqueID)
+		kingston.admin.queries.addperm:start()
+
+		// network
+		net.Start("zcUpdateGroup")
+			net.WriteString(self.uniqueID)
+			net.WriteUInt(GROUP_ADDPERM, 8)
+			net.WriteString(cmd)
+		net.Broadcast()
 	end
 end
 
@@ -82,7 +102,17 @@ function GROUP:takePermission(cmd)
 	self.permissions[cmd] = nil
 	
 	if SERVER then
-		//save and broadcast
+		kingston.admin.queries.takeperm:clearParameters()
+			kingston.admin.queries.takeperm:setString(1, Format("$.%s", cmd))
+			kingston.admin.queries.takeperm:setString(2, self.uniqueID)
+		kingston.admin.queries.takeperm:start()
+
+		// network
+		net.Start("zcUpdateGroup")
+			net.WriteString(self.uniqueID)
+			net.WriteUInt(GROUP_TAKEPERM, 8)
+			net.WriteString(cmd)
+		net.Broadcast()
 	end
 end
 
@@ -98,10 +128,17 @@ end
 
 function GROUP:delete()
 	if SERVER then
-		// delete from database
+		kingston.admin.queries.delete:clearParameters()
+			kingston.admin.queries.delete:setString(1, self.uniqueID)
+		kingston.admin.queries.delete:start()
+
+		// network
+		net.Start("zcDeleteGroup")
+			net.WriteString(self.uniqueID)
+		net.Broadcast()
 	end
 
-	kingston.admin.groups[self.cmd] = nil
+	kingston.admin.groups[self.uniqueID] = nil
 	setmetatable(self, nil)
 end
 
@@ -121,10 +158,27 @@ function kingston.admin.createGroup(uniqueID, data)
 
 	newGroup:init(uniqueID, data)
 
-	kingston.admin.groups[uniqueID] = data
+	kingston.admin.groups[uniqueID] = newGroup
 
 	if SERVER then
-		// save group to db/fs
+		kingston.admin.queries.create:clearParameters()
+			kingston.admin.queries.create:setString(1, uniqueID)
+			kingston.admin.queries.create:setNumber(2, data.priority)
+			kingston.admin.queries.create:setNumber(3, data.isAdmin)
+			kingston.admin.queries.create:setNumber(4, data.isSuperAdmin)
+		kingston.admin.queries.create:start()
+
+		net.Start("zcGetGroups")
+			net.WriteString(newGroup.uniqueID)
+			net.WriteUInt(newGroup.priority, 8)
+			net.WriteBool(newGroup.isAdmin)
+			net.WriteBool(newGroup.isSuperAdmin)
+
+			net.WriteUInt(table.Count(newGroup.permissions), 8)
+			for cmd, _ in pairs(newGroup.permissions) do
+				net.WriteString(cmd)
+			end
+		net.Send(ply)
 	end
 
 	return newGroup
@@ -140,6 +194,10 @@ function kingston.admin.registerCommand(cmd, data)
 		Error("[Admin] Invalid onRun passed to registerCommand")
 		return
 	end
+
+	concommand.Add(Format("rpa_%s", cmd), function(ply, _, args) 
+		kingston.admin.runCommand(ply, cmd, args)
+	end)
 
 	// Command data structure:
 	// onRun - shared
@@ -180,7 +238,7 @@ function GM:PlayerNoClip( ply )
 	if( ply:PassedOut() ) then return false; end
 	if( ply:Bottify() ) then return false; end
 	
-	if( !ply:HasPermission("rpa_noclip") ) then
+	if( !ply:HasPermission("noclip") ) then
 		
 		if( CLIENT and IsFirstTimePredicted() ) then
 			
