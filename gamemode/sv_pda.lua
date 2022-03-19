@@ -334,6 +334,12 @@ local RandomPDANames = {
 	"aznsk8r1337",
 	"Iron Ivan",
 	"Fedya_Rice",
+	"kendricknovielloreal",
+	"Litso",
+	"Grisha Heartthrob",
+	"FULL_EMPTY",
+	"BOOTY ASS",
+	"Artyom Dyatlov",
 }
 
 local RandomItemOpinions = {
@@ -378,6 +384,14 @@ local RandomTalking = {
 	"I wiped this zone and why did I just come here? Money. Yes, we have fattened with our blood and sweat the cocksuckers in the government, that earn while doing fucking shit, and we are here, obliged to crawl for pathetic crumbs.",
 	"feelin pretty shit. Who cares, Ima have myself a beer, HEHE.",
 	"I feel like sleeping",
+	"3.6 roentgens. Not great, not terrible.",
+	"shout out 2 biggie",
+	"wtf even is tourists delight",
+	"I AM COMPLETELY DERANGED!!!!",
+	"The longer I'm here, the more I want to leave, and the less I think I actually can.",
+	"KXFNGDKFGJSLHJRASOPCOFDF",
+	"FUCK BIGGIE",
+	"Who's better, Freedom or Duty?",
 }
 
 local RandomPlayerRelatedStrings = {
@@ -394,6 +408,13 @@ local RandomPlayerRelatedStrings = {
 	"Hey, %s. Want to be friends?",
 	"What the fuck did you just fucking say about me, %s?",
 	"I think I just saw %s. Are the stories true?",
+	"I miss %s sooo much...",
+	"anyone seen %s today?",
+	"THiS IS A MESSAGE for %s. WACH OUT !!!! U R NEXT >:(",
+	"Finally, some peace and quiet. %s can't ever shut the fuck up.",
+	"it's time yall. going to collect that bounty on %s",
+	"%s haunts my dreams.",
+	"Haven't seen %s in a while. Hope they aren't dead.",
 }
 
 local RandomNPCRelatedStrings = {
@@ -402,8 +423,12 @@ local RandomNPCRelatedStrings = {
 	"Stay alert. I hear a %s.",
 	"Seems like every day I wake up and find a %s in my tent.",
 	"Damn %s! It left a mess all over the place.",
-	"Check that out, %s is  getting closer.",
+	"Check it out, that %s is  getting closer.",
 	"Is that... a %s over there?...",
+	"i had a dream about a %s last nite",
+	"does %s taste good or nah",
+	"Eek! %s creep me out.",
+	"There's a mass outbreak of %s in the Garbage. Tread carefully stalkers",
 }
 
 local RandomItemRelatedStrings = {
@@ -420,6 +445,9 @@ local RandomItemRelatedStrings = {
 	"That bastard was carrying %s, I will keep it.",
 	"Would you look at this! He had %s. It's mine now.",
 	"Sidorovich will want his hands on this %s!",
+	"day 532 of looking for a %s ........",
+	"How much is a %s",
+	"Do traders sell %s or do i have to pull it outta some stinkin corpse ?",
 }
 
 local RandomTraderRelatedStrings = {
@@ -427,6 +455,11 @@ local RandomTraderRelatedStrings = {
 	"%s has some great deals.",
 	"Finally, some decent prices. %s has the hookup.",
 	"%s is on their bullshit again. Buyer beware!",
+	"Someone tell %s to wake the fuck up, I need to buy something.",
+	"the market sucks cock rn, at least %s has good prices",
+	"This is the last time I buy from %s. What a rip off.",
+	"I wonder how %s gets their supplies....... hm.......",
+	"This magazine I just bought from %s is sticky.",
 }
 
 local DisallowItems = {
