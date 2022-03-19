@@ -903,7 +903,7 @@ if( CLIENT ) then
 
 	netstream.Hook( "NotifyPlayer", function( font, color, text, varargs )
 		
-		GAMEMODE:AddChat( {[CB_ALL] = true, [CB_OOC] = true}, font or "CombineControl.ChatNormal", color, Format( text, unpack(varargs) ) );
+		GAMEMODE:AddChat( {[CB_ALL] = true, [CB_OOC] = true}, font or "CombineControl.ChatNormal", color, varargs && Format(text, unpack(varargs)) || text);
 	
 	end );
 	

@@ -133,3 +133,45 @@ local function init_log_admin_tbl(db)
 	kingston.admin.load()
 end
 hook.Add("InitSQLTables", "STALKER.InitAdminDBTable", init_log_admin_tbl)
+
+function concommand.AddAdminVariable( cmd, var, default, friendlyvar, sa )
+	
+	local function c( ply, _, args )
+		
+		if( !ply:IsAdmin() ) then
+			
+			ply:Notify( nil, COLOR_ERROR, "You need to be an admin to do this.")
+			return;
+			
+		end
+		
+		if( sa and !ply:IsSuperAdmin() ) then
+
+			ply:Notify( nil, COLOR_ERROR, "You need to be a superadmin to do this.")
+			return;
+			
+		end
+		
+		if( !args[1] ) then
+			
+			ply:Notify(nil, COLOR_ERROR, "Error: no value specified.")
+			return;
+			
+		end
+		
+		GAMEMODE["Set" .. var]( GAMEMODE, tonumber( args[1] ) );
+		
+		GAMEMODE:LogAdmin( "[V] " .. ply:Nick() .. " set variable \"" .. var .. "\" to \"" .. tonumber( args[1] ) .. "\".", ply );
+		GAMEMODE:Notify(nil, nil, Color(255,255,255,255), "%s set %s to %s.", ply:Nick(), friendlyvar, tostring(args[1]))
+		
+	end
+	concommand.Add( cmd, c );
+	
+end
+
+concommand.AddAdminVariable( "rpa_oocdelay", "OOCDelay", 0, "OOC delay" );
+concommand.AddAdminVariable( "rpa_flashlights", "Flashlight", 0, "flashlight" );
+concommand.AddAdminVariable( "rpa_blowout_enabled", "BlowoutEnabled", 1, "Blowout enabled" );
+concommand.AddAdminVariable( "rpa_blowout_auto_schedule", "BlowoutAutoShedule", 1, "Blowout auto-schedule" );
+concommand.AddAdminVariable( "rpa_blowout_interval", "BlowoutInterval", 7200, "Blowout interval" );
+concommand.AddAdminVariable( "rpa_announcing_duration", "BlowoutAnnounceDuration", 300, "Blowout announce duration" );
