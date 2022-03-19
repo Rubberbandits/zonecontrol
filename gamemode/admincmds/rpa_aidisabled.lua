@@ -1,22 +1,13 @@
-local function DisableAI( ply, args )
-	
-	if( !args[1] ) then
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: no value specified.")
-		return;
-		
-	end
-	
-	local n = tonumber( args[1] );
-	
-	if( n != 0 and n != 1 ) then
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
-		return;
-		
-	end
-	
-	RunConsoleCommand( "ai_disabled", args[1] );
-	
-end
-concommand.AddAdmin( "rpa_aidisabled", DisableAI );
+local ARGTYPE_TARGET 	= 0
+local ARGTYPE_STRING 	= 1
+local ARGTYPE_BOOL 		= 2
+local ARGTYPE_NUMBER 	= 3
+
+kingston.admin.registerCommand("aidisabled", {
+	syntax = "<number enabled>",
+	description = "Disable/enable NPC AI",
+	arguments = {ARGTYPE_NUMBER},
+	onRun = function(ply, number)
+		RunConsoleCommand( "ai_disabled", number );
+	end,
+})
