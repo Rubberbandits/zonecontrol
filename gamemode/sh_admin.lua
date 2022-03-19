@@ -9,6 +9,28 @@ local ARGTYPE_STRING 	= 1
 local ARGTYPE_BOOL 		= 2
 local ARGTYPE_NUMBER 	= 3
 
+local ArgumentProcessor = {
+	[ARGTYPE_TARGET] = function(arg)
+		return GAMEMODE:FindPlayer(arg) || false
+	end,
+	[ARGTYPE_STRING] = function(arg)
+		return arg
+	end,
+	[ARGTYPE_BOOL] = function(arg)
+		return tobool(arg)
+	end,
+	[ARGTYPE_NUMBER] = function(arg)
+		return tonumber(arg)
+	end
+}
+
+local ArgToName = {
+	[ARGTYPE_TARGET] = "target",
+	[ARGTYPE_STRING] = "string",
+	[ARGTYPE_BOOL] = "boolean",
+	[ARGTYPE_NUMBER] = "number"
+}
+
 // Player metaobject detours
 local PLAYER = FindMetaTable("Player")
 function PLAYER:GetUserGroup()
@@ -21,22 +43,44 @@ function PLAYER:GetUserGroup()
 end
 
 function PLAYER:HasPermission(cmd, args)
-	return hook.Run("HasPermission", ply, cmd, args)
+	return hook.Run("HasPermission", self, cmd, args)
+end
+
+function PLAYER:IsSuperAdmin()
+	if self:IsUserGroup("superadmin") and !self:HasCharFlag("Q") then return true end
+
+	return false
+end
+
+function PLAYER:IsAdmin()
+	if self:IsSuperAdmin() then return true end
+	if self:IsUserGroup("admin") and !self:HasCharFlag("Q") then return true end
+
+	return false
+end
+
+function PLAYER:IsEventCoordinator()
+	
+	return (self:GetUserGroup() == "gamemaster" or self:HasCharFlag( "G" )) and !self:HasCharFlag("Q")
+	
 end
 
 // Hooks
 function GM:HasPermission(ply, cmd, args)
 	local plyGroup = kingston.admin.groups[ply:GetUserGroup()]
 	local commandData = kingston.admin.commands[cmd]
+	if !commandData then
+		return false, Format("Invalid command")
+	end
 
-	local canRun, err = commandData.canRun && commandData.canRun(ply, args) || true
+	local canRun, err = commandData.canRun && commandData.canRun(ply, unpack(args)) || true
 	if !canRun then
 		return false, Format("Player cannot use this command! Reason: %s", err)
 	end
 
 	// if has target arguments, check if we can target
 
-	local canRun, err = plyGroup:canRun(ply, cmd, args)
+	local canRun, err = plyGroup:canRun(ply, cmd, unpack(args))
 	if !canRun then
 		return false, Format("This group cannot use this command! Reason: %s", err)
 	end
@@ -47,11 +91,43 @@ end
 function GM:CanTargetPlayer(ply, target)
 	local plyGroup = kingston.admin.groups[ply:GetUserGroup()]
 
-	return plyGroup:canTarget(target:GetUserGroup())
+	return ply != target and plyGroup:canTarget(target:GetUserGroup()) or true
 end
 
-function GM:CheckArgumentTypes(cmd, args)
+local function GetArgumentTypeNames(expectedArgs)
+	local names = {}
+	for _,argType in pairs(expectedArgs) do
+		table.insert(names, ArgToName[argType])
+	end
 
+	return names
+end
+
+function GM:CheckArgumentTypes(ply, cmd, args, processed)
+	local commandData = kingston.admin.commands[cmd]
+
+	for i,arg in pairs(args) do
+		local argType = commandData.arguments[i]
+		local result = ArgumentProcessor[argType](arg)
+
+		if argType == ARGTYPE_TARGET then
+			if !result then
+				return false, "Target not found"
+			end
+		
+			local canTarget = hook.Run("CanTargetPlayer", ply, result)
+			
+			if !canTarget then
+				return false, "Cannot target this player!"
+			end
+		end
+
+		processed[i] = result;
+	end
+
+	if #processed != #commandData.arguments then
+		return false, Format("incorrect number of arguments! Expected: %s", table.concat(GetArgumentTypeNames(commandData.arguments), ","))
+	end
 end
 
 local GROUP_ADDPERM 	= 0
@@ -123,8 +199,8 @@ function GROUP:canTarget(target)
 end
 
 function GROUP:canRun(cmd, args)
-	return self.permissions[cmd]
-end
+	return self.permissions[cmd], "missing permission."
+end 
 
 function GROUP:delete()
 	if SERVER then
@@ -199,8 +275,17 @@ function kingston.admin.registerCommand(cmd, data)
 		kingston.admin.runCommand(ply, cmd, args)
 	end)
 
+	kingston.command.register(cmd, {
+		syntax = data.syntax,
+		description = data.description,
+		can_run = function() return true end,
+		on_run = function(ply, args)
+			kingston.admin.runCommand(ply, cmd, args)
+		end,
+	});
+
 	// Command data structure:
-	// onRun - shared
+	// onRun - shared, returns bool, messageString
 	// canRun - shared, returns bool, errorString
 	// arguments - shared, array
 	// syntax - shared, string, help string printed when no arguments are passed to a command
@@ -215,18 +300,28 @@ function kingston.admin.runCommand(ply, cmd, args)
 		return
 	end
 
-	local canRun, message = hook.Run("HasPermission", ply, cmd, args)
-	if !canRun then
-		ply:Notify(nil, COLOR_ERR, message)
+	if #args == 0 then
+
+	end
+
+	local processed = {}
+	local success, err = hook.Run("CheckArgumentTypes", ply, cmd, args, processed)
+	if success == false then
+		print("argument parse error")
+		ply:Notify(nil, COLOR_ERROR, "Argument parsing error: %s", err)
 		return
 	end
 
-	local expectedArguments = commandData.arguments
-	// args processing and type checking
+	local canRun, message = hook.Run("HasPermission", ply, cmd, processed)
+	if !canRun then
 
-	local err, message = commandData.onRun(ply, args)
-	if err then
-		ply:Notify(nil, COLOR_ERR, message)
+		ply:Notify(nil, COLOR_ERROR, message)
+		return
+	end
+
+	local success, message = commandData.onRun(ply, unpack(processed))
+	if !success then
+		ply:Notify(nil, COLOR_ERROR, message)
 		return
 	end
 
@@ -299,4 +394,18 @@ function GM:PlayerNoClip( ply )
 	
 	return true;
 	
+end
+
+local cmd_files = file.Find( GM.FolderName.."/gamemode/admincmds/*.lua", "LUA", "namedesc" );
+if #cmd_files > 0 then
+	for _, v in ipairs(cmd_files) do
+		include("admincmds/"..v)
+	end
+end
+
+local cmd_files = file.Find( GM.FolderName.."/gamemode/gmcmds/*.lua", "LUA", "namedesc" );
+if #cmd_files > 0 then
+	for _, v in ipairs(cmd_files) do
+		include("gmcmds/"..v)
+	end
 end

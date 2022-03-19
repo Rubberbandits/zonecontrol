@@ -92,6 +92,20 @@ local function nAInvalidMap( tab )
 end
 netstream.Hook( "nAInvalidMap", nAInvalidMap );
 
+local function zcCommandList(len)
+	local commands = net.ReadTable()
+
+	GAMEMODE:AddChat( {[CB_ALL] = true, [CB_OOC] = true}, "CombineControl.ChatNormal", Color( 0, 200, 0, 255 ), "All registered commands have been printed to console." );
+	chat.OldAddText( Color( 128, 128, 128, 255 ), "Valid commands:" );
+	
+	for _, v in pairs( commands ) do
+		
+		chat.OldAddText( Color( 128, 128, 128, 255 ), "\t", Color( 229, 201, 98, 255 ), v );
+		
+	end
+end
+net.Receive("zcCommandList", zcCommandList)
+
 local function nASeeAll()
 	
 	GAMEMODE.SeeAll = !GAMEMODE.SeeAll;

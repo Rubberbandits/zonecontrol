@@ -1,38 +1,18 @@
-local function AddBadge( ply, args )
-	
-	if( #args == 0 ) then
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
-		return;
-		
-	end
-	
-	if( #args == 1 ) then
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: no value specified.")
-		return;
-		
-	end
-	
-	local targ = GAMEMODE:FindPlayer( args[1], ply );
-	local val = tonumber( args[2] );
-	
-	if( !val or targ:HasBadge( val ) ) then
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
-		
-	end
-	
-	if( targ and targ:IsValid() ) then
-		
-		targ:SetScoreboardBadges( targ:ScoreboardBadges() + val );
-		targ:UpdatePlayerField( "ScoreboardBadges", targ:ScoreboardBadges() );
-		
-	else
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
-		
-	end
-	
-end
-concommand.AddAdmin( "rpa_addbadge", AddBadge, true );
+local ARGTYPE_TARGET 	= 0
+local ARGTYPE_STRING 	= 1
+local ARGTYPE_BOOL 		= 2
+local ARGTYPE_NUMBER 	= 3
+
+kingston.admin.registerCommand("playergivebadge", {
+	syntax = "<string target> <number badge>",
+	description = "Give a player a scoreboard badge",
+	arguments = {ARGTYPE_TARGET, ARGTYPE_NUMBER},
+	onRun = function(ply, target, badge)
+		if target:HasBadge(badge) then
+			return false, "Error: target already has this badge."
+		end
+			
+		target:SetScoreboardBadges( target:ScoreboardBadges() + badge );
+		target:UpdatePlayerField( "ScoreboardBadges", target:ScoreboardBadges() );
+	end,
+})
