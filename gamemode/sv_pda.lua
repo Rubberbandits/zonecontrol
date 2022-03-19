@@ -427,8 +427,8 @@ local RandomNPCRelatedStrings = {
 	"Is that... a %s over there?...",
 	"i had a dream about a %s last nite",
 	"does %s taste good or nah",
-	"Eek! %s creep me out.",
-	"There's a mass outbreak of %s in the Garbage. Tread carefully stalkers",
+	"Eek! %s!",
+	"Theres a mass outbreak of %s in the Garbage. Tread carefully stalkers",
 }
 
 local RandomItemRelatedStrings = {
