@@ -3,7 +3,7 @@ local ARGTYPE_STRING 	= 1
 local ARGTYPE_BOOL 		= 2
 local ARGTYPE_NUMBER 	= 3
 
-kingston.admin.registerCommand("playergivebadge", {
+kingston.admin.registerCommand("addbadge", {
 	syntax = "<string target> <number badge>",
 	description = "Give a player a scoreboard badge",
 	arguments = {ARGTYPE_TARGET, ARGTYPE_NUMBER},

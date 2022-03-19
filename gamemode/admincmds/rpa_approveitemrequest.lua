@@ -1,15 +1,19 @@
-local function ApproveItemRequest(ply, args)
-	if #args == 0 then
-		ply:Notify(nil, COLOR_ERROR, "Error: no id specified.")
-		return
-	end
-	
-	local request = kingston.item.item_requests[tonumber(args[1])]
-	if request then
-		kingston.item.approve_gm_item(tonumber(args[1]))
-		kingston.log.write("admin", "[%s (%s)(%s)] approved %s's request for %s.", ply:RPName(), ply:Nick(), ply:SteamID(), request.requester:Nick(), request.class)
-	else
-		ply:Notify(nil, COLOR_ERROR, "Error: invalid id specified.")
-	end
-end
-concommand.AddAdmin("rpa_approveitemrequest", ApproveItemRequest)
+local ARGTYPE_TARGET 	= 0
+local ARGTYPE_STRING 	= 1
+local ARGTYPE_BOOL 		= 2
+local ARGTYPE_NUMBER 	= 3
+
+kingston.admin.registerCommand("approveitemrequest", {
+	syntax = "<number requestID>",
+	description = "Approve a pending item request",
+	arguments = {ARGTYPE_NUMBER},
+	onRun = function(ply, requestID)
+		local request = kingston.item.item_requests[requestID]
+		if request then
+			kingston.item.approve_gm_item(requestID)
+			kingston.log.write("admin", "[%s (%s)(%s)] approved %s's request for %s.", ply:RPName(), ply:Nick(), ply:SteamID(), request.requester:Nick(), request.class)
+		else
+			return false, "invalid id specified"
+		end
+	end,
+})
