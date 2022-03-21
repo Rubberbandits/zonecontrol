@@ -31,7 +31,7 @@ local GROUP_SETSA		= 5
 
 local GROUP_ACTION = {
 	[GROUP_ADDPERM] = function(group)
-		group:addPermission(net.ReadString())
+		group:givePermission(net.ReadString())
 	end,
 	[GROUP_TAKEPERM] = function(group)
 		group:takePermission(net.ReadString())
