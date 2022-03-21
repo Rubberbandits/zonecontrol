@@ -1,64 +1,41 @@
-local function SetPhysTrust( ply, args )
-	
-	if( #args == 0 ) then
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
-		return;
-		
-	end
-	
-	local targ = GAMEMODE:FindPlayer( args[1], ply );
-	local trust = tonumber( args[2] ) or 1;
-	
-	if( trust != 0 and trust != 1 ) then
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
-		return;
-		
-	end
-	
-	if( targ and targ:IsValid() ) then
-		
-		if( targ:IsAdmin() ) then
+kingston.admin.registerCommand("setphystrust", {
+	syntax = "<string target> <number trustlevel>",
+	description = "Set a player's physgun trust level",
+	arguments = {ARGTYPE_TARGET, ARGTYPE_NUMBER},
+	onRun = function(ply, target, trust)
+		if( trust != 0 and trust != 1 ) then
 			
-			ply:Notify(nil, COLOR_ERROR, "Error: this target is an admin.")
+			ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 			return;
 			
 		end
 		
-		targ:SetPhysTrust( trust );
+		target:SetPhysTrust( trust );
 		
-		GAMEMODE:LogAdmin( "[S] " .. ply:Nick() .. " changed player " .. targ:RPName() .. "'s phystrust to \"" .. tostring( trust ) .. "\".", ply );
+		GAMEMODE:LogAdmin( "[S] " .. ply:Nick() .. " changed player " .. target:RPName() .. "'s phystrust to \"" .. tostring( trust ) .. "\".", ply );
 		
-		local rf = { ply, targ };
+		local rf = { ply, target };
 		
 		if( trust == 0 ) then
 			
-			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s has removed %s's phystrust.", ply:Nick(), targ:Nick())
+			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s has removed %s's phystrust.", ply:Nick(), target:Nick())
 			
 		else
 			
-			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s has given %s phystrust.", ply:Nick(), targ:Nick())
+			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s has given %s phystrust.", ply:Nick(), target:Nick())
 			
 		end
 		
-		targ:UpdatePlayerField( "PhysTrust", trust );
+		target:UpdatePlayerField( "PhysTrust", trust );
 		
-		if( targ:PhysTrust() == 0 ) then
+		if( target:PhysTrust() == 0 ) then
 			
-			targ:StripWeapon( "weapon_physgun" );
+			target:StripWeapon( "weapon_physgun" );
 			
 		else
 			
-			targ:Give( "weapon_physgun" );
+			target:Give( "weapon_physgun" );
 			
 		end
-		
-	else
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
-		
-	end
-	
-end
-concommand.AddAdmin( "rpa_setphystrust", SetPhysTrust );
+	end,
+})

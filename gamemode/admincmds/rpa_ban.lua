@@ -1,7 +1,4 @@
-local ARGTYPE_TARGET 	= 0
-local ARGTYPE_STRING 	= 1
-local ARGTYPE_BOOL 		= 2
-local ARGTYPE_NUMBER 	= 3
+
 
 kingston.admin.registerCommand("plyban", {
 	syntax = "<string target> <number duration> <string reason>",

@@ -1,16 +1,19 @@
 if StormFox2 then
-	local function ZeusStrike( ply, args )
+	local ARGTYPE_TARGET 	= 0
+	local ARGTYPE_STRING 	= 1
+	local ARGTYPE_BOOL 		= 2
+	local ARGTYPE_NUMBER 	= 3
 
-		local targ = args[1] and GAMEMODE:FindPlayer(args[1], ply) or ply:GetEyeTraceNoCursor().HitPos
+	kingston.admin.registerCommand("lightning", {
+		syntax = "<string target>",
+		description = "Zeus strike a player",
+		arguments = {ARGTYPE_TARGET},
+		onRun = function(ply, target)
+			StormFox2.Thunder.Strike(target)
 
-		StormFox2.Thunder.Strike(targ)
+			GAMEMODE:LogAdmin( "[D] " .. ply:Nick() .. " lighnting'd player " .. target:Nick() .. ".", ply );
 
-		if isentity(targ) then
-			GAMEMODE:LogAdmin( "[D] " .. ply:Nick() .. " lighnting'd player " .. targ:Nick() .. ".", ply );
-
-			targ:Notify(nil, COLOR_NOTIF, "%s used zeus lightning on you.", ply:Nick())
-		end
-		
-	end
-	concommand.AddAdmin( "rpa_lightning", ZeusStrike );
+			target:Notify(nil, COLOR_NOTIF, "%s used zeus lightning on you.", ply:Nick())
+		end,
+	})
 end

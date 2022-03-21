@@ -1,24 +1,11 @@
-local function Goto( ply, args )
-	
-	if( #args == 0 ) then
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
-		return;
-		
-	end
-	
-	local targ = GAMEMODE:FindPlayer( args[1], ply );
-	
-	if( targ and targ:IsValid() ) then
-		
-		local p = FindGoodTeleportPos( targ );
+
+
+kingston.admin.registerCommand("goto", {
+	syntax = "<string target>",
+	description = "Teleport to a player",
+	arguments = {ARGTYPE_TARGET},
+	onRun = function(ply, target)
+		local p = FindGoodTeleportPos( target );
 		ply:SetPos( p );
-		
-	else
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
-		
-	end
-	
-end
-concommand.AddAdmin( "rpa_goto", Goto );
+	end,
+})

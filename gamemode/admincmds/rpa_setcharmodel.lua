@@ -1,50 +1,34 @@
-local function SetCharModel( ply, args )
+kingston.admin.registerCommand("setcharmodel", {
+	syntax = "<string target> <string modelpath>",
+	description = "Set a character's model",
+	arguments = {ARGTYPE_TARGET, ARGTYPE_STRING},
+	onRun = function(ply, target, model)
+		model = string.gsub( string.lower( model ), "\\", "/" );
 	
-	if( #args == 0 ) then
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
-		return;
-		
-	end
-	
-	local targ = GAMEMODE:FindPlayer( args[1], ply );
-	local model = args[2] or GAMEMODE.CitizenModels[1];
-	
-	model = string.gsub( string.lower( model ), "\\", "/" );
-	
-	if( GAMEMODE.TranslateNPCModelTable[model] ) then
-		
-		model = GAMEMODE.TranslateNPCModelTable[model];
-		
-	end
-	
-	if( targ and targ:IsValid() ) then
-		
-		if( targ.CharModel == targ:GetModel() ) then
+		if( GAMEMODE.TranslateNPCModelTable[model] ) then
 			
-			targ:SetModelCC( model );
+			model = GAMEMODE.TranslateNPCModelTable[model];
+			
+		end
+
+		if( target.CharModel == target:GetModel() ) then
+			
+			target:SetModelCC( model );
 			
 		end
 		
 		if( !table.HasValue( GAMEMODE.CitizenModels, model ) ) then
 			
-			targ:SetBody("")
+			target:SetBody("")
 			
 		end
 		
-		targ.CharModel = model;
-		targ:UpdateCharacterField( "Model", model );
+		target.CharModel = model;
+		target:UpdateCharacterField( "Model", model );
 		
-		GAMEMODE:LogAdmin( "[M] " .. ply:Nick() .. " changed player " .. targ:RPName() .. "'s model to \"" .. model .. "\".", ply );
+		GAMEMODE:LogAdmin( "[M] " .. ply:Nick() .. " changed player " .. target:RPName() .. "'s model to \"" .. model .. "\".", ply );
 		
-		local rf = { ply, targ };
-		GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s set %s's model to %s.", ply:Nick(), targ:Nick(), model)
-		
-	else
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
-		
-	end
-	
-end
-concommand.AddAdmin( "rpa_setcharmodel", SetCharModel );
+		local rf = { ply, target };
+		GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s set %s's model to %s.", ply:Nick(), target:Nick(), model)
+	end,
+})

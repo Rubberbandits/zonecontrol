@@ -1,19 +1,14 @@
-local function SetRank(ply, args)
-	if #args == 0 then
-		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
-		return
-	end
-	
-	local targ = GAMEMODE:FindPlayer(args[1], ply)
-	local rank = args[2] or "user"
-	
-	if targ and targ:IsValid() then
-		targ:SetUserGroup(rank)
-		targ:UpdatePlayerField("Rank", rank)
+kingston.admin.registerCommand("setrank", {
+	syntax = "<string target> <string rank>",
+	description = "Set a player's rank",
+	arguments = {bit.bor(ARGTYPE_TARGET, ARGTYPE_STEAMID), bit.bor(ARGTYPE_STRING, ARGTYPE_NONE)},
+	onRun = function(ply, target, rank)
+		rank = rank != NULL and rank or "user"
+
+		// add offline steamID support
+		target:SetUserGroup(rank)
+		target:UpdatePlayerField("Rank", rank)
 		
-		GAMEMODE:Notify({ply, targ}, nil, COLOR_NOTIF, "%s set %s's rank to %s.", ply:Nick(), targ:Nick(), rank)
-	else
-		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
-	end
-end
-concommand.AddAdmin("rpa_setrank", SetRank, true)
+		GAMEMODE:Notify({ply, target}, nil, COLOR_NOTIF, "%s set %s's rank to %s.", ply:Nick(), target:Nick(), rank)
+	end,
+})
