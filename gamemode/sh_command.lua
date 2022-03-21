@@ -35,6 +35,17 @@ if SERVER then
 		end
 	end
 
+	local function GetSimilarCommands(str)
+		local similar = {}
+		for cmd,_ in pairs(kingston.command.types) do
+			if string.match(cmd, string.Trim(str)) then
+				table.insert(similar, cmd)
+			end
+		end
+
+		return similar
+	end
+
 	function kingston.command.process(ply, text, arguments)
 		if string.utf8sub(text, 1, 1) == kingston.command.prefix then
 
@@ -59,8 +70,9 @@ if SERVER then
 					kingston.log.write("command", "[%s][ran command: %s] %s", ply and ply:Nick() or "rcon", match, #text:sub(#match + 3) > 0 and text:sub(#match + 3) or "no args")
 				end
 			else
+				local similar = GetSimilarCommands(match)
 				if IsValid(ply) then
-					ply:Notify(nil, COLOR_ERROR, "That command does not exist.")
+					ply:Notify(nil, COLOR_ERROR, "That command does not exist. Are you looking for any of these?\n\t%s", table.concat(similar, "\n\t"))
 				else
 					MsgC(COLOR_ERROR, "That command does not exist.\n")
 				end
