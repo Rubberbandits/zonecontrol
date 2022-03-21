@@ -11,10 +11,7 @@ local GROUP_UNIQUEID	= 3
 local GROUP_SETADMIN	= 4
 local GROUP_SETSA		= 5
 
-local ARGTYPE_TARGET 	= 0
-local ARGTYPE_STRING 	= 1
-local ARGTYPE_BOOL 		= 2
-local ARGTYPE_NUMBER 	= 3
+
 
 local ArgTypeMap = {
 	ARGTYPE_TARGET = {

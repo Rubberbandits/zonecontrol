@@ -4,31 +4,77 @@ kingston.admin = kingston.admin or {}
 kingston.admin.groups = kingston.admin.groups or {}
 kingston.admin.commands = kingston.admin.commands or {}
 
-local ARGTYPE_TARGET 	= 0
-local ARGTYPE_STRING 	= 1
-local ARGTYPE_BOOL 		= 2
-local ARGTYPE_NUMBER 	= 3
+ARGTYPE_NONE	= bit.lshift(1, 0)
+ARGTYPE_TARGET 	= bit.lshift(1, 1)
+ARGTYPE_STRING 	= bit.lshift(1, 2)
+ARGTYPE_BOOL 	= bit.lshift(1, 3)
+ARGTYPE_NUMBER 	= bit.lshift(1, 4)
+ARGTYPE_STEAMID	= bit.lshift(1, 5)
+ARGTYPE_ARRAY	= bit.lshift(1, 6)
 
-local ArgumentProcessor = {
-	[ARGTYPE_TARGET] = function(arg)
-		return GAMEMODE:FindPlayer(arg) || false
-	end,
-	[ARGTYPE_STRING] = function(arg)
-		return arg
-	end,
-	[ARGTYPE_BOOL] = function(arg)
-		return tobool(arg)
-	end,
-	[ARGTYPE_NUMBER] = function(arg)
-		return tonumber(arg)
-	end
-}
+local ExpectedArguments = {
+	[ARGTYPE_NONE] = {
+		name = "none",
+		process = function() return NULL end
+	},
+	[ARGTYPE_TARGET] = {
+		name = "target",
+		process = function(arg, ply)
+			local target = GAMEMODE:FindPlayer(arg)
+			if !target then
+				return false, "Target not found"
+			end
+		
+			local canTarget = hook.Run("CanTargetPlayer", ply, target)
+			
+			if !canTarget then
+				return false, "Cannot target this player!"
+			end
 
-local ArgToName = {
-	[ARGTYPE_TARGET] = "target",
-	[ARGTYPE_STRING] = "string",
-	[ARGTYPE_BOOL] = "boolean",
-	[ARGTYPE_NUMBER] = "number"
+			return target
+		end
+	},
+	[ARGTYPE_STRING] = {
+		name = "string",
+		process = function(arg)
+			if !arg then
+				return false, "invalid string"
+			end
+
+			return arg
+		end,
+	},
+	[ARGTYPE_BOOL] = {
+		name = "boolean",
+		process = function(arg)
+			return tobool(arg)
+		end,
+	},
+	[ARGTYPE_NUMBER] = {
+		name = "number",
+		process = function(arg)
+			return tonumber(arg)
+		end,
+	},
+	[ARGTYPE_STEAMID] = {
+		name = "steamID",
+		process = function(arg)
+			local isSteamID = string.find(arg, "STEAM_")
+			if !isSteamID then
+				return false, "invalid steamID"
+			end
+
+			return arg
+		end,
+	},
+	[ARGTYPE_ARRAY] = {
+		name = "comma-separated list",
+		process = function(arg)
+			local array = string.Split(arg, ",")
+
+			return array
+		end
+	}
 }
 
 // Player metaobject detours
@@ -96,8 +142,25 @@ end
 
 local function GetArgumentTypeNames(expectedArgs)
 	local names = {}
-	for _,argType in pairs(expectedArgs) do
-		table.insert(names, ArgToName[argType])
+	local validArgumentTypes = {}
+
+	for i,expectedTypes in pairs(expectedArgs) do
+		table.insert(validArgumentTypes, {})
+
+		for argType,_ in pairs(ExpectedArguments) do
+			if bit.band(expectedTypes, argType) != 0 then
+				table.insert(validArgumentTypes[i], argType)
+			end
+		end
+	end
+
+	for i,types in pairs(validArgumentTypes) do
+		local argNames = {}
+		for _,argType in pairs(types) do
+			table.insert(argNames, ExpectedArguments[argType].name)
+		end
+
+		table.insert(names, table.concat(argNames, " or "))
 	end
 
 	return names
@@ -106,36 +169,104 @@ end
 function GM:CheckArgumentTypes(ply, cmd, args, processed)
 	local commandData = kingston.admin.commands[cmd]
 
-	for i,arg in pairs(args) do
-		local argType = commandData.arguments[i]
-		local result = ArgumentProcessor[argType](arg)
+	local validArgumentTypes = {};
+	for i,expectedTypes in pairs(commandData.arguments) do
+		table.insert(validArgumentTypes, {})
 
-		if argType == ARGTYPE_TARGET then
-			if !result then
-				return false, "Target not found"
-			end
-		
-			local canTarget = hook.Run("CanTargetPlayer", ply, result)
-			
-			if !canTarget then
-				return false, "Cannot target this player!"
+		for argType,_ in pairs(ExpectedArguments) do
+			if bit.band(expectedTypes, argType) != 0 then
+				table.insert(validArgumentTypes[i], argType)
 			end
 		end
+	end
 
-		processed[i] = result;
+	for i,types in pairs(validArgumentTypes) do
+		local err
+		for _,argType in pairs(types) do
+			local arg = args[i]
+			local result, errString = ExpectedArguments[argType].process(arg, ply)
+
+			if errString then
+				err = errString
+				continue
+			end
+
+			processed[i] = result;
+		end
+
+		if !processed[i] then
+			return false, err
+		end
 	end
 
 	if #processed != #commandData.arguments then
-		return false, Format("incorrect number of arguments! Expected: %s", table.concat(GetArgumentTypeNames(commandData.arguments), ","))
+		return false, Format("incorrect number of arguments! Expected: %s", table.concat(GetArgumentTypeNames(commandData.arguments), ", "))
 	end
 end
 
-local GROUP_ADDPERM 	= 0
-local GROUP_TAKEPERM 	= 1
-local GROUP_PRIORITY 	= 2
-local GROUP_UNIQUEID	= 3
-local GROUP_SETADMIN	= 4
-local GROUP_SETSA		= 5
+function GM:PlayerNoClip( ply )
+	if ply:PassedOut() then return false end
+	if ply:Bottify() then return false end
+	
+	local canRun, err = ply:HasPermission("noclip")
+	if !canRun then
+		if CLIENT and IsFirstTimePredicted() then
+			LocalPlayer():Notify(nil, COLOR_ERROR, err)
+		end
+		
+		return false
+	end
+	
+	if( SERVER ) then
+		
+		if( ply:IsEFlagSet( EFL_NOCLIP_ACTIVE ) ) then
+			
+			ply:GodDisable();
+			ply:SetNoTarget( false );
+			ply:SetNoDraw( false );
+			ply:SetNotSolid( false );
+			
+			if( ply:GetActiveWeapon() != NULL ) then
+				
+				ply:GetActiveWeapon():SetNoDraw( false );
+				ply:GetActiveWeapon():SetColor( Color( 255, 255, 255, 255 ) );
+				
+			end
+			
+			if( ply.NoclipPos ) then
+				
+				ply:SetPos( ply.NoclipPos );
+				ply.NoclipPos = nil;
+				
+			end
+			
+		else
+			
+			ply:GodEnable();
+			ply:SetNoTarget( true );
+			ply:SetNoDraw( true );
+			ply:SetNotSolid( true );
+			
+			if( ply:GetActiveWeapon() != NULL ) then
+				
+				ply:GetActiveWeapon():SetNoDraw( true );
+				ply:GetActiveWeapon():SetColor( Color( 255, 255, 255, 0 ) );
+				
+			end
+			
+			if( ply:IsEventCoordinator() ) then
+				
+				ply.NoclipPos = ply:GetPos();
+				
+			end
+			
+		end
+		
+	end
+	
+	return true;
+	
+end
 
 // Group object
 // Structure:
@@ -144,6 +275,13 @@ local GROUP_SETSA		= 5
 // isSuperAdmin - bool, if this group returns true when calling IsSuperAdmin()
 // priority - integer, level of seniority when comparing to other groups
 local GROUP = {}
+
+local GROUP_ADDPERM 	= 0
+local GROUP_TAKEPERM 	= 1
+local GROUP_PRIORITY 	= 2
+local GROUP_UNIQUEID	= 3
+local GROUP_SETADMIN	= 4
+local GROUP_SETSA		= 5
 
 function GROUP:init(uniqueID, data)
 	table.Merge(self, data)
@@ -198,7 +336,7 @@ function GROUP:canTarget(target)
 	return self.priority > targetGroup.priority
 end
 
-function GROUP:canRun(cmd, args)
+function GROUP:canRun(ply, cmd, args)
 	return self.permissions[cmd], "missing permission."
 end 
 
@@ -307,14 +445,12 @@ function kingston.admin.runCommand(ply, cmd, args)
 	local processed = {}
 	local success, err = hook.Run("CheckArgumentTypes", ply, cmd, args, processed)
 	if success == false then
-		print("argument parse error")
 		ply:Notify(nil, COLOR_ERROR, "Argument parsing error: %s", err)
 		return
 	end
 
 	local canRun, message = hook.Run("HasPermission", ply, cmd, processed)
 	if !canRun then
-
 		ply:Notify(nil, COLOR_ERROR, message)
 		return
 	end
@@ -328,74 +464,7 @@ function kingston.admin.runCommand(ply, cmd, args)
 	hook.Run("PlayerCommandRan", ply, cmd, args)
 end
 
-function GM:PlayerNoClip( ply )
-	
-	if( ply:PassedOut() ) then return false; end
-	if( ply:Bottify() ) then return false; end
-	
-	if( !ply:HasPermission("noclip") ) then
-		
-		if( CLIENT and IsFirstTimePredicted() ) then
-			
-			LocalPlayer():Notify(nil, Color( 200, 0, 0, 255 ), "You need to be an admin to do this.")
-			
-		end
-		
-		return false;
-		
-	end
-	
-	if( SERVER ) then
-		
-		if( ply:IsEFlagSet( EFL_NOCLIP_ACTIVE ) ) then
-			
-			ply:GodDisable();
-			ply:SetNoTarget( false );
-			ply:SetNoDraw( false );
-			ply:SetNotSolid( false );
-			
-			if( ply:GetActiveWeapon() != NULL ) then
-				
-				ply:GetActiveWeapon():SetNoDraw( false );
-				ply:GetActiveWeapon():SetColor( Color( 255, 255, 255, 255 ) );
-				
-			end
-			
-			if( ply.NoclipPos ) then
-				
-				ply:SetPos( ply.NoclipPos );
-				ply.NoclipPos = nil;
-				
-			end
-			
-		else
-			
-			ply:GodEnable();
-			ply:SetNoTarget( true );
-			ply:SetNoDraw( true );
-			ply:SetNotSolid( true );
-			
-			if( ply:GetActiveWeapon() != NULL ) then
-				
-				ply:GetActiveWeapon():SetNoDraw( true );
-				ply:GetActiveWeapon():SetColor( Color( 255, 255, 255, 0 ) );
-				
-			end
-			
-			if( ply:IsEventCoordinator() ) then
-				
-				ply.NoclipPos = ply:GetPos();
-				
-			end
-			
-		end
-		
-	end
-	
-	return true;
-	
-end
-
+// Load all commands
 local cmd_files = file.Find( GM.FolderName.."/gamemode/admincmds/*.lua", "LUA", "namedesc" );
 if #cmd_files > 0 then
 	for _, v in ipairs(cmd_files) do
