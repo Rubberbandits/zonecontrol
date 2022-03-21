@@ -884,7 +884,7 @@ function GM:Notify( rf, font, color, text, ... )
 		GAMEMODE:AddChat( {[CB_ALL] = true, [CB_OOC] = true}, font or "CombineControl.ChatNormal", color, Format( text, ... ) );
 		
 	elseif( SERVER ) then
-		
+
 		netstream.Start( rf, "NotifyPlayer", font, color, text, {...} );
 	
 	end
@@ -899,14 +899,12 @@ function meta:PDANotify(header, body, notif_x, notif_y, is_priority)
 	end
 end
 
-if( CLIENT ) then
-
-	netstream.Hook( "NotifyPlayer", function( font, color, text, varargs )
+if CLIENT then
+	netstream.Hook("NotifyPlayer", function(font, color, text, varargs)
+		if !text then return end
 		
-		GAMEMODE:AddChat( {[CB_ALL] = true, [CB_OOC] = true}, font or "CombineControl.ChatNormal", color, varargs && Format(text, unpack(varargs)) || text);
-	
-	end );
-	
+		GAMEMODE:AddChat({[CB_ALL] = true, [CB_OOC] = true}, font or "CombineControl.ChatNormal", color, varargs && Format(text, unpack(varargs)) || text)
+	end)
 end
 
 function meta:GetRadiationResistance()
