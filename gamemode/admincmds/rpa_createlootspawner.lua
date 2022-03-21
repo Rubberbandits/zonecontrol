@@ -4,11 +4,19 @@ local argtoenum = {
 	["uncommon"] = LOOT_UNCOMMON,
 }
 
-local function CreateLootSpawner( ply, args )
-	local category = argtoenum[args[1] or "common"];
-	
-	if( category ) then
+
+
+kingston.admin.registerCommand("createlootspawner", {
+	syntax = "<string rarity>",
+	description = "Spawn a random item spawner",
+	arguments = {ARGTYPE_STRING},
+	onRun = function(ply, rarity)
+		local category = argtoenum[rarity or "common"];
 		
+		if !category then
+			return false, "Invalid category"
+		end
+
 		local spawner = ents.Create("loot_spawner")
 		spawner:SetPos(ply:GetEyeTraceNoCursor().HitPos)
 		spawner:SetLootCategory(category)
@@ -16,9 +24,6 @@ local function CreateLootSpawner( ply, args )
 
 		hook.Run("SaveLootSpawns")
 		
-		GAMEMODE:LogAdmin( "[I] " .. ply:Nick() .. " created loot spawner with category \"" .. args[1] .. "\"", ply );
-
-	end
-	
-end
-concommand.AddAdmin( "rpa_createlootspawner", CreateLootSpawner );
+		GAMEMODE:LogAdmin("[I] " .. ply:Nick() .. " created loot spawner with category \"" .. rarity .. "\"", ply)
+	end,
+})

@@ -1,23 +1,10 @@
-local function NameWarn( ply, args )
-	
-	if( #args == 0 ) then
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
-		return;
-		
-	end
-	
-	local targ = GAMEMODE:FindPlayer( args[1], ply );
-	
-	if( targ and targ:IsValid() ) then
-		
+
+
+kingston.admin.registerCommand("namewarn", {
+	syntax = "<string target>",
+	description = "Warn a player for their character's name",
+	arguments = {ARGTYPE_TARGET},
+	onRun = function(ply, target)
 		netstream.Start( targ, "nWarnName" );
-		
-	else
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
-		
-	end
-	
-end
-concommand.AddAdmin( "rpa_namewarn", NameWarn );
+	end,
+})

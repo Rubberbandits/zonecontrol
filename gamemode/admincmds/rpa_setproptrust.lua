@@ -1,54 +1,31 @@
-local function SetPropTrust( ply, args )
-	
-	if( #args == 0 ) then
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
-		return;
-		
-	end
-	
-	local targ = GAMEMODE:FindPlayer( args[1], ply );
-	local trust = tonumber( args[2] ) or 1;
-	
-	if( trust != 0 and trust != 1 ) then
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
-		return;
-		
-	end
-	
-	if( targ and targ:IsValid() ) then
-		
-		if( targ:IsAdmin() ) then
+kingston.admin.registerCommand("setproptrust", {
+	syntax = "<string target> <number trustlevel>",
+	description = "Set a player's prop trust level",
+	arguments = {ARGTYPE_TARGET, ARGTYPE_NUMBER},
+	onRun = function(ply, target, trust)
+		if( trust != 0 and trust != 1 ) then
 			
-			ply:Notify(nil, COLOR_ERROR, "Error: this target is an admin.")
+			ply:Notify(nil, COLOR_ERROR, "Error: invalid value specified.")
 			return;
 			
 		end
 		
-		targ:SetPropTrust( trust );
+		target:SetPropTrust( trust );
 		
-		GAMEMODE:LogAdmin( "[S] " .. ply:Nick() .. " changed player " .. targ:RPName() .. "'s proptrust to \"" .. tostring( trust ) .. "\".", ply );
+		GAMEMODE:LogAdmin( "[S] " .. ply:Nick() .. " changed player " .. target:RPName() .. "'s proptrust to \"" .. tostring( trust ) .. "\".", ply );
 		
-		local rf = { ply, targ };
+		local rf = { ply, target };
 		
 		if( trust == 0 ) then
 			
-			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s has removed %s's proptrust.", ply:Nick(), targ:Nick())
+			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s has removed %s's proptrust.", ply:Nick(), target:Nick())
 			
 		else
 		
-			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s has given %s proptrust.", ply:Nick(), targ:Nick())
+			GAMEMODE:Notify(rf, nil, COLOR_NOTIF, "%s has given %s proptrust.", ply:Nick(), target:Nick())
 			
 		end
 		
-		targ:UpdatePlayerField( "PropTrust", trust );
-		
-	else
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
-		
-	end
-	
-end
-concommand.AddAdmin( "rpa_setproptrust", SetPropTrust );
+		target:UpdatePlayerField( "PropTrust", trust );
+	end,
+})

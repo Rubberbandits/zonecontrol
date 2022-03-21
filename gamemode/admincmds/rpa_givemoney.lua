@@ -1,34 +1,14 @@
-local function GiveMoney( ply, args )
-	
-	if( #args == 0 ) then
+
+
+kingston.admin.registerCommand("givemoney", {
+	syntax = "<string target> <number amount>",
+	description = "Increase a character's money",
+	arguments = {ARGTYPE_TARGET, ARGTYPE_NUMBER},
+	onRun = function(ply, target, amount)
+		target:AddMoney( amount );
+		target:UpdateCharacterField( "Money", tostring( target:Money() ) );
+		target:Notify(nil, COLOR_NOTIF, "%s gave you %d rubles.", ply:Nick(), amount)
 		
-		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
-		return;
-		
-	end
-	
-	local targ = GAMEMODE:FindPlayer( args[1], ply );
-	local amt = 0;
-	
-	if( args[2] ) then
-		
-		amt = tonumber( args[2] );
-		
-	end
-	
-	if( targ and targ:IsValid() ) then
-		
-		targ:AddMoney( amt );
-		targ:UpdateCharacterField( "Money", tostring( targ:Money() ) );
-		targ:Notify(nil, COLOR_NOTIF, "%s gave you %d rubles.", ply:Nick(), amt)
-		
-		GAMEMODE:LogAdmin( "[M] " .. ply:Nick() .. " gave " .. targ:RPName() .. " " .. tostring( amt ) .. " rubles.", ply );
-		
-	else
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
-		
-	end
-	
-end
-concommand.AddAdmin( "rpa_givemoney", GiveMoney );
+		GAMEMODE:LogAdmin( "[M] " .. ply:Nick() .. " gave " .. target:RPName() .. " " .. tostring( amount ) .. " rubles.", ply );
+	end,
+})

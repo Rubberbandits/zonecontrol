@@ -1,10 +1,16 @@
-local function CreateShipmentSpawn( ply, args )
-	local spawner = ents.Create("shipment_spawner")
-	spawner:SetPos(ply:GetEyeTraceNoCursor().HitPos)
-	spawner:Spawn()
 
-	hook.Run("SaveShipmentSpawns")
-	
-	GAMEMODE:LogAdmin( "[I] " .. ply:Nick() .. " created shipment spawn location.", ply );
-end
-concommand.AddAdmin( "rpa_createshipmentspawn", CreateShipmentSpawn );
+
+kingston.admin.registerCommand("createshipmentspawn", {
+	syntax = "<none>",
+	description = "Spawn a random shipment location",
+	arguments = {},
+	onRun = function(ply)
+		local spawner = ents.Create("shipment_spawner")
+		spawner:SetPos(ply:GetEyeTraceNoCursor().HitPos)
+		spawner:Spawn()
+
+		hook.Run("SaveShipmentSpawns")
+		
+		GAMEMODE:LogAdmin("[I] " .. ply:Nick() .. " created a shipment spawn location.", ply)
+	end,
+})
