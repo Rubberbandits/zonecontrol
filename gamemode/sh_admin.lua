@@ -116,7 +116,7 @@ function GM:HasPermission(ply, cmd, args)
 	local plyGroup = kingston.admin.groups[ply:GetUserGroup()]
 	local commandData = kingston.admin.commands[cmd]
 	if !commandData then
-		return false, Format("Invalid command")
+		return false, "Invalid command"
 	end
 
 	local canRun, err = commandData.canRun && commandData.canRun(ply, unpack(args)) || true
@@ -168,6 +168,10 @@ end
 
 function GM:CheckArgumentTypes(ply, cmd, args, processed)
 	local commandData = kingston.admin.commands[cmd]
+
+	if #args == 0 && #commandData.arguments != 0 then
+		return false, Format("no arguments provided. Expected: %s", table.concat(GetArgumentTypeNames(commandData.arguments), ", "))
+	end
 
 	local validArgumentTypes = {};
 	for i,expectedTypes in pairs(commandData.arguments) do
