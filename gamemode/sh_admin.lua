@@ -19,13 +19,13 @@ local ExpectedArguments = {
 	},
 	[ARGTYPE_TARGET] = {
 		name = "target",
-		process = function(arg, ply)
+		process = function(arg, ply, cmd)
 			local target = GAMEMODE:FindPlayer(arg)
 			if !target then
 				return false, "Target not found"
 			end
 		
-			local canTarget = hook.Run("CanTargetPlayer", ply, target)
+			local canTarget = hook.Run("CanTargetPlayer", ply, target, cmd)
 			
 			if !canTarget then
 				return false, "Cannot target this player!"
@@ -66,15 +66,22 @@ local ExpectedArguments = {
 
 			return arg
 		end,
-	},
-	[ARGTYPE_ARRAY] = {
-		name = "comma-separated list",
-		process = function(arg)
-			local array = string.Split(arg, ",")
-
-			return array
-		end
 	}
+}
+
+ExpectedArguments[ARGTYPE_ARRAY] = {
+	name = "comma-separated list",
+	process = function(arg, ply, cmd, expectedType)
+		local data = {}
+		local array = string.Split(arg, ",")
+
+		local listType = ExpectedArguments[bit.bxor(expectedType, ARGTYPE_ARRAY)]
+		for _,entry in pairs(array) do
+			table.insert(data, listType.process(entry, ply, cmd, expectedType))
+		end
+
+		return data
+	end
 }
 
 // Player metaobject detours
@@ -134,8 +141,13 @@ function GM:HasPermission(ply, cmd, args)
 	return true
 end
 
-function GM:CanTargetPlayer(ply, target)
+function GM:CanTargetPlayer(ply, target, cmd)
 	local plyGroup = kingston.admin.groups[ply:GetUserGroup()]
+	local commandData = kingston.admin.commands[cmd]
+
+	if commandData.ignoreRank then
+		return true
+	end
 
 	return ply != target and plyGroup:canTarget(target:GetUserGroup()) or true
 end
@@ -188,7 +200,7 @@ function GM:CheckArgumentTypes(ply, cmd, args, processed)
 		local err
 		for _,argType in pairs(types) do
 			local arg = args[i]
-			local result, errString = ExpectedArguments[argType].process(arg, ply)
+			local result, errString = ExpectedArguments[argType].process(arg, ply, cmd, commandData.arguments[i])
 
 			if errString then
 				err = errString
