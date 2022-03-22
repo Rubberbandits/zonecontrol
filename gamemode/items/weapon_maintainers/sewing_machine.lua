@@ -4,6 +4,7 @@ ITEM.Model =  "models/kek1ch/dev_merger.mdl"
 ITEM.Weight =  1.5;
 ITEM.License = "TX"
 ITEM.SuitOnly = true
+ITEM.TechOnly = true
 ITEM.RepairCondition = 10
 ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );
