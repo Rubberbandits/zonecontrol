@@ -1,25 +1,10 @@
-local function SetWatched( ply, args )
-
-	if( #args == 0 ) then
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
-		return;
-		
+kingston.admin.registerCommand("togglewatched", {
+	syntax = "<string target>",
+	description = "Toggle whether or not a target is watched by the big brother system",
+	arguments = {},
+	onRun = function(ply, target)
+		target:SetWatched(!target:Watched())
+		target:UpdatePlayerField( "Watched", target:Watched() and "1" or "0" )
+		ply:Notify(nil, COLOR_NOTIF, target:Watched() and "%s is now being watched." or "%s is no longer being watched.", target:Nick())
 	end
-	
-	local targ = GAMEMODE:FindPlayer( args[1], ply );
-	
-	if( targ and targ:IsValid() ) then
-	
-		targ:SetWatched(!targ:Watched())
-		targ:UpdatePlayerField( "Watched", targ:Watched() and "1" or "0" )
-		ply:Notify(nil, COLOR_NOTIF, targ:Watched() and "%s is now being watched." or "%s is no longer being watched.", targ:Nick())
-		
-	else
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
-		
-	end
-	
-end
-concommand.AddAdmin( "rpa_togglewatched", SetWatched );
+})

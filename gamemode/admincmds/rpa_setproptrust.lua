@@ -1,4 +1,4 @@
-kingston.admin.registerCommand("setproptrust", {
+kingston.admin.registerCommand("plysetproptrust", {
 	syntax = "<string target> <number trustlevel>",
 	description = "Set a player's prop trust level",
 	arguments = {ARGTYPE_TARGET, ARGTYPE_NUMBER},

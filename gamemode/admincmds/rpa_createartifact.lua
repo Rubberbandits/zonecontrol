@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("createartifact", {
+kingston.admin.registerCommand("itemcreateartifact", {
 	syntax = "<string item>",
 	description = "Spawn an invisible artifact that has to be revealed with a detector",
 	arguments = {ARGTYPE_STRING},

@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("panic", {
+kingston.admin.registerCommand("gamepanic", {
 	syntax = "<none>",
 	description = "Remove all entities with motion-enabled physics",
 	arguments = {},

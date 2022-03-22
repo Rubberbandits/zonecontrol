@@ -65,7 +65,7 @@ concommand.AddAdmin( "rpa_changebanlength", ChangeBanLength );
 
 
 
-kingston.admin.registerCommand("changebanlength", {
+kingston.admin.registerCommand("banchangelength", {
 	syntax = "<string target> <number duration>",
 	description = "Changes the ban duration of a player. Target is steamID.",
 	arguments = {ARGTYPE_STRING, ARGTYPE_NUMBER},

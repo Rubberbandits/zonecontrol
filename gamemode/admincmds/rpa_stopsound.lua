@@ -1,8 +1,9 @@
-local function StopSound( ply, args )
-	
-	netstream.Start( nil, "nAStopSound" );
-	
-	GAMEMODE:LogAdmin( "[S] " .. ply:Nick() .. " stopped all sounds.", ply );
-	
-end
-concommand.AddAdmin( "rpa_stopsound", StopSound );
+kingston.admin.registerCommand("stopsound", {
+	syntax = "<none>",
+	description = "Stop music for all players",
+	arguments = {},
+	onRun = function(ply)
+		netstream.Start( nil, "nAStopSound" );
+		GAMEMODE:LogAdmin( "[S] " .. ply:Nick() .. " stopped all sounds.", ply );
+	end,
+})

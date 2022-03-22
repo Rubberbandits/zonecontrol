@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("givestockpile", {
+kingston.admin.registerCommand("chargivestockpile", {
 	syntax = "<string target>",
 	description = "Allow a character to create their own stockpile",
 	arguments = {ARGTYPE_TARGET},

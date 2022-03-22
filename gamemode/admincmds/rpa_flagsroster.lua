@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("flagsroster", {
+kingston.admin.registerCommand("gameflagsroster", {
 	syntax = "<none>",
 	description = "View all characters with flags",
 	arguments = {},

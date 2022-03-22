@@ -1,6 +1,7 @@
 
 
-kingston.admin.registerCommand("bring", {
+kingston.admin.registerCommand("plybring", {
+	ignoreRank = true,
 	syntax = "<string target>",
 	description = "Teleport a player to your location.",
 	arguments = {ARGTYPE_TARGET},

@@ -1,4 +1,4 @@
-kingston.admin.registerCommand("setitemprice", {
+kingston.admin.registerCommand("itemsetprice", {
 	syntax = "<string itemClass> <number price>",
 	description = "Set the business menu price of an item",
 	arguments = {ARGTYPE_TARGET, ARGTYPE_NUMBER},

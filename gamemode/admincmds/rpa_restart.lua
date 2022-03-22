@@ -1,4 +1,4 @@
-kingston.admin.registerCommand("restart", {
+kingston.admin.registerCommand("gamerestart", {
 	syntax = "<none>",
 	description = "Restart the server via changelevel. Only refreshes Lua state",
 	arguments = {},

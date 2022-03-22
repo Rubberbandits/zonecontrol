@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("addbadge", {
+kingston.admin.registerCommand("plybadgeadd", {
 	syntax = "<string target> <number badge>",
 	description = "Give a player a scoreboard badge",
 	arguments = {ARGTYPE_TARGET, ARGTYPE_NUMBER},

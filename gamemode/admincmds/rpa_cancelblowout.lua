@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("cancelblowout", {
+kingston.admin.registerCommand("blowoutcancel", {
 	syntax = "<none>",
 	description = "Cancel an active blowout",
 	arguments = {},

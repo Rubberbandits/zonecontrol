@@ -1,30 +1,15 @@
-local function Wake( ply, args )
-	
-	if( #args == 0 ) then
+kingston.admin.registerCommand("plywake", {
+	syntax = "<string target>",
+	description = "Wake a knocked out player",
+	arguments = {ARGTYPE_TARGET},
+	onRun = function(ply, target)
+		local nick = target:RPName();
 		
-		ply:Notify(nil, COLOR_ERROR, "Error: no target specified.")
-		return;
-		
-	end
-	
-	local targ = GAMEMODE:FindPlayer( args[1], ply );
-	
-	if( targ and targ:IsValid() ) then
-		
-		local nick = targ:RPName();
-		
-		targ:SetConsciousness( 100 );
-		targ:WakeUp();
+		target:SetConsciousness( 100 );
+		target:WakeUp();
 		
 		GAMEMODE:LogAdmin( "[U] " .. ply:Nick() .. " woke player " .. nick .. ".", ply );
 		
-		targ:Notify(nil, COLOR_NOTIF, "%s woke you up.", ply:Nick())
-		
-	else
-		
-		ply:Notify(nil, COLOR_ERROR, "Error: target not found.")
-		
-	end
-	
-end
-concommand.AddAdmin( "rpa_wake", Wake );
+		target:Notify(nil, COLOR_NOTIF, "%s woke you up.", ply:Nick())
+	end,
+})

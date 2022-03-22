@@ -4,7 +4,7 @@ if StormFox2 then
 	local ARGTYPE_BOOL 		= 2
 	local ARGTYPE_NUMBER 	= 3
 
-	kingston.admin.registerCommand("lightning", {
+	kingston.admin.registerCommand("plylightning", {
 		syntax = "<string target>",
 		description = "Zeus strike a player",
 		arguments = {ARGTYPE_TARGET},

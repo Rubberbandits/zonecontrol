@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("goto", {
+kingston.admin.registerCommand("plygoto", {
 	syntax = "<string target>",
 	description = "Teleport to a player",
 	arguments = {ARGTYPE_TARGET},

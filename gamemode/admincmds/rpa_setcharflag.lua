@@ -1,4 +1,4 @@
-kingston.admin.registerCommand("setcharflag", {
+kingston.admin.registerCommand("charsetflag", {
 	syntax = "<string target> <string flags>",
 	description = "Set a character's flags",
 	arguments = {ARGTYPE_TARGET, bit.bor(ARGTYPE_STRING, ARGTYPE_NONE)},

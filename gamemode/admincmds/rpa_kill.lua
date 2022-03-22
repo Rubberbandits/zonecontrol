@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("kill", {
+kingston.admin.registerCommand("plykill", {
 	syntax = "<string target>",
 	description = "Kill a player",
 	arguments = {ARGTYPE_TARGET},

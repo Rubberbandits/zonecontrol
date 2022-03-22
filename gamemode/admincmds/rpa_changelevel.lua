@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("changelevel", {
+kingston.admin.registerCommand("gamechangelevel", {
 	syntax = "<string mapname>",
 	description = "Change the current level of the server",
 	arguments = {ARGTYPE_STRING},

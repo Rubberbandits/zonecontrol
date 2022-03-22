@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("aidisabled", {
+kingston.admin.registerCommand("gameaidisabled", {
 	syntax = "<number enabled>",
 	description = "Disable/enable NPC AI",
 	arguments = {ARGTYPE_NUMBER},
