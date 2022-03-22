@@ -43,9 +43,7 @@ local function nARemoveItem( ply, targ, k )
 end
 netstream.Hook( "nARemoveItem", nARemoveItem );
 
-
-
-kingston.admin.registerCommand("editinventory", {
+kingston.admin.registerCommand("chareditinventory", {
 	syntax = "<string target>",
 	description = "Edit a player's inventory",
 	arguments = {ARGTYPE_TARGET},

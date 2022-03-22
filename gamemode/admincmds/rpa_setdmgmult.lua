@@ -1,4 +1,4 @@
-kingston.admin.registerCommand("setdmgmult", {
+kingston.admin.registerCommand("gamesetdmgmult", {
 	syntax = "<number multipler>",
 	description = "Set the global TFA damage multiplier",
 	arguments = {ARGTYPE_NUMBER},

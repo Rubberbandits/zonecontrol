@@ -1,4 +1,4 @@
-kingston.admin.registerCommand("setrank", {
+kingston.admin.registerCommand("plysetrank", {
 	syntax = "<string target> <string rank>",
 	description = "Set a player's rank",
 	arguments = {bit.bor(ARGTYPE_TARGET, ARGTYPE_STEAMID), bit.bor(ARGTYPE_STRING, ARGTYPE_NONE)},

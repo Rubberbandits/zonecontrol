@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("hideadmin", {
+kingston.admin.registerCommand("plyhideadmin", {
 	syntax = "<bool hidden>",
 	description = "Hide your admin badge from the scoreboard",
 	arguments = {ARGTYPE_BOOL},

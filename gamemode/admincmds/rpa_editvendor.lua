@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("editvendor", {
+kingston.admin.registerCommand("gameeditvendor", {
 	syntax = "<none>",
 	description = "Edit the vendor you are currently looking at.",
 	arguments = {},

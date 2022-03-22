@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("knockout", {
+kingston.admin.registerCommand("plyknockout", {
 	syntax = "<string target>",
 	description = "Knockout a player",
 	arguments = {ARGTYPE_TARGET},

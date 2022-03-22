@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("createnpcspawner", {
+kingston.admin.registerCommand("gamecreatenpcspawner", {
 	syntax = "<none>",
 	description = "Spawn a random NPC spawner",
 	arguments = {},

@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("explode", {
+kingston.admin.registerCommand("plyexplode", {
 	syntax = "<string target>",
 	description = "Explode a target",
 	arguments = {ARGTYPE_TARGET},

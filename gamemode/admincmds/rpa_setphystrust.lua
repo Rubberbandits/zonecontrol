@@ -1,4 +1,4 @@
-kingston.admin.registerCommand("setphystrust", {
+kingston.admin.registerCommand("plysetphystrust", {
 	syntax = "<string target> <number trustlevel>",
 	description = "Set a player's physgun trust level",
 	arguments = {ARGTYPE_TARGET, ARGTYPE_NUMBER},

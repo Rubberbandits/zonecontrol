@@ -1,4 +1,4 @@
-kingston.admin.registerCommand("setname", {
+kingston.admin.registerCommand("charsetname", {
 	syntax = "<string target> <string name>",
 	description = "Set a character's name",
 	arguments = {ARGTYPE_TARGET, ARGTYPE_STRING},

@@ -1,4 +1,4 @@
-kingston.admin.registerCommand("seeall", {
+kingston.admin.registerCommand("adminseeall", {
 	syntax = "<none>",
 	description = "Activate SeeAll",
 	arguments = {},

@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("createexplosion", {
+kingston.admin.registerCommand("gamecreateexplosion", {
 	syntax = "<none>",
 	description = "Create an explosion where you are aiming. Doesn't do damage.",
 	arguments = {},

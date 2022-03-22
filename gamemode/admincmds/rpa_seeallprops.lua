@@ -1,4 +1,4 @@
-kingston.admin.registerCommand("seeallprops", {
+kingston.admin.registerCommand("adminseeallprops", {
 	syntax = "<none>",
 	description = "Activate perma-prop outlines in SeeAll",
 	arguments = {},

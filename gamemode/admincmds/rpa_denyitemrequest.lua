@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("denyitemrequest", {
+kingston.admin.registerCommand("itemdenyrequest", {
 	syntax = "<number requestID>",
 	description = "Deny an item request",
 	arguments = {ARGTYPE_NUMBER},

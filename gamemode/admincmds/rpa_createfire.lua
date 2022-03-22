@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("createfire", {
+kingston.admin.registerCommand("gamecreatefire", {
 	syntax = "<number duration>",
 	description = "Create a timed fire where you are aiming.",
 	arguments = {ARGTYPE_NUMBER},

@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("hidden", {
+kingston.admin.registerCommand("plyhidden", {
 	syntax = "<bool hidden>",
 	description = "Hide yourself from the scoreboard",
 	arguments = {ARGTYPE_BOOL},

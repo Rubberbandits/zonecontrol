@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("kick", {
+kingston.admin.registerCommand("plykick", {
 	syntax = "<string target> <string reason>",
 	description = "Kick a player from the server",
 	arguments = {ARGTYPE_TARGET, ARGTYPE_STRING},

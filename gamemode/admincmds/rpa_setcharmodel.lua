@@ -1,4 +1,4 @@
-kingston.admin.registerCommand("setcharmodel", {
+kingston.admin.registerCommand("charsetmodel", {
 	syntax = "<string target> <string modelpath>",
 	description = "Set a character's model",
 	arguments = {ARGTYPE_TARGET, ARGTYPE_STRING},

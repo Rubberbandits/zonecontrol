@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("createitem", {
+kingston.admin.registerCommand("itemcreate", {
 	syntax = "<string item>",
 	description = "Spawn an item",
 	arguments = {ARGTYPE_STRING},

@@ -1,4 +1,4 @@
-kingston.admin.registerCommand("sethealth", {
+kingston.admin.registerCommand("charsethealth", {
 	syntax = "<string target> <number health>",
 	description = "Set the current health of a target",
 	arguments = {ARGTYPE_TARGET, ARGTYPE_NUMBER},

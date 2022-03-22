@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("removebadge", {
+kingston.admin.registerCommand("plybadgeremove", {
 	syntax = "<string target> <number badge>",
 	description = "Remove a player's scoreboard badge",
 	arguments = {ARGTYPE_TARGET, ARGTYPE_NUMBER},

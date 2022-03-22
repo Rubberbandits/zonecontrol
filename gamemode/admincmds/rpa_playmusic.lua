@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("playmusic", {
+kingston.admin.registerCommand("musicplay", {
 	syntax = "<string songtype>",
 	description = "Play a random track from a category of ambient tracks",
 	arguments = {ARGTYPE_STRING},

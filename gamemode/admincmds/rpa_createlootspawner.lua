@@ -6,7 +6,7 @@ local argtoenum = {
 
 
 
-kingston.admin.registerCommand("createlootspawner", {
+kingston.admin.registerCommand("gamecreatelootspawner", {
 	syntax = "<string rarity>",
 	description = "Spawn a random item spawner",
 	arguments = {ARGTYPE_STRING},

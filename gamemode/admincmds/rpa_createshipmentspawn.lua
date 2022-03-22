@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("createshipmentspawn", {
+kingston.admin.registerCommand("gamecreateshipmentspawn", {
 	syntax = "<none>",
 	description = "Spawn a random shipment location",
 	arguments = {},
