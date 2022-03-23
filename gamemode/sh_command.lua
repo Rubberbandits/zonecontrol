@@ -301,7 +301,8 @@ kingston.command.register("pda", {
 					url = GAMEMODE.PDADiscordHook,
 					data = util.TableToJSON({
 						username = header,
-						content = body
+						content = body,
+						avatar_url = "https://cdn.discordapp.com/attachments/367478333425844224/956297681658052608/latest.png"
 					})
 				})
 			end

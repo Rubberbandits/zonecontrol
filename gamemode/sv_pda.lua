@@ -911,7 +911,8 @@ local function RandomPDAMessages()
 				url = GAMEMODE.PDADiscordHook,
 				data = util.TableToJSON({
 					username = username.." -> all",
-					content = message
+					content = message,
+					avatar_url = "https://cdn.discordapp.com/attachments/367478333425844224/956297681658052608/latest.png"
 				})
 			})
 		end
