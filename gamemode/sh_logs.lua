@@ -25,7 +25,7 @@ end
 local function SetupLogDirectories()
 	file.CreateDir(kingston.log.dir)
 end
-hook.Add("SetupDataDirectories", SetupLogDirectories)
+hook.Add("SetupDataDirectories", "SetupLogDirectories", SetupLogDirectories)
 
 /* aliases for logging systems */
 
