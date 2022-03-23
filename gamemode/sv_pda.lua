@@ -876,9 +876,9 @@ local function RandomPDAMessages()
 		local icon = {2,5}
 		local username = table.Random(RandomPDANames)
 		local randomMessage = table.Random(RandomPDAMessageFuncs)
-		local string = randomMessage()
+		local message = randomMessage()
 
-		if !string then 
+		if !message then 
 			return
 		end
 
@@ -901,8 +901,19 @@ local function RandomPDAMessages()
 			if !poweredOn then continue end
 
 			if ply:HasItem("pda") then
-				ply:PDANotify(username.." -> all", string, icon[1], icon[2])
+				ply:PDANotify(username.." -> all", message, icon[1], icon[2])
 			end
+		end
+
+		if GAMEMODE.PDADiscordHook then
+			// fire and forget
+			http.Post(GAMEMODE.ProxySite, {
+				url = GAMEMODE.PDADiscordHook,
+				data = util.TableToJSON({
+					username = username,
+					content = message
+				})
+			})
 		end
 
 		GAMEMODE.NextRandomPDA = CurTime() + math.random(180, 300)
