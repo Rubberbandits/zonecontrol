@@ -296,7 +296,7 @@ kingston.command.register("pda", {
 			netstream.Start(rf, "nAddPDANotif", header, body, 2, 5)
 
 			if GAMEMODE.PDADiscordHook then
-				// fire and forget, test commits
+				// fire and forget
 				http.Post(GAMEMODE.ProxySite, {
 					url = GAMEMODE.PDADiscordHook,
 					data = util.TableToJSON({
