@@ -912,7 +912,8 @@ local function RandomPDAMessages()
 				data = util.TableToJSON({
 					username = username.." -> all",
 					content = message,
-					avatar_url = "https://cdn.discordapp.com/attachments/367478333425844224/956297681658052608/latest.png"
+					avatar_url = "https://cdn.discordapp.com/attachments/367478333425844224/956297681658052608/latest.png",
+					allowed_mentions = {parse = {}}
 				})
 			})
 		end
