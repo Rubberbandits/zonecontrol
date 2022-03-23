@@ -11,7 +11,6 @@ ITEM.FOV 			= 46
 ITEM.CamPos 		= Vector( 50, 4.47, 0.9 )
 ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
 ITEM.SelfRepairCondition = 40
-ITEM.License = "X"
 ITEM.BulkPrice = 9000
 ITEM.Slot = 1
 ITEM.Rarity = 4

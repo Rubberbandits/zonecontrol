@@ -12,7 +12,6 @@ ITEM.CamPos 		= Vector( 50, 4.47, 0.9 )
 ITEM.LookAt 		= Vector( -90, -4.82, 4.83 )
 ITEM.SelfRepairCondition = 65
 ITEM.AmmoType = "ammo_9x39"
-ITEM.License = "B"
 ITEM.BulkPrice = 375000
 ITEM.Slot = 2
 ITEM.Damage = 39
