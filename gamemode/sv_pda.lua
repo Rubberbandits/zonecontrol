@@ -910,7 +910,7 @@ local function RandomPDAMessages()
 			http.Post(GAMEMODE.ProxySite, {
 				url = GAMEMODE.PDADiscordHook,
 				data = util.TableToJSON({
-					username = username,
+					username = username.." -> all",
 					content = message
 				})
 			})
