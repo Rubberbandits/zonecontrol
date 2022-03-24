@@ -1698,9 +1698,33 @@ function GM:AdminCreateRostersMenu()
 	CCP.AdminMenu.Roster:SetSize( 670, 406 );
 	CCP.AdminMenu.Roster:AddColumn( "SteamID" );
 	CCP.AdminMenu.Roster:AddColumn( "Character" );
-	CCP.AdminMenu.Roster:AddColumn( "Flag" );
-	CCP.AdminMenu.Roster:AddColumn( "Flag Name" );
+	CCP.AdminMenu.Roster:AddColumn( "Money" );
+	CCP.AdminMenu.Roster:AddColumn( "Flags" );
+	CCP.AdminMenu.Roster:AddColumn( "Date Created" );
 	CCP.AdminMenu.Roster:AddColumn( "Last Online" );
+
+	function CCP.AdminMenu.Roster:DoDoubleClick(lineID, line)
+		local newPage
+		if line.previous then
+			CCP.AdminMenu.Roster.CurrentPage = CCP.AdminMenu.Roster.CurrentPage - 1
+			newPage = true
+		end
+
+		if line.next then
+			CCP.AdminMenu.Roster.CurrentPage = CCP.AdminMenu.Roster.CurrentPage + 1
+			newPage = true
+		end
+
+		if newPage then
+			CCP.AdminMenu.Roster:Clear()
+
+			net.Start("zcGetCharacterList")
+				net.WriteUInt(CCP.AdminMenu.Roster.CurrentPage, 32)
+			net.SendToServer()
+
+			CCP.AdminMenu.RosterChars:SetDisabled( true );
+		end
+	end
 	
 	CCP.AdminMenu.RosterChars = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.RosterChars:SetFont( "CombineControl.LabelSmall" );
@@ -1709,28 +1733,42 @@ function GM:AdminCreateRostersMenu()
 	CCP.AdminMenu.RosterChars:SetSize( 100, 30 );
 	function CCP.AdminMenu.RosterChars:DoClick()
 		
-		netstream.Start( "nGetRosterList", true );
+		net.Start("zcGetCharacterList")
+			net.WriteUInt(1, 32)
+		net.SendToServer()
 
 		CCP.AdminMenu.RosterChars:SetDisabled( true );
 		CCP.AdminMenu.Roster:Clear();
+		CCP.AdminMenu.Roster.CurrentPage = 1;
 		
 	end
 	CCP.AdminMenu.RosterChars:PerformLayout();
 	
 end
 
-function nRosterList( tab )
-	
+local function zcGetCharacterList(len)
 	if( CCP.AdminMenu.Roster and CCP.AdminMenu.Roster:IsValid() ) then
 		
 		CCP.AdminMenu.Roster:Clear();
-		
-		for k, v in pairs( tab ) do
-			
-			CCP.AdminMenu.Roster:AddLine( v[1], v[2], v[3], GAMEMODE:FlagPrintName( v[3] ), v[4] );
-			
+
+		if CCP.AdminMenu.Roster.CurrentPage > 1 then
+			CCP.AdminMenu.Roster:AddLine("Previous page").previous = true
 		end
-		
+
+		for i = 1, net.ReadUInt(32) do
+			local data = {
+				steamID = net.ReadString(),
+				name = net.ReadString(),
+				flags = net.ReadString(),
+				created = net.ReadString(),
+				lastOnline = net.ReadString(),
+				money = net.ReadUInt(32)
+			}
+
+			CCP.AdminMenu.Roster:AddLine(data.steamID, data.name, data.money, data.flags, data.created, data.lastOnline)
+		end
+
+		CCP.AdminMenu.Roster:AddLine("Next page").next = true
 	end
 	
 	if( CCP.AdminMenu.RosterChars and CCP.AdminMenu.RosterChars:IsValid() ) then
@@ -1748,9 +1786,8 @@ function nRosterList( tab )
 		end
 		
 	end );
-	
 end
-netstream.Hook( "nRosterList", nRosterList );
+net.Receive("zcGetCharacterList", zcGetCharacterList)
 
 function GM:AdminCreateRoleplayMenu()
 	

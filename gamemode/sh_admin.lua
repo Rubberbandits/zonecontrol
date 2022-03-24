@@ -125,18 +125,16 @@ end
 function GM:HasPermission(ply, cmd, args)
 	local plyGroup = kingston.admin.groups[ply:GetUserGroup()]
 	local commandData = kingston.admin.commands[cmd]
-	if !commandData then
-		return false, "Invalid command"
-	end
-
-	local canRun, err = commandData.canRun && commandData.canRun(ply, unpack(args)) || true
-	if !canRun then
-		return false, Format("Player cannot use this command! Reason: %s", err)
+	if commandData then
+		local canRun, err = commandData.canRun && commandData.canRun(ply, unpack(args)) || true
+		if !canRun then
+			return false, Format("Player cannot use this command! Reason: %s", err)
+		end
 	end
 
 	// if has target arguments, check if we can target
 
-	local canRun, err = plyGroup:canRun(ply, cmd, unpack(args))
+	local canRun, err = plyGroup:canRun(ply, cmd, args and unpack(args))
 	if !canRun then
 		return false, Format("This group cannot use this command! Reason: %s", err)
 	end
@@ -208,6 +206,11 @@ function GM:CheckArgumentTypes(ply, cmd, args, processed)
 			if errString then
 				err = errString
 				continue
+			end
+
+			// if the final argument is a string, and there are more arguments past that, concat
+			if #args > #commandData.arguments and i == #commandData.arguments and argType == ARGTYPE_STRING then
+				result = table.concat(args, " ", i)
 			end
 
 			processed[i] = result;

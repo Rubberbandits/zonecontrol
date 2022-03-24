@@ -14,10 +14,10 @@ include( "netstream2.lua" );
 include( "shared.lua" );
 
 include( "meta/sh_item.lua" );
-include( "sh_admin.lua" );
 include( "sh_animation.lua" );
 include( "sh_consciousness.lua" );
 include( "sh_chat.lua" );
+include( "sh_admin.lua" );
 include( "sh_door.lua" );
 include( "sh_entity.lua" );
 include( "sh_inventory.lua" );

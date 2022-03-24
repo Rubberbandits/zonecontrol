@@ -800,7 +800,7 @@ local RandomPDAMessageFuncs = {
 		local randomPlayer = table.Random(player.GetAllLoaded())
 		if !IsValid(randomPlayer) then return end
 
-		local playerName = randomPlayer:CharID() > 0 and randomPlayer:RPName() or false
+		local playerName = !randomPlayer:Hidden() and randomPlayer:HasCharFlag("X") and randomPlayer:RPName() or false
 		local randomItem = table.Random(GAMEMODE.Items)
 
 		if DisallowItems[randomItem.Class] then return end
@@ -821,7 +821,7 @@ local RandomPDAMessageFuncs = {
 		local randomPlayer = table.Random(player.GetAllLoaded())
 		if !IsValid(randomPlayer) then return end
 
-		local playerName = randomPlayer:CharID() > 0 and randomPlayer:RPName() or false
+		local playerName = !randomPlayer:Hidden() and randomPlayer:RPName() or false
 
 		if !playerName then return end
 
@@ -831,7 +831,7 @@ local RandomPDAMessageFuncs = {
 		local randomPlayer = table.Random(player.GetAllLoaded())
 		if !IsValid(randomPlayer) then return end
 
-		local playerName = randomPlayer:CharID() > 0 and randomPlayer:HasCharFlag("X") and randomPlayer:RPName() or false
+		local playerName = !randomPlayer:Hidden() and randomPlayer:HasCharFlag("X") and randomPlayer:RPName() or false
 
 		if !playerName then return end
 
@@ -876,9 +876,9 @@ local function RandomPDAMessages()
 		local icon = {2,5}
 		local username = table.Random(RandomPDANames)
 		local randomMessage = table.Random(RandomPDAMessageFuncs)
-		local string = randomMessage()
+		local message = randomMessage()
 
-		if !string then 
+		if !message then 
 			return
 		end
 
@@ -901,8 +901,21 @@ local function RandomPDAMessages()
 			if !poweredOn then continue end
 
 			if ply:HasItem("pda") then
-				ply:PDANotify(username.." -> all", string, icon[1], icon[2])
+				ply:PDANotify(username.." -> all", message, icon[1], icon[2])
 			end
+		end
+
+		if GAMEMODE.PDADiscordHook then
+			// fire and forget
+			http.Post(GAMEMODE.ProxySite, {
+				url = GAMEMODE.PDADiscordHook,
+				data = util.TableToJSON({
+					username = username.." -> all",
+					content = message,
+					avatar_url = "https://cdn.discordapp.com/attachments/367478333425844224/956297681658052608/latest.png",
+					allowed_mentions = {parse = {}}
+				})
+			})
 		end
 
 		GAMEMODE.NextRandomPDA = CurTime() + math.random(180, 300)

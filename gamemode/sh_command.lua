@@ -309,6 +309,19 @@ kingston.command.register("pda", {
 		
 		if args[1] == "all" then
 			netstream.Start(rf, "nAddPDANotif", header, body, 2, 5)
+
+			if GAMEMODE.PDADiscordHook then
+				// fire and forget
+				http.Post(GAMEMODE.ProxySite, {
+					url = GAMEMODE.PDADiscordHook,
+					data = util.TableToJSON({
+						username = header,
+						content = body,
+						avatar_url = "https://cdn.discordapp.com/attachments/367478333425844224/956297681658052608/latest.png",
+						allowed_mentions = {parse = {}}
+					})
+				})
+			end
 		else
 			netstream.Start(rf, "nAddPDANotif", header, body, 6, 3)
 		end
