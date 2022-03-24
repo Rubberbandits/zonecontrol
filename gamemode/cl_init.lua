@@ -27,7 +27,9 @@ include( "shared.lua" );
 include( "meta/sh_item.lua" );
 include( "cl_items.lua" );
 include( "sh_animation.lua" );
+include( "sh_logs.lua" );
 include( "sh_chat.lua" );
+include( "sh_command.lua" );
 include( "sh_admin.lua" );
 include( "sh_consciousness.lua" );
 include( "sh_door.lua" );
@@ -44,8 +46,6 @@ include( "sh_reload.lua" );
 include( "sh_sandbox.lua" );
 include( "sh_weapons.lua" );
 include( "sh_blowout.lua" );
-include( "sh_logs.lua" );
-include( "sh_command.lua" );
 
 include( "cl_admin.lua" );
 include( "cl_adminmenu.lua" );
