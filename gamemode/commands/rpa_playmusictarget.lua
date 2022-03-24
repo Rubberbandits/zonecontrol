@@ -22,7 +22,7 @@ kingston.admin.registerCommand("musicplaytarget", {
 			
 			if type( song ) == "number" then
 				ssong = table.Random( GAMEMODE:GetSongList( song ) );
-				GAMEMODE:LogAdmin( "[M] " .. ply:Nick() .. " played " .. arg .. " targeted music (" .. ssong .. ").", ply );
+				GAMEMODE:LogAdmin( "[M] " .. ply:Nick() .. " played " .. musicType .. " targeted music (" .. ssong .. ").", ply );
 			else
 				GAMEMODE:LogAdmin( "[M] " .. ply:Nick() .. " played targeted music (" .. ssong .. ").", ply );
 			end
