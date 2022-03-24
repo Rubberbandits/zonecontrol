@@ -11,8 +11,6 @@ local GROUP_UNIQUEID	= 3
 local GROUP_SETADMIN	= 4
 local GROUP_SETSA		= 5
 
-
-
 local ArgTypeMap = {
 	ARGTYPE_TARGET = {
 		READ = function()
@@ -52,28 +50,9 @@ function kingston.admin.load()
 end
 
 // Networking
-util.AddNetworkString("zcRunCommand")
 util.AddNetworkString("zcUpdateGroup")
 util.AddNetworkString("zcGetGroups")
 util.AddNetworkString("zcDeleteGroup")
-
-local function zcRunCommand(len, ply)
-	local cmd = net.ReadString()
-
-	local commandData = kingston.admin.commands[cmd]
-	if !commandData then
-		Error("[Admin] Invalid command was sent to zcRunCommand!")
-		return
-	end
-
-	local passedArguments = {};
-	for _,argType in pairs(commandData.arguments) do
-		table.insert(passedArguments, ArgTypeMap[argType].READ())
-	end
-
-	kingston.admin.runCommand(ply, cmd, passedArguments)
-end
-net.Receive("zcRunCommand", zcRunCommand)
 
 local function zcGetGroups(len, ply)
 	--if ply.GroupsNetworked then return end
@@ -102,7 +81,8 @@ kingston.admin.groups_db_struct = {
 	{ "permissions", "JSON"},
 	{ "priority", "INT(3)" },
 	{ "isAdmin", "BOOL" },
-	{ "isSuperAdmin", "BOOL" }
+	{ "isSuperAdmin", "BOOL" },
+	{ "charFlag", "VARCHAR(1)"}
 }
 
 kingston.admin.queries = kingston.admin.queries or {}
@@ -114,7 +94,7 @@ local function init_log_admin_tbl(db)
 	// Load all groups
 	kingston.admin.queries.load = db:prepare([[SELECT `uniqueID`, `permissions`, `priority`, `isAdmin`, `isSuperAdmin` FROM `cc_usergroups`;]]);
 	// Create group
-	kingston.admin.queries.create = db:prepare([[INSERT INTO `cc_usergroups` (`uniqueID`, `permissions`, `priority`, `isAdmin`, `isSuperAdmin`) VALUES (?, JSON_OBJECT(), ?, ?, ?);]]);
+	kingston.admin.queries.create = db:prepare([[INSERT INTO `cc_usergroups` (`uniqueID`, `permissions`, `priority`, `isAdmin`, `isSuperAdmin`, `charFlag`) VALUES (?, JSON_OBJECT(), ?, ?, ?, ?);]]);
 	// Modify group
 	-- kingston.admin.queries.modifyPriority = db:prepare();
 	-- kingston.admin.queries.modifyUniqueID = db:prepare();
