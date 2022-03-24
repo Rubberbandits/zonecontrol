@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("stockpilegiveaccess", {
+kingston.admin.registerCommand("stockpileaccessgive", {
 	syntax = "<string target> <number stockpileID>",
 	description = "Give a character access to a stockpile",
 	arguments = {ARGTYPE_TARGET, ARGTYPE_NUMBER},
