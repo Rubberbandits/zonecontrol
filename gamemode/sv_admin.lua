@@ -1,77 +1,115 @@
 kingston = kingston or {}
-kingston.AdminCommands = kingston.AdminCommands or {}
-kingston.GamemasterCommands = kingston.GamemasterCommands or {}
+kingston.admin = kingston.admin or {}
 
-function nGetBansList( ply )
-	
-	if( !ply:IsAdmin() ) then return end
-	
-	if( !GAMEMODE.BanTable ) then GAMEMODE.BanTable = { } end
-	
-	netstream.Start( ply, "nBansList", GAMEMODE.BanTable );
-	
-end
-netstream.Hook( "nGetBansList", nGetBansList );
+kingston.admin.commands = kingston.admin.commands or {}
+kingston.admin.groups = kingston.admin.groups or {}
 
-function GM:AdminThink( ply )
-	
-	if( DEBUG_PAUSEAPPS ) then return end
-	
-end
+local GROUP_ADDPERM 	= 0
+local GROUP_TAKEPERM 	= 1
+local GROUP_PRIORITY 	= 2
+local GROUP_UNIQUEID	= 3
+local GROUP_SETADMIN	= 4
+local GROUP_SETSA		= 5
 
-function concommand.AddGamemaster( cmd, func, sa, playertarget )
-	
-	local function c( ply, _, args )
-		
-		if( !ply:IsEventCoordinator() ) then
-			
-			ply:Notify( nil, COLOR_ERROR, "You need to be a gamemaster to do this.")
-			
-			return;
-			
+local ArgTypeMap = {
+	ARGTYPE_TARGET = {
+		READ = function()
+			return net.ReadEntity()
 		end
-		
-		func( ply, args );
-		
+	},
+	ARGTYPE_STRING = {
+		READ = function()
+			return net.ReadString()
+		end
+	},
+	ARGTYPE_BOOL = {
+		READ = function()
+			return new.ReadBool()
+		end
+	},
+	ARGTYPE_NUMBER = {
+		READ = function()
+			return net.ReadInt(32)
+		end
+	}
+}
+
+function kingston.admin.load()
+	function kingston.admin.queries.load:onSuccess(results)
+		for _,data in pairs(results) do
+			local newGroup = {}
+			setmetatable(newGroup, kingston.meta.group)
+
+			newGroup:init(data.uniqueID, data)
+
+			kingston.admin.groups[data.uniqueID] = newGroup
+		end
 	end
-	concommand.Add( cmd, c );
 
-	kingston.GamemasterCommands[cmd] = {}
-	
+	kingston.admin.queries.load:start()
 end
 
-function concommand.AddAdmin( cmd, func, sa, playertarget )
-	
-	local function c( ply, _, args )
+// Networking
+util.AddNetworkString("zcUpdateGroup")
+util.AddNetworkString("zcGetGroups")
+util.AddNetworkString("zcDeleteGroup")
 
-		if !ply:IsValid() then
-			ply = Entity(0)
-		end
-		
-		if( ply:EntIndex() != 0 and !ply:IsAdmin() ) then
-			
-			ply:Notify( nil, COLOR_ERROR, "You need to be an admin to do this.")
-			
-			return;
-			
-		end
-		
-		if( ply:EntIndex() != 0 and sa and !ply:IsSuperAdmin() ) then
+local function zcGetGroups(len, ply)
+	--if ply.GroupsNetworked then return end
 
-			ply:Notify( nil, COLOR_ERROR, "You need to be a superadmin to do this.")
-			
-			return;
-			
-		end
-		
-		func( ply, args );
-		
+	for _, group in pairs(kingston.admin.groups) do
+		net.Start("zcGetGroups")
+			net.WriteString(group.uniqueID)
+			net.WriteUInt(group.priority, 8)
+			net.WriteBool(group.isAdmin)
+			net.WriteBool(group.isSuperAdmin)
+
+			net.WriteUInt(table.Count(group.permissions), 8)
+			for cmd, _ in pairs(group.permissions) do
+				net.WriteString(cmd)
+			end
+		net.Send(ply)
 	end
-	concommand.Add( cmd, c );
-	
-	kingston.AdminCommands[cmd] = {}
 
+	ply.GroupsNetworked = true
 end
+net.Receive("zcGetGroups", zcGetGroups)
+
+// Database
+
+kingston.admin.groups_db_struct = {
+	{ "permissions", "JSON"},
+	{ "priority", "INT(3)" },
+	{ "isAdmin", "BOOL" },
+	{ "isSuperAdmin", "BOOL" },
+	{ "charFlag", "VARCHAR(1)"}
+}
+
+kingston.admin.queries = kingston.admin.queries or {}
+
+local function init_log_admin_tbl(db)
+	mysqloo.Query("CREATE TABLE IF NOT EXISTS cc_usergroups (`uniqueID` VARCHAR(128), PRIMARY KEY (`uniqueID`));")
+	GAMEMODE:InitSQLTable(kingston.admin.groups_db_struct, "cc_usergroups")
+	
+	// Load all groups
+	kingston.admin.queries.load = db:prepare([[SELECT `uniqueID`, `permissions`, `priority`, `isAdmin`, `isSuperAdmin` FROM `cc_usergroups`;]]);
+	// Create group
+	kingston.admin.queries.create = db:prepare([[INSERT INTO `cc_usergroups` (`uniqueID`, `permissions`, `priority`, `isAdmin`, `isSuperAdmin`, `charFlag`) VALUES (?, JSON_OBJECT(), ?, ?, ?, ?);]]);
+	// Modify group
+	-- kingston.admin.queries.modifyPriority = db:prepare();
+	-- kingston.admin.queries.modifyUniqueID = db:prepare();
+	-- kingston.admin.queries.modifyAdmin = db:prepare();
+	-- kingston.admin.queries.modifySuperAdmin = db:prepare();
+	// Delete group
+	kingston.admin.queries.delete = db:prepare([[DELETE FROM `cc_usergroups` WHERE `uniqueID` = ?;]]);
+	// Add permission
+	kingston.admin.queries.addperm = db:prepare([[UPDATE `cc_usergroups` SET `permissions` = JSON_SET(`permissions`, ?, true) WHERE `uniqueID` = ?]]);
+	// Take permission
+	kingston.admin.queries.takeperm = db:prepare([[UPDATE `cc_usergroups` SET `permissions` = JSON_REMOVE(`permissions`, ?) WHERE `uniqueID` = ?]]);
+
+	kingston.admin.load()
+end
+hook.Add("InitSQLTables", "STALKER.InitAdminDBTable", init_log_admin_tbl)
 
 function concommand.AddAdminVariable( cmd, var, default, friendlyvar, sa )
 	
@@ -114,120 +152,3 @@ concommand.AddAdminVariable( "rpa_blowout_enabled", "BlowoutEnabled", 1, "Blowou
 concommand.AddAdminVariable( "rpa_blowout_auto_schedule", "BlowoutAutoShedule", 1, "Blowout auto-schedule" );
 concommand.AddAdminVariable( "rpa_blowout_interval", "BlowoutInterval", 7200, "Blowout interval" );
 concommand.AddAdminVariable( "rpa_announcing_duration", "BlowoutAnnounceDuration", 300, "Blowout announce duration" );
-
-local cmd_files = file.Find( GM.FolderName.."/gamemode/admincmds/*.lua", "LUA", "namedesc" );
-if #cmd_files > 0 then
-	for _, v in ipairs(cmd_files) do
-		include("admincmds/"..v)
-	end
-end
-
-local cmd_files = file.Find( GM.FolderName.."/gamemode/gmcmds/*.lua", "LUA", "namedesc" );
-if #cmd_files > 0 then
-	for _, v in ipairs(cmd_files) do
-		include("gmcmds/"..v)
-	end
-end
-
-local GoodTraceVectors = {
-	Vector( 40, 0, 0 ),
-	Vector( -40, 0, 0 ),
-	Vector( 0, 40, 0 ),
-	Vector( 0, -40, 0 ),
-	Vector( 0, 0, 40 )
-};
-
-function FindGoodTeleportPos( ply )
-	
-	local trace = { };
-	trace.start = ply:GetShootPos();
-	trace.endpos = trace.start + ply:GetAimVector() * 50;
-	trace.mins = Vector( -16, -16, 0 );
-	trace.maxs = Vector( 16, 16, 72 );
-	trace.filter = ply;
-	local tr = util.TraceHull( trace );
-	
-	if( !tr.Hit ) then
-		
-		return tr.HitPos;
-		
-	end
-	
-	local pos = ply:GetPos();
-	
-	for _, v in pairs( GoodTraceVectors ) do
-		
-		local trace = { };
-		trace.start = ply:GetPos();
-		trace.endpos = trace.start + v;
-		trace.mins = Vector( -16, -16, 0 );
-		trace.maxs = Vector( 16, 16, 72 );
-		trace.filter = ply;
-		local tr = util.TraceHull( trace );
-		
-		if( tr.Fraction == 1.0 ) then
-			
-			pos = ply:GetPos() + v;
-			break;
-			
-		end
-		
-	end
-	
-	return pos;
-	
-end
-
-local function set_rank(ply, _, args)
-	if ply:IsValid() then
-		return
-	end
-	
-	local targ = GAMEMODE:FindPlayer(args[1])
-	local rank = args[2] or "user"
-	if targ and targ:IsValid() then
-		targ:SetUserGroup(rank)
-		targ:UpdatePlayerField("Rank", rank)
-		
-		MsgC(COLOR_NOTIF, Format("%s's rank has been set to %s.\n", targ:Nick(), rank))
-		targ:Notify(nil, COLOR_NOTIF, "Console set your rank to %s.", rank)
-	elseif( string.find( args[1], "STEAM_" ) ) then
-		GAMEMODE:UpdatePlayerFieldOffline(args[1], "Rank", rank)
-	else
-		MsgC(COLOR_ERROR, "Error: no target found.\n")
-	end
-end
-concommand.Add( "rpa_serversetrank", set_rank );
-
-/*
-	Console command running support
-*/
-
-hook.Add("InitPostEntity", "RCONCommandSupport", function()
-	Entity(0).Notify = function(ent, font, color, text, ...)
-		MsgC(color, Format(text, ...).."\n")
-	end
-	Entity(0).Nick = function(self)
-		return "Console"
-	end
-	Entity(0).SteamID = function(self)
-		return "STEAM_0:0:CONSOLE"
-	end
-end)
-
-local function SetEntityDesc( ply, cmd, args, szArgs )
-	local targ = ply:GetEyeTraceNoCursor().Entity
-	local szDesc = szArgs
-
-	if !ply:IsAdmin() then
-		if #szDesc > 512 then return end
-		if targ.PropSteamID and targ:PropSteamID() != ply:SteamID() then return end
-	end
-
-	if targ and IsValid(targ) and targ:GetClass() == "prop_physics" or targ:GetClass() == "prop_ragdoll" then
-		if targ.PropDesc and SERVER then
-			targ:SetPropDesc(szDesc)
-		end
-	end
-end
-concommand.Add( "rp_propdesc", SetEntityDesc );
