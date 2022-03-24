@@ -481,16 +481,9 @@ function kingston.admin.runCommand(ply, cmd, args)
 end
 
 // Load all commands
-local cmd_files = file.Find( GM.FolderName.."/gamemode/admincmds/*.lua", "LUA", "namedesc" );
+local cmd_files = file.Find( GM.FolderName.."/gamemode/commands/*.lua", "LUA", "namedesc" );
 if #cmd_files > 0 then
 	for _, v in ipairs(cmd_files) do
-		include("admincmds/"..v)
-	end
-end
-
-local cmd_files = file.Find( GM.FolderName.."/gamemode/gmcmds/*.lua", "LUA", "namedesc" );
-if #cmd_files > 0 then
-	for _, v in ipairs(cmd_files) do
-		include("gmcmds/"..v)
+		include("commands/"..v)
 	end
 end
