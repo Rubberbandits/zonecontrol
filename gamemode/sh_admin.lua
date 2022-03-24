@@ -100,21 +100,24 @@ function PLAYER:HasPermission(cmd, args)
 end
 
 function PLAYER:IsSuperAdmin()
-	if self:IsUserGroup("superadmin") and !self:HasCharFlag("Q") then return true end
+	local group = kingston.admin.groups[self:GetUserGroup()]
+	if !group then return false end
 
-	return false
+	return group.isSuperAdmin and !self:HasCharFlag("Q")
 end
 
 function PLAYER:IsAdmin()
 	if self:IsSuperAdmin() then return true end
-	if self:IsUserGroup("admin") and !self:HasCharFlag("Q") then return true end
 
-	return false
+	local group = kingston.admin.groups[self:GetUserGroup()]
+	if !group then return false end
+
+	return group.isAdmin and !self:HasCharFlag("Q")
 end
 
 function PLAYER:IsEventCoordinator()
 	
-	return (self:GetUserGroup() == "gamemaster" or self:HasCharFlag( "G" )) and !self:HasCharFlag("Q")
+	return self:GetUserGroup() == "gamemaster" and !self:HasCharFlag("Q")
 	
 end
 
@@ -269,13 +272,9 @@ function GM:PlayerNoClip( ply )
 				ply:GetActiveWeapon():SetColor( Color( 255, 255, 255, 0 ) );
 				
 			end
-			
-			if( ply:IsEventCoordinator() ) then
 				
-				ply.NoclipPos = ply:GetPos();
-				
-			end
-			
+			ply.NoclipPos = ply:GetPos();
+
 		end
 		
 	end
@@ -396,6 +395,7 @@ function kingston.admin.createGroup(uniqueID, data)
 			kingston.admin.queries.create:setNumber(2, data.priority)
 			kingston.admin.queries.create:setNumber(3, data.isAdmin)
 			kingston.admin.queries.create:setNumber(4, data.isSuperAdmin)
+			kingston.admin.queries.create:setString(5, data.charFlag)
 		kingston.admin.queries.create:start()
 
 		net.Start("zcGetGroups")

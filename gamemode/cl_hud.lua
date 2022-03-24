@@ -1316,7 +1316,7 @@ hook.Add("Think", "MaintainHUDEntList", function()
 end)
 
 function GM:DrawEntities()
-	if self.SeeAll and LocalPlayer():IsEventCoordinator() and LocalPlayer():GetMoveType() != MOVETYPE_NOCLIP then
+	if self.SeeAll and LocalPlayer():HasPermission("seeall") and LocalPlayer():GetMoveType() != MOVETYPE_NOCLIP then
 		self.SeeAll = false
 
 		return
