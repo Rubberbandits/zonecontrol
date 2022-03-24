@@ -354,7 +354,7 @@ kingston.chat.register_type("event", {
 		return {Color(0, 191, 255), "[EVENT] ", text}
 	end,
 	can_say = function(chat_type, ply, text)
-		if !ply:IsAdmin() and !ply:IsEventCoordinator() then
+		if !ply:HasPermission("event") then
 			return "You must be admin/gamemaster to run this command."
 		end
 		
@@ -370,7 +370,7 @@ kingston.chat.register_type("localevent", {
 		return {Color(0, 191, 255), "[L-EVENT] ", text}
 	end,
 	can_say = function(chat_type, ply, text)
-		if !ply:IsAdmin() and !ply:IsEventCoordinator() then
+		if !ply:HasPermission("localevent") then
 			return "You must be admin/gamemaster to run this command."
 		end
 		

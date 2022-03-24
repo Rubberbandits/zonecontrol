@@ -4,15 +4,9 @@ kingston.item = kingston.item or {}
 kingston.item.item_requests = kingston.item.item_requests or {}
 
 function kingston.item.gm_request_item(gamemaster, item_class, data)
-	local metaitem = GAMEMODE:GetItemByID(item_class)
-
-	kingston.item.item_requests[#kingston.item.item_requests + 1] = {
-		requester = gamemaster,
-		class = item_class,
-		vars = data,
-	}
-	
-	netstream.Start(player.GetAdmins(), "nAddNotification", Format("Player %s (%s) is requesting item %s (%s)", gamemaster:Nick(), gamemaster:RPName(), (data or {}).Name or metaitem.Name, item_class))
+	local item = gamemaster:GiveItem(item_class, data)
+	gamemaster:Notify(nil, COLOR_NOTIF, "Item spawned in inventory")
+	kingston.log.write("admin", "%s (%s) spawned %s (#%d)", gamemaster:Nick(), gamemaster:SteamID(), item_class, item:GetID())
 end
 
 function kingston.item.approve_gm_item(id)
@@ -272,7 +266,7 @@ netstream.Hook("ItemSetPos", function(ply, item_id, x, y)
 end)
 
 netstream.Hook("RequestItemSpawn", function(ply, item_class, data)
-	if !ply:IsEventCoordinator() then return end
+	if !ply:HasPermission("itemcreate")
 
 	if !item_class then return end
 	if !GAMEMODE:GetItemByID(item_class) then return end

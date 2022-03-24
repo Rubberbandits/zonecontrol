@@ -49,7 +49,7 @@ SWEP.ItemCamPos = Vector(-2.94, 50, 0.27)
 SWEP.ItemLookAt = Vector(-1.44, 0, 0)
 
 function SWEP:Reload()
-	local item = self.Owner:HasItem("gauss")
+	local item = self.Owner:HasItem("ammo_gauss")
 	if self:Clip1() == 0 and item then
 		if istable(item) and !item.IsItem then
 			item = item[1]

@@ -516,7 +516,7 @@ function GM:GetCCOptions( ent, dist )
 			
 			table.insert( tab, option );
 			
-			if LocalPlayer():IsAdmin() or LocalPlayer():IsEventCoordinator() then
+			if LocalPlayer():HasPermission("togglesaved") then
 				local option = { "Toggle saved", function()
 					RunConsoleCommand("rpa_togglesaved", "")
 				end, nil, 100 };

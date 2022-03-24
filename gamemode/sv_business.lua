@@ -6,8 +6,8 @@ kingston = kingston or {}
 kingston.shipment = kingston.shipment or {}
 kingston.shipment.in_progress = kingston.shipment.in_progress or {}
 
-kingston.shipment.min_delivery_time = 600
-kingston.shipment.max_delivery_time = 1200
+kingston.shipment.min_delivery_time = 300
+kingston.shipment.max_delivery_time = 600
 
 kingston.shipment.use_spawn_ent = true
 -- if false, uses locations defined in table below

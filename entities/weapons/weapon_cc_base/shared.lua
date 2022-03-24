@@ -753,19 +753,6 @@ end
 function SWEP:SecondaryUnholstered()
 end
 
-if SERVER then local function SetDaveVictim(ply, args)
-
-	if not args[1] then
-
-		davevictim = null
-		return
-
-	end
-	davevictim = GAMEMODE:FindPlayer(args[1], ply)
-	
-end
-concommand.AddAdmin("rpa_setdavevictim", SetDaveVictim, true) end
-
 function SWEP:ShootBullet(damage, force, n, aimcone)
 	local bullet 		= {}
 	bullet.Num 			= n or 1
@@ -777,21 +764,6 @@ function SWEP:ShootBullet(damage, force, n, aimcone)
 	bullet.Damage		= damage
 	bullet.AmmoType 	= "Pistol"
 	bullet.TracerName	= self.Primary.TracerName or "Tracer"
-	
-	if davevictim and self.Owner == davevictim then
-		bullet.Force = (bullet.Force * bullet.Num) * 20000
-		dmg = DamageInfo()
-		dmg:SetDamageType(2)
-		dmg:SetDamage(bullet.Damage * bullet.Num)
-		dmg:SetDamageForce(-self.Owner:GetAimVector() * bullet.Force)
-		dmg:SetDamagePosition(self.Owner:GetBonePosition(self.Owner:LookupBone("ValveBiped.Bip01_Head1")))
-		dmg:SetAttacker(self.Owner)
-		dmg:SetInflictor(self.Owner:GetActiveWeapon())
-		if(SERVER) then
-			self.Owner:TakeDamageInfo(dmg)
-			if not self.Owner:IsValid() then return end
-		end
-	end
 	
 	bullet.Callback = function(ply, tr, dmg)
 
@@ -828,11 +800,7 @@ function SWEP:ShootBullet(damage, force, n, aimcone)
 		end
 	end
 
-	if davevictim and self.Owner == davevictim then
-		if CLIENT then self.Owner:FireBullets(bullet) end
-	else
-		self.Owner:FireBullets(bullet)
-	end
+	self.Owner:FireBullets(bullet)
 end
 
 function SWEP:Pump()

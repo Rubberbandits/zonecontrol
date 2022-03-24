@@ -1,5 +1,5 @@
--- 4/28/2020
--- honestly this gamemode has been recoded so massively im hesistant to call it combinecontrol
+-- 3/16/2022
+-- two years since the date was updated in this file. this shit too old
 
 DeriveGamemode( "sandbox" );
 
@@ -31,11 +31,6 @@ local emeta = FindMetaTable( "Entity" );
 function GM:CreateTeams()
 
 	team.SetUp( TEAM_CITIZEN, "Stalkers", Color( 0, 120, 0, 255 ), false );
-	team.SetUp( TEAM_COMBINE, "Combine", Color( 33, 106, 196, 255 ), false );
-	team.SetUp( TEAM_OFFCOMBINE, "Off-Duty Combine", Color( 0, 120, 0, 255 ), false );
-	team.SetUp( TEAM_STALKER, "Also Stalkers", Color( 86, 86, 86, 255 ), false );
-	team.SetUp( TEAM_VORTIGAUNT, "Vortigaunts", Color( 65, 204, 118, 255 ), false );
-	team.SetUp( TEAM_OVERWATCH, "Overwatch", Color( 200, 200, 200, 255 ), false );
 	
 end
 
@@ -304,34 +299,36 @@ function GM:FindPlayer( name, caller, pda )
 	
 	name = string.lower( name );
 	
-	if( name == "^" ) then
-		
-		return caller;
-		
-	end
-	
-	if( name == "-" ) then
-		
-		local tr = caller:GetEyeTrace();
-		
-		if( tr.Entity and tr.Entity:IsValid() and tr.Entity:IsPlayer() ) then
+	if caller and caller:IsValid() then
+		if( name == "^" ) then
 			
-			return tr.Entity;
+			return caller;
 			
 		end
 		
+		if( name == "-" ) then
+			
+			local tr = caller:GetEyeTrace();
+			
+			if( tr.Entity and tr.Entity:IsValid() and tr.Entity:IsPlayer() ) then
+				
+				return tr.Entity;
+				
+			end
+			
+		end
 	end
 	
 	for k, v in pairs( player.GetAll() ) do
-	
 		if( pda and v and v:IsValid() and v.Inventory ) then
 			for m,n in next, v.Inventory do
 				if n:GetClass() == "pda" then
-					if string.find( string.lower( n:GetVar("Name","") ), name, nil, true ) and n:GetVar("Power",false) then
-						return v
+					if string.find( string.lower(n:GetVar("Name","")), name, nil, true ) and n:GetVar("Power",false) then
+						return n
 					end
 				end
 			end
+
 			continue;
 		end
 		

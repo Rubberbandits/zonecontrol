@@ -135,7 +135,7 @@ end
 
 function GM:PlayerSpawnEffect( ply, model )
 	
-	if( ply:IsAdmin() or ply:IsEventCoordinator() ) then
+	if( ply:HasPermission("spawneffect") ) then
 		
 		if( SERVER ) then
 			
@@ -256,7 +256,7 @@ end
 
 function GM:PlayerSpawnRagdoll( ply, model )
 	
-	if( ply:IsAdmin() or ply:IsEventCoordinator() or (ply:ToolTrust() > 0) ) then
+	if( ply:HasPermission("spawnragdoll") or (ply:ToolTrust() > 0) ) then
 		
 		if( SERVER ) then
 			
@@ -291,7 +291,7 @@ end
 
 function GM:PlayerSpawnSENT( ply, class )
 
-	if( ply:IsAdmin() or ply:IsEventCoordinator() ) then
+	if( ply:HasPermission("spawnsent") ) then
 	
 		return true;
 	

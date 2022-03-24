@@ -11,8 +11,12 @@ kingston.command.prefix = "/"
 	gm_only, bool
 	group, string or table - usergroups that should be able to run this command
 --]]
+concommand.AddGamemaster = function() end
+concommand.AddAdmin = function() end
 
 if SERVER then
+	util.AddNetworkString("zcCommandList")
+
 	function kingston.command.run(ply, command, arguments, raw)
 		local command = kingston.command.types[command]
 
@@ -29,6 +33,17 @@ if SERVER then
 				end
 			end
 		end
+	end
+
+	local function GetSimilarCommands(str)
+		local similar = {}
+		for cmd,_ in pairs(kingston.command.types) do
+			if string.match(cmd, string.Trim(str)) then
+				table.insert(similar, cmd)
+			end
+		end
+
+		return similar
 	end
 
 	function kingston.command.process(ply, text, arguments)
@@ -55,8 +70,9 @@ if SERVER then
 					kingston.log.write("command", "[%s][ran command: %s] %s", ply and ply:Nick() or "rcon", match, #text:sub(#match + 3) > 0 and text:sub(#match + 3) or "no args")
 				end
 			else
+				local similar = GetSimilarCommands(match)
 				if IsValid(ply) then
-					ply:Notify(nil, COLOR_ERROR, "That command does not exist.")
+					ply:Notify(nil, COLOR_ERROR, "That command does not exist. Are you looking for any of these?\n\t%s", table.concat(similar, "\n\t"))
 				else
 					MsgC(COLOR_ERROR, "That command does not exist.\n")
 				end
@@ -75,6 +91,7 @@ function kingston.command.register(id, data)
 	if !data.on_run then return end
 	
 	data.syntax = data.syntax or "[none]"
+	data.description = data.description or "No description"
 	
 	if !data.can_run then
 		data.can_run = function(ply, arguments)
@@ -98,7 +115,7 @@ function kingston.command.register(id, data)
 	data.on_run = function(ply, arguments, raw)
 		local can_run, reason = data.can_run(ply, arguments)
 		if !can_run then
-			return COLOR_ERROR, reason or "You don't have the permissions to run this command."
+			return COLOR_ERROR, reason or "You don't have permission to run this command."
 		else
 			return old_onrun(ply, arguments, raw)
 		end
@@ -263,25 +280,23 @@ kingston.command.register("pda", {
 				end
 			end
 		else
-			local target = GAMEMODE:FindPlayer(args[1], ply, true)
-			if !target then
+			print(args[1])
+
+			local pda = GAMEMODE:FindPlayer(args[1], ply, true)
+			if !pda then
 				ply:PDANotify("STALKER.net", "Recipient could not be found, or is offline. Try again later.", 3, 12)
 				return
 			end
-			local targ_name
-			local targ_pda_id
-			
-			for k,v in next, target.Inventory do
-				if v:GetClass() == "pda" then
-					if string.find( string.lower( v:GetVar("Name","") ), args[1], nil, true ) and v:GetVar("Power",false) then
-						targ_name = v:GetVar("Name")
-						targ_pda_id = v:GetID()
-						break
-					end
-				end
-			end
+			local targ_name = pda:GetVar("Name")
+			local targ_pda_id = pda:GetID()
 			
 			if !targ_name or #targ_name == 0 then 
+				ply:PDANotify("STALKER.net", "Recipient could not be found, or is offline. Try again later.", 3, 12)
+				return
+			end
+
+			local target = pda:Owner()
+			if !target or !IsValid(target) then 
 				ply:PDANotify("STALKER.net", "Recipient could not be found, or is offline. Try again later.", 3, 12)
 				return
 			end
@@ -350,5 +365,19 @@ kingston.command.register("anorak", {
 		else
 			ply:SetBodySubMat("models/kingstonstalker/bandit/bandit1")
 		end
+	end
+})
+
+kingston.command.register("cmdhelp", {
+	on_run = function(ply, args)
+		local commands = {}
+
+		for cmd,data in pairs(kingston.command.types) do
+			table.insert(commands, Format("/%s %s\n\t\t%s", cmd, data.syntax, data.description))
+		end
+
+		net.Start("zcCommandList")
+			net.WriteTable(commands)
+		net.Send(ply)
 	end
 })
