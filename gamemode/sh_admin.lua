@@ -210,6 +210,11 @@ function GM:CheckArgumentTypes(ply, cmd, args, processed)
 				continue
 			end
 
+			// if the final argument is a string, and there are more arguments past that, concat
+			if #args > #commandData.arguments and i == #commandData.arguments and argType == ARGTYPE_STRING then
+				result = table.concat(args, " ", i)
+			end
+
 			processed[i] = result;
 		end
 
