@@ -356,6 +356,8 @@ local anoraks = {
 }
 
 kingston.command.register("anorak", {
+	description = "Change the color of your anorak.",
+	syntax = "<string color [black/white/grey/green/brown]>",
 	can_run = function(ply, args)
 		return ply:Alive(), "You need to be alive to change your anorak!"
 	end,

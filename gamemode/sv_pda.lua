@@ -340,6 +340,9 @@ local RandomPDANames = {
 	"FULL_EMPTY",
 	"BOOTY ASS",
 	"Artyom Dyatlov",
+	"marauderofficial",
+	"Naum Shubin",
+	"not_a_barman_alt",
 }
 
 local RandomItemOpinions = {
