@@ -338,13 +338,7 @@ function GM:UpdateAdminInventory( inv, targ )
 end
 
 local function nAEditInventory( targ, inv )
-	
-	if( !LocalPlayer():IsAdmin() ) then
-		
-		return;
-		
-	end
-	
+
 	CCP.AdminInv = vgui.Create( "DFrame" );
 	CCP.AdminInv:SetSize( 800, 426 );
 	CCP.AdminInv:Center();
