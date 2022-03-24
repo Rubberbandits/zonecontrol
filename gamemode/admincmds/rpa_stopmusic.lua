@@ -1,4 +1,4 @@
-kingston.admin.registerCommand("plyslap", {
+kingston.admin.registerCommand("musicstop", {
 	syntax = "<none>",
 	description = "Stop music for all players",
 	arguments = {},
