@@ -375,7 +375,7 @@ function GM:AdminCreateStockpileMenu( name, inv, id )
 				CCP.StockpileMenu.ButTake:SetSize( 100, 20 );
 				function CCP.StockpileMenu.ButTake:DoClick()
 					
-					RunConsoleCommand( "rpa_takefromstockpile", CCP.StockpileMenu.ID, self.InventoryID );
+					RunConsoleCommand( "rpa_stockpiletakeitem", CCP.StockpileMenu.ID, self.InventoryID );
 					GAMEMODE:PMResetStockpileText();
 					icon:Remove();
 					
@@ -429,7 +429,7 @@ function GM:AdminCreateToolsMenu()
 	CCP.AdminMenu.RestartBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.RestartBut:DoClick()
 		
-		RunConsoleCommand( "rpa_restart" );
+		RunConsoleCommand( "rpa_gamerestart" );
 		CCP.AdminMenu.RestartBut:SetDisabled( true );
 		
 	end
@@ -520,7 +520,7 @@ function GM:AdminCreateToolsMenu()
 	CCP.AdminMenu.SeeAll:PerformLayout();
 	function CCP.AdminMenu.SeeAll:OnChange( val )
 		
-		GAMEMODE.SeeAll = val;
+		RunConsoleCommand("rpa_adminseeall")
 		
 	end
 	
@@ -609,7 +609,7 @@ function GM:AdminCreateToolsMenu()
 	CCP.AdminMenu.Hidden:PerformLayout();
 	function CCP.AdminMenu.Hidden:OnChange( val )
 		
-		RunConsoleCommand( "rpa_hidden", val and 1 or 0 );
+		RunConsoleCommand( "rpa_plyhidden", val and 1 or 0 );
 		
 	end
 	
@@ -630,7 +630,7 @@ function GM:AdminCreateToolsMenu()
 	CCP.AdminMenu.AIDisabled:PerformLayout();
 	function CCP.AdminMenu.AIDisabled:OnChange( val )
 		
-		RunConsoleCommand( "rpa_aidisabled", val and 1 or 0 );
+		RunConsoleCommand( "rpa_gameaidisabled", val and 1 or 0 );
 		
 	end
 	
@@ -684,7 +684,7 @@ function GM:AdminCreateToolsMenu()
 	CCP.AdminMenu.ChangeLevelBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.ChangeLevelBut:DoClick()
 		
-		RunConsoleCommand( "rpa_changelevel", CCP.AdminMenu.ChangeLevel:GetValue() );
+		RunConsoleCommand( "rpa_gamechangelevel", CCP.AdminMenu.ChangeLevel:GetValue() );
 		
 	end
 	CCP.AdminMenu.ChangeLevelBut:PerformLayout();
@@ -826,7 +826,7 @@ function GM:AdminPopulateGiveAccessMenu( tbl )
 		CCP.StockpilesMenu.Stockpile[k]:SetSize( 200, 20 );
 		CCP.StockpilesMenu.Stockpile[k].DoClick = function( self )
 			
-			RunConsoleCommand( "rpa_giveaccesstostockpile", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).Player:RPName(), self.id ) ;
+			RunConsoleCommand( "rpa_stockpileaccessgive", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).Player:RPName(), self.id ) ;
 			CCP.StockpilesMenu:Close();
 			
 		end
@@ -873,7 +873,7 @@ function GM:AdminPopulateTakeAccessMenu( tbl )
 		CCP.StockpilesMenu.Stockpile[k]:SetSize( 200, 20 );
 		CCP.StockpilesMenu.Stockpile[k].DoClick = function( self )
 			
-			RunConsoleCommand( "rpa_takeaccesstostockpile", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).Player:RPName(), self.id ) ;
+			RunConsoleCommand( "rpa_stockpiletakeaccess", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).Player:RPName(), self.id ) ;
 			CCP.StockpilesMenu:Close();
 			
 		end
@@ -939,7 +939,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.KickBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.KickBut:DoClick()
 		
-		RunConsoleCommand( "rpa_kick", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, CCP.AdminMenu.KickReason:GetValue() );
+		RunConsoleCommand( "rpa_plykick", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, CCP.AdminMenu.KickReason:GetValue() );
 		
 		CCP.AdminMenu.PlayerList:RemoveLine( CCP.AdminMenu.SelectedID );
 		
@@ -983,7 +983,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.BanBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.BanBut:DoClick()
 		
-		RunConsoleCommand( "rpa_ban", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, CCP.AdminMenu.BanDuration:GetValue(), CCP.AdminMenu.BanReason:GetValue() );
+		RunConsoleCommand( "rpa_plyban", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, CCP.AdminMenu.BanDuration:GetValue(), CCP.AdminMenu.BanReason:GetValue() );
 		
 		CCP.AdminMenu.PlayerList:RemoveLine( CCP.AdminMenu.SelectedID );
 		
@@ -1000,7 +1000,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.PBanBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.PBanBut.DoClick()
 		
-		RunConsoleCommand( "rpa_ban", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, "0", CCP.AdminMenu.BanReason:GetValue() );
+		RunConsoleCommand( "rpa_plyban", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, "0", CCP.AdminMenu.BanReason:GetValue() );
 		
 		CCP.AdminMenu.PlayerList:RemoveLine( CCP.AdminMenu.SelectedID );
 		
@@ -1017,7 +1017,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.BringBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.BringBut:DoClick()
 		
-		RunConsoleCommand( "rpa_bring", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
+		RunConsoleCommand( "rpa_plybring", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
 		
 	end
 	CCP.AdminMenu.BringBut:SetDisabled( true );
@@ -1030,7 +1030,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.GotoBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.GotoBut:DoClick()
 		
-		RunConsoleCommand( "rpa_goto", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
+		RunConsoleCommand( "rpa_plygoto", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
 		
 	end
 	CCP.AdminMenu.GotoBut:SetDisabled( true );
@@ -1043,7 +1043,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.KillBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.KillBut:DoClick()
 		
-		RunConsoleCommand( "rpa_kill", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
+		RunConsoleCommand( "rpa_plykill", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
 		
 	end
 	CCP.AdminMenu.KillBut:SetDisabled( true );
@@ -1056,7 +1056,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.SlapBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.SlapBut:DoClick()
 		
-		RunConsoleCommand( "rpa_slap", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
+		RunConsoleCommand( "rpa_plyslap", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
 		
 	end
 	CCP.AdminMenu.SlapBut:SetDisabled( true );
@@ -1069,7 +1069,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.KOBut:SetSize( 40, 20 );
 	function CCP.AdminMenu.KOBut:DoClick()
 		
-		RunConsoleCommand( "rpa_ko", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
+		RunConsoleCommand( "rpa_plyknockout", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
 		
 	end
 	CCP.AdminMenu.KOBut:SetDisabled( true );
@@ -1082,7 +1082,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.WakeBut:SetSize( 50, 20 );
 	function CCP.AdminMenu.WakeBut:DoClick()
 		
-		RunConsoleCommand( "rpa_wake", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
+		RunConsoleCommand( "rpa_plywake", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
 		
 	end
 	CCP.AdminMenu.WakeBut:SetDisabled( true );
@@ -1110,7 +1110,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.GiveMoneyBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.GiveMoneyBut:DoClick()
 		
-		RunConsoleCommand( "rpa_givemoney", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, CCP.AdminMenu.GiveMoney:GetValue() );
+		RunConsoleCommand( "rpa_chargivemoney", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, CCP.AdminMenu.GiveMoney:GetValue() );
 		
 	end
 	CCP.AdminMenu.GiveMoneyBut:SetDisabled( true );
@@ -1136,7 +1136,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.CharFlagBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.CharFlagBut:DoClick()
 		
-		RunConsoleCommand( "rpa_setcharflag", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, CCP.AdminMenu.CharFlag:GetValue() );
+		RunConsoleCommand( "rpa_charsetflag", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, CCP.AdminMenu.CharFlag:GetValue() );
 		
 	end
 	CCP.AdminMenu.CharFlagBut:SetDisabled( true );
@@ -1162,7 +1162,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.ModelBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.ModelBut:DoClick()
 		
-		RunConsoleCommand( "rpa_setcharmodel", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, CCP.AdminMenu.Model:GetValue() );
+		RunConsoleCommand( "rpa_charsetmodel", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, CCP.AdminMenu.Model:GetValue() );
 		
 	end
 	CCP.AdminMenu.ModelBut:SetDisabled( true );
@@ -1175,7 +1175,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.PhysTrust0:SetSize( 100, 20 );
 	function CCP.AdminMenu.PhysTrust0:DoClick()
 		
-		RunConsoleCommand( "rpa_setphystrust", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, 0 );
+		RunConsoleCommand( "rpa_plysetphystrust", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, 0 );
 		CCP.AdminMenu.PhysTrust0:SetDisabled( true );
 		CCP.AdminMenu.PhysTrust1:SetDisabled( false );
 		
@@ -1190,7 +1190,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.PhysTrust1:SetSize( 100, 20 );
 	function CCP.AdminMenu.PhysTrust1:DoClick()
 		
-		RunConsoleCommand( "rpa_setphystrust", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, 1 );
+		RunConsoleCommand( "rpa_plysetphystrust", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, 1 );
 		CCP.AdminMenu.PhysTrust0:SetDisabled( false );
 		CCP.AdminMenu.PhysTrust1:SetDisabled( true );
 		
@@ -1205,7 +1205,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.PropTrust0:SetSize( 100, 20 );
 	function CCP.AdminMenu.PropTrust0:DoClick()
 		
-		RunConsoleCommand( "rpa_setproptrust", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, 0 );
+		RunConsoleCommand( "rpa_plysetproptrust", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, 0 );
 		CCP.AdminMenu.PropTrust0:SetDisabled( true );
 		CCP.AdminMenu.PropTrust1:SetDisabled( false );
 		
@@ -1220,7 +1220,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.PropTrust1:SetSize( 100, 20 );
 	function CCP.AdminMenu.PropTrust1:DoClick()
 		
-		RunConsoleCommand( "rpa_setproptrust", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, 1 );
+		RunConsoleCommand( "rpa_plysetproptrust", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, 1 );
 		CCP.AdminMenu.PropTrust0:SetDisabled( false );
 		CCP.AdminMenu.PropTrust1:SetDisabled( true );
 		
@@ -1235,7 +1235,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.TT0:SetSize( 100, 20 );
 	function CCP.AdminMenu.TT0:DoClick()
 		
-		RunConsoleCommand( "rpa_settooltrust", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, 0 );
+		RunConsoleCommand( "rpa_plysettooltrust", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, 0 );
 		CCP.AdminMenu.TT0:SetDisabled( true );
 		CCP.AdminMenu.TT1:SetDisabled( false );
 		CCP.AdminMenu.TT2:SetDisabled( false );
@@ -1251,7 +1251,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.TT1:SetSize( 100, 20 );
 	function CCP.AdminMenu.TT1:DoClick()
 		
-		RunConsoleCommand( "rpa_settooltrust", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, 1 );
+		RunConsoleCommand( "rpa_plysettooltrust", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, 1 );
 		CCP.AdminMenu.TT0:SetDisabled( false );
 		CCP.AdminMenu.TT1:SetDisabled( true );
 		CCP.AdminMenu.TT2:SetDisabled( false );
@@ -1267,7 +1267,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.TT2:SetSize( 100, 20 );
 	function CCP.AdminMenu.TT2:DoClick()
 		
-		RunConsoleCommand( "rpa_settooltrust", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, 2 );
+		RunConsoleCommand( "rpa_plysettooltrust", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, 2 );
 		CCP.AdminMenu.TT0:SetDisabled( false );
 		CCP.AdminMenu.TT1:SetDisabled( false );
 		CCP.AdminMenu.TT2:SetDisabled( true );
@@ -1283,7 +1283,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.SetRankUser:SetSize( 100, 20 );
 	function CCP.AdminMenu.SetRankUser:DoClick()
 		
-		RunConsoleCommand( "rpa_setrank", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, "user" );
+		RunConsoleCommand( "rpa_plysetrank", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, "user" );
 		CCP.AdminMenu.SetRankUser:SetDisabled( true );
 		CCP.AdminMenu.SetRankGM:SetDisabled( false );
 		CCP.AdminMenu.SetRankAdmin:SetDisabled( false );
@@ -1299,7 +1299,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.SetRankGM:SetSize( 100, 20 );
 	function CCP.AdminMenu.SetRankGM:DoClick()
 		
-		RunConsoleCommand( "rpa_setrank", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, "gamemaster" );
+		RunConsoleCommand( "rpa_plysetrank", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, "gamemaster" );
 		CCP.AdminMenu.SetRankUser:SetDisabled( false );
 		CCP.AdminMenu.SetRankGM:SetDisabled( true );
 		CCP.AdminMenu.SetRankAdmin:SetDisabled( false );
@@ -1315,7 +1315,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.SetRankAdmin:SetSize( 100, 20 );
 	function CCP.AdminMenu.SetRankAdmin:DoClick()
 		
-		RunConsoleCommand( "rpa_setrank", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, "admin" );
+		RunConsoleCommand( "rpa_plysetrank", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID, "admin" );
 		CCP.AdminMenu.SetRankUser:SetDisabled( false );
 		CCP.AdminMenu.SetRankGM:SetDisabled( false );
 		CCP.AdminMenu.SetRankAdmin:SetDisabled( true );
@@ -1359,7 +1359,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.EditInventory:SetSize( 100, 20 );
 	function CCP.AdminMenu.EditInventory:DoClick()
 		
-		RunConsoleCommand( "rpa_editinventory", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
+		RunConsoleCommand( "rpa_chareditinventory", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
 		
 	end
 	CCP.AdminMenu.EditInventory:SetDisabled( true );
@@ -1372,7 +1372,7 @@ function GM:AdminCreatePlayersMenu()
 	CCP.AdminMenu.WarnName:SetSize( 100, 20 );
 	function CCP.AdminMenu.WarnName:DoClick()
 		
-		RunConsoleCommand( "rpa_namewarn", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
+		RunConsoleCommand( "rpa_charnamewarn", CCP.AdminMenu.PlayerList:GetLine( CCP.AdminMenu.SelectedID ).SteamID );
 		
 	end
 	CCP.AdminMenu.WarnName:SetDisabled( true );
@@ -1437,7 +1437,7 @@ function GM:AdminCreateBansMenu()
 	CCP.AdminMenu.UnbanBut:SetSize( 100, 30 );
 	function CCP.AdminMenu.UnbanBut:DoClick()
 		
-		RunConsoleCommand( "rpa_unban", CCP.AdminMenu.BansList:GetLine( CCP.AdminMenu.SelectedBanID ).SteamID );
+		RunConsoleCommand( "rpa_plyunban", CCP.AdminMenu.BansList:GetLine( CCP.AdminMenu.SelectedBanID ).SteamID );
 		
 	end
 	CCP.AdminMenu.UnbanBut:SetDisabled( true );
@@ -1521,7 +1521,7 @@ function GM:AMCreateBanEntry()
 					
 					CCP.AdminMenu.BanEntry:Remove();
 					
-					RunConsoleCommand( "rpa_ban", sid, math.ceil( tonumber( dur ) ), reason );
+					RunConsoleCommand( "rpa_plyban", sid, math.ceil( tonumber( dur ) ), reason );
 					
 				else
 
@@ -1795,7 +1795,7 @@ function GM:AdminCreateRoleplayMenu()
 	CCP.AdminMenu.PlayMusicBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.PlayMusicBut:DoClick()
 		
-		RunConsoleCommand( "rpa_playmusic", CCP.AdminMenu.PlayMusic:GetSelected()[1].Path );
+		RunConsoleCommand( "rpa_musicplay", CCP.AdminMenu.PlayMusic:GetSelected()[1].Path );
 		
 	end
 	CCP.AdminMenu.PlayMusicBut:SetDisabled( true );
@@ -1808,7 +1808,7 @@ function GM:AdminCreateRoleplayMenu()
 	CCP.AdminMenu.StopMusicBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.StopMusicBut:DoClick()
 		
-		RunConsoleCommand( "rpa_stopmusic" );
+		RunConsoleCommand( "rpa_musicstop" );
 		
 	end
 	CCP.AdminMenu.StopMusicBut:PerformLayout();
@@ -1919,7 +1919,7 @@ function GM:AdminCreateRoleplayMenu()
 					
 				end
 				
-				RunConsoleCommand( "rpa_playmusictarget", CCP.AdminMenu.PlayMusic:GetSelected()[1].Path, unpack( tab ) );
+				RunConsoleCommand( "rpa_musicplaytarget", CCP.AdminMenu.PlayMusic:GetSelected()[1].Path, unpack( tab ) );
 				
 			end
 			
@@ -2039,7 +2039,7 @@ function GM:AdminCreateRoleplayMenu()
 	CCP.AdminMenu.PlayMusicIdle:SetSize( 100, 20 );
 	function CCP.AdminMenu.PlayMusicIdle:DoClick()
 		
-		RunConsoleCommand( "rpa_playmusic", SONG_IDLE );
+		RunConsoleCommand( "rpa_musicplay", SONG_IDLE );
 		
 	end
 	CCP.AdminMenu.PlayMusicIdle:PerformLayout();
@@ -2051,7 +2051,7 @@ function GM:AdminCreateRoleplayMenu()
 	CCP.AdminMenu.PlayMusicAlert:SetSize( 100, 20 );
 	function CCP.AdminMenu.PlayMusicAlert:DoClick()
 		
-		RunConsoleCommand( "rpa_playmusic", SONG_ALERT );
+		RunConsoleCommand( "rpa_musicplay", SONG_ALERT );
 		
 	end
 	CCP.AdminMenu.PlayMusicAlert:PerformLayout();
@@ -2063,7 +2063,7 @@ function GM:AdminCreateRoleplayMenu()
 	CCP.AdminMenu.PlayMusicAction:SetSize( 100, 20 );
 	function CCP.AdminMenu.PlayMusicAction:DoClick()
 		
-		RunConsoleCommand( "rpa_playmusic", SONG_ACTION );
+		RunConsoleCommand( "rpa_musicplay", SONG_ACTION );
 		
 	end
 	CCP.AdminMenu.PlayMusicAction:PerformLayout();
@@ -2075,7 +2075,7 @@ function GM:AdminCreateRoleplayMenu()
 	CCP.AdminMenu.PlayMusicStinger:SetSize( 100, 20 );
 	function CCP.AdminMenu.PlayMusicStinger:DoClick()
 		
-		RunConsoleCommand( "rpa_playmusic", SONG_STINGER );
+		RunConsoleCommand( "rpa_musicplay", SONG_STINGER );
 		
 	end
 	CCP.AdminMenu.PlayMusicStinger:PerformLayout();
@@ -2102,7 +2102,7 @@ function GM:AdminCreateRoleplayMenu()
 		
 		if( CCP.AdminMenu.SpawnItem:GetValue() != "" ) then
 			
-			RunConsoleCommand( "rpa_createitem", CCP.AdminMenu.SpawnItem:GetValue() );
+			RunConsoleCommand( "rpa_itemcreate", CCP.AdminMenu.SpawnItem:GetValue() );
 			
 		end
 		
@@ -2265,12 +2265,12 @@ function GM:CreateItemRequestMenu()
 	pnl.Requests.OnRowRightClick = function(panel, id, line)
 		local menu = DermaMenu(panel)
 		menu:AddOption("Approve", function()
-			RunConsoleCommand("rpa_approveitemrequest", line.id)
+			RunConsoleCommand("rpa_itemrequestapprove", line.id)
 			pnl.Requests:RemoveLine(id)
 			pnl.ItemInfo:Clear()
 		end)
 		menu:AddOption("Deny", function()
-			RunConsoleCommand("rpa_denyitemrequest", line.id)
+			RunConsoleCommand("rpa_itemrequestdeny", line.id)
 			pnl.Requests:RemoveLine(id)
 			pnl.ItemInfo:Clear()
 		end)
