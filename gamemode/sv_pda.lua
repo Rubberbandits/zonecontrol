@@ -800,7 +800,7 @@ local RandomPDAMessageFuncs = {
 		local randomPlayer = table.Random(player.GetAllLoaded())
 		if !IsValid(randomPlayer) then return end
 
-		local playerName = randomPlayer:CharID() > 0 and randomPlayer:RPName() or false
+		local playerName = !randomPlayer:Hidden() and randomPlayer:HasCharFlag("X") and randomPlayer:RPName() or false
 		local randomItem = table.Random(GAMEMODE.Items)
 
 		if DisallowItems[randomItem.Class] then return end
@@ -821,7 +821,7 @@ local RandomPDAMessageFuncs = {
 		local randomPlayer = table.Random(player.GetAllLoaded())
 		if !IsValid(randomPlayer) then return end
 
-		local playerName = randomPlayer:CharID() > 0 and randomPlayer:RPName() or false
+		local playerName = !randomPlayer:Hidden() and randomPlayer:RPName() or false
 
 		if !playerName then return end
 
@@ -831,7 +831,7 @@ local RandomPDAMessageFuncs = {
 		local randomPlayer = table.Random(player.GetAllLoaded())
 		if !IsValid(randomPlayer) then return end
 
-		local playerName = randomPlayer:CharID() > 0 and randomPlayer:HasCharFlag("X") and randomPlayer:RPName() or false
+		local playerName = !randomPlayer:Hidden() and randomPlayer:HasCharFlag("X") and randomPlayer:RPName() or false
 
 		if !playerName then return end
 
