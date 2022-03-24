@@ -72,6 +72,10 @@ local ExpectedArguments = {
 ExpectedArguments[ARGTYPE_ARRAY] = {
 	name = "comma-separated list",
 	process = function(arg, ply, cmd, expectedType)
+		if !arg or #arg == 0 then
+			return false, "invalid list"
+		end
+
 		local data = {}
 		local array = string.Split(arg, ",")
 
@@ -214,6 +218,7 @@ function GM:CheckArgumentTypes(ply, cmd, args, processed)
 			end
 
 			processed[i] = result;
+			break
 		end
 
 		if !processed[i] then
