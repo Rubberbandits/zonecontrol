@@ -266,7 +266,7 @@ netstream.Hook("ItemSetPos", function(ply, item_id, x, y)
 end)
 
 netstream.Hook("RequestItemSpawn", function(ply, item_class, data)
-	if !ply:HasPermission("itemcreate")
+	if !ply:HasPermission("itemcreate") then return end
 
 	if !item_class then return end
 	if !GAMEMODE:GetItemByID(item_class) then return end
