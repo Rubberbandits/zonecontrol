@@ -1,6 +1,6 @@
 
 
-kingston.admin.registerCommand("itemapproverequest", {
+kingston.admin.registerCommand("itemrequestapprove", {
 	syntax = "<number requestID>",
 	description = "Approve a pending item request",
 	arguments = {ARGTYPE_NUMBER},
