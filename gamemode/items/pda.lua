@@ -33,7 +33,7 @@ ITEM.functions.SetName = {
 		return true
 	end,
 	CanRun = function(item)
-		return !item:GetVar("Name")
+		return !item:GetVar("PDAName")
 	end,
 }
 ITEM.functions.MakePrimary = {
@@ -177,7 +177,7 @@ ITEM.functions.RecoverJournal = {
 	end,
 }
 function ITEM:GetName()
-	local name = self:GetVar("Name", "")
+	local name = self:GetVar("PDAName", "")
 	if #name > 0 then
 		return name.."'s PDA"
 	end
