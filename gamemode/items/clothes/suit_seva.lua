@@ -32,29 +32,29 @@ ITEM.HandsModel = {
 
 ITEM.ArmorValues = {
 	-- "Impact" (blunt)
-	[DMG_CRUSH] = .50,
-	[DMG_FALL] = .50,
-	[DMG_CLUB] = .50,
-	[DMG_VEHICLE] = .50,
+	[DMG_CRUSH] = 0.50,
+	[DMG_FALL] = 0.50,
+	[DMG_CLUB] = 0.50,
+	[DMG_VEHICLE] = 0.50,
 	-- "Rupture" (sharp)
-	[DMG_SLASH] = .50,
+	[DMG_SLASH] = 0.50,
 	-- "Bulletproof"
-	[DMG_BULLET] = .89,
+	[DMG_BULLET] = 0.89,
 	-- "Explosion"
-	[DMG_BLAST] = .85,
+	[DMG_BLAST] = 0.85,
 	-- "Thermal"
-	[DMG_BURN] = .30,
-	[DMG_SLOWBURN] = .30,
+	[DMG_BURN] = 0.30,
+	[DMG_SLOWBURN] = 0.30,
 	-- "Chemical Burn"
-	[DMG_ACID] = .20,
-	[DMG_POISON] = .20,
-	[DMG_NERVEGAS] = .20,
+	[DMG_ACID] = 0.20,
+	[DMG_POISON] = 0.20,
+	[DMG_NERVEGAS] = 0.20,
 	-- "Electric Shock"
-	[DMG_SHOCK] = .25,
+	[DMG_SHOCK] = 0.25,
 	-- "Radiation"
-	[DMG_RADIATION] = .10,
+	[DMG_RADIATION] = 0.10,
 	-- "Psychic"
-	[DMG_PARALYZE] = .39,
+	[DMG_PARALYZE] = 0.39,
 }
 ITEM.Rarity = 4
 ITEM.AllowRandomSpawn = false

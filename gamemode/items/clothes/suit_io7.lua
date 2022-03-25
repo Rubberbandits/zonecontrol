@@ -33,27 +33,27 @@ ITEM.HandsModel = {
 
 ITEM.ArmorValues = {
 	-- "Impact" (blunt)
-	[DMG_CRUSH] = .85,
-	[DMG_FALL] = .85,
-	[DMG_CLUB] = .85,
-	[DMG_VEHICLE] = .85,
+	[DMG_CRUSH] = 0.85,
+	[DMG_FALL] = 0.85,
+	[DMG_CLUB] = 0.85,
+	[DMG_VEHICLE] = 0.85,
 	-- "Rupture" (sharp)
-	[DMG_SLASH] = .75,
+	[DMG_SLASH] = 0.75,
 	-- "Bulletproof"
-	[DMG_BULLET] = .75,
+	[DMG_BULLET] = 0.75,
 	-- "Explosion"
-	[DMG_BLAST] = .75,
+	[DMG_BLAST] = 0.75,
 	-- "Thermal"
-	[DMG_BURN] = .85,
-	[DMG_SLOWBURN] = .85,
+	[DMG_BURN] = 0.85,
+	[DMG_SLOWBURN] = 0.85,
 	-- "Chemical Burn"
-	[DMG_ACID] = .85,
-	[DMG_POISON] = .85,
-	[DMG_NERVEGAS] = .85,
+	[DMG_ACID] = 0.85,
+	[DMG_POISON] = 0.85,
+	[DMG_NERVEGAS] = 0.85,
 	-- "Electric Shock"
-	[DMG_SHOCK] = .90,
+	[DMG_SHOCK] = 0.90,
 	-- "Radiation"
-	[DMG_RADIATION] = .88,
+	[DMG_RADIATION] = 0.88,
 	-- "Psychic"
 	[DMG_PARALYZE] = 1.00,
 }
