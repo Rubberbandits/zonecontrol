@@ -413,7 +413,7 @@ local RandomPlayerRelatedStrings = {
 	"I think I just saw %s. Are the stories true?",
 	"I miss %s sooo much...",
 	"anyone seen %s today?",
-	"THiS IS A MESSAGE for %s. WACH OUT !!!! U R NEXT >:(",
+	"THiS is a MESSAGE fOr %s. WACH OUT !!!! U R NEXT >:(",
 	"Finally, some peace and quiet. %s can't ever shut the fuck up.",
 	"it's time yall. going to collect that bounty on %s",
 	"%s haunts my dreams.",
@@ -431,7 +431,7 @@ local RandomNPCRelatedStrings = {
 	"i had a dream about a %s last nite",
 	"does %s taste good or nah",
 	"Eek! %s!",
-	"Theres a mass outbreak of %s in the Garbage. Tread carefully stalkers",
+	"Theres a mass outbreak of %s in the Garbage . Tread carefully stalkers",
 }
 
 local RandomItemRelatedStrings = {
