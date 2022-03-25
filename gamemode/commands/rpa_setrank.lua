@@ -1,10 +1,8 @@
 kingston.admin.registerCommand("plysetrank", {
 	syntax = "<string target> <string rank>",
 	description = "Set a player's rank",
-	arguments = {bit.bor(ARGTYPE_TARGET, ARGTYPE_STEAMID), bit.bor(ARGTYPE_STRING, ARGTYPE_NONE)},
+	arguments = {bit.bor(ARGTYPE_TARGET, ARGTYPE_STEAMID), ARGTYPE_STRING},
 	onRun = function(ply, target, rank)
-		rank = rank != NULL and rank or "user"
-
 		// add offline steamID support
 		target:SetUserGroup(rank)
 		target:UpdatePlayerField("Rank", rank)
