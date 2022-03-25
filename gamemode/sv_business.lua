@@ -269,12 +269,12 @@ local function SuccessfulShipment(shipment)
 	local ply = player.GetByCharID(shipment.Owner)
 	if !IsValid(ply) then return end
 
-	ply:PDANotify("Courier -> you", "Here you are, all your stuff!", 6, 3)
+	ply:PDANotify("Courier -> you", "Here's your stuff! Let's do business again!", 6, 3)
 end
 hook.Add("ShipmentDelivered", "STALKER.ShipmentSuccess", SuccessfulShipment)
 
 local function ShipmentStarted(ply, shipment)
-	ply:PDANotify("Courier -> you", "I'll make sure to get all this stuff to you as fast as I can!", 6, 3)
+	ply:PDANotify("Courier -> you", "I'll make sure to get this to you as fast as I can!", 6, 3)
 end
 hook.Add("ShipmentCreated", "STALKER.ShipmentStarted", ShipmentStarted)
 

@@ -43,7 +43,9 @@ function GM:RefreshHelpMenuContent()
 			/ger - Speak German.
 			/ita - Speak Italian.
 
-			Adding variables w and y behind language or radio commands will react accordingly, i.e. /engy to yell in English and /rw to whisper over radio.]] },
+			Adding variables w and y behind language or radio commands will react accordingly, i.e. /engy to yell in English and /rw to whisper over radio.
+			
+			/cmdhelp - Prints a list of available commands that only staff may use. To use these commands in the console, simply type rpa_ before the command.]] },
 		{ "Binds", [[F1 - Open help menu.
 		F2 - Open character menu.
 		F3 - Open player menu.
