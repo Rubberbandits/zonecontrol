@@ -1223,6 +1223,10 @@ function GM:CharSelectPopulateCharacters()
 			b:SetDisabled( true );
 			
 		end
+
+		if v.Banned == 1 then
+			b:SetDisabled(true)
+		end
 		
 		table.insert( self.CharSelectCharacterButtons, charpane );
 		
@@ -1359,6 +1363,10 @@ function GM:CharCreateDelete()
 			
 			b:SetDisabled( true );
 			
+		end
+
+		if v.Banned == 1 then
+			b:SetDisabled(true)
 		end
 		
 		table.insert( self.CharDeleteCharacterButtons, charpane );

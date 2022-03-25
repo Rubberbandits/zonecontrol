@@ -223,7 +223,7 @@ local function ShipmentThink()
 		for id,shipment in ipairs(kingston.shipment.in_progress) do
 			if shipment.DeliveryTime <= CurTime() then
 				local threats = kingston.shipment.roll_fail_chance(id)
-				if threats then
+				if threats and #ents.FindByClass("shipment_spawner") > 0 then
 					kingston.shipment.fail_delivery(id, threats)
 				else
 					kingston.shipment.deliver(id)

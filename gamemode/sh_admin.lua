@@ -128,6 +128,8 @@ end
 // Hooks
 function GM:HasPermission(ply, cmd, args)
 	local plyGroup = kingston.admin.groups[ply:GetUserGroup()]
+	if !plyGroup then return false end
+
 	local commandData = kingston.admin.commands[cmd]
 	if commandData then
 		local canRun, err = commandData.canRun && commandData.canRun(ply, unpack(args)) || true
@@ -148,6 +150,8 @@ end
 
 function GM:CanTargetPlayer(ply, target, cmd)
 	local plyGroup = kingston.admin.groups[ply:GetUserGroup()]
+	if !plyGroup then return false end
+
 	local commandData = kingston.admin.commands[cmd]
 
 	if commandData.ignoreRank then

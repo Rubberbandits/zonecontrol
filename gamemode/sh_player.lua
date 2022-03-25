@@ -939,6 +939,38 @@ function meta:IsUpgradeTech()
 	return self:HasCharFlag("T")
 end
 
+function meta:UnloadCharacter()
+	for _,accessor in pairs(GAMEMODE.PlayerAccessors) do
+		self["Set"..accessor[1]](self, accessor[4]) // reset all accessors
+	end
+
+	if SERVER then
+		self:SetPos(Vector(10000,10000,10000))
+		self:Freeze(true)
+		self:SetNotSolid( true );
+		self:SetMoveType( MOVETYPE_NOCLIP );
+
+		if( self:SQLGetNumChars() > 0 ) then
+			netstream.Start( self, "nCharacterList", self.SQLCharData );
+			
+			local nStartType = 0;
+			if( (GAMEMODE.CurrentLocation or 0) != GAMEMODE.MainServerLocation ) then
+				nStartType = CC_SELECT;
+			else
+				if( self:SQLGetNumChars() < GAMEMODE.MaxCharacters ) then
+					nStartType = CC_CREATESELECT;
+				else
+					nStartType = CC_SELECT;
+				end
+			end
+			
+			netstream.Start( self, "nOpenCharCreate", nStartType );
+		else
+			netstream.Start( self, "nOpenCharCreate", CC_CREATE );
+		end
+	end
+end
+
 gameevent.Listen("player_spawn")
 hook.Add("player_spawn", "STALKER.SetPlayerHulls", function(data)
 	local ply = Player(data.userid)
