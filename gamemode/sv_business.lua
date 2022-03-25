@@ -274,7 +274,7 @@ end
 hook.Add("ShipmentDelivered", "STALKER.ShipmentSuccess", SuccessfulShipment)
 
 local function ShipmentStarted(ply, shipment)
-	ply:PDANotify("Courier -> you", "I'll make sure to get this to you as fast as I can!", 6, 3)
+	ply:PDANotify("Courier -> you", "I'll get this to you as fast as I can, boss!", 6, 3)
 end
 hook.Add("ShipmentCreated", "STALKER.ShipmentStarted", ShipmentStarted)
 
