@@ -375,6 +375,10 @@ kingston.command.register("cmdhelp", {
 		local commands = {}
 
 		for cmd,data in pairs(kingston.command.types) do
+			if kingston.admin.commands[cmd] then
+				if !ply:HasPermission(cmd) then continue end
+			end
+
 			table.insert(commands, Format("/%s %s\n\t\t%s", cmd, data.syntax, data.description))
 		end
 
