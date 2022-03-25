@@ -18,6 +18,8 @@ function nSelectCharacter( ply, id )
 	if( ply:SQLCharExists( id ) ) then
 		
 		if( ply:CharID() == id ) then return end
+
+		if ply:GetCharFromID(id).Banned == 1 then return end
 		
 		if( GAMEMODE.CurrentLocation and ply:GetCharFromID( id ).Location != GAMEMODE.CurrentLocation and !ply:IsAdmin() ) then return end
 		

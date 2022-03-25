@@ -1223,6 +1223,10 @@ function GM:CharSelectPopulateCharacters()
 			b:SetDisabled( true );
 			
 		end
+
+		if b.Banned == 1 then
+			b:SetDisabled(true)
+		end
 		
 		table.insert( self.CharSelectCharacterButtons, charpane );
 		
