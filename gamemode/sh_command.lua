@@ -374,7 +374,7 @@ kingston.command.register("cmdhelp", {
 	on_run = function(ply, args)
 		local commands = {}
 
-		for cmd,data in pairs(kingston.command.types) do
+		for cmd,data in SortedPairs(kingston.command.types) do
 			if kingston.admin.commands[cmd] then
 				if !ply:HasPermission(cmd) then continue end
 			end
