@@ -16,6 +16,8 @@ ITEM.Vars = {
 	Power = true,
 	Encrypted = false,
 	HasPassword = false,
+	Experience = 0,
+	CustomIcon = "",
 }
 if SERVER then
 	ITEM.Vars.PrivateVars = {
@@ -191,6 +193,25 @@ function ITEM:OnDeleted()
 	mysqloo.Query( Format( "DELETE FROM cc_pda_journal WHERE Owner = '%d'", self:GetID() ), onSuccess );
 end
 
+local PDARanks = {
+	[2000] = "Novice",
+	[10000] = "Experienced",
+	[20000] = "Veteran",
+	[50000] = "Expert",
+	[130000] = "Master",
+	[300000] = "Legend",
+}
+
+function ITEM:GetPDARank()
+	local rank = "Rookie"
+	for xp,name in pairs(PDARanks) do
+		if self:GetVar("Experience", 0) >= xp then
+			rank = name
+		end
+	end
+
+	return rank
+end
 
 /* UI */
 function GM:PMCreatePDAPassword(item)
@@ -213,3 +234,4 @@ function ITEM:CanQuickUse()
 	return self:GetVar("Power", false)
 end
 ITEM.Rarity = 2
+
