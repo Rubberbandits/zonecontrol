@@ -804,13 +804,11 @@ local RandomPDAMessageFuncs = {
 		if !IsValid(randomPlayer) then return end
 
 		local playerName = !randomPlayer:Hidden() and randomPlayer:HasCharFlag("X") and randomPlayer:RPName() or false
+		if !playerName then return end
+		
 		local randomItem = table.Random(GAMEMODE.Items)
 
 		if DisallowItems[randomItem.Class] then return end
-
-		if !playerName then
-			playerName = table.Random(RandomPDANames)
-		end
 
 		return Format("%s just ripped me off on %s. I paid twice the value!", playerName, randomItem.Name)
 	end,
