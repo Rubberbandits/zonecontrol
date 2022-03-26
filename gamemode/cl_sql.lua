@@ -5,6 +5,6 @@ local function zcNetworkCharVarChange(len)
 	local key = net.ReadString()
 	local value = net.ReadString()
 
-	LocalPlayer:GetCharFromID(charID)[field] = value
+	LocalPlayer():GetCharFromID(charID)[key] = value
 end
 net.Receive("zcNetworkCharVarChange", zcNetworkCharVarChange)
