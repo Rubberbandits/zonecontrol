@@ -47,6 +47,7 @@ include( "sh_sandbox.lua" );
 include( "sh_weapons.lua" );
 include( "sh_blowout.lua" );
 
+include( "cl_sql.lua" );
 include( "cl_admin.lua" );
 include( "cl_adminmenu.lua" );
 include( "cl_binds.lua" );

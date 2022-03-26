@@ -91,6 +91,7 @@ AddCSLuaFile( "sh_blowout.lua" );
 AddCSLuaFile( "sh_logs.lua" );
 AddCSLuaFile( "sh_command.lua" );
 
+AddCSLuaFile( "cl_sql.lua" );
 AddCSLuaFile( "cl_items.lua" );
 AddCSLuaFile( "cl_admin.lua" );
 AddCSLuaFile( "cl_adminmenu.lua" );
