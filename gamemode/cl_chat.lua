@@ -97,6 +97,7 @@ function GM:DrawChat()
 
 		for i = 1, 20 do
 			local v = self.ChatLines[i]
+			if !v then continue end
 
 			local filter = v[2] or {}
 
