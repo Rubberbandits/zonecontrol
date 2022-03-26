@@ -1224,7 +1224,7 @@ function GM:CharSelectPopulateCharacters()
 			
 		end
 
-		if v.Banned == 1 then
+		if tonumber(v.Banned) == 1 then
 			b:SetDisabled(true)
 		end
 		
@@ -1365,7 +1365,7 @@ function GM:CharCreateDelete()
 			
 		end
 
-		if v.Banned == 1 then
+		if tonumber(v.Banned) == 1 then
 			b:SetDisabled(true)
 		end
 		
