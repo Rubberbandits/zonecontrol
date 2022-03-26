@@ -779,25 +779,27 @@ end
 function meta:UpdateCharacterField( field, value, nolog )
 	
 	if( self:IsBot() ) then return end
-	if( self:CharID() == -1 ) then return end
+
+	local charID = self:CharID()
+	if( charID == -1 ) then return end
 	
-	if( self.SQLCharData[self:GetCharIndexFromID( self:CharID() )][field] == tostring( value ) ) then return end
+	if( self.SQLCharData[self:GetCharIndexFromID( charID )][field] == tostring( value ) ) then return end
 
 	local ply = self;
 	local q = "UPDATE cc_chars";
 	q = q .. " SET " .. mysqloo.Escape( field );
-	q = q .. " = ? WHERE id = '" .. self:CharID() .. "'";
+	q = q .. " = ? WHERE id = '" .. charID .. "'";
 	
 	local query = CCSQL:prepare( q );
 	function query:onSuccess( ret )
 	
 		if( !nolog ) then
 			
-			--GAMEMODE:LogSQL( "Player " .. ply:Nick() .. " (" .. ply:RPName() .. ") updated character field " .. field .. " to " .. tostring( value ) .. "." );
+			GAMEMODE:LogSQL( "Player " .. ply:Nick() .. " (" .. ply:RPName() .. ") updated character field " .. field .. " to " .. tostring( value ) .. "." );
 			
 		end
 		
-		ply.SQLCharData[ply:GetCharIndexFromID( ply:CharID() )][field] = tostring( value );
+		ply.SQLCharData[ply:GetCharIndexFromID( charID )][field] = tostring( value );
 		
 	end
 	function query:onError( err )
