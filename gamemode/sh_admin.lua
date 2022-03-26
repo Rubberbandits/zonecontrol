@@ -212,7 +212,7 @@ function GM:CheckArgumentTypes(ply, cmd, args, processed)
 		end
 	end
 
-	if #args == 0 && !table.HasValue(validArgumentTypes[1], ARGTYPE_NONE) then
+	if #args == 0 && #commandData.arguments > 0 && !table.HasValue(validArgumentTypes[1], ARGTYPE_NONE) then
 		return false, Format("no arguments provided. Expected: %s", table.concat(GetArgumentTypeNames(commandData.arguments), ", "))
 	end
 
