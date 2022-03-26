@@ -168,3 +168,44 @@ local function RCONCommandSupport()
 	end
 end
 hook.Add("InitPostEntity", "RCONCommandSupport", RCONCommandSupport)
+
+function FindGoodTeleportPos( ply )
+
+	local trace = { };
+	trace.start = ply:GetShootPos();
+	trace.endpos = trace.start + ply:GetAimVector() * 50;
+	trace.mins = Vector( -16, -16, 0 );
+	trace.maxs = Vector( 16, 16, 72 );
+	trace.filter = ply;
+	local tr = util.TraceHull( trace );
+
+	if( !tr.Hit ) then
+
+		return tr.HitPos;
+
+	end
+
+	local pos = ply:GetPos();
+
+	for _, v in pairs( GoodTraceVectors ) do
+
+		local trace = { };
+		trace.start = ply:GetPos();
+		trace.endpos = trace.start + v;
+		trace.mins = Vector( -16, -16, 0 );
+		trace.maxs = Vector( 16, 16, 72 );
+		trace.filter = ply;
+		local tr = util.TraceHull( trace );
+
+		if( tr.Fraction == 1.0 ) then
+
+			pos = ply:GetPos() + v;
+			break;
+
+		end
+
+	end
+
+	return pos;
+
+end
