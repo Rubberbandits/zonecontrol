@@ -315,3 +315,10 @@ local function blowout_think()
 	end
 end
 hook.Add("Think", "STALKER.BlowoutThink", blowout_think)
+
+local function DetectPlayerEmissionLog(ply)
+	if kingston.blowout.get_var("Bool", "active_blowout") and !kingston.blowout.is_protected(ent) then
+		kingston.log.write("admin", "[L] %s (%s) combat-logged while in an emission!", ply:Nick())
+	end
+end
+hook.Add("PlayerDisconnected", "STALKER.DetectPlayerEmissionLog", DetectPlayerEmissionLog)
