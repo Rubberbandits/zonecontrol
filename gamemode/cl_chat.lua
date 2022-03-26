@@ -95,10 +95,7 @@ function GM:DrawChat()
 		
 		if !self.ChatLines then return end
 
-		for i = 1, 20 do
-			local v = self.ChatLines[i]
-			if !v then continue end
-
+		for _,v in pairs(self.ChatLines) do
 			local filter = v[2] or {}
 
 			if( filter[self.ChatboxFilter] and CurTime() - v[1] < 10 ) then
