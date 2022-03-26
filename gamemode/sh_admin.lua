@@ -100,7 +100,12 @@ function PLAYER:GetUserGroup()
 end
 
 function PLAYER:HasPermission(cmd, args)
-	return hook.Run("HasPermission", self, cmd, args)
+	local canRun, message = hook.Run("HasPermission", self, cmd, args)
+	if !canRun then
+		return false
+	end
+
+	return true
 end
 
 function PLAYER:IsSuperAdmin()
@@ -130,7 +135,9 @@ function GM:HasPermission(ply, cmd, args)
 	if ply:GetUserGroup() == "rcon" then return true end
 
 	local plyGroup = kingston.admin.groups[ply:GetUserGroup()]
-	if !plyGroup then return false end
+	if !plyGroup then 
+		return false, Format("Player doesn't have any permissions!") 
+	end
 
 	local commandData = kingston.admin.commands[cmd]
 	if commandData then
@@ -320,6 +327,9 @@ local GROUP_SETSA		= 5
 function GROUP:init(uniqueID, data)
 	table.Merge(self, data)
 
+	self.isAdmin = tobool(self.isAdmin)
+	self.isSuperAdmin = tobool(self.isSuperAdmin)
+
 	self.permissions = isstring(data.permissions) && util.JSONToTable(data.permissions) || data.permissions
 	self.uniqueID = uniqueID
 end
@@ -445,13 +455,18 @@ function kingston.admin.registerCommand(cmd, data)
 	end
 
 	concommand.Add(Format("rpa_%s", cmd), function(ply, _, args) 
+		if !IsValid(ply) then
+			ply = Entity(0)
+		end
+
 		kingston.admin.runCommand(ply, cmd, args)
 	end)
 
 	kingston.command.register(cmd, {
 		syntax = data.syntax,
 		description = data.description,
-		can_run = function() return true end,
+		can_run = function(ply) return ply:HasPermission(cmd) end,
+		log = function() end,
 		on_run = function(ply, args)
 			kingston.admin.runCommand(ply, cmd, args)
 		end,
@@ -491,12 +506,16 @@ function kingston.admin.runCommand(ply, cmd, args)
 	end
 
 	local success, message = commandData.onRun(ply, unpack(processed))
-	if !success then
+	if success == false then
 		ply:Notify(nil, COLOR_ERROR, message)
 		return
 	end
 
 	hook.Run("PlayerCommandRan", ply, cmd, args)
+end
+
+function GM:PlayerCommandRan(ply, cmd, args)
+	kingston.log.write("command", "[%s][ran command: %s] %s", ply and ply:Nick() or "rcon", cmd, #args > 0 and table.concat(args, " ") or "no args")
 end
 
 // Load all commands
