@@ -201,10 +201,6 @@ end
 function GM:CheckArgumentTypes(ply, cmd, args, processed)
 	local commandData = kingston.admin.commands[cmd]
 
-	if #args == 0 && #commandData.arguments != 0 then
-		return false, Format("no arguments provided. Expected: %s", table.concat(GetArgumentTypeNames(commandData.arguments), ", "))
-	end
-
 	local validArgumentTypes = {};
 	for i,expectedTypes in pairs(commandData.arguments) do
 		table.insert(validArgumentTypes, {})
@@ -214,6 +210,10 @@ function GM:CheckArgumentTypes(ply, cmd, args, processed)
 				table.insert(validArgumentTypes[i], argType)
 			end
 		end
+	end
+
+	if #args == 0 && !table.HasValue(validArgumentTypes[1], ARGTYPE_NONE) then
+		return false, Format("no arguments provided. Expected: %s", table.concat(GetArgumentTypeNames(commandData.arguments), ", "))
 	end
 
 	for i,types in pairs(validArgumentTypes) do
