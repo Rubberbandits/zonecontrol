@@ -776,6 +776,7 @@ function meta:DeleteCharacter( id, name )
 	
 end
 
+util.AddNetworkString("zcNetworkCharVarChange")
 function meta:UpdateCharacterField( field, value, nolog )
 	
 	if( self:IsBot() ) then return end
@@ -800,7 +801,12 @@ function meta:UpdateCharacterField( field, value, nolog )
 		end
 		
 		ply.SQLCharData[ply:GetCharIndexFromID( charID )][field] = tostring( value );
-		
+
+		net.Start("zcNetworkCharVarChange")
+			net.WriteUInt(charID, 32)
+			net.WriteString(field)
+			net.WriteString(tostring(value))
+		net.Send(ply)
 	end
 	function query:onError( err )
 	
