@@ -152,3 +152,19 @@ concommand.AddAdminVariable( "rpa_blowout_enabled", "BlowoutEnabled", 1, "Blowou
 concommand.AddAdminVariable( "rpa_blowout_auto_schedule", "BlowoutAutoShedule", 1, "Blowout auto-schedule" );
 concommand.AddAdminVariable( "rpa_blowout_interval", "BlowoutInterval", 7200, "Blowout interval" );
 concommand.AddAdminVariable( "rpa_announcing_duration", "BlowoutAnnounceDuration", 300, "Blowout announce duration" );
+
+local function RCONCommandSupport()
+	Entity(0).Notify = function(ent, font, color, text, ...)
+		MsgC(color, Format(text, ...).."\n")
+	end
+	Entity(0).Nick = function(self)
+		return "Console"
+	end
+	Entity(0).SteamID = function(self)
+		return "STEAM_0:0:CONSOLE"
+	end
+	Entity(0).GetUserGroup = function(self)
+		return "rcon"
+	end
+end
+hook.Add("InitPostEntity", "RCONCommandSupport", RCONCommandSupport)

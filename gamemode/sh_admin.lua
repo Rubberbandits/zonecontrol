@@ -127,6 +127,8 @@ end
 
 // Hooks
 function GM:HasPermission(ply, cmd, args)
+	if ply:GetUserGroup() == "rcon" then return true end
+
 	local plyGroup = kingston.admin.groups[ply:GetUserGroup()]
 	if !plyGroup then return false end
 
@@ -149,6 +151,8 @@ function GM:HasPermission(ply, cmd, args)
 end
 
 function GM:CanTargetPlayer(ply, target, cmd)
+	if ply:GetUserGroup() == "rcon" then return true end
+
 	local plyGroup = kingston.admin.groups[ply:GetUserGroup()]
 	if !plyGroup then return false end
 
