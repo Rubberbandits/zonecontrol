@@ -3,9 +3,9 @@
 kingston.admin.registerCommand("itemcreate", {
 	syntax = "<string item>",
 	description = "Spawn an item",
-	arguments = {ARGTYPE_STRING},
+	arguments = {bit.bor(ARGTYPE_NONE, ARGTYPE_STRING)},
 	onRun = function(ply, item)
-		if item == "" then
+		if item == NULL then
 			netstream.Start( ply, "nAListItems", "" )
 			return
 		end
