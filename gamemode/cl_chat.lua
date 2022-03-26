@@ -94,8 +94,10 @@ function GM:DrawChat()
 		local tab = { };
 		
 		if !self.ChatLines then return end
-		
-		for _, v in ipairs( self.ChatLines ) do
+
+		for i = 1, 20 do
+			local v = self.ChatLines[i]
+
 			local filter = v[2] or {}
 
 			if( filter[self.ChatboxFilter] and CurTime() - v[1] < 10 ) then
@@ -103,7 +105,6 @@ function GM:DrawChat()
 				table.insert( tab, v );
 				
 			end
-			
 		end
 		
 		local ty = 0;
