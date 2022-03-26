@@ -373,8 +373,11 @@ kingston.command.register("anorak", {
 kingston.command.register("cmdhelp", {
 	on_run = function(ply, args)
 		local commands = {}
+		local allCommands = table.SortByKey(kingston.command.types)
 
-		for cmd,data in SortedPairs(kingston.command.types) do
+		for _,cmd in pairs(allCommands) do
+			local data = kingston.command.types[cmd]
+			
 			if kingston.admin.commands[cmd] then
 				if !ply:HasPermission(cmd) then continue end
 			end
