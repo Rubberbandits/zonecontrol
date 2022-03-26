@@ -222,7 +222,10 @@ function GM:CheckArgumentTypes(ply, cmd, args, processed)
 			end
 
 			processed[i] = result;
-			break
+
+			if result != NULL then
+				break
+			end
 		end
 
 		if !processed[i] then
