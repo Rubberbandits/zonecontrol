@@ -31,7 +31,7 @@ local typeTable = {
 			for k,v in pairs(ents) do
 				if v:GetClass() == "cc_item" and v.GetItemClass then
 					local metaitem = GAMEMODE:GetItemByID( v:GetItemClass() );
-					if metaitem.Artifact and GAMEMODE:GetItemByID(v:GetItemClass()).Tier <= DETECTOR_ECHO then
+					if metaitem.Artifact and metaitem.Tier <= DETECTOR_ECHO then
 						if nearestArt then
 							local mp = LocalPlayer():GetPos()
 							local p1 = nearestArt:GetPos():DistToSqr(mp)
@@ -87,7 +87,7 @@ local typeTable = {
 			for k,v in pairs(ents) do
 				if v:GetClass() == "cc_item" and v.GetItemClass then
 					local metaitem = GAMEMODE:GetItemByID( v:GetItemClass() );
-					if metaitem.Artifact and GAMEMODE:GetItemByID(v:GetItemClass()).Tier <= DETECTOR_BEAR then
+					if metaitem.Artifact and metaitem.Tier <= DETECTOR_BEAR then
 						if nearestArt then
 							local mp = LocalPlayer():GetPos()
 							local p1 = nearestArt:GetPos():DistToSqr(mp)
@@ -242,10 +242,12 @@ function PANEL:Think()
 				if v:GetClass() == "cc_item" and v.GetItemClass then
 					local metaitem = GAMEMODE:GetItemByID( v:GetItemClass() );
 					if( !metaitem.Artifact ) then return end
-					if metaitem.Tier <= t and v:GetNoDraw() then
+					if metaitem.Tier <= t and v:GetNoDraw() and !v.revealed then
 						-- artifact has been discovered by player!
 						--FIXME
 						netstream.Start( "nUnhideItem", v:EntIndex() );
+						v.revealed = true
+					
 						v:SetNoDraw(false)
 						if metaitem.ItemSubmaterials then
 							for m,n in next, metaitem.ItemSubmaterials do
