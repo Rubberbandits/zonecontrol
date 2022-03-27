@@ -280,8 +280,6 @@ kingston.command.register("pda", {
 				end
 			end
 		else
-			print(args[1])
-
 			local pda = GAMEMODE:FindPlayer(args[1], ply, true)
 			if !pda then
 				ply:PDANotify("STALKER.net", "Recipient could not be found, or is offline. Try again later.", 3, 12)
