@@ -240,6 +240,7 @@ kingston.command.register("pda", {
 	end,
 	on_run = function(ply, args, raw)
 		local rf = {}
+		local pda_rank
 		local pda_name
 		local pda_id
 		local header
@@ -247,8 +248,9 @@ kingston.command.register("pda", {
 		for k,v in next, ply.Inventory do
 			if v:GetClass() == "pda" then
 				if v:GetVar("Power", false) and v:GetVar("Primary", false) then
-					pda_name = v:GetVar("Name")
+					pda_name = v:GetVar("PDAName")
 					pda_id = v:GetID()
+					pda_rank = v:GetPDARank()
 					break
 				end
 			end
@@ -266,7 +268,7 @@ kingston.command.register("pda", {
 		local body = string.Replace(text:sub(finish + 2, #text), "%", "")
 		
 		if args[1] == "all" then
-			header = pda_name.." -> all"
+			header = Format("[%s] %s -> all", pda_rank, pda_name)
 			
 			for _,targ in next, player.GetAll() do
 				if !targ.Inventory then continue end
@@ -285,7 +287,7 @@ kingston.command.register("pda", {
 				ply:PDANotify("STALKER.net", "Recipient could not be found, or is offline. Try again later.", 3, 12)
 				return
 			end
-			local targ_name = pda:GetVar("Name")
+			local targ_name = pda:GetVar("PDAName")
 			local targ_pda_id = pda:GetID()
 			
 			if !targ_name or #targ_name == 0 then 
