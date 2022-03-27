@@ -2,7 +2,6 @@ include( "shared.lua" )
 
 ENT.NPC_INFORMATION = {
 	name = "Redrick",
-	profession = "Stubborn Bastard",
 	model = "models/tnb/stalker_2019/psz.mdl",
 }
 
@@ -24,6 +23,7 @@ ENT.NPC_CONVERSATION = {
 net.Receive("ui_help_npc", function(len)
 	local npc = net.ReadEntity()
 	local dialog = vgui.Create("zcNPCDialog")
+	dialog:SetName(npc.NPC_INFORMATION.name)
 	dialog:AddDialogOptions(npc.NPC_CONVERSATION)
 	dialog.NPCEntity = npc
 end)
