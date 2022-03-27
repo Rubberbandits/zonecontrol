@@ -6,6 +6,7 @@ matMultiplayer = Material( "kingston/multiplayer_panels" );
 matHints = Material( "kingston/hint_panels" );
 matSleep = Material( "kingston/sleep_panels" );
 matPDA = Material( "kingston/pda_panels" );
+local matDialogMenu = Material("kingston/ui_actor_dialog")
 
 function meta:DrawSelections()
 
@@ -1034,6 +1035,19 @@ UVSkin.CleaningMenu = {
 	},
 }
 
+UVSkin.DialogMenu = {
+	mat = matDialogMenu,
+	x = -6,
+	y = 0,
+	u0 = 0.02,
+	v0 = 0,
+	u1 = 0.61,
+	v1 = 0.73,
+	addw = 28,
+	addh = 0,
+	disableclip = true
+}
+
 function UVSkin:PaintDFrame( panel, w, h )
 
 end
@@ -1544,6 +1558,33 @@ function UVSkin:PaintScrollButtonUp(panel, w, h)
 	end
 	
 	surface.DrawTexturedRectUV( v.x or 0, v.y or 0, w + ( addw or 0 ), h + ( addh or 0 ), v.u0, v.v0, v.u1, v.v1 );
+	
+	if( v.disableclip ) then
+	
+		DisableClipping( false );
+		
+	end
+end
+
+function UVSkin:PaintDialogMenu(panel, w, h)
+	local skin = kingston.gui.classes[panel:GetSkin().Name];
+	local v = self.DialogMenu;
+
+	surface.SetDrawColor( 255, 255, 255, 255 );
+	
+	if( v.mat ) then
+		
+		surface.SetMaterial( v.mat );
+		
+	end
+	
+	if( v.disableclip ) then
+	
+		DisableClipping( true );
+		
+	end
+	
+	surface.DrawTexturedRectUV( v.x or 0, v.y or 0, w + ( v.addw or 0 ), h + ( v.addh or 0 ), v.u0, v.v0, v.u1, v.v1 );
 	
 	if( v.disableclip ) then
 	
