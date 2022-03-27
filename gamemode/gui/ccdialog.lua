@@ -65,6 +65,7 @@ function PANEL:Init()
 	self:Center()
 	self:MakePopup()
 	self:SetSkin("STALKER")
+	self.NPCName = "None"
 
 	self.dialog = self:Add("DScrollPanel")
 	self.dialog:DockMargin(2, 42, 2, 0)
@@ -79,6 +80,10 @@ function PANEL:Init()
 	function self.dialogOptions:Paint(w, h) end
 
 	//self:InitiateDevDialog()
+end
+
+function PANEL:SetName(name)
+	self.NPCName = name;
 end
 
 function PANEL:Close()
@@ -112,7 +117,7 @@ local function defaultDialogCallback(panel, key, noResponse)
 	panel:AddDialog(LocalPlayer():RPName(), (isfunction(dialogData.dialog) and dialogData.dialog(panel, dialogKey)) or dialogData.dialog, true)
 
 	if !noResponse then
-		panel:AddDialog("Redrick", (isfunction(dialogData.response) and dialogData.response(panel, key)) or dialogData.response or "")
+		panel:AddDialog(self.NPCName, (isfunction(dialogData.response) and dialogData.response(panel, key)) or dialogData.response or "")
 	end
 end
 
@@ -129,7 +134,7 @@ function PANEL:AddDialogOptions(data)
 		error("Invalid data passed to function, conversation must have an opening!\n")
 	end
 
-	self:AddDialog("Redrick", (isfunction(openingDialog.response) and openingDialog.response(self, "opening")) or openingDialog.response or "")
+	self:AddDialog(self.NPCName, (isfunction(openingDialog.response) and openingDialog.response(self, "opening")) or openingDialog.response or "")
 	
 	if openingDialog.options then
 		for i,dialog in ipairs(openingDialog.options) do
