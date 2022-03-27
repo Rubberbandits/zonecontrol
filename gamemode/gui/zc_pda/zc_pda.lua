@@ -405,13 +405,20 @@ function PANEL:CreateContact(data)
 	contact_name:SetTextColor(Color(229, 201, 98))
 	contact_name:SizeToContents()
 	contact_name:SetPos(ScreenScaleH(2), ScreenScaleH(2))
-	
+
+	local rank = vgui.Create("DLabel", panel)
+	rank:SetFont("CombineControl.ChatNormal")
+	rank:SetText(data.rank)
+	rank:SetTextColor(Color(120,120,120))
+	rank:SizeToContents()
+	rank:SetPos(ScreenScaleH(4), ScreenScaleH(2) + contact_name:GetTall())
+
 	local placeholder = vgui.Create("DLabel", panel)
 	placeholder:SetFont("CombineControl.ChatNormal")
 	placeholder:SetText("ACTIVE_DEVICE: "..table.Random(rand_devices))
 	placeholder:SetTextColor(Color(120,120,120))
 	placeholder:SizeToContents()
-	placeholder:SetPos(ScreenScaleH(4), ScreenScaleH(2) + contact_name:GetTall())
+	placeholder:SetPos(ScreenScaleH(4), ScreenScaleH(2) + contact_name:GetTall() + rank:GetTall())
 	
 	function panel:PerformLayout(w,h)
 		contact_name:SizeToContentsY()

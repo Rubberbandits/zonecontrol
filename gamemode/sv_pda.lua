@@ -66,7 +66,7 @@ function kingston.pda.find_contacts()
 		if v:GetClass() == "pda" then
 			if !v:GetVar("Power", false) then continue end
 			
-			rf[#rf + 1] = {name = v:GetVar("Name", "UNKNOWN_USER")}
+			rf[#rf + 1] = {name = v:GetVar("PDAName", "UNKNOWN_USER"), rank = v:GetPDARank()}
 		end
 	end
 	
@@ -81,8 +81,8 @@ function kingston.pda.write_chat(sender_id, receiver_id, message)
 	kingston.pda.chat_insert:clearParameters()
 		kingston.pda.chat_insert:setNumber(1, sender_id)
 		kingston.pda.chat_insert:setNumber(2, receiver_id)
-		kingston.pda.chat_insert:setString(3, sender_pda:GetVar("Name", "UNKNOWN_USER"))
-		kingston.pda.chat_insert:setString(4, receiver_pda:GetVar("Name", "UNKNOWN_USER"))
+		kingston.pda.chat_insert:setString(3, sender_pda:GetVar("PDAName", "UNKNOWN_USER"))
+		kingston.pda.chat_insert:setString(4, receiver_pda:GetVar("PDAName", "UNKNOWN_USER"))
 		kingston.pda.chat_insert:setString(5, message)
 	kingston.pda.chat_insert:start()
 end
