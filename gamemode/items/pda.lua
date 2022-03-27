@@ -194,23 +194,35 @@ function ITEM:OnDeleted()
 end
 
 local PDARanks = {
-	[2000] = "Novice",
-	[10000] = "Experienced",
-	[20000] = "Veteran",
-	[50000] = "Expert",
-	[130000] = "Master",
-	[300000] = "Legend",
+	{name = "Novice", xp = 2000},
+	{name = "Experienced", xp = 10000},
+	{name = "Veteran", xp = 20000},
+	{name = "Expert", xp = 50000},
+	{name = "Master", xp = 130000},
+	{name = "Legend", xp = 300000},
 }
 
-function ITEM:GetPDARank()
+function ITEM:GetPDARank(forXP)
 	local rank = "Rookie"
-	for xp,name in pairs(PDARanks) do
-		if self:GetVar("Experience", 0) >= xp then
-			rank = name
+	for _,rankData in pairs(PDARanks) do
+		if (forXP or self:GetVar("Experience", 0)) >= rankData.xp then
+			rank = rankData.name
 		end
 	end
 
 	return rank
+end
+
+function ITEM:GiveExperience(amt)
+	self:SetVar("Experience", math.Clamp(self:GetVar("Experience", 0) + amt, 0, 300000), nil, true)
+
+	hook.Run("PDAExperienceChanged", self, amt)
+end
+
+function ITEM:TakeExperience(amt)
+	self:SetVar("Experience", math.Clamp(self:GetVar("Experience", 0) - amt, 0, 300000), nil, true)
+
+	hook.Run("PDAExperienceChanged", self, -amt)
 end
 
 /* UI */
@@ -235,3 +247,36 @@ function ITEM:CanQuickUse()
 end
 ITEM.Rarity = 2
 
+if SERVER then
+	local function GiveXPForArtifactReveal(ply, ent, itemClass)
+		local metaitem = GAMEMODE:GetItemByID(itemClass)
+		if !metaitem or !metaitem.Artifact then return end
+
+		local pda = ply:GetPrimaryPDA()
+		if !pda then return end
+
+		pda:GiveExperience(metaitem.Tier * 250)
+	end
+	hook.Add("PlayerArtifactRevealed", "GiveXPForArtifactReveal", GiveXPForArtifactReveal)
+
+	local function NotifyExperience(item, amt)
+		local oldAmount = item:GetVar("Experience", 0) - amt
+		local ply = item:Owner()
+
+		local curRank = item:GetPDARank()
+		local lastRank = item:GetPDARank(oldAmount)
+
+		print(curRank, lastRank)
+
+		if amt > 0 then
+			if curRank != lastRank then
+				ply:PDANotify("Message", Format("You've advanced to the rank of \"%s\"", curRank), 4, 1)
+			end
+		else
+			if curRank != lastRank then
+				ply:PDANotify("Message", Format("You've dropped to the rank of \"%s\"", curRank), 4, 1)
+			end
+		end
+	end
+	hook.Add("PDAExperienceChanged", "NotifyExperience", NotifyExperience)
+end
