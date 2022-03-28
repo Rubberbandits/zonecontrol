@@ -4,7 +4,7 @@ include( "shared.lua" )
 
 function ENT:Initialize()
 	if (SERVER) then
-		self:SetModel( "models/tnb/stalker_2019/psz.mdl" )
+		self:SetModel( self.NPC_INFORMATION.model )
 		self:SetUseType(SIMPLE_USE)
 		self:SetMoveType(MOVETYPE_NONE)
 		self:DrawShadow(true)

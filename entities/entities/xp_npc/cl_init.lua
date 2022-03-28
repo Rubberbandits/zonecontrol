@@ -1,10 +1,5 @@
 include( "shared.lua" )
 
-ENT.NPC_INFORMATION = {
-	name = "Redrick",
-	model = "models/tnb/stalker_2019/psz.mdl",
-}
-
 ENT.NPC_CONVERSATION = {
 	opening = {
 		response = "What can I do for you, stalker?",
