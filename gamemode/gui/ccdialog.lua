@@ -103,6 +103,10 @@ local function defaultDialogCallback(panel, key, noResponse)
 
 	local dialogData = panel.conversations[key]
 	local options = dialogData.options or panel.conversations.opening.options
+	
+	if isfunction(options) then
+		options = options(panel, key)
+	end
 
 	for i,dialogKey in ipairs(options) do
 		local dialogData = panel.conversations[dialogKey]
@@ -133,11 +137,15 @@ function PANEL:AddDialogOptions(data)
 	if !openingDialog then
 		error("Invalid data passed to function, conversation must have an opening!\n")
 	end
-
-	self:AddDialog(self.NPCName, (isfunction(openingDialog.response) and openingDialog.response(self, "opening")) or openingDialog.response or "")
 	
-	if openingDialog.options then
-		for i,dialog in ipairs(openingDialog.options) do
+	local options = openingDialog.options
+
+	if options then
+		if isfunction(options) then
+			options = options(self, "opening")
+		end
+
+		for i,dialog in ipairs(options) do
 			local dialogData = data[dialog]
 			if !dialogData then
 				error("Specified dialog doesn't exist!\n")
@@ -150,6 +158,8 @@ function PANEL:AddDialogOptions(data)
 			self:AddDialogOption(Format("%d. %s", i, (isfunction(dialogData.dialog) and dialogData.dialog(self, dialog)) or dialogData.dialog), dialog, dialogData.callback)
 		end
 	end
+
+	self:AddDialog(self.NPCName, (isfunction(openingDialog.response) and openingDialog.response(self, "opening")) or openingDialog.response or "")
 end
 
 local NPC_NAME_COLOR = Color(229, 159, 26)
