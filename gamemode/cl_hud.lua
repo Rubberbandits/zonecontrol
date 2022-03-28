@@ -832,6 +832,33 @@ local COLOR_BACKBAR = Color(30,30,30,200)
 local COLOR_LEGSHOT = Color(150, 150, 100, 255)
 local COLOR_HUNGER = Color(37, 150, 37, 255)
 
+local statusMatData = {
+	{
+		u0 = 0.535,
+		v0 = 0.9626,
+		u1 = 0.565,
+		v1 = 0.994
+	},	
+	{
+		u0 = 0.012,
+		v0 = 0.867,
+		u1 = 0.042,
+		v1 = 0.899
+	},
+	{
+		u0 = 0.012,
+		v0 = 0.907,
+		u1 = 0.042,
+		v1 = 0.939
+	},
+	{
+		u0 = 0.012,
+		v0 = 0.948,
+		u1 = 0.042,
+		v1 = 0.98
+	},
+}
+
 function GM:DrawHealthBars()
 
 	if !self.LocalPlayer then
@@ -857,22 +884,6 @@ function GM:DrawHealthBars()
 	if( math_abs( self.HPDraw - hp ) < 1 ) then
 		
 		self.HPDraw = hp;
-		
-	end
-	
-	if( self.HGDraw > hg ) then
-		
-		self.HGDraw = self.HGDraw - 0.1;
-		
-	elseif( self.HGDraw < hg ) then
-		
-		self.HGDraw = self.HGDraw + 0.1;
-		
-	end
-	
-	if( math_abs( self.HGDraw - hg ) < 1 ) then
-		
-		self.HGDraw = hg;
 		
 	end
 
@@ -917,17 +928,17 @@ function GM:DrawHealthBars()
 	end
 
 	if( self.UseHunger ) then
+
+		local hungerStage = math.ceil(hg / 20)
+
+		local x, y, w, h = ScrW() * 0.95, ScrH() * 0.8, 32, 32
 	
-		draw_RoundedBox( 0, scrW - ( scrW / 7 ), scrH * 0.84, w, 14, COLOR_BACKBAR );
-		
-		if( self.HGDraw > 0 ) then
-			
-			draw_RoundedBox( 0, scrW - ( scrW / 7 ) + 2, scrH * 0.84 + 2, ( w - 4 ) * ( math_Clamp( self.HGDraw, 1, 100 ) / 100 ), 10, COLOR_HUNGER );
-			
-			y = y - 16;
-			
+		if hungerStage > 1 then
+			local uvData = statusMatData[hungerStage - 1]
+			surface_SetMaterial( matHints );
+			surface_SetDrawColor( 255, 255, 255, 255 );
+			surface_DrawTexturedRectUV( x, y, w, h, uvData.u0, uvData.v0, uvData.u1, uvData.v1 );
 		end
-		
 	end
 	
 end
