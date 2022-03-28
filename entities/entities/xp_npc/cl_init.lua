@@ -38,7 +38,7 @@ ENT.NPC_CONVERSATION = {
 
 				return "Well, hello! I don't think we've met. I'm Bogdan, though most everyone just calls me Big-brother."
 			else
-				return Format("Welcome back, %s. What have you brought me?", cookie.GetNumber("zcBodgan_introduced", 0) == 1 and LocalPlayer():RPName() or "stalker")
+				return Format("Welcome back, %s. What have you brought me?", cookie.GetNumber("zcBogdan_introduced", 0) == 1 and LocalPlayer():RPName() or "stalker")
 			end
 		end,
 		options = function(panel, key)
