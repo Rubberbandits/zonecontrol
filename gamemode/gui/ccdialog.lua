@@ -117,7 +117,7 @@ local function defaultDialogCallback(panel, key, noResponse)
 	panel:AddDialog(LocalPlayer():RPName(), (isfunction(dialogData.dialog) and dialogData.dialog(panel, dialogKey)) or dialogData.dialog, true)
 
 	if !noResponse then
-		panel:AddDialog(self.NPCName, (isfunction(dialogData.response) and dialogData.response(panel, key)) or dialogData.response or "")
+		panel:AddDialog(panel.NPCName, (isfunction(dialogData.response) and dialogData.response(panel, key)) or dialogData.response or "")
 	end
 end
 
