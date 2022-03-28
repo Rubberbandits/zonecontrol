@@ -111,7 +111,7 @@ ENT.NPC_CONVERSATION = {
 		callback = function(panel, key)
 			panel:Close()
 		end,
-	}
+	},
 	dont_care = {
 		can_see = function(panel, key)
 			return cookie.GetNumber("zcBogdan_spokenTo", 0) == 0
