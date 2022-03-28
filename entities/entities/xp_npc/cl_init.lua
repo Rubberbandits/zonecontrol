@@ -88,7 +88,7 @@ ENT.NPC_CONVERSATION = {
 		response = "Word gets around here. When you do good work for somebody, we hear about it. And if you wanna boost your score, you can bring me direct proof of your work... trophies, classified documents, anything that proves you did something.",
 		options = {
 			"business",
-			"nothing_now"
+			"cool"
 		}
 	},
 	business = {
@@ -120,6 +120,12 @@ ENT.NPC_CONVERSATION = {
 		callback = function(panel, key)
 			panel:Close()
 		end
+	},
+	cool = {
+		dialog = "Cool. I'll come back later.",
+		callback = function(panel, key)
+			panel:Close()
+		end,
 	},
 }
 

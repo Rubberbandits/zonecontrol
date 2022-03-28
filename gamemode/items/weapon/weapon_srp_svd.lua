@@ -19,3 +19,12 @@ ITEM.NoDefaultAtts = true
 ITEM.Damage = 105
 ITEM.Rarity = 3
 ITEM.RepairCost = 15
+ITEM.Vars = {
+	Equipped = false,
+	CurrentAttachments = {},
+	Upgrades = {
+		generic_opt_mount = true,
+	},
+	Durability = 100,
+	Clip1 = 0,
+},

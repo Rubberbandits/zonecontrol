@@ -21,3 +21,12 @@ ITEM.H = 1
 ITEM.Damage = 33
 ITEM.Rarity = 4
 ITEM.RepairCost = 5
+ITEM.Vars = {
+	Equipped = false,
+	CurrentAttachments = {},
+	Upgrades = {
+		generic_underrail_mount = true,
+	},
+	Durability = 100,
+	Clip1 = 0,
+},

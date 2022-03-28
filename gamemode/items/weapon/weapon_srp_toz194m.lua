@@ -18,3 +18,12 @@ ITEM.Slot = 2
 ITEM.Damage = 10
 ITEM.Rarity = 2
 ITEM.RepairCost = 3
+ITEM.Vars = {
+	Equipped = false,
+	CurrentAttachments = {},
+	Upgrades = {
+		generic_opt_mount = true,
+	},
+	Durability = 100,
+	Clip1 = 0,
+},

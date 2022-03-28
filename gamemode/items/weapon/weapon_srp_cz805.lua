@@ -20,9 +20,11 @@ ITEM.Vars = {
 	CurrentAttachments = {},
 	Upgrades = {
 		generic_opt_mount = true,
+		generic_underbarrel_mount = true,
+		generic_underrail = true,
 	},
 	Durability = 100,
 	Clip1 = 0,
-};
+},
 ITEM.Rarity = 4
 ITEM.RepairCost = 14

@@ -19,3 +19,14 @@ ITEM.SlotPos = 1
 ITEM.Damage = 45
 ITEM.Rarity = 4
 ITEM.RepairCost = 9
+ITEM.Vars = {
+	Equipped = false,
+	CurrentAttachments = {},
+	Upgrades = {
+		generic_opt_mount = true,
+        generic_barrel_thread = true,
+        generic_underbarrel_mount = true,
+	},
+	Durability = 100,
+	Clip1 = 0,
+},

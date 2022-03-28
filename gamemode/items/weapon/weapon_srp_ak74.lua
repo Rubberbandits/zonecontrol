@@ -17,3 +17,12 @@ ITEM.BulkPrice = 75000
 ITEM.Damage = 34
 ITEM.Rarity = 2
 ITEM.RepairCost = 6
+ITEM.Vars = {
+	Equipped = false,
+	CurrentAttachments = {},
+	Upgrades = {
+		generic_barrel_thread = true,
+	},
+	Durability = 100,
+	Clip1 = 0,
+}

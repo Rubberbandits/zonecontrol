@@ -18,3 +18,12 @@ ITEM.Slot = 2
 ITEM.Damage = 33
 ITEM.Rarity = 3
 ITEM.RepairCost = 4
+ITEM.Vars = {
+	Equipped = false,
+	CurrentAttachments = {},
+	Upgrades = {
+		generic_barrel_thread = true,
+	},
+	Durability = 100,
+	Clip1 = 0,
+},

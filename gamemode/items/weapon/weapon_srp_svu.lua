@@ -16,3 +16,12 @@ ITEM.BulkPrice = 220000
 ITEM.Damage = 95
 ITEM.Rarity = 5
 ITEM.RepairCost = 18
+ITEM.Vars = {
+	Equipped = false,
+	CurrentAttachments = {},
+	Upgrades = {
+		generic_opt_mount = true,
+	},
+	Durability = 100,
+	Clip1 = 0,
+},
