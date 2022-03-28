@@ -16,4 +16,13 @@ ITEM.License = "B"
 ITEM.BulkPrice = 77000
 ITEM.Damage = 34
 ITEM.Rarity = 3
-ITEM.RepairCost = 7
+ITEM.RepairCost = 
+ITEM.Vars = {
+	Equipped = false,
+	CurrentAttachments = {},
+	Upgrades = {
+		generic_barrel_thread = true,
+	},
+	Durability = 100,
+	Clip1 = 0,
+},
