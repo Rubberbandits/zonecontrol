@@ -105,7 +105,7 @@ ENT.NPC_CONVERSATION = {
 			// open dialog to turn in items
 			print("open dialog to turn in items")
 		end
-	}
+	},
 	nothing_now = {
 		dialog = "Nothing right now. See you later.",
 		callback = function(panel, key)
