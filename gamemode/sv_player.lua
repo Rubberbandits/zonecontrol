@@ -57,6 +57,7 @@ function GM:PlayerCheckFlag( ply, respawn )
 	end
 	ply:SetModelCC( ply.CharModel )
 	ply:SetSkin( ply:GetCharFromID( ply:CharID() ).Skingroup );
+	ply:ManipulateBonePosition(6, Vector(0.4,0.4,0))
 	
 	if( ply.EntryPort and ply.JustTransitioned and self.EntryPortSpawns[ply.EntryPort] ) then
 		
