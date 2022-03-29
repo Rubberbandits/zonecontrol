@@ -33,16 +33,16 @@ OK - let's get to business. ->
 ENT.NPC_CONVERSATION = {
 	opening = { // this opening is the dialogue shown when you first interact with the NPC
 		response = function(panel, key)
-			if cookie.GetNumber("zcBogdan_spokenTo", 0) == 0 then
-				cookie.Set("zcBogdan_spokenTo", "1")
+			if cookie.GetNumber(Format("zcBogdan_spokenTo%d", LocalPlayer():CharID()), 0) == 0 then
+				cookie.Set(Format("zcBogdan_spokenTo%d", LocalPlayer():CharID()), "1")
 
 				return "Well, hello! I don't think we've met. I'm Bogdan, though most everyone just calls me Big-brother."
 			else
-				return Format("Welcome back, %s. What have you brought me?", cookie.GetNumber("zcBogdan_introduced", 0) == 1 and LocalPlayer():RPName() or "stalker")
+				return Format("Welcome back, %s. What have you brought me?", cookie.GetNumber(Format("zcBogdan_introduced%d", LocalPlayer():CharID()), 0) == 1 and LocalPlayer():RPName() or "stalker")
 			end
 		end,
 		options = function(panel, key)
-			if cookie.GetNumber("zcBogdan_spokenTo", 0) == 0 then
+			if cookie.GetNumber(Format("zcBogdan_spokenTo%d", LocalPlayer():CharID()), 0) == 0 then
 				return {
 					"introduce_yourself",
 					"business",
@@ -61,7 +61,7 @@ ENT.NPC_CONVERSATION = {
 			return Format("I'm %s. What kind of nickname is that?", LocalPlayer():RPName())
 		end,
 		response = function()
-			cookie.Set("zcBogdan_introduced", "1")
+			cookie.Set(Format("zcBogdan_introduced%d", LocalPlayer():CharID()), "1")
 			return "I work with Sidorovich and Barkeep on the STALKERNet project. My job is to keep track of stalkers' reputations - specifically their skill levels."
 		end,
 		options = {
@@ -114,7 +114,7 @@ ENT.NPC_CONVERSATION = {
 	},
 	dont_care = {
 		can_see = function(panel, key)
-			return cookie.GetNumber("zcBogdan_spokenTo", 0) == 0
+			return cookie.GetNumber(Format("zcBogdan_spokenTo%d", LocalPlayer():CharID()), 0) == 0
 		end,
 		dialog = "Don't care. Bye.",
 		callback = function(panel, key)
