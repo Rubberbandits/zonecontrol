@@ -68,14 +68,14 @@ function PANEL:Init()
 	self.NPCName = "None"
 
 	self.dialog = self:Add("DScrollPanel")
-	self.dialog:DockMargin(2, 42, 2, 0)
+	self.dialog:DockMargin(ScreenScaleH(8), ScreenScaleH(24), ScreenScaleH(8), 0)
 	self.dialog:Dock(TOP)
 	self.dialog:SetTall(self:GetTall() * .62)
 	function self.dialog:Paint(w, h) end
 
 	self.dialogOptions = self:Add("DScrollPanel")
 	self.dialogOptions:Dock(TOP)
-	self.dialogOptions:DockMargin(20, 24, 20, 0)
+	self.dialogOptions:DockMargin(ScreenScaleH(20), ScreenScaleH(24), ScreenScaleH(20), 0)
 	self.dialogOptions:SetTall(self:GetTall() * .24)
 	function self.dialogOptions:Paint(w, h) end
 
