@@ -9,7 +9,6 @@ ITEM.ItemSubmaterials = {
 
 ITEM.Tier =  3
 ITEM.Weight =  1.5
-ITEM.BulkPrice =  
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
