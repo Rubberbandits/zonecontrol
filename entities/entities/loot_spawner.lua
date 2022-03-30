@@ -49,35 +49,68 @@ function ENT:CanPhysgun()
 	
 end
 
+local function CalculatePlayerRatio()
+	local maxPlayers = game.MaxPlayers()
+	local playerRatio = (maxPlayers - player.GetCount()) / maxPlayers
+
+	return playerRatio
+end
+
 function ENT:Think()
 	if !SERVER then return end
 
 	if !self.NextLootSpawn then
-		self.NextLootSpawn = CurTime() + math.random(1200, 3600)
+		local playerRatio = CalculatePlayerRatio()
+		local minTime = math.Clamp(1200 * playerRatio, 120, 1200)
+		local maxTime = math.Clamp(3600 * playerRatio, 150, 3600)
+
+		self.NextLootSpawn = CurTime() + math.random(minTime, maxTime)
 	end
 
 	if self.NextLootSpawn <= CurTime() then
+		local playerRatio = CalculatePlayerRatio()
+		local minTime = math.Clamp(1200 * playerRatio, 120, 1200)
+		local maxTime = math.Clamp(3600 * playerRatio, 150, 3600)
+
 		local chance = math.random(0, 100)
 		if GAMEMODE.ItemSpawnChance > chance then
-			self.NextLootSpawn = CurTime() + math.random(1200,3600)
+			self.NextLootSpawn = CurTime() + math.random(minTime, maxTime)
 			return
 		end
 
 		local surroundItemCount = 0
 		for _,ent in ipairs(ents.FindInSphere(self:GetPos(), 100)) do
 			if ent:GetClass() == "cc_item" then
+				if ent.DeleteTime <= CurTime() then
+					ent:Remove()
+					continue
+				end
+
 				surroundItemCount = surroundItemCount + 1
 			end
 		end
 
 		if surroundItemCount >= 5 then
-			self.NextLootSpawn = CurTime() + math.random(1200,3600)
+			self.NextLootSpawn = CurTime() + math.random(minTime,maxTime)
 			return
 		end
 
 		local totalItemCount = #ents.FindByClass("cc_item")
-		if totalItemCount >= 100 then
-			self.NextLootSpawn = CurTime() + math.random(1200,3600)
+		local inverseRatio = 1 - playerRatio
+		if totalItemCount >= math.Clamp(200 * inverseRatio, 25, 200) then
+			self.NextLootSpawn = CurTime() + math.random(minTime,maxTime)
+			return
+		end
+
+		local playersInVicinity = 0
+		for _,ent in pairs(ents.FindInSphere(self:GetPos(), 2048)) do
+			if ent:IsPlayer() then
+				playersInVicinity = playersInVicinity + 1
+			end
+		end
+
+		if playersInVicinity == 0 then
+			self.NextLootSpawn = CurTime() + math.random(150, 300)
 			return
 		end
 
@@ -91,9 +124,10 @@ function ENT:Think()
 
 		local randomItem = table.Random(lootItems)
 
-		GAMEMODE:CreateNewItemEntity(randomItem, self:GetPos() + Vector(math.random(0,40), math.random(0,40), 0) + self:GetAngles():Up() * 10, Angle(0,0,0))
+		local ent = GAMEMODE:CreateNewItemEntity(randomItem, self:GetPos() + Vector(math.random(0,40), math.random(0,40), 0) + self:GetAngles():Up() * 10, Angle(0,0,0))
+		ent.DeleteTime = CurTime() + 300
 
-		self.NextLootSpawn = CurTime() + math.random(1200, 3600)
+		self.NextLootSpawn = CurTime() + math.random(minTime, maxTime)
 	end
 end
 

@@ -87,6 +87,7 @@ GM.CitizenModels = {
 	"models/srp/fmale_01.mdl",
 	"models/srp/fmale_02.mdl",
 	"models/srp/fmale_03.mdl",
+	"models/srp/fmale_04.mdl",
 	"models/srp/fmale_05.mdl",
 	"models/srp/fmale_06.mdl",
 	"models/srp/fmale_07.mdl",

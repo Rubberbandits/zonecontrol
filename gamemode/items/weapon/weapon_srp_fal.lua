@@ -22,6 +22,6 @@ ITEM.Vars = {
 	},
 	Durability = 100,
 	Clip1 = 0,
-},
+}
 ITEM.Rarity = 4
 ITEM.RepairCost = 16

@@ -16,7 +16,7 @@ ITEM.License = "B"
 ITEM.BulkPrice = 77000
 ITEM.Damage = 34
 ITEM.Rarity = 3
-ITEM.RepairCost = 
+ITEM.RepairCost = 7
 ITEM.Vars = {
 	Equipped = false,
 	CurrentAttachments = {},
@@ -25,4 +25,4 @@ ITEM.Vars = {
 	},
 	Durability = 100,
 	Clip1 = 0,
-},
+}

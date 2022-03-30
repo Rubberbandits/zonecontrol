@@ -25,4 +25,4 @@ ITEM.Vars = {
 	},
 	Durability = 100,
 	Clip1 = 0,
-},
+}

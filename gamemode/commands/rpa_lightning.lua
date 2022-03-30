@@ -13,7 +13,7 @@ if StormFox2 then
 
 			GAMEMODE:LogAdmin( "[D] " .. ply:Nick() .. " lighnting'd player " .. target:Nick() .. ".", ply );
 
-			target:Notify(nil, COLOR_NOTIF, "%s used zeus lightning on you.", ply:Nick())
+			target:Notify(nil, COLOR_NOTIF, Format("%s used zeus lightning on you.", ply:Nick()))
 		end,
 	})
 end
