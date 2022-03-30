@@ -4,7 +4,7 @@ ITEM.Desc =  "Pure light, almost impossible to grasp - physically and philosophi
 ITEM.Model =  "models/tnb/stalker/artifacts/flash.mdl"
 ITEM.Tier =  2
 ITEM.Weight =  0.5;
-ITEM.BulkPrice =  22500 
+ITEM.BulkPrice =  32500 
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

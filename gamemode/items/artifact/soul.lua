@@ -4,7 +4,7 @@ ITEM.Desc =  "Post-animate material that seems to have flowed into a semi-rigid 
 ITEM.Model =  "models/tnb/stalker/artifacts/soul.mdl"
 ITEM.Tier =  3
 ITEM.Weight =  0.5;
-ITEM.BulkPrice =  50000
+ITEM.BulkPrice =  60000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 0.85,

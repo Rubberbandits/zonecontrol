@@ -2,7 +2,6 @@ ITEM.Base = "artifact"
 ITEM.Name =  "Sword"
 ITEM.Desc =  "This jealous thing's passion is to poke you; in fact, so much so, it toughens skin prior to puncture from exterior sources."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/night star.mdl"
-
 ITEM.ItemSubmaterials = {
 { 0 , "models/kali/miscstuff/stalker/artifacts/night_star_inner_c" },
 { 1 , "models/props_debris/plasterwall039c" }

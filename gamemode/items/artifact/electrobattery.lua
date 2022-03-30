@@ -1,11 +1,10 @@
-
 ITEM.Base = "artifact"
 ITEM.Name =  "Electro Battery"
 ITEM.Desc =  "Composed seemingly only of rust, this artifact appears to be generated around what in ordinary circumstances would be a centralized electromagnet. Bands of string-like oxidation have twisted to intersect across two parabolic arches, giving it a delicate appearance. The air around it thrums, heavy with potential. Reported to absorb static electricity whilst making the user more susceptible to radiation."
 ITEM.Model =  "models/tnb/stalker/artifacts/battery.mdl"
 ITEM.Tier =  3
 ITEM.Weight =  0.5
-ITEM.BulkPrice =  40000
+ITEM.BulkPrice =  55000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

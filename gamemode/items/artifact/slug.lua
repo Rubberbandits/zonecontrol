@@ -4,13 +4,13 @@ ITEM.Desc =  "An almost invisible, insubstantial mass whose edges seem to melt o
 ITEM.Model =  "models/tnb/stalker/artifacts/slug.mdl"
 ITEM.Tier =  3
 ITEM.Weight =  1;
-ITEM.BulkPrice =  40000
+ITEM.BulkPrice =  47500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
-    [DMG_CRUSH] = 0.95,
-    [DMG_FALL] = 0.95,
-    [DMG_CLUB] = 0.95,
-    [DMG_VEHICLE] = 0.95,
+    [DMG_CRUSH] = 0.9,
+    [DMG_FALL] = 0.9,
+    [DMG_CLUB] = 0.9,
+    [DMG_VEHICLE] = 0.9,
     -- "Rupture" (sharp)
     [DMG_SLASH] = 1,
     -- "Bulletproof"

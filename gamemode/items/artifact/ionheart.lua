@@ -2,7 +2,6 @@ ITEM.Base = "artifact"
 ITEM.Name =  "Ion's Heart"
 ITEM.Desc =  "The calcified, radioactive heart of the legendary loner Ion. Those lucky enough to hold it are filled with loops of his last thoughts."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/goldfish.mdl"
-
 ITEM.ItemSubmaterials = {
 { 0 , "models/weapons/v_crowbar/crowbar_cyl" }
 }

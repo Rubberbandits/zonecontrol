@@ -4,7 +4,7 @@ ITEM.Desc =  "An unidentifiable aqua-colored substrate with iridescent propertie
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/bubble.mdl"
 ITEM.Tier =  3
 ITEM.Weight =  0.5;
-ITEM.BulkPrice =  40000
+ITEM.BulkPrice =  55000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

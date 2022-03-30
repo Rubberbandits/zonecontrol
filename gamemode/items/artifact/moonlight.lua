@@ -4,7 +4,7 @@ ITEM.Desc =  "A solitary mote of purest energy held within what appears to be th
 ITEM.Model =  "models/tnb/stalker/artifacts/moonlight.mdl"
 ITEM.Tier =  3
 ITEM.Weight =  0.5;
-ITEM.BulkPrice =  40000
+ITEM.BulkPrice =  60000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

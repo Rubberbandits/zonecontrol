@@ -4,7 +4,7 @@ ITEM.Desc =  "A rotating double helix tipped by colored knobs on each side. It f
 ITEM.Model =  "models/tnb/stalker/artifacts/mamasbeads.mdl"
 ITEM.Tier =  2
 ITEM.Weight =  0.5;
-ITEM.BulkPrice =  30000
+ITEM.BulkPrice =  35000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

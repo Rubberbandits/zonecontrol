@@ -4,7 +4,7 @@ ITEM.Desc =  "A rare byproduct of the Burnt Fuzz anomaly. A tiny ball of ashen-b
 ITEM.Model =  "models/tnb/stalker/artifacts/urchin.mdl"
 ITEM.Tier =  3
 ITEM.Weight =  0.5;
-ITEM.BulkPrice =  40000
+ITEM.BulkPrice =  42500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

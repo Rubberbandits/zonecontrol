@@ -27,7 +27,7 @@ ITEM.ArmorValues = {
     -- "Electric Shock"
     [DMG_SHOCK] = 1,
     -- "Radiation"
-    [DMG_RADIATION] = 1.3,
+    [DMG_RADIATION] = 1.5,
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }

@@ -2,7 +2,6 @@ ITEM.Base = "artifact"
 ITEM.Name =  "Stone Flower"
 ITEM.Desc =  "A porous geode with large, irregular perforations spread across it. From within shimmers turquoise liquid crystals. A visible haze of energy resolves around it and disperses continuously. Soothes the mind in times of duress. Slightly conductive to radiation."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/stone flower.mdl"
-
 ITEM.ItemSubmaterials = {
 { 1 , "models/tnb/artifacts/sparkler2" }
 }

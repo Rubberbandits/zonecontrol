@@ -4,7 +4,7 @@ ITEM.Desc =  "A Battery burned to a cinder. Seemingly a vessel for radiation, th
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/battery.mdl"
 ITEM.Tier =  3
 ITEM.Weight =  0.5;
-ITEM.BulkPrice =  40000
+ITEM.BulkPrice =  80000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

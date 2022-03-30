@@ -4,7 +4,7 @@ ITEM.Desc =  "This artifact is formed in anomalous zones with intense thermal ac
 ITEM.Model =  "models/tnb/stalker/artifacts/crystal.mdl"
 ITEM.Tier =  2
 ITEM.Weight =  0.50
-ITEM.BulkPrice =  24000
+ITEM.BulkPrice =  18000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

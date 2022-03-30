@@ -4,7 +4,7 @@ ITEM.Desc =  "Fungus-like metal plates interconnected by brown, root-like growth
 ITEM.Model =  "models/tnb/stalker/artifacts/shell.mdl"
 ITEM.Tier =  3
 ITEM.Weight =  0.5;
-ITEM.BulkPrice =  40000
+ITEM.BulkPrice =  57500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

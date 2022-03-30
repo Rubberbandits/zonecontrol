@@ -4,7 +4,7 @@ ITEM.Desc =  "This artifact, which resembles the human eye, is known to consider
 ITEM.Model =  "models/tnb/stalker/artifacts/eye.mdl"
 ITEM.Tier =  2
 ITEM.Weight =  0.50
-ITEM.BulkPrice =  20000
+ITEM.BulkPrice =  32500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

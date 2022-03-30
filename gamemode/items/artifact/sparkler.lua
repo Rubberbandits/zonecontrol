@@ -4,7 +4,7 @@ ITEM.Desc =  "Hardened discharge preserved by anomalous forces. Generates strong
 ITEM.Model =  "models/tnb/stalker/artifacts/static.mdl"
 ITEM.Tier =  1
 ITEM.Weight =  0.5;
-ITEM.BulkPrice =  7500
+ITEM.BulkPrice =  6750
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

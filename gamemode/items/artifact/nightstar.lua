@@ -4,7 +4,7 @@ ITEM.Desc =  "Only found in the evening, this rare artifact is covered in intang
 ITEM.Model =  "models/tnb/stalker/artifacts/nightstar.mdl"
 ITEM.Tier =  2
 ITEM.Weight =  0.5;
-ITEM.BulkPrice =  25000
+ITEM.BulkPrice =  30000
 ITEM.CarryAdd		= 4;
 ITEM.ArmorValues = {
     -- "Impact" (blunt)

@@ -4,7 +4,7 @@ ITEM.Desc =  "This rare artifact forms in areas of high thermal activity. Emits 
 ITEM.Model =  "models/tnb/stalker/artifacts/flame.mdl"
 ITEM.Tier =  3
 ITEM.Weight =  0.50;
-ITEM.BulkPrice =  40000
+ITEM.BulkPrice =  55000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

@@ -1,15 +1,15 @@
 ITEM.Base = "artifact"
-ITEM.Name =  "Guts"
-ITEM.Desc =  "A semi-organic amalgam of tissue and debris. Stalkers tell stories about them being the remains of victims from the first CNPP meltdowns. Somehow, it's useful in absorbing supersonic shock waves."
-ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/stone flower.mdl"
+ITEM.Name =  "Firefly"
+ITEM.Desc =  "A seafoam-colored ball with a couple golden ringed holes permeating its surface. Beloved by some of the Zone's first stalkers, this little treat has great healing properties at the expense of quickly irradiating the holder. Medics like them in emergency situations for a quick fixup."
+ITEM.Model =  "models/tnb/stalker/artifacts/thorn.mdl"
 ITEM.ItemSubmaterials = {
-{ 0 , "models/kali/miscstuff/stalker/artifacts/stone_flower_outer_c"},
-{ 1 , "models/props_lab/cornerunit_cloud"}
+	{ 0 , "models/shadertest/predator" },
+	{ 1 , "models/tnb/artifacts/elec1" }
 }
 
 ITEM.Tier =  3
-ITEM.Weight =  0.50;
-ITEM.BulkPrice =  40000
+ITEM.Weight =  1.5
+ITEM.BulkPrice =  
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -21,7 +21,7 @@ ITEM.ArmorValues = {
     -- "Bulletproof"
     [DMG_BULLET] = 1,
     -- "Explosion"
-    [DMG_BLAST] = 0.6,
+    [DMG_BLAST] = 1,
     -- "Thermal"
     [DMG_BURN] = 1,
     [DMG_SLOWBURN] = 1,
@@ -32,7 +32,7 @@ ITEM.ArmorValues = {
     -- "Electric Shock"
     [DMG_SHOCK] = 1,
     -- "Radiation"
-    [DMG_RADIATION] = 1,
+    [DMG_RADIATION] = 2,
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }

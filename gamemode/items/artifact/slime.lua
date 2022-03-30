@@ -4,7 +4,7 @@ ITEM.Desc =  "A dazzling web of transparent, brittle chemical residue. The gaze 
 ITEM.Model =  "models/tnb/stalker/artifacts/slime.mdl"
 ITEM.Tier =  1
 ITEM.Weight =  0.50;
-ITEM.BulkPrice =  5000
+ITEM.BulkPrice =  4000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -12,7 +12,7 @@ ITEM.ArmorValues = {
     [DMG_CLUB] = 1,
     [DMG_VEHICLE] = 1,
     -- "Rupture" (sharp)
-    [DMG_SLASH] = 0.90,
+    [DMG_SLASH] = 0.9,
     -- "Bulletproof"
     [DMG_BULLET] = 1,
     -- "Explosion"

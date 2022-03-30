@@ -2,14 +2,13 @@ ITEM.Base = "artifact"
 ITEM.Name =  "Mother"
 ITEM.Desc =  "A familiar miniature. It is unknown where such an intriguing artifact might have formed. It is widely speculated and deeply feared that there aren't many duplicates out there. Those who wield it tend to experience increased skin elasticity and clearer, sounder thoughts, along with slight resistance to radiation."
 ITEM.Model =  "models/tnb/stalker/artifacts/urchin.mdl"
-
 ITEM.ItemSubmaterials = {
 { 0 , "models/tnb/artifacts/flash1" }
 }
 
 ITEM.Tier =  2
 ITEM.Weight =  0.50;
-ITEM.BulkPrice =  25000
+ITEM.BulkPrice =  27500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

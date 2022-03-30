@@ -4,7 +4,7 @@ ITEM.Desc =  "A fluorescent, lustrous green compound of several hollow, organic 
 ITEM.Model =  "models/tnb/stalker/artifacts/bubble.mdl"
 ITEM.Tier =  3
 ITEM.Weight =  0.5;
-ITEM.BulkPrice =  60000
+ITEM.BulkPrice =  70000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

@@ -4,7 +4,7 @@ ITEM.Desc =  "Even though the Fireball is a thermal artifact, it can be handled 
 ITEM.Model =  "models/tnb/stalker/artifacts/fireball.mdl"
 ITEM.Tier =  2
 ITEM.Weight =  0.66;
-ITEM.BulkPrice =  32500
+ITEM.BulkPrice =  36000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

@@ -2,14 +2,13 @@ ITEM.Base = "artifact"
 ITEM.Name =  "Sponge"
 ITEM.Desc =  "A powerful resistor, the sponge is capable of absorbing lethal doses of electricity. However, it's ability to spontaneously combust under mild heat makes it difficult to employ. Makes users more susceptible to radiation."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/stone flower.mdl"
-
 ITEM.ItemSubmaterials = {
 { 0 , "models/tnb/artifacts/slug1" }
 }
 
 ITEM.Tier =  1
 ITEM.Weight =  0.5;
-ITEM.BulkPrice =  15000
+ITEM.BulkPrice =  11500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,

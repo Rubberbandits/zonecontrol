@@ -4,7 +4,7 @@ ITEM.Desc =  "A deadspace pocket of focused gravitational energy turned in on it
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/goldfish.mdl"
 ITEM.Tier =  3
 ITEM.Weight =  0.5;
-ITEM.BulkPrice =  50000
+ITEM.BulkPrice =  60000
 ITEM.CarryAdd		= 10;
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
