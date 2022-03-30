@@ -9,7 +9,6 @@ ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.Bonemerge = "models/stalker_2019/berill.mdl";
 ITEM.DegradationProtection = 97.5
 ITEM.BulkPrice = 400000
-ITEM.License = "S"
 ITEM.Bodygroups = {
 	{1, 0}
 }

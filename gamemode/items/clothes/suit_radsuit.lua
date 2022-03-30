@@ -9,7 +9,6 @@ ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.Bonemerge = "models/stalker_2019/radsuit.mdl";
 ITEM.DegradationProtection = 97.5
 ITEM.BulkPrice = 500000
-ITEM.License = "S"
 ITEM.RepairCost = 36
 ITEM.Bodygroups = {
 	{1, 0}

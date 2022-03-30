@@ -9,7 +9,6 @@ ITEM.LookAt =  Vector( 0, 0, 0 );
 ITEM.WearModel = "models/kingston/stalker/suit_seva_armor.mdl";
 ITEM.DegradationProtection = 97.5
 ITEM.BulkPrice = 475000
-ITEM.License = "S"
 ITEM.ArtifactSlots = 2
 ITEM.RepairCost = 36
 ITEM.RemoveBody = true

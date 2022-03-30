@@ -9,7 +9,6 @@ ITEM.LookAt = Vector( -1.6, -4.82, 1.61 );
 ITEM.Bonemerge = "models/tnb/stalker_2019/ssp.mdl";
 ITEM.DegradationProtection = 97.5
 ITEM.BulkPrice = 500000
-ITEM.License = "S"
 ITEM.RepairCost = 70
 ITEM.Bodygroups = {
 	{1, 0}
