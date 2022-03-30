@@ -451,6 +451,7 @@ local RandomItemRelatedStrings = {
 	"day 532 of looking for a %s ........",
 	"How much is a %s",
 	"Do traders sell %s or do i have to pull it outta some stinkin corpse ?",
+	"I;m thinking about thos %s",
 }
 
 local RandomTraderRelatedStrings = {
