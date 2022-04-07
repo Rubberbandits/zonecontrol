@@ -53,6 +53,10 @@ local ExpectedArguments = {
 	[ARGTYPE_NUMBER] = {
 		name = "number",
 		process = function(arg)
+			if !arg then
+				return false, "invalid number"
+			end
+
 			return tonumber(arg)
 		end,
 	},
