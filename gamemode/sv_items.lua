@@ -316,3 +316,24 @@ local function zcRepairItem(len, ply)
 	ply:Notify(nil, COLOR_NOTIF, "Repair completed successfully.")
 end
 net.Receive("zcRepairItem", zcRepairItem)
+
+local BUNDLE_AMOUNTS = {
+	1000,
+	5000,
+	10000
+}
+
+util.AddNetworkString("zcBundleMoney")
+local function zcBundleMoney(len, ply)
+	local bundleOption = net.ReadUInt(4)
+	local bundleAmount = BUNDLE_AMOUNTS[bundleOption]
+
+	if !bundleAmount then return end
+	if ply:Money() < bundleAmount then return end
+
+	ply:AddMoney(-bundleAmount)
+	ply:UpdateCharacterField("Money", ply:Money())
+
+	ply:GiveItem("rubles", {Stacked = bundleAmount})
+end
+net.Receive("zcBundleMoney", zcBundleMoney)

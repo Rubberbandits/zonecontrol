@@ -1,5 +1,11 @@
 local PANEL = {}
 
+local BUNDLE_AMOUNTS = {
+	1000,
+	5000,
+	10000
+}
+
 function PANEL:Init()
 	GAMEMODE.Inventory = self; -- maybe use return value from vgui.Create instead
 	
@@ -77,6 +83,22 @@ function PANEL:Init()
 			GAMEMODE.Inventory:PopulateItems()
 		end
 	end)
+	function self.InventoryBack:OnMouseReleased(keyCode)
+		if keyCode == MOUSE_RIGHT then
+			local menu = DermaMenu(false, self)
+			local bundleOptions = menu:AddSubMenu("bundle")
+
+			for option,amount in pairs(BUNDLE_AMOUNTS) do
+				bundleOptions:AddOption(tostring(amount), function() 
+					net.Start("zcBundleMoney")
+						net.WriteUInt(option, 4)
+					net.SendToServer()
+				end)
+			end
+
+			menu:Open()
+		end
+	end
 	
 	self.InventoryScroll = vgui.Create("DScrollPanel", self.InventoryBack)
 	self.InventoryScroll:SetSize(ScrW() / 4.04, self.InventoryBack:GetTall() - (self.InventoryBack:GetTall() / 4.5))
