@@ -106,7 +106,7 @@ end
 function PLAYER:HasPermission(cmd, args)
 	local canRun, message = hook.Run("HasPermission", self, cmd, args)
 	if !canRun then
-		return false
+		return false, message
 	end
 
 	return true
