@@ -486,6 +486,8 @@ function kingston.admin.registerCommand(cmd, data)
 end
 
 function kingston.admin.runCommand(ply, cmd, args)
+	if !SERVER then return end
+
 	local commandData = kingston.admin.commands[cmd]
 	if !commandData then
 		Error("[Admin] Tried to call invalid command!")
