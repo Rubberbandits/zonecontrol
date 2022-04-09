@@ -16,6 +16,7 @@ concommand.AddAdmin = function() end
 
 if SERVER then
 	util.AddNetworkString("zcCommandList")
+	util.AddNetworkString("zcRunCommand")
 
 	function kingston.command.run(ply, command, arguments, raw)
 		local command = kingston.command.types[command]
@@ -83,6 +84,16 @@ if SERVER then
 
 		return false
 	end
+
+	local function zcRunCommand(len, ply)
+		local command = net.ReadString()
+		local arguments = net.ReadTable()
+
+		local raw = Format("/%s %s", command, table.concat(arguments, " "))
+
+		kingston.command.process(ply, raw, arguments)
+	end
+	net.Receive("zcRunCommand", zcRunCommand)
 end
 
 function kingston.command.register(id, data)
