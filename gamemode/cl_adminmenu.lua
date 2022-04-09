@@ -505,6 +505,30 @@ function GM:AdminCreateToolsMenu()
 		GAMEMODE:CreateItemRequestMenu()
 	end
 	CCP.AdminMenu.ItemRequestsBut:PerformLayout();
+
+	CCP.AdminMenu.ItemCreatorBut = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
+	CCP.AdminMenu.ItemCreatorBut:SetFont( "CombineControl.LabelSmall" );
+	CCP.AdminMenu.ItemCreatorBut:SetText( "Item Creator" );
+	CCP.AdminMenu.ItemCreatorBut:SetPos( 670, 10 );
+	CCP.AdminMenu.ItemCreatorBut:SetSize( 100, 20 );
+	function CCP.AdminMenu.ItemCreatorBut:DoClick()
+		CCP.AdminMenu:Close()
+
+		vgui.Create("zc_itemrequest")
+	end
+	CCP.AdminMenu.ItemCreatorBut:PerformLayout();
+
+	CCP.AdminMenu.RankManageBut = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
+	CCP.AdminMenu.RankManageBut:SetFont( "CombineControl.LabelSmall" );
+	CCP.AdminMenu.RankManageBut:SetText( "Item Creator" );
+	CCP.AdminMenu.RankManageBut:SetPos( 670, 10 );
+	CCP.AdminMenu.RankManageBut:SetSize( 100, 20 );
+	function CCP.AdminMenu.RankManageBut:DoClick()
+		CCP.AdminMenu:Close()
+
+		vgui.Create("zc_rank_manage")
+	end
+	CCP.AdminMenu.RankManageBut:PerformLayout();
 	
 	CCP.AdminMenu.SeeAllL = vgui.Create( "DLabel", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.SeeAllL:SetText( "SeeAll Enabled" );
