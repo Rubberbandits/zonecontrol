@@ -458,13 +458,15 @@ function kingston.admin.registerCommand(cmd, data)
 		return
 	end
 
-	concommand.Add(Format("rpa_%s", cmd), function(ply, _, args) 
-		if !IsValid(ply) then
-			ply = Entity(0)
-		end
+	if SERVER then
+		concommand.Add(Format("rpa_%s", cmd), function(ply, _, args) 
+			if !IsValid(ply) then
+				ply = Entity(0)
+			end
 
-		kingston.admin.runCommand(ply, cmd, args)
-	end)
+			kingston.admin.runCommand(ply, cmd, args)
+		end)
+	end
 
 	kingston.command.register(cmd, {
 		syntax = data.syntax,
@@ -472,6 +474,8 @@ function kingston.admin.registerCommand(cmd, data)
 		can_run = function(ply) return ply:HasPermission(cmd) end,
 		log = function() end,
 		on_run = function(ply, args)
+			if !SERVER then return end
+
 			kingston.admin.runCommand(ply, cmd, args)
 		end,
 	});
@@ -486,8 +490,6 @@ function kingston.admin.registerCommand(cmd, data)
 end
 
 function kingston.admin.runCommand(ply, cmd, args)
-	if !SERVER then return end
-
 	local commandData = kingston.admin.commands[cmd]
 	if !commandData then
 		Error("[Admin] Tried to call invalid command!")
