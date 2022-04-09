@@ -395,6 +395,12 @@ kingston.command.register("cmdhelp", {
 	end
 })
 
+kingston.command.register("itemrequest", {
+	on_run = function(ply, args)
+		ply:SendLua("vgui.Create('zc_itemrequest')") // lol
+	end
+})
+
 local function SetEntityDesc( ply, cmd, args, szArgs )
 	local targ = ply:GetEyeTraceNoCursor().Entity
 	local szDesc = szArgs
