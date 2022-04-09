@@ -520,8 +520,8 @@ function GM:AdminCreateToolsMenu()
 
 	CCP.AdminMenu.RankManageBut = vgui.Create( "DButton", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.RankManageBut:SetFont( "CombineControl.LabelSmall" );
-	CCP.AdminMenu.RankManageBut:SetText( "Item Creator" );
-	CCP.AdminMenu.RankManageBut:SetPos( 670, 10 );
+	CCP.AdminMenu.RankManageBut:SetText( "Rank Management" );
+	CCP.AdminMenu.RankManageBut:SetPos( 10, 40 );
 	CCP.AdminMenu.RankManageBut:SetSize( 100, 20 );
 	function CCP.AdminMenu.RankManageBut:DoClick()
 		CCP.AdminMenu:Close()
@@ -532,14 +532,14 @@ function GM:AdminCreateToolsMenu()
 	
 	CCP.AdminMenu.SeeAllL = vgui.Create( "DLabel", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.SeeAllL:SetText( "SeeAll Enabled" );
-	CCP.AdminMenu.SeeAllL:SetPos( 10, 40 );
+	CCP.AdminMenu.SeeAllL:SetPos( 10, 70 );
 	CCP.AdminMenu.SeeAllL:SetFont( "CombineControl.LabelMedium" );
 	CCP.AdminMenu.SeeAllL:SizeToContents();
 	CCP.AdminMenu.SeeAllL:PerformLayout();
 	
 	CCP.AdminMenu.SeeAll = vgui.Create( "DCheckBoxLabel", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.SeeAll:SetText( "" );
-	CCP.AdminMenu.SeeAll:SetPos( 200, 40 );
+	CCP.AdminMenu.SeeAll:SetPos( 200, 70 );
 	CCP.AdminMenu.SeeAll:SetValue( self.SeeAll );
 	CCP.AdminMenu.SeeAll:PerformLayout();
 	function CCP.AdminMenu.SeeAll:OnChange( val )
@@ -621,14 +621,14 @@ function GM:AdminCreateToolsMenu()
 	
 	CCP.AdminMenu.HiddenL = vgui.Create( "DLabel", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.HiddenL:SetText( "Hidden Enabled" );
-	CCP.AdminMenu.HiddenL:SetPos( 10, 70 );
+	CCP.AdminMenu.HiddenL:SetPos( 10, 90 );
 	CCP.AdminMenu.HiddenL:SetFont( "CombineControl.LabelMedium" );
 	CCP.AdminMenu.HiddenL:SizeToContents();
 	CCP.AdminMenu.HiddenL:PerformLayout();
 	
 	CCP.AdminMenu.Hidden = vgui.Create( "DCheckBoxLabel", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.Hidden:SetText( "" );
-	CCP.AdminMenu.Hidden:SetPos( 200, 70 );
+	CCP.AdminMenu.Hidden:SetPos( 200, 90 );
 	CCP.AdminMenu.Hidden:SetValue( LocalPlayer():HideAdmin() );
 	CCP.AdminMenu.Hidden:PerformLayout();
 	function CCP.AdminMenu.Hidden:OnChange( val )
@@ -642,14 +642,14 @@ function GM:AdminCreateToolsMenu()
 	
 	CCP.AdminMenu.AIDisabledL = vgui.Create( "DLabel", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.AIDisabledL:SetText( "AI Disabled" );
-	CCP.AdminMenu.AIDisabledL:SetPos( 10, 100 );
+	CCP.AdminMenu.AIDisabledL:SetPos( 10, 110 );
 	CCP.AdminMenu.AIDisabledL:SetFont( "CombineControl.LabelMedium" );
 	CCP.AdminMenu.AIDisabledL:SizeToContents();
 	CCP.AdminMenu.AIDisabledL:PerformLayout();
 	
 	CCP.AdminMenu.AIDisabled = vgui.Create( "DCheckBoxLabel", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.AIDisabled:SetText( "" );
-	CCP.AdminMenu.AIDisabled:SetPos( 200, 100 );
+	CCP.AdminMenu.AIDisabled:SetPos( 200, 110 );
 	CCP.AdminMenu.AIDisabled:SetValue( GetConVarNumber( "ai_disabled" ) );
 	CCP.AdminMenu.AIDisabled:PerformLayout();
 	function CCP.AdminMenu.AIDisabled:OnChange( val )
