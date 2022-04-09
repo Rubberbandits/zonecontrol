@@ -35,7 +35,10 @@ ITEM.functions.Use = {
 
 function item:CanStack(item)
 	if self.Stackable and item.Stackable and item.Base == self.Base and self.Class == item.Class then
-		if self:GetVar("Stacked", 1) + item:GetVar("Stacked", 1) > 10000 then
+		local selfAmount = self.IsItem and self:GetVar("Stacked", 1) or self.Vars.Stacked
+		local otherAmount = item.IsItem and item:GetVar("Stacked", 1) or item.Vars.Stacked
+
+		if selfAmount + otherAmount > 10000 then
 			return false
 		end
 
