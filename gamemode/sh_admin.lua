@@ -526,6 +526,10 @@ end
 local cmd_files = file.Find( GM.FolderName.."/gamemode/commands/*.lua", "LUA", "namedesc" );
 if #cmd_files > 0 then
 	for _, v in ipairs(cmd_files) do
+		if SERVER then
+			AddCSLuaFile("commands/"..v)
+		end
+
 		include("commands/"..v)
 	end
 end
