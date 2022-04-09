@@ -221,7 +221,7 @@ function GM:CheckArgumentTypes(ply, cmd, args, processed)
 	end
 
 	for i,types in pairs(validArgumentTypes) do
-		local err
+		local err = "unknown"
 		for _,argType in pairs(types) do
 			local arg = args[i]
 			local result, errString = ExpectedArguments[argType].process(arg, ply, cmd, commandData.arguments[i])
