@@ -243,7 +243,7 @@ function GM:CheckArgumentTypes(ply, cmd, args, processed)
 			end
 		end
 
-		if !processed[i] then
+		if processed[i] == nil then
 			return false, err
 		end
 	end
