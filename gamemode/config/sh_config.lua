@@ -310,7 +310,7 @@ GM.Recipes = {
 };
 
 GM.GearSelection = {
-	["backpack"] = 500,
+	/* ["backpack"] = 500,
 	["med_medkit"] = 900,
 	["smallmedkit"] = 100,
 	["antirad"] = 300,
@@ -341,7 +341,7 @@ GM.GearSelection = {
 	["weapon_srp_kabar"] = 2500,
 	["weapon_srp_hatchet"] = 1000,
 	["suit_trenchcoat"] = 2000,
-	["weapon_srp_f1"] = 2200,
+	["weapon_srp_f1"] = 2200, */
 }
 
 GM.DefaultSelfRepairCond = 80
