@@ -3,7 +3,7 @@ kingston.item = kingston.item or {}
 
 kingston.item.item_requests = kingston.item.item_requests or {}
 
-function kingston.item.gm_request_item(gamemaster, item_class, data)
+function kingston.item.gm_request_item(gamemaster, item_class, data, reason)
 	if !gamemaster:HasPermission("itemcreate") then
 		local metaitem = GAMEMODE:GetItemByID(item_class)
 
@@ -11,13 +11,14 @@ function kingston.item.gm_request_item(gamemaster, item_class, data)
 			requester = gamemaster,
 			class = item_class,
 			vars = data,
+			reason = reason
 		}
 		
 		netstream.Start(player.GetAdmins(), "nAddNotification", Format("Player %s (%s) is requesting item %s (%s)", gamemaster:Nick(), gamemaster:RPName(), (data or {}).Name or metaitem.Name, item_class))
 	else
-		local item = gamemaster:GiveItem(item_class, data)
+		gamemaster:GiveItem(item_class, data)
 		gamemaster:Notify(nil, COLOR_NOTIF, "Item spawned in inventory")
-		kingston.log.write("admin", "%s (%s) spawned %s (#%d)", gamemaster:Nick(), gamemaster:SteamID(), item_class, item:GetID())
+		kingston.log.write("admin", "%s (%s) spawned %s", gamemaster:Nick(), gamemaster:SteamID(), item_class)
 	end
 end
 
@@ -278,13 +279,13 @@ netstream.Hook("ItemSetPos", function(ply, item_id, x, y)
 	item:UpdateSave()
 end)
 
-netstream.Hook("RequestItemSpawn", function(ply, item_class, data)
+netstream.Hook("RequestItemSpawn", function(ply, item_class, data, reason)
 	if !item_class then return end
 	if !GAMEMODE:GetItemByID(item_class) then return end
 	
 	-- need to do minmax checking and auth
 	
-	kingston.item.gm_request_item(ply, item_class, data)
+	kingston.item.gm_request_item(ply, item_class, data, reason)
 end)
 
 netstream.Hook("AdminRequestedItems", function(ply)
