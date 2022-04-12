@@ -404,7 +404,7 @@ local RandomTalking = {
 }
 
 local RandomPlayerRelatedStrings = {
-	"I heard that somebody put a bounty on %'s head.",
+	"I heard that somebody put a bounty on %s's head.",
 	"%s seems kind of jittery lately. Did anyone post money on their head?",
 	"Hey, %s! Duck.",
 	"Pssst, %s. Don't look behind you.",

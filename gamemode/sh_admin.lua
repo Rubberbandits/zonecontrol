@@ -53,6 +53,10 @@ local ExpectedArguments = {
 	[ARGTYPE_NUMBER] = {
 		name = "number",
 		process = function(arg)
+			if !arg then
+				return false, "invalid number"
+			end
+
 			return tonumber(arg)
 		end,
 	},
@@ -102,7 +106,7 @@ end
 function PLAYER:HasPermission(cmd, args)
 	local canRun, message = hook.Run("HasPermission", self, cmd, args)
 	if !canRun then
-		return false
+		return false, message
 	end
 
 	return true
@@ -217,7 +221,7 @@ function GM:CheckArgumentTypes(ply, cmd, args, processed)
 	end
 
 	for i,types in pairs(validArgumentTypes) do
-		local err
+		local err = "unknown"
 		for _,argType in pairs(types) do
 			local arg = args[i]
 			local result, errString = ExpectedArguments[argType].process(arg, ply, cmd, commandData.arguments[i])
@@ -239,7 +243,7 @@ function GM:CheckArgumentTypes(ply, cmd, args, processed)
 			end
 		end
 
-		if !processed[i] then
+		if processed[i] == nil then
 			return false, err
 		end
 	end
@@ -454,13 +458,15 @@ function kingston.admin.registerCommand(cmd, data)
 		return
 	end
 
-	concommand.Add(Format("rpa_%s", cmd), function(ply, _, args) 
-		if !IsValid(ply) then
-			ply = Entity(0)
-		end
+	if SERVER then
+		concommand.Add(Format("rpa_%s", cmd), function(ply, _, args) 
+			if !IsValid(ply) then
+				ply = Entity(0)
+			end
 
-		kingston.admin.runCommand(ply, cmd, args)
-	end)
+			kingston.admin.runCommand(ply, cmd, args)
+		end)
+	end
 
 	kingston.command.register(cmd, {
 		syntax = data.syntax,
@@ -468,6 +474,8 @@ function kingston.admin.registerCommand(cmd, data)
 		can_run = function(ply) return ply:HasPermission(cmd) end,
 		log = function() end,
 		on_run = function(ply, args)
+			if !SERVER then return end
+
 			kingston.admin.runCommand(ply, cmd, args)
 		end,
 	});
@@ -522,6 +530,10 @@ end
 local cmd_files = file.Find( GM.FolderName.."/gamemode/commands/*.lua", "LUA", "namedesc" );
 if #cmd_files > 0 then
 	for _, v in ipairs(cmd_files) do
+		if SERVER then
+			AddCSLuaFile("commands/"..v)
+		end
+
 		include("commands/"..v)
 	end
 end

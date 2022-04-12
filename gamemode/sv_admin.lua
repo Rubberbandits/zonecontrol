@@ -96,10 +96,10 @@ local function init_log_admin_tbl(db)
 	// Create group
 	kingston.admin.queries.create = db:prepare([[INSERT INTO `cc_usergroups` (`uniqueID`, `permissions`, `priority`, `isAdmin`, `isSuperAdmin`, `charFlag`) VALUES (?, JSON_OBJECT(), ?, ?, ?, ?);]]);
 	// Modify group
-	-- kingston.admin.queries.modifyPriority = db:prepare();
+	kingston.admin.queries.modifyPriority = db:prepare([[UPDATE `cc_usergroups` SET `priority` = ? WHERE `uniqueID` = ?;]]);
 	-- kingston.admin.queries.modifyUniqueID = db:prepare();
-	-- kingston.admin.queries.modifyAdmin = db:prepare();
-	-- kingston.admin.queries.modifySuperAdmin = db:prepare();
+	kingston.admin.queries.modifyAdmin = db:prepare([[UPDATE `cc_usergroups` SET `isAdmin` = ? WHERE `uniqueID` = ?;]]);
+	kingston.admin.queries.modifySuperAdmin = db:prepare([[UPDATE `cc_usergroups` SET `isSuperAdmin` = ? WHERE `uniqueID` = ?;]]);
 	// Delete group
 	kingston.admin.queries.delete = db:prepare([[DELETE FROM `cc_usergroups` WHERE `uniqueID` = ?;]]);
 	// Add permission

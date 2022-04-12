@@ -4,9 +4,21 @@ kingston.item = kingston.item or {}
 kingston.item.item_requests = kingston.item.item_requests or {}
 
 function kingston.item.gm_request_item(gamemaster, item_class, data)
-	local item = gamemaster:GiveItem(item_class, data)
-	gamemaster:Notify(nil, COLOR_NOTIF, "Item spawned in inventory")
-	kingston.log.write("admin", "%s (%s) spawned %s (#%d)", gamemaster:Nick(), gamemaster:SteamID(), item_class, item:GetID())
+	if !gamemaster:HasPermission("itemcreate") then
+		local metaitem = GAMEMODE:GetItemByID(item_class)
+
+		kingston.item.item_requests[#kingston.item.item_requests + 1] = {
+			requester = gamemaster,
+			class = item_class,
+			vars = data,
+		}
+		
+		netstream.Start(player.GetAdmins(), "nAddNotification", Format("Player %s (%s) is requesting item %s (%s)", gamemaster:Nick(), gamemaster:RPName(), (data or {}).Name or metaitem.Name, item_class))
+	else
+		local item = gamemaster:GiveItem(item_class, data)
+		gamemaster:Notify(nil, COLOR_NOTIF, "Item spawned in inventory")
+		kingston.log.write("admin", "%s (%s) spawned %s (#%d)", gamemaster:Nick(), gamemaster:SteamID(), item_class, item:GetID())
+	end
 end
 
 function kingston.item.approve_gm_item(id)
@@ -15,6 +27,7 @@ function kingston.item.approve_gm_item(id)
 	
 	request.requester:GiveItem(request.class, request.vars)
 	netstream.Start(request.requester, "nAddNotification", Format("Your request for item %s was approved.", request.class))
+	kingston.log.write("admin", "%s (%s) spawned %s", request.requester:Nick(), request.requester:SteamID(), request.class)
 	
 	kingston.item.item_requests[id] = nil
 end
@@ -266,8 +279,6 @@ netstream.Hook("ItemSetPos", function(ply, item_id, x, y)
 end)
 
 netstream.Hook("RequestItemSpawn", function(ply, item_class, data)
-	if !ply:HasPermission("itemcreate") then return end
-
 	if !item_class then return end
 	if !GAMEMODE:GetItemByID(item_class) then return end
 	
@@ -316,3 +327,24 @@ local function zcRepairItem(len, ply)
 	ply:Notify(nil, COLOR_NOTIF, "Repair completed successfully.")
 end
 net.Receive("zcRepairItem", zcRepairItem)
+
+local BUNDLE_AMOUNTS = {
+	1000,
+	5000,
+	10000
+}
+
+util.AddNetworkString("zcBundleMoney")
+local function zcBundleMoney(len, ply)
+	local bundleOption = net.ReadUInt(4)
+	local bundleAmount = BUNDLE_AMOUNTS[bundleOption]
+
+	if !bundleAmount then return end
+	if ply:Money() < bundleAmount then return end
+
+	ply:AddMoney(-bundleAmount)
+	ply:UpdateCharacterField("Money", ply:Money())
+
+	ply:GiveItem("rubles", {Stacked = bundleAmount})
+end
+net.Receive("zcBundleMoney", zcBundleMoney)
