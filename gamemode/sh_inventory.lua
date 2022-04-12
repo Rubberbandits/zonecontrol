@@ -159,8 +159,6 @@ end
 
 function meta:GiveItem( item_class, vars, x, y )
 	
-	GAMEMODE:LogItems( "[G] " .. self:VisibleRPName() .. " obtained item " .. item_class .. ".", self );
-	
 	if( !GAMEMODE:GetItemByID( item_class ) ) then
 
 		return;
@@ -179,6 +177,7 @@ function meta:GiveItem( item_class, vars, x, y )
 
 		self.Inventory[object.id] = object
 		netstream.Start( self, "ReceiveItem", item_class, object.id, object.Vars or {}, object.x, object.y );
+		kingston.log.write("items", "[%s (%s)(%s)] acquired item %s [ID: %d]", self:RPName(), self:Nick(), self:SteamID(), object:GetName(), object:GetID())
 		
 	end
 	object:SaveNewObject( cb );
