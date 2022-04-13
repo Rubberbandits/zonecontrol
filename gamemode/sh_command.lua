@@ -416,4 +416,4 @@ local function SetEntityDesc( ply, cmd, args, szArgs )
 		end
 	end
 end
-concommand.Add( "rp_propdesc", SetEntityDesc ); 
+concommand.Add( "rp_propdesc", SetEntityDesc, "Sets a prop's description", FCVAR_USERINFO ); 
