@@ -945,7 +945,9 @@ function GM:SpawnSavedProps()
 			prop:SetModel( model );
 			prop:SetPos( pos );
 			prop:SetAngles( ang );
-			prop:SetModelScale(scale);
+			if scale then
+				prop:SetModelScale(scale);
+			end
 			prop:Spawn();
 			prop:Activate();
 			
