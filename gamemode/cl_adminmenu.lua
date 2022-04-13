@@ -1720,6 +1720,7 @@ function GM:AdminCreateRostersMenu()
 	CCP.AdminMenu.Roster = vgui.Create( "DListView", CCP.AdminMenu.ContentPane );
 	CCP.AdminMenu.Roster:SetPos( 120, 10 );
 	CCP.AdminMenu.Roster:SetSize( 670, 406 );
+	CCP.AdminMenu.Roster:AddColumn( "ID" );
 	CCP.AdminMenu.Roster:AddColumn( "SteamID" );
 	CCP.AdminMenu.Roster:AddColumn( "Character" );
 	CCP.AdminMenu.Roster:AddColumn( "Money" );
@@ -1781,6 +1782,7 @@ local function zcGetCharacterList(len)
 
 		for i = 1, net.ReadUInt(32) do
 			local data = {
+				charID = net.ReadUInt(32),
 				steamID = net.ReadString(),
 				name = net.ReadString(),
 				flags = net.ReadString(),
@@ -1789,7 +1791,7 @@ local function zcGetCharacterList(len)
 				money = net.ReadUInt(32)
 			}
 
-			CCP.AdminMenu.Roster:AddLine(data.steamID, data.name, data.money, data.flags, data.created, data.lastOnline)
+			CCP.AdminMenu.Roster:AddLine(data.charID, data.steamID, data.name, data.money, data.flags, data.created, data.lastOnline)
 		end
 
 		CCP.AdminMenu.Roster:AddLine("Next page").next = true

@@ -21,6 +21,7 @@ if SERVER then
 			net.Start("zcGetCharacterList")
 				net.WriteUInt(#ret, 32)
 				for _,data in pairs(ret) do
+					net.WriteUInt(data.id, 32)
 					net.WriteString(data.SteamID)
 					net.WriteString(data.RPName)
 					net.WriteString(data.CharFlags)
@@ -35,7 +36,7 @@ if SERVER then
 		
 		local function qF(err) print(err) end
 		
-		mysqloo.Query(Format("SELECT SteamID, RPName, CharFlags, Money, Date, LastOnline FROM cc_chars LIMIT %d, 25;", 25 * number), qS, qF)
+		mysqloo.Query(Format("SELECT id, SteamID, RPName, CharFlags, Money, Date, LastOnline FROM cc_chars LIMIT %d, 25;", 25 * number), qS, qF)
 	end
 	net.Receive("zcGetCharacterList", zcGetCharacterList)
 end
