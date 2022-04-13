@@ -445,7 +445,7 @@ function kingston.admin.createGroup(uniqueID, data)
 			for cmd, _ in pairs(newGroup.permissions) do
 				net.WriteString(cmd)
 			end
-		net.Send(ply)
+		net.Broadcast()
 	end
 
 	return newGroup
