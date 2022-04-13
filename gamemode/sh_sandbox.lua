@@ -883,6 +883,7 @@ function GM:SaveSavedProps()
 			local col = v:GetColor();
 			local c1 = v:PropCreator();
 			local c2 = v:PropSteamID();
+			local scale = v:GetModelScale();
 			
 			text = text ..
 			pos.x .. "," ..
@@ -900,6 +901,7 @@ function GM:SaveSavedProps()
 			col.a .. "," ..
 			c1 .. "," ..
 			c2 .. "," ..
+			scale..","..
 			"\n";
 			
 		end
@@ -937,11 +939,13 @@ function GM:SpawnSavedProps()
 			local col = Color( tonumber( ctab[10] ), tonumber( ctab[11] ), tonumber( ctab[12] ), tonumber( ctab[13] ) );
 			local creatorstring = ctab[14];
 			local creatorsteam = ctab[15];
+			local scale = tonumber(ctab[16])
 			
 			local prop = ents.Create( "prop_physics" );
 			prop:SetModel( model );
 			prop:SetPos( pos );
 			prop:SetAngles( ang );
+			prop:SetModelScale(scale);
 			prop:Spawn();
 			prop:Activate();
 			
