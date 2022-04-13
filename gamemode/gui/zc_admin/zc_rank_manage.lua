@@ -76,6 +76,7 @@ function PANEL:Init()
 	self.ranks:Dock(LEFT)
 	self.ranks:SetWide(self:GetWide() * 0.3)
 	self.ranks:AddColumn("Rank")
+	self.ranks:SetMultiSelect(false)
 	self.ranks.OnRowRightClick = function(pnl, lineID, line)
 		local menu = DermaMenu(false, self.ranks)
 
@@ -112,7 +113,9 @@ function PANEL:Init()
 	self.permissions:AddColumn("Permission")
 	self.permissions.OnRowSelected = function(pnl, lineID, line)
 		self.buttons.remove:SetDisabled(false)
-		pnl.selected = lineID
+	end
+	self.permissions.DoDoubleClick = function(pnl, lineID, line)
+		self.buttons.remove:DoClick()
 	end
 
 	self.buttons = self:Add("DPanel")
@@ -131,26 +134,26 @@ function PANEL:Init()
 	self.buttons.add:Dock(TOP)
 	self.buttons.add:SetDisabled(true)
 	self.buttons.add.DoClick = function(pnl)
-		local lineID = self.commands.selected
-
-		if lineID then
+		local lines = self.commands:GetSelected()
+		if #lines > 0 then
 			local selectedRank = self.ranks:GetLine(self.ranks.selected).data.uniqueID
+			local perms = {}
 
-			local line = self.commands:GetLine(lineID)
-			local text = line:GetColumnText(1)
+			for lineID,line in pairs(lines) do
+				local text = line:GetColumnText(1)
+				table.insert(perms, text)
+
+				self.commands:RemoveLine(lineID)
+				self.permissions:AddLine(text)
+			end
 
 			net.Start("zcRunCommand")
 				net.WriteString("rankgiveperm")
 				net.WriteTable({
 					selectedRank,
-					text
+					table.concat(perms, ",")
 				})
 			net.SendToServer()
-
-			self.commands:RemoveLine(lineID)
-			self.permissions:AddLine(text)
-			
-			self.commands.selected = nil
 
 			pnl:SetDisabled(true)
 		end
@@ -162,26 +165,26 @@ function PANEL:Init()
 	self.buttons.remove:Dock(TOP)
 	self.buttons.remove:SetDisabled(true)
 	self.buttons.remove.DoClick = function(pnl)
-		local lineID = self.permissions.selected
-
-		if lineID then
+		local lines = self.permissions:GetSelected()
+		if #lines > 0 then
 			local selectedRank = self.ranks:GetLine(self.ranks.selected).data.uniqueID
+			local perms = {}
 
-			local line = self.permissions:GetLine(lineID)
-			local text = line:GetColumnText(1)
+			for lineID,line in pairs(lines) do
+				local text = line:GetColumnText(1)
+				table.insert(perms, text)
+
+				self.permissions:RemoveLine(lineID)
+				self.commands:AddLine(text)
+			end
 
 			net.Start("zcRunCommand")
 				net.WriteString("ranktakeperm")
 				net.WriteTable({
 					selectedRank,
-					text
+					table.concat(perms, ",")
 				})
 			net.SendToServer()
-
-			self.permissions:RemoveLine(lineID)
-			self.commands:AddLine(text)
-
-			self.permissions.selected = nil
 
 			pnl:SetDisabled(true)
 		end
@@ -193,7 +196,9 @@ function PANEL:Init()
 	self.commands:AddColumn("Command")
 	self.commands.OnRowSelected = function(pnl, lineID, line)
 		self.buttons.add:SetDisabled(false)
-		pnl.selected = lineID
+	end
+	self.commands.DoDoubleClick = function(pnl, lineID, line)
+		self.buttons.add:DoClick()
 	end
 
 	self:PopulateRanks()
@@ -202,7 +207,7 @@ end
 function PANEL:PopulateRanks()
 	self.ranks:Clear()
 
-	for rank,data in pairs(kingston.admin.groups) do
+	for rank,data in SortedPairsByMemberValue(kingston.admin.groups, "priority") do
 		local line = self.ranks:AddLine(rank)
 		line.data = data
 		line:SetTooltip(Format("Priority: %d\nIs admin: %s\nIs superadmin: %s", data.priority, data.isAdmin, data.isSuperAdmin))
