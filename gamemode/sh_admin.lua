@@ -422,6 +422,10 @@ function kingston.admin.createGroup(uniqueID, data)
 
 	kingston.admin.groups[uniqueID] = newGroup
 
+	if !newGroup.permissions then
+		newGroup.permissions = {}
+	end
+
 	if SERVER then
 		kingston.admin.queries.create:clearParameters()
 			kingston.admin.queries.create:setString(1, uniqueID)
