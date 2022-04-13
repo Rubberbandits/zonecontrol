@@ -120,8 +120,11 @@ function PANEL:Init()
 		sent_data.Weight = self.WeightEntry:GetValue()
 		sent_data.Model = self.ModelEntry:GetText()
 		sent_data.Desc = self.DescEntry:GetText()
-		
-		netstream.Start("RequestItemSpawn", self.CurrentItem, sent_data)
+
+		Derma_StringRequest("Request reason", "Why did you request this item?", "", function(text) 
+			netstream.Start("RequestItemSpawn", self.CurrentItem, sent_data, text)
+			self:Close()
+		end)
 	end
 	
 	self.CurrentItem = "generic_item"

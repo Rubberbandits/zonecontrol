@@ -169,6 +169,14 @@ local function RCONCommandSupport()
 end
 hook.Add("InitPostEntity", "RCONCommandSupport", RCONCommandSupport)
 
+local GoodTraceVectors = {
+	Vector( 40, 0, 0 ),
+	Vector( -40, 0, 0 ),
+	Vector( 0, 40, 0 ),
+	Vector( 0, -40, 0 ),
+	Vector( 0, 0, 40 )
+};
+
 function FindGoodTeleportPos( ply )
 
 	local trace = { };

@@ -422,12 +422,16 @@ function kingston.admin.createGroup(uniqueID, data)
 
 	kingston.admin.groups[uniqueID] = newGroup
 
+	if !newGroup.permissions then
+		newGroup.permissions = {}
+	end
+
 	if SERVER then
 		kingston.admin.queries.create:clearParameters()
 			kingston.admin.queries.create:setString(1, uniqueID)
 			kingston.admin.queries.create:setNumber(2, data.priority)
-			kingston.admin.queries.create:setNumber(3, data.isAdmin)
-			kingston.admin.queries.create:setNumber(4, data.isSuperAdmin)
+			kingston.admin.queries.create:setNumber(3, data.isAdmin == true and 1 or 0)
+			kingston.admin.queries.create:setNumber(4, data.isSuperAdmin == true and 1 or 0)
 			kingston.admin.queries.create:setString(5, data.charFlag)
 		kingston.admin.queries.create:start()
 
@@ -441,7 +445,7 @@ function kingston.admin.createGroup(uniqueID, data)
 			for cmd, _ in pairs(newGroup.permissions) do
 				net.WriteString(cmd)
 			end
-		net.Send(ply)
+		net.Broadcast()
 	end
 
 	return newGroup

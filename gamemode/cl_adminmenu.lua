@@ -2312,6 +2312,7 @@ function GM:CreateItemRequestMenu()
 	pnl.Requests:SetPos(0,24)
 	pnl.Requests:AddColumn("Requester")
 	pnl.Requests:AddColumn("Item Class")
+	pnl.Requests:AddColumn("Reason")
 	pnl.Requests.SortByColumn = function() end
 	pnl.Requests.OnRowSelected = function(panel, id, line)
 		pnl.ItemInfo:Clear()
@@ -2349,7 +2350,8 @@ end
 
 function GM:AdminPopulateItemRequests(data)
 	for k,v in next, data do
-		local line = self.AdminItemRequests.Requests:AddLine(v.requester:Nick(), v.class)
+		local line = self.AdminItemRequests.Requests:AddLine(v.requester:Nick(), v.class, v.reason)
+		line:SetToolTip(v.reason)
 		line.data = v.vars
 		line.id = k
 	end
