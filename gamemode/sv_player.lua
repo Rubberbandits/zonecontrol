@@ -80,7 +80,7 @@ function GM:PlayerCheckInventory( ply )
 		local metaitem = GAMEMODE:GetItemByID(v:GetClass())
 		
 		if !metaitem then continue end
-		if v:GetVar("Equipped", false) then
+		if v.Initialize then
 			v:Initialize()
 		end
 	end
