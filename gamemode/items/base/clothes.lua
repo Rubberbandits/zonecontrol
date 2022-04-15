@@ -15,6 +15,7 @@ BASE.Vars = {
 	Upgrades = {},
 	Durability = 100,
 	SuitClass = "",
+	Patch = "patch_loner",
 }
 BASE.UseDurability = true;
 BASE.DegradationProtection = 97.5; -- a percentage: 100% allows no durability damage, 0% allows full durability damage.
@@ -181,6 +182,23 @@ BASE.functions.Upgrade = {
 		return item:CanUpgrade()
 	end,
 }
+BASE.functions.TearPatch = {
+	SelectionName = "tear off patch",
+	OnUse = function(item)
+		local class = item:GetVar("Patch")
+
+		if SERVER then
+			item:Owner():GiveItem(class, {Torn = true})
+		end
+
+		item:SetVar("Patch")
+		
+		return true
+	end,
+	CanRun = function(item)
+		return item:GetVar("Patch")
+	end,
+}
 
 function BASE:Initialize()
 	if( self:GetVar( "Equipped", false ) ) then
@@ -315,8 +333,9 @@ function BASE:GetDesc()
 		end
 	end
 
+	local patch_string = self:GetVar("Patch") and Format("\nThis suit has a %s on it.", GAMEMODE:GetItemByID(self:GetVar("Patch")).Name) or ""
 	local desc_string = self:GetVar("Desc", self.Desc)
-	local desc = Format("%s\nSuit condition: %d%%\nArtifact slots: %d\n%s", desc_string, self:GetVar("Durability",0), self:GetArtifactSlots(), upgrades_text)
+	local desc = Format("%s%s\nSuit condition: %d%%\nArtifact slots: %d\n%s", desc_string, patch_string, self:GetVar("Durability",0), self:GetArtifactSlots(), upgrades_text)
 	
 	return desc
 end
@@ -364,6 +383,26 @@ end
 function BASE:Paint(pnl, w, h)
 	if self:GetVar("Equipped", false) and !pnl.PaintingDragging then
 		kingston.gui.FindFunc(pnl, "Paint", "ItemDurability", w, h, self)
+	end
+end
+
+function BASE:Initialize()
+	if self:GetVar("Equipped", false) and self:GetVar("Patch") then
+		local spawnPos = kingston.factions.spawns[self:GetVar("Patch")]
+
+		if spawnPos then
+			self:Owner():SetPos(spawnPos)
+		end
+	end
+end
+
+function BASE:OnPlayerDeath()
+	if self:GetVar("Equipped", false) and self:GetVar("Patch") then
+		local class = self:GetVar("Patch")
+		self:SetVar("Patch")
+
+		local ent = GAMEMODE:CreateNewItemEntity(class, self:Owner():GetPos() + Vector(0, 0, 16), Angle(0,0,0))
+		ent.Vars = {Torn = true}
 	end
 end
 
