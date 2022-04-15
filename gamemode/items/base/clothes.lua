@@ -202,6 +202,23 @@ BASE.functions.TearPatch = {
 
 function BASE:Initialize()
 	if( self:GetVar( "Equipped", false ) ) then
+		if SERVER then
+			local patchClass = self:GetVar("Patch")
+			local nextSpawnPos = self:Owner().NextSpawnPos
+
+			if patchClass then
+				local spawnPos = kingston.factions.spawns[patchClass]
+
+				if spawnPos then
+					nextSpawnPos = spawnPos
+				end
+			end
+
+			if nextSpawnPos then
+				self:Owner():SetPos(nextSpawnPos)
+			end
+		end
+
 		if( self.FunctionHooks and self.FunctionHooks["PreEquip"] ) then
 			self.FunctionHooks["PreEquip"]( self );
 		end
@@ -386,23 +403,19 @@ function BASE:Paint(pnl, w, h)
 	end
 end
 
-function BASE:Initialize()
-	if self:GetVar("Equipped", false) and self:GetVar("Patch") then
-		local spawnPos = kingston.factions.spawns[self:GetVar("Patch")]
-
-		if spawnPos then
-			self:Owner():SetPos(spawnPos)
-		end
-	end
-end
-
 function BASE:OnPlayerDeath()
 	if self:GetVar("Equipped", false) and self:GetVar("Patch") then
 		local class = self:GetVar("Patch")
-		self:SetVar("Patch")
+		self:SetVar("Patch", nil, nil, true)
 
 		local ent = GAMEMODE:CreateNewItemEntity(class, self:Owner():GetPos() + Vector(0, 0, 16), Angle(0,0,0))
 		ent.Vars = {Torn = true}
+
+		local spawnPos = kingston.factions.spawns[class]
+
+		if spawnPos then
+			self:Owner().NextSpawnPos = spawnPos
+		end
 	end
 end
 
