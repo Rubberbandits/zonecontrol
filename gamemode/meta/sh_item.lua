@@ -84,7 +84,9 @@ function item:New( owner, metaitem, id, vars, x, y )
 		itemdata.y = y
 	end
 
-	itemdata:Initialize();
+	if itemdata.Initialize then
+		itemdata:Initialize();
+	end
 	
 	if( id ) then
 	
