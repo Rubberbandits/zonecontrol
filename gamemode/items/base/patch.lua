@@ -3,6 +3,7 @@ BASE.Vars = {
 }
 BASE.W = 1
 BASE.H = 1
+BASE.Experience = 150;
 BASE.functions = {};
 BASE.functions.Wear = {
 	RemoveOnUse = true,
