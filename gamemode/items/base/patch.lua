@@ -8,7 +8,7 @@ BASE.functions.Wear = {
 	RemoveOnUse = true,
 	SelectionName = "wear",
 	OnUse = function(item)
-		for _, otherItem in pairs(item:Owner().Inventory)
+		for _, otherItem in pairs(item:Owner().Inventory) do
 			if otherItem.Base == "clothes" and otherItem:GetVar("Equipped", false) then
 				otherItem:SetVar("Patch", item:GetClass())
 
