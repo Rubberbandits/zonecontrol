@@ -453,6 +453,24 @@ function ccASay( ply, cmd, args )
 end
 concommand.Add( "asay", ccASay );
 
+util.AddNetworkString("zctts")
+local function ccTTS(ply, cmd, args)
+	local text = "";
+	
+	for i = 1, #args do
+		
+		text = text .. args[i] .. " ";
+		
+	end
+	
+	text = string.Trim( text );
+
+	net.Start("zcttc")
+		net.WriteString(text)
+	net.Broadcast()
+end
+concommand.Add( "zctts", ccTTS )
+
 function GM:PlayerDeathSound()
 	
 	return true;

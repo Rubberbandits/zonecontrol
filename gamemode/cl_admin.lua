@@ -455,3 +455,16 @@ local function WhatIsThis()
 	end
 end
 concommand.Add("whatisthis", WhatIsThis)
+
+// maximum irritation
+
+local function zctts(len)
+	local text = net.ReadString()
+
+	sound.PlayURL("https://tts.cyzon.us/tts/?text=" .. text,"",function(station)
+		if ( IsValid( station ) ) then
+			station:Play()
+		end
+	end)
+end
+net.Receive("zctts")
