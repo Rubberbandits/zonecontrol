@@ -54,6 +54,7 @@ include( "sv_sql.lua" );
 include( "sv_think.lua" );
 include( "sv_blowout.lua" );
 include( "sv_pda.lua" );
+include( "sv_factions.lua" );
 
 include( "ctp/sv_ctp.lua" );
 
