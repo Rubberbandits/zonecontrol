@@ -167,10 +167,6 @@ function item:GetVar(key, fallback)
 	return table.Copy(self.Vars)[key] or fallback
 end
 
-function item:Initialize() -- maybe we can use hook.Run
-	-- override when u need obj init cb
-end
-
 function item:GetCharID()
 	return self.CharID or 0
 end
