@@ -465,7 +465,7 @@ local function ccTTS(ply, cmd, args)
 	
 	text = string.Trim( text );
 
-	net.Start("zcttc")
+	net.Start("zctts")
 		net.WriteString(text)
 	net.Broadcast()
 end
