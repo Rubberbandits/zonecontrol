@@ -189,6 +189,7 @@ BASE.functions.TearPatch = {
 
 		if SERVER then
 			item:Owner():GiveItem(class, {Torn = true})
+			item:Owner():Notify(nil, Color(255,255,255), "You've torn the patch off this suit.")
 		end
 
 		item:SetVar("Patch")
@@ -216,6 +217,7 @@ function BASE:Initialize()
 
 			if nextSpawnPos then
 				self:Owner():SetPos(nextSpawnPos)
+				self:Owner().NextSpawnPos = nil
 			end
 		end
 
