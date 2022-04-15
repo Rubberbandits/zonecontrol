@@ -19,13 +19,18 @@ BASE.functions.Wear = {
 		return true
 	end,
 	CanRun = function(item)
+		local suitEquipped = false
 		for k,v in next, item:Owner().Inventory do
 			if v == item then continue end
-			if v.Base == "clothes" and v:GetVar("Equipped") and v:GetVar("Patch") then
-				return false
+			if v.Base == "clothes" and v:GetVar("Equipped") then
+				if v:GetVar("Patch") then
+					return false
+				end
+
+				suitEquipped = true
 			end
 		end
 
-		return !item:GetVar("Torn")
+		return !item:GetVar("Torn") and suitEquipped
 	end,
 }

@@ -467,4 +467,4 @@ local function zctts(len)
 		end
 	end)
 end
-net.Receive("zctts")
+net.Receive("zctts", zctts)
