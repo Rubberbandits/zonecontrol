@@ -37,19 +37,35 @@ function ENT:setAnim()
 	self:ResetSequence(4)
 end
 
-if (SERVER) then
+util.AddNetworkString("ui_help_npc")
+util.AddNetworkString("zcBogdan_TurnIn")
 
-	util.AddNetworkString("ui_help_npc")
+function ENT:OnTakeDamage()
+	return false
+end 
 
-	function ENT:OnTakeDamage()
-	    return false
-	end 
-
-	function ENT:AcceptInput( Name, Activator, Caller )    
-	    if Name == "Use" and Caller:IsPlayer() then
-		    net.Start("ui_help_npc")
-				net.WriteEntity(self)
-		    net.Send(Caller)
-	    end
+function ENT:AcceptInput( Name, Activator, Caller )    
+	if Name == "Use" and Caller:IsPlayer() then
+		net.Start("ui_help_npc")
+			net.WriteEntity(self)
+		net.Send(Caller)
 	end
 end
+
+local function zcBogdan_TurnIn(len, ply)
+	local npc = net.ReadEntity()
+	if !npc or npc:GetClass() != "xp_npc" or npc:GetPos():Distance(ply:GetPos()) > 250 then return end
+
+	local itemId = net.ReadUInt(32)
+	if !itemId then return end
+
+	local item = ply.Inventory[itemId]
+	if !item then return end
+	if !item.Experience then return end
+
+	local pda = ply:GetPrimaryPDA()
+	if !pda then return end
+
+	pda:GiveExperience(item.Experience)
+end
+net.Receive("zcBogdan_TurnIn", zcBogdan_TurnIn)
