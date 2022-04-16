@@ -63,6 +63,10 @@ function GM:LimitReachedProcess( ply, str )
 
 end
 
+function GM:PlayerCheckLimit(ply, limitName, current, defaultMax)
+	return hook.Run("LimitReachedProcess", ply, limitName)
+end
+
 function GM:CanDrive( ply, ent )
 	
 	return false;
