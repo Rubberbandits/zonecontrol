@@ -12,5 +12,6 @@ UPGRADE.PropertiesTooltip = {
 UPGRADE.RequiredItems = {
 	{ "basic_toolkit", 1, false },
 	{ "parts_low", 1, true },
+	{ "wire", 2, true },
 };
 UPGRADE.Item = WEAPON_ALL;

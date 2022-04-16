@@ -33,6 +33,8 @@ UPGRADE.RequiredUpgrade = "generic_freefloat"
 UPGRADE.RequiredItems = {
 	{ "intrm_toolkit", 1, false },
 	{ "parts_weapon", 2, true },
+	{ "scrapmetal", 3, true },
+	{ "wrench", 1, false },
 };
 UPGRADE.Incompatible = {
 	"generic_fluted_barrel",
