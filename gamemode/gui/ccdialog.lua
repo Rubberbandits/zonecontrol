@@ -131,6 +131,12 @@ function PANEL:BackToOpening()
 	defaultDialogCallback(self, "opening", true)
 end
 
+function PANEL:SendToDialog(key)
+	if !self.conversations then return end
+
+	defaultDialogCallback(self, key)
+end
+
 function PANEL:AddDialogOptions(data)
 	self.conversations = data
 	local openingDialog = data.opening

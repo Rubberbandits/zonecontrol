@@ -84,7 +84,9 @@ function item:New( owner, metaitem, id, vars, x, y )
 		itemdata.y = y
 	end
 
-	itemdata:Initialize();
+	if itemdata.Initialize then
+		itemdata:Initialize();
+	end
 	
 	if( id ) then
 	
@@ -165,10 +167,6 @@ function item:GetVar(key, fallback)
 	if !self.Vars then return fallback end
 	
 	return table.Copy(self.Vars)[key] or fallback
-end
-
-function item:Initialize() -- maybe we can use hook.Run
-	-- override when u need obj init cb
 end
 
 function item:GetCharID()

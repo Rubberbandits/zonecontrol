@@ -80,7 +80,7 @@ function GM:PlayerCheckInventory( ply )
 		local metaitem = GAMEMODE:GetItemByID(v:GetClass())
 		
 		if !metaitem then continue end
-		if v:GetVar("Equipped", false) then
+		if v.Initialize then
 			v:Initialize()
 		end
 	end
@@ -452,6 +452,24 @@ function ccASay( ply, cmd, args )
 	
 end
 concommand.Add( "asay", ccASay );
+
+util.AddNetworkString("zctts")
+local function ccTTS(ply, cmd, args)
+	local text = "";
+	
+	for i = 1, #args do
+		
+		text = text .. args[i] .. " ";
+		
+	end
+	
+	text = string.Trim( text );
+
+	net.Start("zctts")
+		net.WriteString(text)
+	net.Broadcast()
+end
+concommand.Add( "zctts", ccTTS )
 
 function GM:PlayerDeathSound()
 	

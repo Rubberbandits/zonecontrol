@@ -202,7 +202,7 @@ function ENT:Use( ply, caller, type, val )
 			end
 			
 			if should_create then
-				self.ItemObj = ply:GiveItem( self:GetItemClass(), metaitem.Vars );
+				self.ItemObj = ply:GiveItem( self:GetItemClass(), self.Vars or metaitem.Vars );
 			end
 		else
 			local should_transfer = true

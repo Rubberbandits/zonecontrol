@@ -101,10 +101,44 @@ ENT.NPC_CONVERSATION = {
 	},
 	turn_in = {
 		dialog = "I have something to turn in.",
+		response = "Let's see what you've got."
 		callback = function(panel, key)
-			// open dialog to turn in items
-			print("open dialog to turn in items")
+			panel:ClearDialogOptions()
+
+			local dialogData = panel.conversations[key]
+
+			for itemId,item in pairs(LocalPlayer().Inventory) do
+				if !item.Experience then continue end
+				if item.CanGiveXP and !item:CanGiveXP() then continue end
+
+				panel:AddDialogOption(
+					Format("%d. %s", i, item:GetName()), 
+					"turn_in_item", 
+					function(panel, key) 
+						net.Start("zcBogdan_TurnIn")
+							net.WriteEntity(panel.NPCEntity)
+							net.WriteUInt(itemId, 32)
+						net.SendToServer()
+
+						panel:SendToDialog("turn_in_more")
+					end
+				)
+			end
+
+			panel:AddDialog(LocalPlayer():RPName(), (isfunction(dialogData.dialog) and dialogData.dialog(panel, dialogKey)) or dialogData.dialog, true)
+
+			if !noResponse then
+				panel:AddDialog(panel.NPCName, (isfunction(dialogData.response) and dialogData.response(panel, key)) or dialogData.response or "")
+			end
 		end
+	},
+	turn_in_more = {
+		dialog = "Here you go.",
+		response = "Anything else?",
+		options = {
+			"turn_in",
+			"nothing_now"
+		}
 	},
 	nothing_now = {
 		dialog = "Nothing right now. See you later.",
