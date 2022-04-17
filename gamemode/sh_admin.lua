@@ -381,7 +381,7 @@ end
 function GROUP:canTarget(target)
 	local targetGroup = kingston.admin.groups[target]
 
-	return self.priority > targetGroup and targetGroup.priority or 0
+	return self.priority > (targetGroup and targetGroup.priority or 0)
 end
 
 function GROUP:canRun(ply, cmd, args)
