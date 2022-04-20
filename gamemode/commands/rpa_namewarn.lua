@@ -5,6 +5,6 @@ kingston.admin.registerCommand("charnamewarn", {
 	description = "Warn a player for their character's name",
 	arguments = {ARGTYPE_TARGET},
 	onRun = function(ply, target)
-		netstream.Start( targ, "nWarnName" );
+		netstream.Start( target, "nWarnName" );
 	end,
 })
