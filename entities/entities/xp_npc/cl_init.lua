@@ -101,7 +101,7 @@ ENT.NPC_CONVERSATION = {
 	},
 	turn_in = {
 		dialog = "I have something to turn in.",
-		response = "Let's see what you've got."
+		response = "Let's see what you've got.",
 		callback = function(panel, key)
 			panel:ClearDialogOptions()
 
