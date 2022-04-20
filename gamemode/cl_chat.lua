@@ -251,7 +251,7 @@ function GM:CreateChatbox()
 	self.ChatboxOpen = true;
 	
 	CCP.Chatbox = vgui.Create( "CCChat" );
-	CCP.Chatbox:SetSize( ScreenScale(200), ScreenScale(100) );
+	CCP.Chatbox:SetSize( ScreenScale(200), cookie.GetNumber( "zc_chatheight", 300 ) );
 	CCP.Chatbox:SetPos( ScrW() / 96, ScrH() - (ScrH() / 5.4) - (ScrH() / 31) - (ScrH() / 3.6) );
 	function CCP.Chatbox:Think()
 	
