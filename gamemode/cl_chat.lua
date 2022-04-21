@@ -249,10 +249,12 @@ end
 function GM:CreateChatbox()
 	
 	self.ChatboxOpen = true;
+
+	local cH = cookie.GetNumber( "zc_chatheight", 350 )
 	
 	CCP.Chatbox = vgui.Create( "CCChat" );
-	CCP.Chatbox:SetSize( ScreenScale(200), cookie.GetNumber( "zc_chatheight", 300 ) );
-	CCP.Chatbox:SetPos( ScrW() / 96, ScrH() - (ScrH() / 5.4) - (ScrH() / 31) - (ScrH() / 3.6) );
+	CCP.Chatbox:SetSize( ScreenScale(200), cH );
+	CCP.Chatbox:SetPos( ScrW() / 96, ScrH() * 0.5 - (cH / 2) );
 	function CCP.Chatbox:Think()
 	
 		if( input.IsKeyDown( KEY_ESCAPE ) ) then
@@ -274,7 +276,7 @@ function GM:CreateChatbox()
 	
 	CCP.Chatbox.Entry = vgui.Create( "DTextEntry", CCP.Chatbox );
 	CCP.Chatbox.Entry:SetFont( "CombineControl.ChatNormal" );
-	CCP.Chatbox.Entry:SetPos( ScreenScale(4), ScreenScale(90) );
+	CCP.Chatbox.Entry:SetPos( ScreenScale(4), cH - ScreenScaleH(16) );
 	CCP.Chatbox.Entry:SetSize( ScreenScale(192), ScreenScale(8) );
 	CCP.Chatbox.Entry.History = CCP.MessagesSent
 	CCP.Chatbox.Entry:PerformLayout();
