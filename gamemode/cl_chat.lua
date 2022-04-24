@@ -314,27 +314,13 @@ function GM:CreateChatbox()
 		
 	end
 	function CCP.Chatbox.Entry:OnTextChanged()
+		if( !LocalPlayer():Typing() ) then return end
 		
-		if( string.len( self:GetValue() ) > 0 ) then
-			
-			if( LocalPlayer():Typing() ) then return end
-
-			net.Start("nSetTyping")
-				net.WriteBool(true)
-			net.SendToServer()
-		
-		else
-		
-			if( !LocalPlayer():Typing() ) then return end
-			
-			net.Start("nSetTyping")
-				net.WriteBool(false)
-			net.SendToServer()
-			
-		end
+		net.Start("nSetTyping")
+			net.WriteBool(string.len(self:GetValue()) > 0 and true or false)
+		net.SendToServer()
 			
 		self:SetTextColor( Color( 200, 200, 200, 255 ) );
-		
 	end
 	function CCP.Chatbox.Entry:OnKeyCode(code)
 		if ( code == KEY_UP ) then
