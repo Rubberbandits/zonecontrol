@@ -249,4 +249,46 @@ end)
 
 GM.FullyLoaded = true;
 
+hook.Add("NotifyShouldTransmit", "STALKER.BonemergeUpdate", function(ent, transmit)
+	if !ent:IsPlayer() then return end
+
+	print("[NotifyShouldTransmit] STALKER.BonemergeUpdate")
+	print(ent, transmit)
+end)
+
+hook.Add("NetworkEntityCreated", "STALKER.BonemergeUpdate", function(ent) 
+	if !ent:IsPlayer() then return end
+	
+	print("[NetworkEntityCreated] STALKER.BonemergeUpdate")
+	print(ent)
+end)
+
+hook.Add("EntityRemoved", "STALKER.BonemergeUpdate", function(ent)
+	if !ent:IsPlayer() then return end
+
+	print("[EntityRemoved] STALKER.BonemergeUpdate")
+	print(ent)
+end)
+
+hook.Add("OnReloaded", "STALKER.BonemergeUpdate", function()
+	print("[OnReloaded] STALKER.BonemergeUpdate")
+end)
+
+gameevent.Listen("player_spawn")
+hook.Add("player_spawn", "STALKER.BonemergeUpdate", function(userId)
+	local ply = Player(userId)
+
+	print("[player_spawn] STALKER.BonemergeUpdate")
+	print(ply)
+end)
+
+gameevent.Listen("entity_killed")
+hook.Add("entity_killed", "STALKER.BonemergeUpdate", function(entIndexInflictor, entIndexAttacker, damageFlags, entIndexVictim)
+	local ent = Entity(entIndexVictim)
+	if !ent:IsPlayer() then return end
+
+	print("[entity_killed] STALKER.BonemergeUpdate")
+	print(ent)
+end)
+
 MsgC( Color( 200, 200, 200, 255 ), "Clientside loaded.\n" );
