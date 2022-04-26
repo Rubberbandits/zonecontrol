@@ -2,10 +2,12 @@ PANEL = { };
 
 function PANEL:Init()
 	
+	local cH = cookie.GetNumber( "zc_chatheight", 350 )
+
 	self.chat_bg_opacity = cookie.GetNumber( "zc_chatopacity", 0.8 )
 	self.ContentScroll = vgui.Create( "DScrollPanel", self );
 	self.ContentScroll:SetPos( ScreenScale(4), ScreenScale(16) );
-	self.ContentScroll:SetSize( ScreenScale(192), ScreenScale(72) );
+	self.ContentScroll:SetSize( ScreenScale(192), cH - ScreenScaleH(38) );
 	function self.ContentScroll:Paint( w, h )
 		
 		surface.SetDrawColor( 0, 0, 0, 70 );

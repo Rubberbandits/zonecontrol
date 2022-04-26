@@ -454,6 +454,7 @@ function GM:OnEntityCreated( ent )
 	
 end
 
+/*
 function GM:SetupPlayerVisibility( ply, viewent )
 	
 	if( self.GetHL2CamPos ) then
@@ -475,6 +476,7 @@ function GM:SetupPlayerVisibility( ply, viewent )
 	end
 	
 end
+*/
 
 GM.ConnectMessages = { };
 GM.EntryPortSpawns = { };
