@@ -1,14 +1,14 @@
-ITEM.Name =  "Medkit";
-ITEM.Desc =  "General purpose medkit. Contains emergency first aid materials to stave off death.";
-ITEM.Model =  "models/kali/miscstuff/stalker/aid/first aid kit.mdl";
+ITEM.Name =  "Medkit"
+ITEM.Desc =  "General purpose medkit. Contains emergency first aid materials to stave off death."
+ITEM.Model =  "models/kali/miscstuff/stalker/aid/first aid kit.mdl"
 ITEM.ConsumeText = "You tend to your wounds. It'll do for now."
 ITEM.HealAmount = 45
-ITEM.Weight =  0.33;
-ITEM.FOV =  9;
-ITEM.CamPos =  Vector( 0, 0, 50 );
-ITEM.LookAt =  Vector( 0, 0, 0 );
+ITEM.Weight =  0.33
+ITEM.FOV =  9
+ITEM.CamPos =  Vector( 0, 0, 50 )
+ITEM.LookAt =  Vector( 0, 0, 0 )
 ITEM.BulkPrice =  1000
-ITEM.License =  "D";
+ITEM.License =  "D"
 ITEM.DrugType = "MEDKIT"
 
 GM:CreateDrugType("MEDKIT", {

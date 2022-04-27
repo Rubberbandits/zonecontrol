@@ -1,6 +1,6 @@
 ITEM.Name =  "Toilet Paper"
 ITEM.Desc =  "A slightly dirty, slightly damp roll of thin-as-shit service station toilet paper. The preferred alternative to leaves and rawdogging it."
-ITEM.Model =  "models/props_junk/cardboard_box004a.mdl"  
+ITEM.Model =  "models/props_interiors/toiletpaperdispenser_residential.mdl"  
 ITEM.Weight =  0.1;
 ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );
