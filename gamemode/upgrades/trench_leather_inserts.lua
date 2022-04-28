@@ -32,6 +32,8 @@ UPGRADE.RequiredUpgrade = "trench_kevlar_plates"
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "intrm_toolkit", 1, false },
-	{ "parts_suit", 2, true },
+	{ "intrm_sewkit", 1, false },
+	{ "parts_low", 1, true },
+	{ "blanket", 1, true },
+	{ "buckleparts", 2, true },
 };

@@ -24,6 +24,8 @@ UPGRADE.Item = {
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "basic_toolkit", 1, false },
-	{ "parts_suit", 1, true },
+	{ "basic_sewkit", 1, false },
+	{ "buckleparts", 1, true },
+	{ "thread", 2, true },
+	{ "kevlartape", 1, true },
 };

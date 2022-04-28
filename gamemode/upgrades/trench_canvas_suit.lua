@@ -42,6 +42,7 @@ UPGRADE.RequiredUpgrade = "trench_rubber_layer";
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "intrm_toolkit", 1, false },
-	{ "parts_suit", 2, true },
+	{ "intrm_sewkit", 1, false },
+	{ "buckleparts", 2, true },
+	{ "thread", 1, true }
 };

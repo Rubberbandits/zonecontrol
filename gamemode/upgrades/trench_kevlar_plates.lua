@@ -27,6 +27,7 @@ UPGRADE.Item = {
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "basic_toolkit", 1, false },
-	{ "parts_suit", 1, true },
+	{ "basic_sewkit", 1, false },
+	{ "scrapfabric", 2, true },
+	{ "scrappatch", 2, true },
 };

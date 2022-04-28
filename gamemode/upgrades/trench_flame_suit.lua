@@ -9,8 +9,8 @@ UPGRADE.IconY = 35
 
 UPGRADE.ArmorValues = {
 	-- "Thermal"
-	[DMG_BURN] = .85,
-	[DMG_SLOWBURN] = .85,
+	[DMG_BURN] = 0.85,
+	[DMG_SLOWBURN] = 0.85,
 }
 
 UPGRADE.PropertiesTooltip = {
@@ -34,6 +34,7 @@ UPGRADE.RequiredUpgrade = "trench_rubber_layer";
 
 --TIER
 UPGRADE.RequiredItems = {
-	{ "intrm_toolkit", 1, false },
-	{ "parts_suit", 2, true },
+	{ "intrm_sewkit", 1, false },
+	{ "parts_basic", 2, true },
+	{ "adhesive", 3, true },
 };
