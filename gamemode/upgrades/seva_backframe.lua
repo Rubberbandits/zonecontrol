@@ -5,7 +5,7 @@ UPGRADE.Desc = "A back frame relieves focused shoulder load from the carried wei
 
 UPGRADE.IconPage = 5
 UPGRADE.IconX = 13
-UPGRADE.IconY = 37
+UPGRADE.IconY = 36
 
 UPGRADE.CarryAdd = 10
 
