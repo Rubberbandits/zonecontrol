@@ -9,10 +9,10 @@ UPGRADE.IconY = 27
 
 UPGRADE.ArmorValues = {
 	-- "Impact" (blunt)
-	[DMG_CRUSH] = .9, -- 10% increase
-	[DMG_FALL] = .9,
-	[DMG_CLUB] = .9,
-	[DMG_VEHICLE] = .9,
+	[DMG_CRUSH] = 0.9, -- 10% increase
+	[DMG_FALL] = 0.9,
+	[DMG_CLUB] = 0.9,
+	[DMG_VEHICLE] = 0.9,
 }
 
 UPGRADE.PropertiesTooltip = {

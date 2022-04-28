@@ -9,7 +9,7 @@ UPGRADE.IconY = 33
 
 UPGRADE.ArmorValues = {
 	-- "Rupture" (sharp)
-	[DMG_SLASH] = .85,
+	[DMG_SLASH] = 0.85,
 }
 
 UPGRADE.ReduceWeight = -2
