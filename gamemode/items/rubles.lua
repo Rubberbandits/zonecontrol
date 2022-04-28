@@ -1,7 +1,7 @@
 ITEM.Name =  "Rubles";
 ITEM.Desc =  "A bundle of rubles, the common currency.";
 ITEM.Model =  "models/props/cs_assault/Dollar.mdl";
-ITEM.Weight =  0.0
+ITEM.Weight =  0
 ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
