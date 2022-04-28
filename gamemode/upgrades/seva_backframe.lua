@@ -7,7 +7,7 @@ UPGRADE.IconPage = 5
 UPGRADE.IconX = 13
 UPGRADE.IconY = 36
 
-UPGRADE.CarryAdd = 10
+UPGRADE.CarryAdd = 7
 
 UPGRADE.PropertiesTooltip = {
 	{
@@ -27,7 +27,7 @@ UPGRADE.RequiredUpgrade = "seva_weight_distro"
 --TIER
 UPGRADE.RequiredItems = {
 	{ "intrm_sewkit", 1, false },
-	{ "buckleparts", 1, true },
+	{ "buckleparts", 2, true },
     { "scrapmetal", 3, true },
-	{ "scrapfabric", 1, true },
+	{ "scrapfabric", 2, true },
 };
