@@ -10,7 +10,7 @@ ITEM.UseText = "Eat"
 ITEM.Rarity = 2
 ITEM.AllowRandomSpawn = false
 ITEM.IsSellable = true
-
+ITEM.Experience = 50
 function ITEM:GetSellPrice()
     return 75
 end

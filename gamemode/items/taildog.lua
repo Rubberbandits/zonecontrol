@@ -11,7 +11,7 @@ ITEM.Rarity = 2
 ITEM.AllowRandomSpawn = false
 ITEM.BulkPrice = 500
 ITEM.IsSellable = true
-
+ITEM.Experience = 50
 function ITEM:GetSellPrice()
 	return 100
 end
