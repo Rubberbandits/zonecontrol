@@ -4,15 +4,15 @@ UPGRADE.Name = "Weight Distribution Back Frame";
 UPGRADE.Desc = "A back frame relieves focused shoulder load from the carried weight by distributing it over the body, increasing max load."
 
 UPGRADE.IconPage = 5
-UPGRADE.IconX = 12
-UPGRADE.IconY = 36
+UPGRADE.IconX = 11
+UPGRADE.IconY = 35
 
 UPGRADE.CarryAdd = 10
 
 UPGRADE.PropertiesTooltip = {
 	{
-		IconX = 6,
-		IconY = 3,
+		IconX = 5,
+		IconY = 2,
 		Text = "+10kg Carrying Capacity.",
 	},
 }
