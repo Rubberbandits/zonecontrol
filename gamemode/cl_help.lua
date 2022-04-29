@@ -83,9 +83,15 @@ function GM:RefreshHelpMenuContent()
 		
 		Staff can take away phys and proptrust if you abuse the privillege - you can get it back through the forums.]] 
 		},
-		{ "Stockpiles", [[Stockpiles are an extended inventory system outside of your regular F3 inventory menu. Stockpiles are mandatory for Technicians and Traders to conduct business and use their features. Stockpiles are also recommended for factions and PBGs to store extra gear. Not all players may be granted a Stockpile; you must have a need and a right to have one.
-
-		Regular players cannot spawn the Stockpile entity themselves, they must ask a staff member to spawn one for them. ]]
+		{ "Stockpiles", [[Stockpiles are an extended inventory system outside of your regular F3 inventory menu. Stockpiles are mandatory for Technicians and Traders to conduct business and use their features. Stockpiles are also recommended for factions and PBGs to store extra gear.  Not all players may be granted a Stockpile; you must have a need and a right to have one. 
+		
+		Regular players cannot spawn the Stockpile entity themselves, they must ask a staff member to spawn one for them. Stockpiles will already be naturally dispersed throughout the map.
+		
+		You can ask a moderator to give you access to someone else's Stockpile, and vice versa. Stockpile names are global.
+			
+		Pressing E on a Stockpile lets you see the contents. Right-clicking items in your inventory and selecting "stockpile" will send them to the Stockpile you choose from the menu. You can only send items to your Stockpile if you are standing near it.
+		
+		Traders use Stockpiles to get money back from items they buy from players by selecting "sell to stockpile for Xru". Furthermore, Traders and Technicians cannot access their business menu if they are not standing near a stockpile. Technicians cannot upgrade gear without standing near a Stockpile.]]
 		},
 		{ "Flags", 
 			[[ZoneControl uses a flag system. Most flags are automatic - you don't need to run a command to access them.
@@ -100,10 +106,9 @@ function GM:RefreshHelpMenuContent()
 			D - Medical
 			H - PDA Encryption/Decryption
 			S - Suits
-			U - BDUs (Suit Colors)
+			U - BDUs (Suit Colors) [This system is being reworked and will be removed shortly.]
 
 			Player Flags
-			G - Gamemaster, per-character
 			Q - Removes admin powers, per-character]] 
 		},
 	};
