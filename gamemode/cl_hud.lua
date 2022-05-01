@@ -1087,13 +1087,13 @@ local EntityRenderingFuncs = {
 		
 		if( v.HUDAlpha > 0 ) then
 		
-			local lines, maxW = wrapText( Entity_PropDesc(v), 512, "CombineControl.LabelSmall" );
+			local lines, maxW = wrapText( Entity_PropDesc(v), 512, "CombineControl.LabelMedium" );
 			
 			for m,n in ipairs(lines) do
 			
-				surface_SetFont( "CombineControl.LabelSmall" );
+				surface_SetFont( "CombineControl.LabelMedium" );
 				local w,h = surface_GetTextSize( n );
-				draw_DrawTextShadow( n, "CombineControl.LabelSmall", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
+				draw_DrawTextShadow( n, "CombineControl.LabelMedium", pos.x, pos.y, Color( 200, 200, 200, v.HUDAlpha * 255 ), Color( 0, 0, 0, v.HUDAlpha * 255 ), 1 );
 				pos.y = pos.y + h + 2;
 			
 			end

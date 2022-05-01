@@ -125,6 +125,14 @@ ENT.NPC_CONVERSATION = {
 				)
 			end
 
+			local nevermindData = panel.conversations.nevermind
+
+			panel:AddDialogOption(
+				(isfunction(nevermindData.dialog) and nevermindData.dialog(panel, dialogKey)) or nevermindData.dialog, 
+				"nevermind", 
+				nevermindData.callback
+			)
+
 			panel:AddDialog(LocalPlayer():RPName(), (isfunction(dialogData.dialog) and dialogData.dialog(panel, dialogKey)) or dialogData.dialog, true)
 
 			if !noResponse then
@@ -139,6 +147,12 @@ ENT.NPC_CONVERSATION = {
 			"turn_in",
 			"nothing_now"
 		}
+	},
+	nevermind = {
+		dialog = "Nevermind.",
+		callback = function(panel, key)
+			panel:Close()
+		end,
 	},
 	nothing_now = {
 		dialog = "Nothing right now. See you later.",
