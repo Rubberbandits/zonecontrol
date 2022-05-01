@@ -420,21 +420,21 @@ GM.AdminOptions = {
 		txt = "Kick",
 		icon = "icon16/delete.png",
 		func = function(targ)
-			RunConsoleCommand("rpa_kick", targ:RPName())
+			RunConsoleCommand("rpa_plykick", targ:RPName())
 		end,
 	},
 	{
 		txt = "Bring",
 		icon = "icon16/door_in.png",
 		func = function(targ)
-			RunConsoleCommand("rpa_bring", targ:RPName())
+			RunConsoleCommand("rpa_plybring", targ:RPName())
 		end,
 	},
 	{
 		txt = "Goto",
 		icon = "icon16/door_out.png",
 		func = function(targ)
-			RunConsoleCommand("rpa_goto", targ:RPName())
+			RunConsoleCommand("rpa_plygoto", targ:RPName())
 		end,
 	},
 	{
@@ -450,7 +450,7 @@ GM.AdminOptions = {
 						txt = targ:RPName(),
 						icon = "icon16/user.png",
 						func = function()
-							RunConsoleCommand("rpa_send", ply:RPName(), targ:RPName())
+							RunConsoleCommand("rpa_plysend", ply:RPName(), targ:RPName())
 						end,
 					}
 				end
@@ -467,7 +467,7 @@ GM.AdminOptions = {
 				"Give Rubles", 
 				"Enter amount to give to player.",
 				"",
-				function(text) RunConsoleCommand("rpa_givemoney", targ:RPName(), text) end
+				function(text) RunConsoleCommand("rpa_chargivemoney", targ:RPName(), text) end
 			)
 		end,
 	},
@@ -478,7 +478,7 @@ GM.AdminOptions = {
 			return !targ:TiedUp()
 		end,
 		func = function(targ) 
-			RunConsoleCommand("rpa_settied", targ:RPName(), 1)
+			RunConsoleCommand("rpa_plysettied", targ:RPName(), 1)
 		end,
 	},
 	{
@@ -488,7 +488,7 @@ GM.AdminOptions = {
 			return targ:TiedUp()
 		end,
 		func = function(targ) 
-			RunConsoleCommand("rpa_settied", targ:RPName(), 0)
+			RunConsoleCommand("rpa_plysettied", targ:RPName(), 0)
 		end,
 	},
 }
