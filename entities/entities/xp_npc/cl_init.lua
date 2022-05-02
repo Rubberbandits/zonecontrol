@@ -106,6 +106,7 @@ ENT.NPC_CONVERSATION = {
 			panel:ClearDialogOptions()
 
 			local dialogData = panel.conversations[key]
+			local i = 1
 
 			for itemId,item in pairs(LocalPlayer().Inventory) do
 				if !item.Experience then continue end
@@ -123,6 +124,8 @@ ENT.NPC_CONVERSATION = {
 						panel:SendToDialog("turn_in_more")
 					end
 				)
+
+				i = i + 1
 			end
 
 			local nevermindData = panel.conversations.nevermind
