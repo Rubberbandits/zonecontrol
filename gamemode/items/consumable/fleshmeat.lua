@@ -9,5 +9,4 @@ ITEM.ConsumeText = "You take a big, hungry bite out of the hunk of meat. It's ch
 ITEM.UseText = "Eat"
 ITEM.HungerReduce = 45
 ITEM.Rarity = 2
-ITEM.Experience = 50
 ITEM.AllowRandomSpawn = false
