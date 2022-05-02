@@ -2,7 +2,7 @@ UPGRADE.Base = "weapon"
 UPGRADE.Name = "Makarov Embellishment";
 UPGRADE.Desc = "Ceremonial embellishment for the Makarov pistol.";
 
-UPGRADE.Attachment = "ins2_pm_alt";
+UPGRADE.Attachment = "ins2_pm_honorary";
 
 UPGRADE.IconPage = 1;
 UPGRADE.IconX = 8;
