@@ -115,7 +115,7 @@ function GM:PlayerSpawn( ply )
 	
 	ply:SetMaxHealth(100)
 	if ply.JustDied then
-		ply:SetHealth(10)
+		ply:SetHealth(50)
 		ply.JustDied = false
 	elseif ply.CharCreateCompleted then
 		local data = ply:GetCharFromID(ply:CharID())
