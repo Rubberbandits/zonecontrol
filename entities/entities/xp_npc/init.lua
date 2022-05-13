@@ -67,5 +67,6 @@ local function zcBogdan_TurnIn(len, ply)
 	if !pda then return end
 
 	pda:GiveExperience(item.Experience)
+	item:RemoveItem(true)
 end
 net.Receive("zcBogdan_TurnIn", zcBogdan_TurnIn)
