@@ -314,10 +314,12 @@ function GM:CreateChatbox()
 		
 	end
 	function CCP.Chatbox.Entry:OnTextChanged()
-		if( !LocalPlayer():Typing() ) then return end
+		local isTyping = string.len(self:GetValue()) > 0 and true or false
+
+		if(isTyping == LocalPlayer():Typing()) then return end
 		
 		net.Start("nSetTyping")
-			net.WriteBool(string.len(self:GetValue()) > 0 and true or false)
+			net.WriteBool(isTyping)
 		net.SendToServer()
 			
 		self:SetTextColor( Color( 200, 200, 200, 255 ) );
