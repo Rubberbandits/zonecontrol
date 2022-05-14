@@ -133,6 +133,8 @@ function nCGiveCredits( ply, amt, targ )
 	if( ply:APC() and ply:APC():IsValid() ) then return end
 	
 	if( ply:GetPos():Distance( targ:GetPos() ) > 128 ) then return end
+
+	if amt <= 0 then return end
 	
 	if( ply:Money() >= amt ) then
 		
