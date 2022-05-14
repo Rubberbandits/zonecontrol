@@ -455,6 +455,8 @@ concommand.Add( "asay", ccASay );
 
 util.AddNetworkString("zctts")
 local function ccTTS(ply, cmd, args)
+	if IsValid(ply) then return end
+	
 	local text = "";
 	
 	for i = 1, #args do

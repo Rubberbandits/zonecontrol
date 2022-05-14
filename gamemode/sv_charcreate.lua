@@ -70,6 +70,8 @@ function nChangePDAName( ply, name, id )
 		if( !string.find( allowedChars, name, 1, true ) ) then
 		
 			local item = ply.Inventory[id]
+			if item:GetVar("PDAName") then return end
+			
 			mysqloo.Query("SELECT Vars FROM cc_items WHERE ItemClass = 'pda'", function(ret)
 				for k,v in next, ret do
 					local vars = util.JSONToTable(v.Vars)
