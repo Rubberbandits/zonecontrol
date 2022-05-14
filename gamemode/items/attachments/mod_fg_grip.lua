@@ -15,3 +15,4 @@ ITEM.Rarity = 3
 ITEM.AllowRandomSpawn = true
 ITEM.IsSellable = true
 ITEM.BulkPrice = 7500
+ITEM.License = "TX"
