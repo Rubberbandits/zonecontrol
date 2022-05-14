@@ -6,6 +6,7 @@ ITEM.FOV 			= 6;
 ITEM.CamPos 		= Vector( 0, 0, 90 );
 ITEM.LookAt 		= Vector( 0, 0, 0 );
 ITEM.BulkPrice =  5000
+ITEM.License = "X"
 ITEM.W = 1
 ITEM.H = 1
 -- explanation of PrivateVars key

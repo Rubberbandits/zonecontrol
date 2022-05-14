@@ -10,7 +10,6 @@ ITEM.CamPos = Vector( -1.37, -0, 100 );
 ITEM.LookAt = Vector( 0, 0, 0 );
 ITEM.Weight = 0.65
 ITEM.BulkPrice = 62500;
-ITEM.License = "X"
 ITEM.Rarity = 4
 ITEM.AllowRandomSpawn = true
 ITEM.IsSellable = true
