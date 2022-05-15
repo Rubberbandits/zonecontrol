@@ -170,6 +170,9 @@ function nCPatDownStart( ply, targ )
 	if( ply:GetPos():Distance( targ:GetPos() ) > 128 ) then return end
 	
 	local mul = 1;
+	ply.PattingDown = targ;
+	ply.PattingCompletionTime = CurTime() + 4*mul;
+
 	netstream.Start( targ, "nCreateTimedProgressBar", 5*mul, "Being pat down...", ply );
 	
 end
@@ -182,8 +185,14 @@ function nCPatDown( ply, targ )
 	if( ply:APC() and ply:APC():IsValid() ) then return end
 	
 	if ply:GetPos():Distance( targ:GetPos() ) > 128 then return end
+
+	if ply.PattingDown != targ then return end
+	if ply.PattingCompletionTime > CurTime() then return end
 	
 	if targ:GetVelocity():Length2D() <= 5 then
+		ply.PattingDown = nil
+		ply.PattingCompletionTime = nil
+
 		local tab = {}
 		if !targ.Inventory then return end
 		
