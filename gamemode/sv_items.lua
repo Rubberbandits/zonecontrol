@@ -313,7 +313,9 @@ local function zcRepairItem(len, ply)
 	local partsRequired = math.ceil(item.RepairCost / (metaitem.Vars.Durability / repairAmount))
 
 	local items = ply:HasItem(requiredItem)
-	if !items or (items.IsItem and partsRequired > 1) or (partsRequired > #items) then return end
+	if !items then return end
+	if partsRequired > 1 and items.IsItem then return end
+	if partsRequired > #items then return end
 
 	item:SetVar("Durability", itemCondition + repairAmount, false, true)
 	if !items.IsItem then
