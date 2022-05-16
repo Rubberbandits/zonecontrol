@@ -1,6 +1,9 @@
-local s_Meta = FindMetaTable("Player")
+kingston = kingston or {}
+kingston.bonemerge = kingston.bonemerge or {}
 
-function s_Meta:CreateNewBonemerge(szModel, iBoneScale)
+// Player functions
+local meta = FindMetaTable("Player")
+function meta:CreateNewBonemerge(szModel, iBoneScale)
 	if !IsValidModel(szModel) then return end
 
 	local b = ClientsideModel(szModel, RENDERGROUP_OPAQUE)
@@ -14,24 +17,6 @@ function s_Meta:CreateNewBonemerge(szModel, iBoneScale)
 		local ply = self:GetParent()
 	
 		if IsValid(ply) then
-			if !self.LastParent then
-				if !self.bLastAliveState then
-					self.bLastAliveState = ply:Alive()
-				end
-				
-				if !self.nLastCharID then
-					self.nLastCharID = ply:CharID()
-				end
-			else
-				if !self.bLastAliveState then
-					self.bLastAliveState = self.LastParent:Alive()
-				end
-				
-				if !self.nLastCharID then
-					self.nLastCharID = self.LastParent:CharID()
-				end
-			end
-	
 			if ply:GetMoveType() == MOVETYPE_NOCLIP and ply:GetNoDraw() and !self.bLastDrawState then
 				self:SetNoDraw(true)
 			elseif !ply:GetNoDraw() and self.bLastDrawState then
@@ -41,55 +26,11 @@ function s_Meta:CreateNewBonemerge(szModel, iBoneScale)
 			if ply.pac_hide_entity then
 				self:SetNoDraw(true)
 			end
-
-			if !self.LastParent then
-				if !ply:Alive() and self.bLastAliveState then
-					self.LastParent = ply
-					self:SetParent(ply:GetRagdollEntity())
-					self:AddEffects(EF_BONEMERGE)
-				end
-				
-				if ply:CharID() != self.nLastCharID then
-					GAMEMODE.BonemergeEntities[self] = nil
-					GAMEMODE:RemoveBonemergedItemCache(ply)
-					self:Remove()
-				end
-			else
-				if self.LastParent:Alive() and !self.bLastAliveState then
-					self:SetParent(self.LastParent)
-					self:AddEffects(EF_BONEMERGE)
-					self.LastParent = nil
-				end
-				
-				if self.LastParent:CharID() != self.nLastCharID then
-					GAMEMODE.BonemergeEntities[self] = nil
-					GAMEMODE:RemoveBonemergedItemCache(ply)
-					self:Remove()
-				end
-			end
 		else
-			if !IsValid(self.LastParent) then
-				GAMEMODE:RemoveBonemergedItemCache(ply)
-				self:Remove()
-			else
-				self:SetParent(self.LastParent)
-				self:AddEffects(EF_BONEMERGE)
-				self.LastParent = nil
-			end
+			self:Remove()
 		end
 		
 		self.bLastDrawState = self:GetNoDraw()
-		if !self.LastParent then
-			if IsValid(ply) then
-				self.bLastAliveState = ply:Alive()
-				self.nLastCharID = ply:CharID()
-			end
-		else
-			if !IsValid(self.LastParent) then return end
-		
-			self.bLastAliveState = self.LastParent:Alive()
-			self.nLastCharID = self.LastParent:CharID()
-		end
 	end
 	hook.Add("Think", b, b.Think)
 	
@@ -99,231 +40,305 @@ function s_Meta:CreateNewBonemerge(szModel, iBoneScale)
 		end
 	end
 	
-	GAMEMODE.BonemergeEntities[b] = b
 	return b
 end
 
-GM.BonemergeItems = GM.BonemergeItems or {}
-GM.BonemergeItemKeys = GM.BonemergeItemKeys or {}
-GM.BonemergeEntities = GM.BonemergeEntities or {}
-GM.BonemergeBodies = GM.BonemergeBodies or {}
-GM.BodyHidden = GM.BodyHidden or {}
+kingston.bonemerge.data = kingston.bonemerge.data or {}
 
-function GM:OnReceiveDummyItem(s_iID, s_DummyItem)
-	local metaitem = GAMEMODE:GetItemByID(s_DummyItem.szClass)
-	if !self.BonemergeItems[s_iID] then
-		self.BonemergeItems[s_iID] = {
-			Owner = s_DummyItem.Owner,
-			szClass = s_DummyItem.szClass,
-			Vars = s_DummyItem.Vars,
-			CharID = s_DummyItem.CharID,
-			ID = s_iID,
-		}
-		
-		table.insert(self.BonemergeItemKeys, s_iID)
-		self.BonemergeItems[s_iID].Key = #self.BonemergeItemKeys
-	else
-		self.BonemergeItems[s_iID].Vars = s_DummyItem.Vars
-		self.BonemergeItems[s_iID].CharID = s_DummyItem.CharID
+// Bonemerge data functions
+function kingston.bonemerge.add(charId, itemId, itemData)
+	local charData = kingston.bonemerge.data[charId]
+	if !charData then
+		kingston.bonemerge.data[charId] = {}
+		charData = kingston.bonemerge.data[charId]
 	end
 
-	if s_DummyItem.Vars["Equipped"] then
-		if metaitem.RemoveBody then
-			self.BodyHidden[s_DummyItem.Owner] = true
-			if self.BonemergeBodies[s_DummyItem.Owner] then
-				self.BonemergeBodies[s_DummyItem.Owner]:Remove()
-				self.BonemergeBodies[s_DummyItem.Owner] = nil
-			end
-		end
-	elseif !s_DummyItem.Vars["Equipped"] then
-		local owner = self.BonemergeItems[s_iID]["Owner"]
-		if self.BonemergeItems[s_iID].BonemergedEntity then
-			self.BonemergeItems[s_iID].BonemergedEntity:Remove()
-			self.BonemergeItems[s_iID].BonemergedEntity = nil
-		end
-		
-		if metaitem.RemoveBody and !self.BonemergeBodies[s_DummyItem.Owner] then
-			self.BodyHidden[s_DummyItem.Owner] = false
-
-			if s_DummyItem.Owner.Body then
-				local body = s_DummyItem.Owner:Body()
-				if !body or #body == 0 then return end
-
-				self.BonemergeBodies[s_DummyItem.Owner] = s_DummyItem.Owner:CreateNewBonemerge(s_DummyItem.Owner:Body())
-				self.BonemergeBodies[s_DummyItem.Owner]:SetSubMaterial(0, s_DummyItem.Owner:BodySubMat())
-			end
-		end
+	local transmittedItems = kingston.bonemerge.data[charId].items
+	if !transmittedItems then
+		kingston.bonemerge.data[charId].items = {}
+		transmittedItems = kingston.bonemerge.data[charId].items
 	end
+
+	local itemExists = transmittedItems[itemId] and true or false
+	local parent = itemData.Owner
+	transmittedItems[itemId] = {
+		parent = parent,
+		class = itemData.szClass,
+		vars = itemData.Vars,
+		charId = charId,
+		itemId = itemId
+	}
 	
 	-- cant use full item info
+	local metaitem = GAMEMODE:GetItemByID(itemData.szClass)
 	if metaitem.DummyItemUpdate then
-		metaitem.DummyItemUpdate(s_DummyItem, self.BonemergeItems[s_iID].BonemergedEntity)
+		metaitem.DummyItemUpdate(itemData)
+	end
+
+	if itemExists then
+		hook.Run("BonemergeItemUpdated", parent, charId, itemId)
+	else
+		hook.Run("BonemergeItemAdded", parent, charId, itemId)
 	end
 end
 
-function GM:RemoveBonemergedItemCache(ply)
-	self.BodyHidden[ply] = false
-	if self.BonemergeBodies[ply] and self.BonemergeBodies[ply]:IsValid() then
-		self.BonemergeBodies[ply]:Remove()
-		self.BonemergeBodies[ply] = nil
-	end
+function kingston.bonemerge.remove(charId, itemId)
+	if !kingston.bonemerge.data[charId] then return end
 	
-	for k,v in next, self.BonemergeItems do
-		if v.Owner == ply then
-			if v.BonemergedEntity then
-				v.BonemergedEntity:Remove()
-				v.BonemergedEntity = nil
+	local charData = kingston.bonemerge.data[charId]
+	if !charData then return end
+
+	local transmittedItems = charData.items
+	if !transmittedItems then return end
+
+	local itemData = transmittedItems[itemId]
+	if !itemData then return end
+
+	if IsValid(itemData.entity) then
+		itemData.entity:Remove()
+	end
+
+	transmittedItems[itemId] = nil
+
+	hook.Run("BonemergeItemRemoved", charId, itemId)
+end
+
+function kingston.bonemerge.createEntity(ply, itemClass, itemVars)
+	local metaitem = GAMEMODE:GetItemByID(itemClass)
+	if metaitem.Bonemerge then
+		local mdl = metaitem.Bonemerge
+		local scale
+		
+		if metaitem.AllowGender then
+			if ply:Gender() == GENDER_FEMALE then
+				mdl = string.StripExtension(mdl).."_f.mdl"
+			end
+		elseif metaitem.ScaleForGender and ply:Gender() == GENDER_FEMALE then
+			scale = metaitem.ScaleForGender
+		end
+
+		local ent = ply:CreateNewBonemerge(mdl, scale)
+		if !ent or !IsValid(ent) then
+			return -- outside of pvs? creation failed.
+		end
+	
+		if metaitem.Bodygroups then
+			for _,bodygroup in next, metaitem.Bodygroups do
+				-- first key in bodygroup is bodygroup index
+				-- second key in bodygroup is bodygroup value
+				
+				ent:SetBodygroup(bodygroup[1], bodygroup[2])
+			end
+		end
+		
+		if metaitem.Submaterials then
+			for _,submaterial in next, metaitem.Submaterials do
+				ent:SetSubMaterial(submaterial[1], submaterial[2])
+			end
+		end
+		
+		if itemVars.SuitClass and GAMEMODE.SuitVariants[itemVars.SuitClass] then
+			local suit = GAMEMODE.SuitVariants[itemVars.SuitClass]
+			if suit.Submaterial then
+				for _,submaterial in next, suit.Submaterial do
+					ent:SetSubMaterial(submaterial[1], submaterial[2])
+				end
+			end
+		end
+		
+		if metaitem.DummyItemUpdate then
+			metaitem.DummyItemUpdate(n, ent)
+		end
+
+		return ent
+	end
+end
+
+function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, newParent)
+	local charId = ply.CharID and ply:CharID() or nil
+	if !charId or charId == 0 then return end
+
+	local charData = kingston.bonemerge.data[charId]
+	if !charData then return end
+
+	local transmittedItems = charData.items
+	if !transmittedItems then return end
+
+	for itemId,itemData in next, transmittedItems do
+		local entity = itemData.entity
+
+		if removeEntities and IsValid(entity) then
+			entity:Remove()
+		end
+
+		if createEntities then
+			itemData.entity = kingston.bonemerge.createEntity(itemData.parent, itemData.class, itemData.vars)
+		end
+
+		if IsValid(newParent) then
+			itemData.entity:SetParent(newParent)
+		end
+	end
+
+	local charParts = charData.parts
+	if !charParts then
+		charParts = {
+			body = {
+				model = ply:Body(),
+			}	
+		}
+
+		charData.parts = charParts
+	end
+
+	for partType,partData in next, charParts do
+		if !partData.model or #partData.model == 0 then continue end
+
+		local ent = ply:CreateNewBonemerge(partData.model)
+		if !ent or !IsValid(ent) then
+			continue -- outside of pvs? creation failed.
+		end
+		
+		if metaitem.Submaterials then
+			for _,submaterial in next, metaitem.Submaterials do
+				ent:SetSubMaterial(submaterial[1], submaterial[2])
 			end
 		end
 	end
 end
 
-local function ProcessBonemergeItems(ply)
-	local ent_found
-	for _,m in ipairs(GAMEMODE.BonemergeItemKeys) do
-		local n = GAMEMODE.BonemergeItems[m]
+// Data handling
+function GM:OnReceiveDummyItem(itemId, itemData)
+	local charId = itemData.CharID
 
-		if !n then continue end
+	kingston.bonemerge.add(charId, itemId, itemData)
+end
 
-		if n.Owner == ply and n.CharID != ply:CharID() then
-			if n.BonemergedEntity then
-				n.BonemergedEntity:Remove()
-			end
-			n.BonemergedEntity = nil
-			table.remove(GAMEMODE.BonemergeItemKeys, n.Key)
-			GAMEMODE.BonemergeItems[m] = nil
-			
-			continue
-		end
-		
-		if n.Owner == ply and (!n.BonemergedEntity or !IsValid(n.BonemergedEntity)) and n.Vars["Equipped"] then
-			local metaitem = GAMEMODE:GetItemByID(n.szClass)
-			if metaitem.Bonemerge then
-				local mdl = metaitem.Bonemerge
-				local scale
-				
-				if metaitem.AllowGender then
-					if ply:Gender() == GENDER_FEMALE then
-						mdl = string.StripExtension(mdl).."_f.mdl"
-					end
-				elseif metaitem.ScaleForGender and ply:Gender() == GENDER_FEMALE then
-					scale = metaitem.ScaleForGender
-				end
-		
-				n.BonemergedEntity = ply:CreateNewBonemerge(mdl, scale)
-				if n.BonemergedEntity then
-					ent_found = true
-				end
-				
-				if !n.BonemergedEntity or !IsValid(n.BonemergedEntity) then
-					continue -- outside of pvs? creation failed.
-				end
+function GM:BonemergeItemAdded(parent, charId, itemId)
+	local charData = kingston.bonemerge.data[charId]
+	if !charData then return end
 
-				if metaitem.RemoveBody and GAMEMODE.BonemergeBodies[ply] then
-					GAMEMODE.BonemergeBodies[ply]:Remove()
-					GAMEMODE.BonemergeBodies[ply] = nil
-				end
-			
-				if metaitem.Bodygroups then
-					for _,bodygroup in next, metaitem.Bodygroups do
-						-- first key in bodygroup is bodygroup index
-						-- second key in bodygroup is bodygroup value
-						
-						n.BonemergedEntity:SetBodygroup(bodygroup[1], bodygroup[2])
-					end
-				end
-				
-				if metaitem.Submaterials then
-					for _,submaterial in next, metaitem.Submaterials do
-						n.BonemergedEntity:SetSubMaterial(submaterial[1], submaterial[2])
-					end
-				end
-				
-				if n.Vars["SuitClass"] and GAMEMODE.SuitVariants[n.Vars["SuitClass"]] then
-					local suit = GAMEMODE.SuitVariants[n.Vars["SuitClass"]]
-					if suit.Submaterial then
-						for _,submaterial in next, suit.Submaterial do
-							n.BonemergedEntity:SetSubMaterial(submaterial[1], submaterial[2])
-						end
-					end
-				end
-				
-				if metaitem.DummyItemUpdate then
-					metaitem.DummyItemUpdate(n, n.BonemergedEntity)
-				end
-			end
-		elseif !n.Vars["Equipped"] and n.BonemergedEntity then
-			n.BonemergedEntity:Remove()
-			n.BonemergedEntity = nil
-		elseif n.Owner == ply and n.BonemergedEntity then
-			ent_found = true
-		elseif !IsValid(n.Owner) and n.CharID == ply:CharID() then
-			n.Owner = ply
-		end
+	local transmittedItems = charData.items
+	if !transmittedItems then return end
+
+	local itemData = transmittedItems[itemId]
+	if !itemData then return end
+
+	itemData.entity = kingston.bonemerge.createEntity(parent, itemData.class, itemData.vars)
+end
+
+function GM:BonemergeItemUpdated(parent, charId, itemId)
+	local charData = kingston.bonemerge.data[charId]
+	if !charData then return end
+
+	local transmittedItems = charData.items
+	if !transmittedItems then return end
+
+	local itemData = transmittedItems[itemId]
+	if !itemData then return end
+
+	local entity = itemData.entity
+	if IsValid(entity) then
+		entity:Remove()
 	end
+
+	itemData.entity = kingston.bonemerge.createEntity(parent, itemData.class, itemData.vars)
+end
+
+// Hooks
+hook.Add("NotifyShouldTransmit", "STALKER.BonemergeUpdate", function(ent, transmit)
+	if !ent:IsPlayer() then return end
+
+	kingston.bonemerge.manageEntities(ent, transmit, !transmit)
+end)
+
+hook.Add("NetworkEntityCreated", "STALKER.BonemergeUpdate", function(ent) 
+	if !ent:IsPlayer() then return end
 	
-	return ent_found
-end
+	kingston.bonemerge.manageEntities(ent, true, true)
+end)
 
-local function ProcessBody(ply)
-	if !GAMEMODE.BodyHidden[ply] and !IsValid(GAMEMODE.BonemergeBodies[ply]) then
-		GAMEMODE.BonemergeBodies[ply] = ply:CreateNewBonemerge(ply:Body())
-		if !IsValid(GAMEMODE.BonemergeBodies[ply]) then return end
-		GAMEMODE.BonemergeBodies[ply]:SetSubMaterial(0, ply:BodySubMat())
-	elseif GAMEMODE.BodyHidden[ply] and IsValid(GAMEMODE.BonemergeBodies[ply]) then
-		GAMEMODE.BonemergeBodies[ply]:Remove()
-		GAMEMODE.BonemergeBodies[ply] = nil
+hook.Add("EntityRemoved", "STALKER.BonemergeUpdate", function(ent)
+	if !ent:IsPlayer() then return end
+
+	kingston.bonemerge.manageEntities(ent, nil, true)
+end)
+
+hook.Add("OnReloaded", "STALKER.BonemergeUpdate", function()
+	for _,ply in ipairs(player.GetHumans()) do
+		if ply:IsDormant() then continue end
+
+		kingston.bonemerge.manageEntities(ply, true, true)
 	end
-end
+end)
 
-local function BonemergeThink()
-	for k,v in ipairs(player.GetAll()) do
-		if !IsValid(v) then continue end
-		if !v.CharID then continue end
-		if v:CharID() <= 0 then continue end
-		if v:IsDormant() then continue end
-		if !GAMEMODE.EfficientModelCheck[v:GetModel()] and !v.CacheCleared then GAMEMODE:RemoveBonemergedItemCache(v) v.CacheCleared = true continue end
-		if v:GetNoDraw() then continue end
-		if #v:Body() == 0 then continue end
-		
-		ProcessBody(v)
-		local ent_found = ProcessBonemergeItems(v)
-		
-		if (!GAMEMODE.BonemergeBodies[v] or !IsValid(GAMEMODE.BonemergeBodies[v])) and !ent_found then
-			GAMEMODE.BodyHidden[v] = false
-			ProcessBody(v)
-		elseif GAMEMODE.BonemergeBodies[v] and IsValid(GAMEMODE.BonemergeBodies[v]) and ent_found and !GAMEMODE.BodyHidden[v] then
-			GAMEMODE.BodyHidden[v] = true
-			ProcessBody(v)
+gameevent.Listen("player_spawn")
+hook.Add("player_spawn", "STALKER.BonemergeUpdate", function(data)
+	local ply = Player(data.userid)
+
+	if !GAMEMODE.EfficientModelCheck[ply:GetModel()] then
+		kingston.bonemerge.manageEntities(ply, nil, true)
+
+		return
+	end
+
+	kingston.bonemerge.manageEntities(ply, true, true)
+end)
+
+gameevent.Listen("entity_killed")
+hook.Add("entity_killed", "STALKER.BonemergeUpdate", function(data)
+	local ent = Entity(data.entindex_killed)
+	if !ent:IsPlayer() then return end
+
+	local ragdoll = ent:GetRagdollEntity()
+	if !IsValid(ragdoll) then return end
+
+	kingston.bonemerge.manageEntities(ent, nil, nil, ragdoll)
+end)
+
+hook.Add("Think", "STALKER.BonemergeRefresh", function()
+	local nextRefresh = GAMEMODE.nextBonemergeRefresh
+	if !nextRefresh then
+		GAMEMODE.nextBonemergeRefresh = CurTime()
+		nextRefresh = GAMEMODE.nextBonemergeRefresh
+	end
+
+	if nextRefresh <= CurTime() then
+		for _,ply in ipairs(player.GetHumans()) do
+			if ply:IsDormant() then continue end
+
+			kingston.bonemerge.manageEntities(ply, true, true)
 		end
-	end
-end
-hook.Add("Think", "STALKER.BonemergeThink", BonemergeThink)
 
-local function HandleBodySubMatChange(ply, key, value)
-	if key == "BodySubMat" then
-		if IsValid(GAMEMODE.BonemergeBodies[ply]) then
-			GAMEMODE.BonemergeBodies[ply]:SetSubMaterial(0, value)
-		end
+		GAMEMODE.nextBonemergeRefresh = CurTime() + 300
 	end
-end
-hook.Add("PlayerAccessorChanged", "STALKER.HandleBodySubMatChange", HandleBodySubMatChange)
+end)
 
-local function DrawBonemergedShadows(ply)
-	if !IsValid(ply) or !ply:Alive() then return end
-	
-	if IsValid(GAMEMODE.BonemergeBodies[ply]) then
-		GAMEMODE.BonemergeBodies[ply]:CreateShadow()
+gameevent.Listen("player_disconnect")
+hook.Add("player_disconnect", "STALKER.BonemergeUpdate", function(data)
+	local ply = Player(data.userid)
+	if !IsValid(ply) then return end
+
+	local charId = ply:CharID()
+	if charId == 0 then return end
+
+	local charData = kingston.bonemerge.data[charId]
+	if !charData then return end
+
+	local transmittedItems = charData.items
+	if !transmittedItems then return end
+
+	for itemId,itemData in next, transmittedItems do
+		kingston.bonemerge.remove(charId, itemId)
 	end
-	
-	for _,m in ipairs(GAMEMODE.BonemergeItemKeys) do
-		local n = GAMEMODE.BonemergeItems[m]
+end)
 
-		if !n then continue end
+hook.Add("PlayerModelChanged", "STALKER.BonemergeUpdate", function(ply)
+	if !GAMEMODE.EfficientModelCheck[ply:GetModel()] then
+		kingston.bonemerge.manageEntities(ply, nil, true)
 
-		if n.Owner == ply and IsValid(n.BonemergedEntity) and n.Vars["Equipped"] then
-			n.BonemergedEntity:CreateShadow()
-		end
+		return
 	end
-end
-hook.Add("PostPlayerDraw", "STALKER.DrawBonemergedShadows", DrawBonemergedShadows)
+
+	kingston.bonemerge.manageEntities(ply, true, true)
+end)
