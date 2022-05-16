@@ -205,11 +205,7 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 			continue -- outside of pvs? creation failed.
 		end
 		
-		if metaitem.Submaterials then
-			for _,submaterial in next, metaitem.Submaterials do
-				ent:SetSubMaterial(submaterial[1], submaterial[2])
-			end
-		end
+		ent:SetSubMaterial(0, ply:BodySubMat())
 	end
 end
 
