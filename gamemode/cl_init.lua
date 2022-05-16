@@ -238,6 +238,13 @@ local function zcSendCustomPrices(len)
 end
 net.Receive("zcSendCustomPrices", zcSendCustomPrices)
 
+local function PlayerModelChanged(len)
+	local ply = net.ReadEntity()
+
+	hook.Run("PlayerModelChanged", ply)
+end
+net.Receive("PlayerModelChanged", PlayerModelChanged)
+
 hook.Add("Think", "STALKER.ScreenResolutionChange", function()
 	if ScrW() != GAMEMODE.LastScrW or ScrH() != GAMEMODE.LastScrH then
 		hook.Run("ScreenResolutionChanged")

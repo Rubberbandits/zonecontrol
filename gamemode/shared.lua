@@ -175,6 +175,10 @@ function IsValidModel( szModelPath )
 
 end
 
+if SERVER then
+	util.AddNetworkString("PlayerModelChanged")
+end
+
 function meta:SetModelCC( mdl )
 	if !mdl then return end
 	
@@ -185,46 +189,17 @@ function meta:SetModelCC( mdl )
 		self:SetSubMaterial( i, "" );
 	end
 	
-	if( GAMEMODE.ModelFuncs[mdl] ) then
-		
-		GAMEMODE.ModelFuncs[mdl]( self );
-		
-	end
-	
-	if( GAMEMODE.ModelColors[mdl] ) then
-		
-		self:SetPlayerColor( GAMEMODE.ModelColors[mdl] );
-		
-	end
-	
 	if( self:GetViewModel( 0 ) and self:GetViewModel( 0 ):IsValid() ) then
 		
 		self:SetupHands();
 		
 	end
-	
-	if( string.find( mdl, "group03m" ) ) then
 		
-		self:SetArmor( 75 );
-		
-	elseif( string.find( mdl, "group03" ) ) then
-		
-		self:SetArmor( 100 );
-		
-	elseif( string.find( mdl, "police" ) ) then
-		
-		self:SetArmor( 100 );
-		
-	elseif( string.find( mdl, "combine_soldier" ) or string.find( mdl, "combine_super_soldier" ) ) then
-		
-		self:SetArmor( 100 );
-		
-	else
-		
-		self:SetArmor( 0 );
-		
-	end
-	
+	self:SetArmor( 0 );
+
+	net.Start("PlayerModelChanged")
+		net.WriteEntity(self)
+	net.Broadcast()
 end
 
 GM.ModelHands = {}
