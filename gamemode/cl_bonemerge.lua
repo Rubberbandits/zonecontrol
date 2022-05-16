@@ -172,7 +172,7 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 	print(debug.traceback())
 
 	local charId = ply.CharID and ply:CharID() or nil
-	if !charId or charId == 0 then print("invalid charId") return end
+	if !charId or charId == 0 then return end
 
 	local charData = kingston.bonemerge.data[charId]
 	if !charData then
@@ -184,7 +184,7 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 	end
 
 	local transmittedItems = charData.items
-	if !transmittedItems then print("no transmittedItems") return end
+	if !transmittedItems then return end
 
 	local hideBody = false
 	for itemId,itemData in next, transmittedItems do
@@ -240,6 +240,28 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 
 		if IsValid(newParent) and IsValid(partData.entity) then
 			partData.entity:SetParent(newParent)
+		end
+	end
+
+	// Garbage collection
+	for _,ent in next, ply:GetChildren() do
+		if ent:GetClass() != "class C_BaseFlex" then continue end
+	
+		local foundEntity = false
+		for _,itemData in next, transmittedItems then
+			if itemData.entity == ent then
+				foundEntity = true
+			end
+		end
+
+		for _,partData in next, charParts do
+			if partData.entity == ent then
+				foundEntity = true
+			end
+		end
+
+		if !foundEntity then
+			ent:Remove()
 		end
 	end
 end
