@@ -33,8 +33,10 @@ function ITEM:DynamicFunctions()
                     item:RemoveItem()
                 end
 
-                item:Owner():GiveItem("coffee_hot", {Stacked = 4})
-            end
+				if SERVER then
+                	item:Owner():GiveItem("coffee_hot", {Stacked = 4})
+				end
+			end
         }
     }
 end
