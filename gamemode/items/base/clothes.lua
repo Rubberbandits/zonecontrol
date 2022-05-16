@@ -379,7 +379,7 @@ end
 
 function BASE:DummyItemUpdate(itemClass, itemVars, ent)
 	local metaitem = GAMEMODE:GetItemByID(itemClass)
-	print(itemClass)
+	PrintTable(itemClass)
 	
 	if metaitem.HelmetBodygroup then
 		if !IsValid(ent) then return end
