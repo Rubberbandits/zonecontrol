@@ -44,8 +44,7 @@ BASE.functions.Equip = {
 		
 		if SERVER then
 			if metaitem.WearModel then
-				item:Owner():SetModelCC( item:GetWearModel() );
-				item:Owner().Uniform = item:GetWearModel();
+				item:Owner():SetModelCC( item.WearModel );
 			end
 			
 			item:Transmit()
@@ -131,7 +130,6 @@ BASE.functions.Unequip = {
 		if SERVER then
 			if item.WearModel then
 				item:Owner():SetModelCC( item:Owner().CharModel );
-				item:Owner().Uniform = nil;
 				item:Owner():SetBody( item:Owner():GetCharFromID( item:Owner():CharID() ).Body );
 			elseif metaitem.Bonemerge then
 				item:Transmit()
