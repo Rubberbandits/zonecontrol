@@ -301,12 +301,14 @@ hook.Add("entity_killed", "STALKER.BonemergeUpdate", function(data)
 	print(ent)
 
 	// closure, but we need to wait one tick for the ragdoll to be created
-	timer.Simple(0, function()
+	timer.Simple(1, function()
 		print("timer")
 
 		local ragdoll = ent:GetRagdollEntity()
-		if !IsValid(ragdoll) then return end
+		if !IsValid(ragdoll) then print("no ragdoll") return end
 	
+		print("update entities")
+
 		kingston.bonemerge.manageEntities(ent, nil, nil, ragdoll)
 	end)
 end)
