@@ -97,7 +97,11 @@ BASE.functions.RemoveHelmet = {
 		
 		if SERVER then
 			item:Transmit()
-			item:Owner():SetSubMaterial()
+
+			for index,material in next, item:Owner():GetMaterials() do
+				item:Owner():SetSubMaterial(index - 1, material)
+			end
+
 			item:Owner():SetSkin(item:Owner():GetCharFromID( item:Owner():CharID() ).Skingroup)
 		end
 		
