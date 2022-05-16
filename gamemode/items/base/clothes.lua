@@ -381,16 +381,19 @@ function BASE.DummyItemUpdate(itemClass, itemVars, ent)
 	local metaitem = GAMEMODE:GetItemByID(itemClass)
 	
 	if metaitem.HelmetBodygroup then
-		if !IsValid(ent) then return end
+		if !IsValid(ent) then print("no ent") return end
 	
 		if itemVars["HelmetEquipped"] then
+			print("put helmet on")
 			ent:SetBodygroup(metaitem.HelmetBodygroup[1], metaitem.HelmetBodygroup[2])
 		else
+			print("take helmet off")
 			if metaitem.Bodygroups then
 				for _,bodygroup in next, metaitem.Bodygroups do
 					ent:SetBodygroup(bodygroup[1], bodygroup[2])
 				end
 			else
+				print("fallback bodygroups")
 				ent:SetBodygroup(0, 0)
 			end
 		end
