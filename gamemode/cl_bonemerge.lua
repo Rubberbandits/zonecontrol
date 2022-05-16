@@ -274,16 +274,7 @@ function GM:OnReceiveDummyItem(itemId, itemData)
 end
 
 function GM:BonemergeItemAdded(parent, charId, itemId)
-	local charData = kingston.bonemerge.data[charId]
-	if !charData then return end
-
-	local transmittedItems = charData.items
-	if !transmittedItems then return end
-
-	local itemData = transmittedItems[itemId]
-	if !itemData then return end
-
-	itemData.entity = kingston.bonemerge.createEntity(parent, itemData.class, itemData.vars)
+	kingston.bonemerge.manageEntities(parent, true, true)
 end
 
 function GM:BonemergeItemUpdated(parent, charId, itemId)
@@ -295,23 +286,7 @@ function GM:BonemergeItemUpdated(parent, charId, itemId)
 		itemId
 	))
 
-	local charData = kingston.bonemerge.data[charId]
-	if !charData then return end
-
-	local transmittedItems = charData.items
-	if !transmittedItems then return end
-
-	local itemData = transmittedItems[itemId]
-	if !itemData then return end
-
-	local entity = itemData.entity
-	if IsValid(entity) then
-		entity:Remove()
-	end
-
-	PrintTable(itemData)
-
-	itemData.entity = kingston.bonemerge.createEntity(parent, itemData.class, itemData.vars)
+	kingston.bonemerge.manageEntities(parent, true, true)
 end
 
 // Hooks
