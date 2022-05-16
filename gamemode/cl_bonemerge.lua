@@ -381,7 +381,7 @@ hook.Add("PlayerAccessorChanged", "STALKER.BonemergeUpdate", function(ply, key, 
 
 	if value != -1 then
 		local ragdoll = ply:Ragdoll()
-		if !IsValid(ragdoll) then return end
+		if !IsValid(ragdoll) then print("no valid ragdoll") return end
 
 		kingston.bonemerge.manageEntities(ply, nil, nil, ragdoll)
 	else
