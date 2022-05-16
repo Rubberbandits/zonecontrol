@@ -287,6 +287,14 @@ function GM:BonemergeItemAdded(parent, charId, itemId)
 end
 
 function GM:BonemergeItemUpdated(parent, charId, itemId)
+	print("BonemergeItemUpdated")
+	print(Format(
+		"Subject: %s\ncharId: %d\nitemId: %s", 
+		parent:RPName(), 
+		charId,
+		itemId
+	))
+
 	local charData = kingston.bonemerge.data[charId]
 	if !charData then return end
 
@@ -300,6 +308,8 @@ function GM:BonemergeItemUpdated(parent, charId, itemId)
 	if IsValid(entity) then
 		entity:Remove()
 	end
+
+	PrintTable(itemData)
 
 	itemData.entity = kingston.bonemerge.createEntity(parent, itemData.class, itemData.vars)
 end
