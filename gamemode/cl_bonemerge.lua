@@ -298,8 +298,12 @@ hook.Add("entity_killed", "STALKER.BonemergeUpdate", function(data)
 	local ent = Entity(data.entindex_killed)
 	if !ent:IsPlayer() then return end
 
+	print(ent)
+
 	// closure, but we need to wait one tick for the ragdoll to be created
 	timer.Simple(0, function()
+		print("timer")
+
 		local ragdoll = ent:GetRagdollEntity()
 		if !IsValid(ragdoll) then return end
 	
