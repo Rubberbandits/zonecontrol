@@ -376,14 +376,14 @@ function BASE:GetHands()
 	
 	return suit.HandsModel or self.HandsModel
 end
--- self in this func is dummy item. only has Owner, Vars, and szClass. Clientside only.
-function BASE:DummyItemUpdate(ent)
-	local metaitem = GAMEMODE:GetItemByID(self.szClass)
+
+function BASE:DummyItemUpdate(itemClass, itemVars, ent)
+	local metaitem = GAMEMODE:GetItemByID(itemClass)
 	
 	if metaitem.HelmetBodygroup then
 		if !IsValid(ent) then return end
 	
-		if self.Vars["HelmetEquipped"] then
+		if itemVars["HelmetEquipped"] then
 			ent:SetBodygroup(metaitem.HelmetBodygroup[1], metaitem.HelmetBodygroup[2])
 		else
 			if metaitem.Bodygroups then
