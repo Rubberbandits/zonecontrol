@@ -377,9 +377,8 @@ function BASE:GetHands()
 	return suit.HandsModel or self.HandsModel
 end
 
-function BASE:DummyItemUpdate(itemClass, itemVars, ent)
+function BASE.DummyItemUpdate(itemClass, itemVars, ent)
 	local metaitem = GAMEMODE:GetItemByID(itemClass)
-	PrintTable(itemClass)
 	
 	if metaitem.HelmetBodygroup then
 		if !IsValid(ent) then return end
