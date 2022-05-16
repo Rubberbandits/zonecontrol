@@ -194,7 +194,7 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 			entity:Remove()
 		end
 
-		if createEntities then
+		if createEntities and GAMEMODE.EfficientModelCheck[ply:GetModel()] then
 			itemData.entity = kingston.bonemerge.createEntity(itemData.parent, itemData.class, itemData.vars)
 
 			if itemData.removeBody and itemData.vars.Equipped then
@@ -225,7 +225,7 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 			entity:Remove()
 		end
 
-		if createEntities and !hideBody then
+		if createEntities and !hideBody and GAMEMODE.EfficientModelCheck[ply:GetModel()] then
 			if !partData.model or #partData.model == 0 then continue end
 
 			local ent = ply:CreateNewBonemerge(partData.model)
