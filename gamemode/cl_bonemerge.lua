@@ -49,15 +49,15 @@ kingston.bonemerge.data = kingston.bonemerge.data or {}
 function kingston.bonemerge.add(charId, itemId, itemData)
 	local charData = kingston.bonemerge.data[charId]
 	if !charData then
-		kingston.bonemerge.data[charId] = {}
+		kingston.bonemerge.data[charId] = {
+			items = {}
+		}
+
 		charData = kingston.bonemerge.data[charId]
 	end
 
 	local transmittedItems = kingston.bonemerge.data[charId].items
-	if !transmittedItems then
-		kingston.bonemerge.data[charId].items = {}
-		transmittedItems = kingston.bonemerge.data[charId].items
-	end
+	if !transmittedItems then return end
 
 	local itemExists = transmittedItems[itemId] and true or false
 	local parent = itemData.Owner
@@ -156,13 +156,19 @@ end
 
 function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, newParent)
 	local charId = ply.CharID and ply:CharID() or nil
-	if !charId or charId == 0 then return end
+	if !charId or charId == 0 then print("invalid charId") return end
 
 	local charData = kingston.bonemerge.data[charId]
-	if !charData then return end
+	if !charData then
+		charData = {
+			items = {}
+		}
+
+		kingston.bonemerge.data[charId] = charData
+	end
 
 	local transmittedItems = charData.items
-	if !transmittedItems then return end
+	if !transmittedItems then print("no transmittedItems") return end
 
 	for itemId,itemData in next, transmittedItems do
 		local entity = itemData.entity
@@ -334,6 +340,8 @@ hook.Add("player_disconnect", "STALKER.BonemergeUpdate", function(data)
 end)
 
 hook.Add("PlayerModelChanged", "STALKER.BonemergeUpdate", function(ply)
+	if !IsValid(ply) then return end
+	
 	if !GAMEMODE.EfficientModelCheck[ply:GetModel()] then
 		kingston.bonemerge.manageEntities(ply, nil, true)
 
