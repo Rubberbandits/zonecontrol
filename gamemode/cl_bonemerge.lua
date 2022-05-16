@@ -298,10 +298,13 @@ hook.Add("entity_killed", "STALKER.BonemergeUpdate", function(data)
 	local ent = Entity(data.entindex_killed)
 	if !ent:IsPlayer() then return end
 
-	local ragdoll = ent:GetRagdollEntity()
-	if !IsValid(ragdoll) then return end
-
-	kingston.bonemerge.manageEntities(ent, nil, nil, ragdoll)
+	// closure, but we need to wait one tick for the ragdoll to be created
+	timer.Simple(0, function()
+		local ragdoll = ent:GetRagdollEntity()
+		if !IsValid(ragdoll) then return end
+	
+		kingston.bonemerge.manageEntities(ent, nil, nil, ragdoll)
+	end)
 end)
 
 hook.Add("Think", "STALKER.BonemergeRefresh", function()
@@ -346,7 +349,6 @@ hook.Add("PlayerModelChanged", "STALKER.BonemergeUpdate", function(ply)
 	
 	if !GAMEMODE.EfficientModelCheck[ply:GetModel()] then
 		kingston.bonemerge.manageEntities(ply, nil, true)
-
 		return
 	end
 
