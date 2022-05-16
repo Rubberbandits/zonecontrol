@@ -164,6 +164,7 @@ hook.Add( "PostDrawCharPanel", "charpanel", function( panel, entity )
 end )
 
 function PANEL:InitializeModel( mdl, parent, scale )
+	if !mdl then return end
 
 	if( !self.modelList ) then self.modelList = {} end;
 
