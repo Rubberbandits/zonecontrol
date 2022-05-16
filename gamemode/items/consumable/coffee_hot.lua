@@ -1,0 +1,14 @@
+ITEM.Name =  "Freshly Brewed Coffee"
+ITEM.Desc =  "A piping hot cup of black coffee. Ethically sourced for sale at your local Stalkerbucks."
+ITEM.Model =  "models/props_junk/garbage_coffeemug001a.mdl"
+ITEM.Weight =  0.1
+ITEM.FOV =  6
+ITEM.CamPos =  Vector( 50, 50, 50 )
+ITEM.LookAt =  Vector( 0, 0, 0 )
+ITEM.BulkPrice = 250
+ITEM.License = "F"
+ITEM.ConsumeText = "You blow on the rim of the cup, but your impatience prompts you to just dive right in. It burns your lips, but it's oh so good. You are humbly reminded of all the things in your past life that you took for granted, and reconcile that things in the Zone are only as bad as you allow them to be."
+ITEM.UseText = "Drink"
+ITEM.HungerReduce = 10
+ITEM.Rarity = 1
+ITEM.AllowRandomSpawn = false

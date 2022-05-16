@@ -9,6 +9,7 @@ ITEM.ConsumeText = "You light and smoke a cigarette. You feel more relaxed at th
 ITEM.UseText = "Smoke"
 ITEM.RadiationHealAmount = 5
 ITEM.HungerReduce = -5
+ITEM.License = "F"
 
 function ITEM:DynamicFunctions()
     return {

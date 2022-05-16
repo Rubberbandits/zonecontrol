@@ -1,0 +1,14 @@
+ITEM.Name =  "Freshly Brewed Tea"
+ITEM.Desc =  "A mug of piping hot green tea."
+ITEM.Model =  "models/props_junk/garbage_coffeemug001a.mdl"
+ITEM.Weight =  0.1
+ITEM.FOV =  6
+ITEM.CamPos =  Vector( 50, 50, 50 )
+ITEM.LookAt =  Vector( 0, 0, 0 )
+ITEM.BulkPrice = 5
+ITEM.License = "F"
+ITEM.ConsumeText = "You blow on the rim of the mug, then carefully slurp up the hot hot liquid. It soothes your throat. This would be even better with honey and lemon, but it's already a welcome treat. You're reminded that warmth is one of humanity's greatest discoveries."
+ITEM.UseText = "Drink"
+ITEM.HungerReduce = 5
+ITEM.Rarity = 1
+ITEM.AllowRandomSpawn = true
