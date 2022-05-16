@@ -61,16 +61,18 @@ function kingston.bonemerge.add(charId, itemId, itemData)
 
 	local itemExists = transmittedItems[itemId] and true or false
 	local parent = itemData.Owner
+	
+	local metaitem = GAMEMODE:GetItemByID(itemData.szClass)
 	transmittedItems[itemId] = {
 		parent = parent,
 		class = itemData.szClass,
 		vars = itemData.Vars,
 		charId = charId,
-		itemId = itemId
+		itemId = itemId,
+		removeBody = metaitem.RemoveBody
 	}
 	
 	-- cant use full item info
-	local metaitem = GAMEMODE:GetItemByID(itemData.szClass)
 	if metaitem.DummyItemUpdate then
 		metaitem.DummyItemUpdate(itemData.szClass, itemData.Vars)
 	end
@@ -174,6 +176,7 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 	local transmittedItems = charData.items
 	if !transmittedItems then print("no transmittedItems") return end
 
+	local hideBody = false
 	for itemId,itemData in next, transmittedItems do
 		local entity = itemData.entity
 
@@ -183,6 +186,10 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 
 		if createEntities then
 			itemData.entity = kingston.bonemerge.createEntity(itemData.parent, itemData.class, itemData.vars)
+
+			if itemData.removeBody and itemData.vars.Equipped then
+				hideBody = true
+			end
 		end
 
 		if IsValid(newParent) then
@@ -202,14 +209,28 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 	end
 
 	for partType,partData in next, charParts do
-		if !partData.model or #partData.model == 0 then continue end
+		local entity = partData.entity
 
-		local ent = ply:CreateNewBonemerge(partData.model)
-		if !ent or !IsValid(ent) then
-			continue -- outside of pvs? creation failed.
+		if removeEntities and IsValid(entity) then
+			entity:Remove()
 		end
-		
-		ent:SetSubMaterial(0, ply:BodySubMat())
+
+		if createEntities and !hideBody then
+			if !partData.model or #partData.model == 0 then continue end
+
+			local ent = ply:CreateNewBonemerge(partData.model)
+			if !ent or !IsValid(ent) then
+				continue -- outside of pvs? creation failed.
+			end
+			
+			ent:SetSubMaterial(0, ply:BodySubMat())
+
+			partData.entity = ent
+		end
+
+		if IsValid(newParent) then
+			partData.entity:SetParent(newParent)
+		end
 	end
 end
 
@@ -298,18 +319,13 @@ hook.Add("entity_killed", "STALKER.BonemergeUpdate", function(data)
 	local ent = Entity(data.entindex_killed)
 	if !ent:IsPlayer() then return end
 
-	print(ent)
-
-	// closure, but we need to wait one tick for the ragdoll to be created
-	timer.Simple(1, function()
-		print("timer")
-
+	// closure, but we need to wait for the ragdoll to be created
+	timer.Create("BonemergeSwitchParent"..data.entindex_killed, 0, 0, function()
 		local ragdoll = ent:GetRagdollEntity()
-		if !IsValid(ragdoll) then print("no ragdoll") return end
-	
-		print("update entities")
+		if !IsValid(ragdoll) then return end
 
 		kingston.bonemerge.manageEntities(ent, nil, nil, ragdoll)
+		timer.Remove("BonemergeSwitchParent"..data.entindex_killed)
 	end)
 end)
 
