@@ -286,7 +286,7 @@ end
 hook.Add("NotifyShouldTransmit", "STALKER.BonemergeUpdate", function(ent, transmit)
 	if !ent:IsPlayer() then return end
 
-	kingston.bonemerge.manageEntities(ent, transmit, !transmit)
+	kingston.bonemerge.manageEntities(ent, transmit, true)
 end)
 
 hook.Add("NetworkEntityCreated", "STALKER.BonemergeUpdate", function(ent) 
