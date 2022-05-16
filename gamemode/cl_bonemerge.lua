@@ -104,22 +104,26 @@ function kingston.bonemerge.remove(charId, itemId)
 end
 
 function kingston.bonemerge.createEntity(ply, itemClass, itemVars)
+	if !IsValid(ply) then return end
+
 	local metaitem = GAMEMODE:GetItemByID(itemClass)
 	if metaitem.Bonemerge then
 		local mdl = metaitem.Bonemerge
 		local scale
 		
-		if metaitem.AllowGender then
-			if ply:Gender() == GENDER_FEMALE then
-				mdl = string.StripExtension(mdl).."_f.mdl"
+		if ply.Gender then
+			if metaitem.AllowGender then
+				if ply:Gender() == GENDER_FEMALE then
+					mdl = string.StripExtension(mdl).."_f.mdl"
+				end
+			elseif metaitem.ScaleForGender and ply:Gender() == GENDER_FEMALE then
+				scale = metaitem.ScaleForGender
 			end
-		elseif metaitem.ScaleForGender and ply:Gender() == GENDER_FEMALE then
-			scale = metaitem.ScaleForGender
-		end
 
-		local ent = ply:CreateNewBonemerge(mdl, scale)
-		if !ent or !IsValid(ent) then
-			return -- outside of pvs? creation failed.
+			local ent = ply:CreateNewBonemerge(mdl, scale)
+			if !ent or !IsValid(ent) then
+				return -- outside of pvs? creation failed.
+			end
 		end
 	
 		if metaitem.Bodygroups then
