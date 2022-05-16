@@ -248,7 +248,7 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 		if ent:GetClass() != "class C_BaseFlex" then continue end
 	
 		local foundEntity = false
-		for _,itemData in next, transmittedItems then
+		for _,itemData in next, transmittedItems do
 			if itemData.entity == ent then
 				foundEntity = true
 			end
