@@ -277,6 +277,7 @@ end)
 gameevent.Listen("player_spawn")
 hook.Add("player_spawn", "STALKER.BonemergeUpdate", function(data)
 	local ply = Player(data.userid)
+	if !IsValid(ply) then return end
 
 	if !GAMEMODE.EfficientModelCheck[ply:GetModel()] then
 		kingston.bonemerge.manageEntities(ply, nil, true)
