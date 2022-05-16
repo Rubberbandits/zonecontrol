@@ -385,7 +385,7 @@ function BASE.DummyItemUpdate(itemClass, itemVars, ent)
 	local metaitem = GAMEMODE:GetItemByID(itemClass)
 	
 	if metaitem.HelmetBodygroup then
-		if !IsValid(ent) then print("no ent") return end
+		if !IsValid(ent) then return end
 	
 		if itemVars["HelmetEquipped"] then
 			ent:SetBodygroup(metaitem.HelmetBodygroup[1], metaitem.HelmetBodygroup[2])
