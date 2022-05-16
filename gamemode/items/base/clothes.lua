@@ -44,8 +44,7 @@ BASE.functions.Equip = {
 		
 		if SERVER then
 			if metaitem.WearModel then
-				item:Owner():SetModelCC( item:GetWearModel() );
-				item:Owner().Uniform = item:GetWearModel();
+				item:Owner():SetModelCC( item.WearModel );
 			end
 			
 			item:Transmit()
@@ -98,7 +97,11 @@ BASE.functions.RemoveHelmet = {
 		
 		if SERVER then
 			item:Transmit()
-			item:Owner():SetSubMaterial()
+
+			for index,material in next, item:Owner():GetMaterials() do
+				item:Owner():SetSubMaterial(index - 1, material)
+			end
+
 			item:Owner():SetSkin(item:Owner():GetCharFromID( item:Owner():CharID() ).Skingroup)
 		end
 		
@@ -131,7 +134,6 @@ BASE.functions.Unequip = {
 		if SERVER then
 			if item.WearModel then
 				item:Owner():SetModelCC( item:Owner().CharModel );
-				item:Owner().Uniform = nil;
 				item:Owner():SetBody( item:Owner():GetCharFromID( item:Owner():CharID() ).Body );
 			elseif metaitem.Bonemerge then
 				item:Transmit()
@@ -378,14 +380,14 @@ function BASE:GetHands()
 	
 	return suit.HandsModel or self.HandsModel
 end
--- self in this func is dummy item. only has Owner, Vars, and szClass. Clientside only.
-function BASE:DummyItemUpdate(ent)
-	local metaitem = GAMEMODE:GetItemByID(self.szClass)
+
+function BASE.DummyItemUpdate(itemClass, itemVars, ent)
+	local metaitem = GAMEMODE:GetItemByID(itemClass)
 	
 	if metaitem.HelmetBodygroup then
 		if !IsValid(ent) then return end
 	
-		if self.Vars["HelmetEquipped"] then
+		if itemVars["HelmetEquipped"] then
 			ent:SetBodygroup(metaitem.HelmetBodygroup[1], metaitem.HelmetBodygroup[2])
 		else
 			if metaitem.Bodygroups then
