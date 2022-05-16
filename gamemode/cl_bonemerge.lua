@@ -72,7 +72,7 @@ function kingston.bonemerge.add(charId, itemId, itemData)
 	-- cant use full item info
 	local metaitem = GAMEMODE:GetItemByID(itemData.szClass)
 	if metaitem.DummyItemUpdate then
-		metaitem.DummyItemUpdate(itemData)
+		metaitem.DummyItemUpdate(itemData.szClass, itemData.Vars)
 	end
 
 	if itemExists then
@@ -151,7 +151,7 @@ function kingston.bonemerge.createEntity(ply, itemClass, itemVars)
 		end
 		
 		if metaitem.DummyItemUpdate then
-			metaitem.DummyItemUpdate(metaitem, ent)
+			metaitem.DummyItemUpdate(itemClass, itemVars, ent)
 		end
 
 		return ent
