@@ -202,7 +202,7 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 			end
 		end
 
-		if IsValid(newParent) then
+		if IsValid(newParent) and IsValid(itemData.entity) then
 			itemData.entity:SetParent(newParent)
 		end
 	end
