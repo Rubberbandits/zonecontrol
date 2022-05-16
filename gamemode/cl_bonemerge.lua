@@ -119,11 +119,11 @@ function kingston.bonemerge.createEntity(ply, itemClass, itemVars)
 			elseif metaitem.ScaleForGender and ply:Gender() == GENDER_FEMALE then
 				scale = metaitem.ScaleForGender
 			end
+		end
 
-			local ent = ply:CreateNewBonemerge(mdl, scale)
-			if !ent or !IsValid(ent) then
-				return -- outside of pvs? creation failed.
-			end
+		local ent = ply:CreateNewBonemerge(mdl, scale)
+		if !ent or !IsValid(ent) then
+			return -- outside of pvs? creation failed.
 		end
 	
 		if metaitem.Bodygroups then
