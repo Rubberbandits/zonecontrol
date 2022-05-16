@@ -161,6 +161,16 @@ function kingston.bonemerge.createEntity(ply, itemClass, itemVars)
 end
 
 function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, newParent)
+	print("bonemerge.manageEntities")
+	print(Format(
+		"Subject: %s\nCreate entities: %s\nRemove entities: %s\nNew parent: %s", 
+		ply:RPName(), 
+		tostring(createEntities),
+		tostring(removeEntities),
+		newParent
+	))
+	print(debug.traceback())
+
 	local charId = ply.CharID and ply:CharID() or nil
 	if !charId or charId == 0 then print("invalid charId") return end
 
