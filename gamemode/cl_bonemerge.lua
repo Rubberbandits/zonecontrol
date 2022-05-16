@@ -151,7 +151,7 @@ function kingston.bonemerge.createEntity(ply, itemClass, itemVars)
 		end
 		
 		if metaitem.DummyItemUpdate then
-			metaitem.DummyItemUpdate(n, ent)
+			metaitem.DummyItemUpdate(metaitem, ent)
 		end
 
 		return ent
@@ -272,6 +272,7 @@ end)
 
 hook.Add("OnReloaded", "STALKER.BonemergeUpdate", function()
 	for _,ply in ipairs(player.GetHumans()) do
+		if !IsValid(ply) then continue end
 		if ply:IsDormant() then continue end
 
 		kingston.bonemerge.manageEntities(ply, true, true)
