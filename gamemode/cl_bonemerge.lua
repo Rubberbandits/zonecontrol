@@ -382,10 +382,10 @@ hook.Add("PlayerAccessorChanged", "STALKER.BonemergeUpdate", function(ply, key, 
 	if value != -1 then
 		// closure, but we need to wait for the ragdoll to be created
 		timer.Create("BonemergeSwitchParent"..value, 0, 0, function()
-			local ragdoll = ent:Ragdoll()
+			local ragdoll = ply:Ragdoll()
 			if !IsValid(ragdoll) then return end
 
-			kingston.bonemerge.manageEntities(ent, nil, nil, ragdoll)
+			kingston.bonemerge.manageEntities(ply, nil, nil, ragdoll)
 			timer.Remove("BonemergeSwitchParent"..value)
 		end)
 	else
