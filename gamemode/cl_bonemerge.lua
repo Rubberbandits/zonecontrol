@@ -392,3 +392,33 @@ hook.Add("PlayerAccessorChanged", "STALKER.BonemergeUpdate", function(ply, key, 
 		kingston.bonemerge.manageEntities(ply, true, true)
 	end
 end)
+
+local function DrawBonemergedShadows(ply)
+	if cookie.GetNumber("zc_settings_bonemerge_shadows", 1) == 0 then return end
+	if !IsValid(ply) or !ply:Alive() then return end
+	
+	local charId = ply:CharID()
+	if !charId or charId == 0 then return end
+
+	local charData = kingston.bonemerge.data[charId]
+	if !charData then return end
+
+	local charParts = charData.parts
+	if !charParts then return end
+
+	local bodyEntity = charParts.body.entity
+	if IsValid(bodyEntity) then
+		bodyEntity:CreateShadow()
+	end
+
+	local charItems = charData.items
+	if #charItems == 0 then return end
+
+	for _,itemData in next, charItems do
+		local entity = itemData.entity
+		if !IsValid(entity) then continue end
+
+		entity:CreateShadow()
+	end
+end
+hook.Add("PostPlayerDraw", "STALKER.DrawBonemergedShadows", DrawBonemergedShadows)
