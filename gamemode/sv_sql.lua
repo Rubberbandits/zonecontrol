@@ -499,6 +499,10 @@ function meta:PostLoadCharsInfo()
 				nStartType = CC_SELECT;
 			end
 		end
+
+		if game.GetMap() == "gm_construct" then
+			nStartType = CC_CREATESELECT
+		end
 		
 		netstream.Start( self, "nOpenCharCreate", nStartType );
 		
@@ -638,7 +642,7 @@ end
 
 function meta:SaveNewCharacter( name, title, titleone, titletwo, model, trait, skin, gear )
 	
-	if (GAMEMODE.CurrentLocation or 0) != GAMEMODE.MainServerLocation then return end
+	if game.GetMap() != "gm_construct" and (GAMEMODE.CurrentLocation or 0) != GAMEMODE.MainServerLocation then return end
 
 	local d = os.date( "!%m/%d/%y %H:%M:%S" );
 	local ply = self;
