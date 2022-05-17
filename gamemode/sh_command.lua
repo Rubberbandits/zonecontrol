@@ -382,10 +382,14 @@ kingston.command.register("anorak", {
 })
 
 kingston.command.register("cmdhelp", {
+	description = "Find a command via a search term or list all commands.",
+	syntax = "<string search_term>",
 	on_run = function(ply, args)
 		local commands = {}
 
 		for cmd,data in SortedPairs(kingston.command.types) do
+			if args[1] and !string.match(cmd, args[1]) then continue end
+
 			table.insert(commands, Format("/%s %s\n\t\t%s", cmd, data.syntax, data.description))
 		end
 
