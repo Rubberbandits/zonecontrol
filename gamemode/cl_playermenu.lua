@@ -564,56 +564,67 @@ function GM:PMCreateBio()
 		return LocalPlayer():GetPlayerColor();
 		
 	end
-	if self.BonemergeBodies[LocalPlayer()] and IsValid(self.BonemergeBodies[LocalPlayer()]) then
-		CCP.PlayerMenu.CharacterModel:InitializeModel(self.BonemergeBodies[LocalPlayer()]:GetModel(), CCP.PlayerMenu.CharacterModel.Entity)
-	end
-	for id,item in next, GAMEMODE.BonemergeItems do
-		if item.Owner != LocalPlayer() then continue end
-		if !item.Vars["Equipped"] then continue end
-		local metaitem = GAMEMODE:GetItemByID(item.szClass)
-		local mdl_str = metaitem.Bonemerge
-		local scale
-		
-		if metaitem.AllowGender then
-			if LocalPlayer():Gender() == GENDER_FEMALE then
-				mdl_str = string.StripExtension(mdl_str).."_f.mdl"
-			end
-		elseif metaitem.ScaleForGender and LocalPlayer():Gender() == GENDER_FEMALE then
-			scale = metaitem.ScaleForGender
-		end
-		
-		local mdl = CCP.PlayerMenu.CharacterModel:InitializeModel(mdl_str,CCP.PlayerMenu.CharacterModel.Entity, scale)
-		if metaitem.Bodygroups then
-			for k,v in next, metaitem.Bodygroups do
-				mdl:SetBodygroup(v[1], v[2])
+
+	local charId = LocalPlayer():CharID()
+	local charData = kingston.bonemerge.data[charId]
+	if charData then
+		local charParts = charData.parts
+		if charParts then
+			for partType,partData in next, charParts do
+				CCP.PlayerMenu.CharacterModel:InitializeModel(partData.model, CCP.PlayerMenu.CharacterModel.Entity)
 			end
 		end
-		
-		if metaitem.Submaterials then
-			for _,submaterial in next, metaitem.Submaterials do
-				mdl:SetSubMaterial( submaterial[1], submaterial[2] );
-			end
-		end
-		
-		if item.Vars["SuitClass"] and self.SuitVariants[item.Vars["SuitClass"]] then
-			local suit = self.SuitVariants[item.Vars["SuitClass"]]
-			if suit.Submaterial then
-				for _,submaterial in next, suit.Submaterial do
-					mdl:SetSubMaterial(submaterial[1], submaterial[2])
-				end
-			end
-		end
-		
-		if metaitem.HelmetBodygroup then
-			if item.Vars["HelmetEquipped"] then
-				mdl:SetBodygroup(metaitem.HelmetBodygroup[1], metaitem.HelmetBodygroup[2])
-			else
-				if metaitem.Bodygroups then
-					for _,bodygroup in next, metaitem.Bodygroups do
-						mdl:SetBodygroup(bodygroup[1], bodygroup[2])
+
+		local charItems = charData.items
+		if charItems then
+			for itemId,itemData in next, charItems do
+				if !itemData.vars["Equipped"] then continue end
+				local metaitem = GAMEMODE:GetItemByID(itemData.class)
+				local mdl_str = metaitem.Bonemerge
+				local scale
+				
+				if metaitem.AllowGender then
+					if ply:Gender() == GENDER_FEMALE then
+						mdl_str = string.StripExtension(mdl_str).."_f.mdl"
 					end
-				else
-					mdl:SetBodygroup(0, 0)
+				elseif metaitem.ScaleForGender and ply:Gender() == GENDER_FEMALE then
+					scale = metaitem.ScaleForGender
+				end
+				
+				local mdl = CCP.PlayerMenu.CharacterModel:InitializeModel(mdl_str, CCP.PlayerMenu.CharacterModel.Entity, scale)
+				if metaitem.Bodygroups then
+					for k,v in next, metaitem.Bodygroups do
+						mdl:SetBodygroup(v[1], v[2])
+					end
+				end
+				
+				if metaitem.Submaterials then
+					for _,submaterial in next, metaitem.Submaterials do
+						mdl:SetSubMaterial( submaterial[1], submaterial[2] );
+					end
+				end
+				
+				if itemData.vars["SuitClass"] and GAMEMODE.SuitVariants[itemData.vars["SuitClass"]] then
+					local suit = GAMEMODE.SuitVariants[itemData.vars["SuitClass"]]
+					if suit.Submaterial then
+						for _,submaterial in next, suit.Submaterial do
+							mdl:SetSubMaterial(submaterial[1], submaterial[2])
+						end
+					end
+				end
+				
+				if metaitem.HelmetBodygroup then
+					if itemData.vars["HelmetEquipped"] then
+						mdl:SetBodygroup(metaitem.HelmetBodygroup[1], metaitem.HelmetBodygroup[2])
+					else
+						if metaitem.Bodygroups then
+							for _,bodygroup in next, metaitem.Bodygroups do
+								mdl:SetBodygroup(bodygroup[1], bodygroup[2])
+							end
+						else
+							mdl:SetBodygroup(0, 0)
+						end
+					end
 				end
 			end
 		end
