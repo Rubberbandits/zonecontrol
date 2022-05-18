@@ -568,16 +568,15 @@ function GM:PMCreateBio()
 	local charId = LocalPlayer():CharID()
 	local charData = kingston.bonemerge.data[charId]
 	if charData then
-		local charParts = charData.parts
-		if charParts then
-			for partType,partData in next, charParts do
-				CCP.PlayerMenu.CharacterModel:InitializeModel(partData.model, CCP.PlayerMenu.CharacterModel.Entity)
-			end
-		end
-
+		local hideBody = false
+		
 		local charItems = charData.items
 		if charItems then
 			for itemId,itemData in next, charItems do
+				if itemData.removeBody then
+					hideBody = true
+				end
+
 				if !itemData.vars["Equipped"] then continue end
 				local metaitem = GAMEMODE:GetItemByID(itemData.class)
 				local mdl_str = metaitem.Bonemerge
@@ -626,6 +625,13 @@ function GM:PMCreateBio()
 						end
 					end
 				end
+			end
+		end
+
+		local charParts = charData.parts
+		if charParts and !hideBody then
+			for partType,partData in next, charParts do
+				CCP.PlayerMenu.CharacterModel:InitializeModel(partData.model, CCP.PlayerMenu.CharacterModel.Entity)
 			end
 		end
 	end

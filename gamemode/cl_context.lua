@@ -850,16 +850,15 @@ function GM:CCCreatePlayerViewer( ent )
 	local charId = ent:CharID()
 	local charData = kingston.bonemerge.data[charId]
 	if charData then
-		local charParts = charData.parts
-		if charParts then
-			for partType,partData in next, charParts do
-				CCP.PlayerViewer.CharacterModel:InitializeModel(partData.model, CCP.PlayerViewer.CharacterModel.Entity)
-			end
-		end
+		local hideBody = false
 
 		local charItems = charData.items
 		if charItems then
 			for itemId,itemData in next, charItems do
+				if itemData.removeBody then
+					hideBody = true
+				end
+
 				if !itemData.vars["Equipped"] then continue end
 				local metaitem = GAMEMODE:GetItemByID(itemData.class)
 				local mdl_str = metaitem.Bonemerge
@@ -908,6 +907,13 @@ function GM:CCCreatePlayerViewer( ent )
 						end
 					end
 				end
+			end
+		end
+
+		local charParts = charData.parts
+		if charParts and !hideBody then
+			for partType,partData in next, charParts do
+				CCP.PlayerViewer.CharacterModel:InitializeModel(partData.model, CCP.PlayerViewer.CharacterModel.Entity)
 			end
 		end
 	end
