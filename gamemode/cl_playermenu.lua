@@ -584,10 +584,10 @@ function GM:PMCreateBio()
 				local scale
 				
 				if metaitem.AllowGender then
-					if ply:Gender() == GENDER_FEMALE then
+					if LocalPlayer():Gender() == GENDER_FEMALE then
 						mdl_str = string.StripExtension(mdl_str).."_f.mdl"
 					end
-				elseif metaitem.ScaleForGender and ply:Gender() == GENDER_FEMALE then
+				elseif metaitem.ScaleForGender and LocalPlayer():Gender() == GENDER_FEMALE then
 					scale = metaitem.ScaleForGender
 				end
 				
