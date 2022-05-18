@@ -323,6 +323,11 @@ hook.Add("entity_killed", "STALKER.BonemergeUpdate", function(data)
 
 	// closure, but we need to wait for the ragdoll to be created
 	timer.Create("BonemergeSwitchParent"..data.entindex_killed, 0, 0, function()
+		if !IsValid(ent) then 
+			timer.Remove("BonemergeSwitchParent"..data.entindex_killed)
+			return
+		end
+
 		local ragdoll = ent:GetRagdollEntity()
 		if !IsValid(ragdoll) then return end
 
@@ -384,6 +389,11 @@ local ACCESSOR_HOOKS = {
 		if value != -1 then
 			// closure, but we need to wait for the ragdoll to be created
 			timer.Create("BonemergeSwitchParent"..value, 0, 0, function()
+				if !IsValid(ply) then 
+					timer.Remove("BonemergeSwitchParent"..data.entindex_killed)
+					return
+				end
+
 				local ragdoll = ply:Ragdoll()
 				if !IsValid(ragdoll) then return end
 	
