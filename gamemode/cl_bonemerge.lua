@@ -184,10 +184,10 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 			entity:Remove()
 		end
 
-		if createEntities and GAMEMODE.EfficientModelCheck[ply:GetModel()] then
+		if createEntities and GAMEMODE.EfficientModelCheck[ply:GetModel()] and itemData.vars.Equipped then
 			itemData.entity = kingston.bonemerge.createEntity(itemData.parent, itemData.class, itemData.vars)
 
-			if itemData.removeBody and itemData.vars.Equipped then
+			if itemData.removeBody then
 				hideBody = true
 			end
 		end
@@ -268,6 +268,9 @@ function GM:BonemergeItemAdded(parent, charId, itemId)
 end
 
 function GM:BonemergeItemUpdated(parent, charId, itemId)
+	local charData = kingston.bonemerge.data[charId]
+	if !charData then return end
+
 	kingston.bonemerge.manageEntities(parent, true, true)
 end
 
@@ -376,19 +379,59 @@ hook.Add("PlayerModelChanged", "STALKER.BonemergeUpdate", function(ply)
 	kingston.bonemerge.manageEntities(ply, true, true)
 end)
 
-hook.Add("PlayerAccessorChanged", "STALKER.BonemergeUpdate", function(ply, key, value)
-	if key != "RagdollIndex" then return end
-
-	if value != -1 then
-		// closure, but we need to wait for the ragdoll to be created
-		timer.Create("BonemergeSwitchParent"..value, 0, 0, function()
-			local ragdoll = ply:Ragdoll()
-			if !IsValid(ragdoll) then return end
-
-			kingston.bonemerge.manageEntities(ply, nil, nil, ragdoll)
-			timer.Remove("BonemergeSwitchParent"..value)
-		end)
-	else
+local ACCESSOR_HOOKS = {
+	RagdollIndex = function(ply, key, value)
+		if value != -1 then
+			// closure, but we need to wait for the ragdoll to be created
+			timer.Create("BonemergeSwitchParent"..value, 0, 0, function()
+				local ragdoll = ply:Ragdoll()
+				if !IsValid(ragdoll) then return end
+	
+				kingston.bonemerge.manageEntities(ply, nil, nil, ragdoll)
+				timer.Remove("BonemergeSwitchParent"..value)
+			end)
+		else
+			kingston.bonemerge.manageEntities(ply, true, true)
+		end
+	end,
+	BodySubMat = function(ply, key, value)
 		kingston.bonemerge.manageEntities(ply, true, true)
 	end
+}
+
+hook.Add("PlayerAccessorChanged", "STALKER.BonemergeUpdate", function(ply, key, value)
+	local accessorHook = ACCESSOR_HOOKS[key]
+	if !accessorHook then return end
+
+	accessorHook(ply, key, value)
 end)
+
+local function DrawBonemergedShadows(ply)
+	if cookie.GetNumber("zc_settings_bonemerge_shadows", 1) == 0 then return end
+	if !IsValid(ply) or !ply:Alive() then return end
+	
+	local charId = ply:CharID()
+	if !charId or charId == 0 then return end
+
+	local charData = kingston.bonemerge.data[charId]
+	if !charData then return end
+
+	local charParts = charData.parts
+	if !charParts then return end
+
+	local bodyEntity = charParts.body.entity
+	if IsValid(bodyEntity) then
+		bodyEntity:CreateShadow()
+	end
+
+	local charItems = charData.items
+	if !charItems then return end
+
+	for _,itemData in next, charItems do
+		local entity = itemData.entity
+		if !IsValid(entity) then continue end
+
+		entity:CreateShadow()
+	end
+end
+hook.Add("PostPlayerDraw", "STALKER.DrawBonemergedShadows", DrawBonemergedShadows)
