@@ -145,7 +145,7 @@ ENT.NPC_CONVERSATION = {
 	},
 	turn_in_more = {
 		dialog = "Here you go.",
-		response = "Anything else?",
+		response = "Great work. I'll boost your score on the PDA. Anything else?",
 		options = {
 			"turn_in",
 			"nothing_now"
