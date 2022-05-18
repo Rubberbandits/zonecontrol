@@ -184,10 +184,10 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 			entity:Remove()
 		end
 
-		if createEntities and GAMEMODE.EfficientModelCheck[ply:GetModel()] then
+		if createEntities and GAMEMODE.EfficientModelCheck[ply:GetModel()] and itemData.vars.Equipped then
 			itemData.entity = kingston.bonemerge.createEntity(itemData.parent, itemData.class, itemData.vars)
 
-			if itemData.removeBody and itemData.vars.Equipped then
+			if itemData.removeBody then
 				hideBody = true
 			end
 		end
@@ -268,6 +268,9 @@ function GM:BonemergeItemAdded(parent, charId, itemId)
 end
 
 function GM:BonemergeItemUpdated(parent, charId, itemId)
+	local charData = kingston.bonemerge.data[charId]
+	if !charData then return end
+
 	kingston.bonemerge.manageEntities(parent, true, true)
 end
 
