@@ -104,9 +104,14 @@ function GM:RefreshHelpMenuContent()
 			A - Ammunition
 			B - Firearms
 			D - Medical
-			H - PDA Encryption/Decryption
+			F - Food
 			S - Suits
-			U - BDUs (Suit Colors) [This system is being reworked and will be removed shortly.]
+			X - General/Junk
+
+			Technician Flags
+			T - General Technician
+			H - PDA Manipulation
+			U - BDUs (This system will be reworked in the future.)
 
 			Player Flags
 			Q - Removes admin powers, per-character]] 
