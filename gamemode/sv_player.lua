@@ -335,6 +335,7 @@ function meta:LoadCharacter( data )
 		end
 	
 		netstream.Start(self, "CharacterLoaded")
+                hook.Run("CharacterLoaded", self, data)
 		self:Spawn()
 	end
 	mysqloo.Query(Format("SELECT * FROM cc_items WHERE Owner = '%d' AND Stockpile = 0", self:CharID()), onSuccess)

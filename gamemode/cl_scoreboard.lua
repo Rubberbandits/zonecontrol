@@ -252,7 +252,7 @@ function GM:ScoreboardAdd( ply, y, n )
 		local charItems = charData.items
 		if charItems then
 			for itemId,itemData in next, charItems do
-				if itemData.removeBody then
+				if itemData.removeBody and itemData.vars.Equipped then
 					hideBody = true
 				end
 
