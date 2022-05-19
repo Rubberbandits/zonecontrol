@@ -35,11 +35,11 @@ ITEM.ArmorValues = {
 	[DMG_CLUB] = 0.29,
 	[DMG_VEHICLE] = 0.29,
 	-- "Rupture" (sharp)
-	[DMG_SLASH] = 0.29,
+	[DMG_SLASH] = 0.19,
 	-- "Bulletproof"
-	[DMG_BULLET] = 0.59,
+	[DMG_BULLET] = 0.44,
 	-- "Explosion"
-	[DMG_BLAST] = 0.59,
+	[DMG_BLAST] = 0.49,
 	-- "Thermal"
 	[DMG_BURN] = 0.62,
 	[DMG_SLOWBURN] = 0.62,
