@@ -174,7 +174,10 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 	end
 
 	local transmittedItems = charData.items
-	if !transmittedItems then return end
+	if !transmittedItems then 
+		charData.items = {}
+		transmittedItems = charData.items
+	end
 
 	local hideBody = false
 	for itemId,itemData in next, transmittedItems do
@@ -409,7 +412,7 @@ local ACCESSOR_HOOKS = {
 
 		local charId = ply:CharID()
 		if charId == 0 then return end
-		
+
 		local charData = kingston.bonemerge.data[charId]
 		if !charData then
 			kingston.bonemerge.data[charId] = {}
