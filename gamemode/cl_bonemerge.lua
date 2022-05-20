@@ -396,7 +396,7 @@ local ACCESSOR_HOOKS = {
 			// closure, but we need to wait for the ragdoll to be created
 			timer.Create("BonemergeSwitchParent"..value, 0, 0, function()
 				if !IsValid(ply) then 
-					timer.Remove("BonemergeSwitchParent"..data.entindex_killed)
+					timer.Remove("BonemergeSwitchParent"..value)
 					return
 				end
 
