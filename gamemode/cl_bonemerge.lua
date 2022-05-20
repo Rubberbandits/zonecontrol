@@ -404,6 +404,26 @@ local ACCESSOR_HOOKS = {
 			kingston.bonemerge.manageEntities(ply, true, true)
 		end
 	end,
+	Body = function(ply, key, value)
+		local charId = ply:CharID()
+		local charData = kingston.bonemerge.data[charId]
+		if !charData then
+			kingston.bonemerge.data[charId] = {}
+			charData = kingston.bonemerge.data[charId]
+		end
+
+		local charParts = charData.parts
+		if !charParts then
+			charData.parts = {}
+			charParts = charData.parts
+		end
+
+		charParts[key] = {
+			model = value
+		}
+
+		kingston.bonemerge.manageEntities(ply, true, true)
+	end,
 	BodySubMat = function(ply, key, value)
 		kingston.bonemerge.manageEntities(ply, true, true)
 	end
