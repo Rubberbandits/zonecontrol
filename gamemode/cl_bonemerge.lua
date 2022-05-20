@@ -418,7 +418,7 @@ local ACCESSOR_HOOKS = {
 			charParts = charData.parts
 		end
 
-		charParts[key] = {
+		charParts[string.lower(key)] = {
 			model = value
 		}
 
