@@ -978,6 +978,20 @@ function player.GetAdmins()
 	return players
 end
 
+function player.GetPDAs()
+	local players = {}
+	
+	for _,ply in next, player.GetAll() do
+		local item = ply:GetPrimaryPDA()
+
+		if ply:IsValid() and ply:CharID() > 0 and item then
+			players[#players + 1] = {item = item, ply = ply}
+		end
+	end
+	
+	return players
+end
+
 game.AddParticles( "particles/hunter_shield_impact.pcf" )
 game.AddParticles( "particles/warpshield.pcf" )
 game.AddParticles( "particles/advisor.pcf" )
