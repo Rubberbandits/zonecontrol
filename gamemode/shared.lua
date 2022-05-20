@@ -298,7 +298,7 @@ function GM:FindPlayer( name, caller, pda )
 		if( pda and v and v:IsValid() and v.Inventory ) then
 			for m,n in next, v.Inventory do
 				if n:GetClass() == "pda" then
-					if string.find( string.lower(n:GetVar("Name","")), name, nil, true ) and n:GetVar("Power",false) then
+					if string.find( string.lower(n:GetVar("PDAName","")), name, nil, true ) and n:GetVar("Power",false) then
 						return n
 					end
 				end
