@@ -405,7 +405,11 @@ local ACCESSOR_HOOKS = {
 		end
 	end,
 	Body = function(ply, key, value)
+		if !ply.CharID then return end
+
 		local charId = ply:CharID()
+		if charId == 0 then return end
+		
 		local charData = kingston.bonemerge.data[charId]
 		if !charData then
 			kingston.bonemerge.data[charId] = {}
