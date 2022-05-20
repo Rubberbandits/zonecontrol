@@ -939,6 +939,13 @@ function meta:IsUpgradeTech()
 	return self:HasCharFlag("T")
 end
 
+function meta:IsTrader()
+	return  self:HasCharFlag("X") or 
+			self:HasCharFlag("F") or
+			self:HasCharFlag("A") or
+			self:HasCharFlag("D")
+end
+
 function meta:UnloadCharacter()
 	for _,accessor in pairs(GAMEMODE.PlayerAccessors) do
 		self["Set"..accessor[1]](self, accessor[4]) // reset all accessors
