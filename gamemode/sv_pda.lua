@@ -810,7 +810,7 @@ local RandomPDAMessageFuncs = {
 	end,
 	[3] = function()
 		local randomData = table.Random(player.GetPDAs())
-		if !IsValid(randomData) then return end
+		if !randomData then return end
 
 		local randomPlayer = randomData.ply
 		local playerPda = randomData.item
@@ -832,7 +832,7 @@ local RandomPDAMessageFuncs = {
 	end,
 	[5] = function()
 		local randomData = table.Random(player.GetPDAs())
-		if !IsValid(randomData) then return end
+		if !randomData then return end
 
 		local randomPlayer = randomData.ply
 		local playerPda = randomData.item
@@ -844,7 +844,7 @@ local RandomPDAMessageFuncs = {
 	end,
 	[6] = function()
 		local randomData = table.Random(player.GetPDAs())
-		if !IsValid(randomData) then return end
+		if !randomData then return end
 
 		local randomPlayer = randomData.ply
 		local playerPda = randomData.item
