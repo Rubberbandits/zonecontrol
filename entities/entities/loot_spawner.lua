@@ -81,7 +81,7 @@ function ENT:Think()
 		local surroundItemCount = 0
 		for _,ent in ipairs(ents.FindInSphere(self:GetPos(), 100)) do
 			if ent:GetClass() == "cc_item" then
-				if ent.DeleteTime <= CurTime() then
+				if ent.DeleteTime and ent.DeleteTime <= CurTime() then
 					ent:Remove()
 					continue
 				end
