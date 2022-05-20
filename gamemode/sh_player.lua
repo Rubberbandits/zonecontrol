@@ -980,6 +980,8 @@ end
 
 // Helper function to grab a player's primary PDA
 function meta:GetPrimaryPDA()
+	if !self.Inventory then return end
+
 	for k,v in next, self.Inventory do
 		if v:GetClass() == "pda" then
 			if v:GetVar("Power", false) and v:GetVar("Primary", false) then
