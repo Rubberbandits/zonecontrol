@@ -56,8 +56,11 @@ function kingston.bonemerge.add(charId, itemId, itemData)
 		charData = kingston.bonemerge.data[charId]
 	end
 
-	local transmittedItems = kingston.bonemerge.data[charId].items
-	if !transmittedItems then return end
+	local transmittedItems = charData.items
+	if !transmittedItems then 
+		charData.items = {}
+		transmittedItems = charData.items 
+	end
 
 	local itemExists = transmittedItems[itemId] and true or false
 	local parent = itemData.Owner
