@@ -982,9 +982,10 @@ function player.GetPDAs()
 	local players = {}
 	
 	for _,ply in next, player.GetAll() do
-		local item = ply:GetPrimaryPDA()
+		if !ply:IsValid() or ply:CharID() == 0 then continue end
 
-		if ply:IsValid() and ply:CharID() > 0 and item then
+		local item = ply:GetPrimaryPDA()
+		if item then
 			players[#players + 1] = {item = item, ply = ply}
 		end
 	end
