@@ -210,13 +210,14 @@ netstream.Hook("RetrieveDummyItems", function(ply)
 
 	hook.Add("Think", "STALKER.TransmitItems"..ply:UserID(), function()
 		local item = transmittedItems[index]
-		index = index + 1
-
 		netstream.Start(ply, "ReceiveDummyItem", item:GetID(), item:GetClass(), item:GetVars(), item:Owner(), item.CharID)
 
 		if index == #transmittedItems then
 			hook.Remove("Think", "STALKER.TransmitItems"..ply:UserID())
+			return
 		end
+
+		index = index + 1
 	end)
 end)
 
