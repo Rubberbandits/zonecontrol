@@ -6,6 +6,8 @@ local meta = FindMetaTable("Player")
 function meta:CreateNewBonemerge(szModel, iBoneScale)
 	if !IsValidModel(szModel) then return end
 
+	local hookName = self:EntIndex()..szModel
+
 	local b = ClientsideModel(szModel, RENDERGROUP_OPAQUE)
 	if !b then return end
 	b:SetModel(szModel)
@@ -28,12 +30,17 @@ function meta:CreateNewBonemerge(szModel, iBoneScale)
 			end
 		else
 			self:Remove()
-			hook.Remove("Think", self)
 		end
 		
 		self.bLastDrawState = self:GetNoDraw()
 	end
-	hook.Add("Think", b, b.Think)
+	hook.Add("Think", hookName, b.Think)
+
+	b.oldRemove = b.Remove
+	function b:Remove()
+		hook.Remove("Think", hookName)
+		b:oldRemove()
+	end
 	
 	if iBoneScale then
 		for i = 0, b:GetBoneCount() - 1 do 
