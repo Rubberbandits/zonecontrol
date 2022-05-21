@@ -28,6 +28,7 @@ function meta:CreateNewBonemerge(szModel, iBoneScale)
 			end
 		else
 			self:Remove()
+			hook.Remove("Think", self)
 		end
 		
 		self.bLastDrawState = self:GetNoDraw()
@@ -264,10 +265,23 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 	end
 end
 
-function kingston.bonemerge.fullUpdate()
+function kingston.bonemerge.clear()
 	for _,ent in ipairs(ents.FindByClass("class C_BaseFlex")) do
 		ent:Remove()
 	end
+
+	local thinkHooks = hook.GetTable().Think
+	if !thinkHooks then return end
+
+	for key,_ in next, thinkHooks do
+		if IsEntity(key) and !IsValid(key) then
+			hook.Remove("Think", key)
+		end
+	end
+end
+
+function kingston.bonemerge.fullUpdate()
+	kingston.bonemerge.clear()
 
 	for _,ply in ipairs(player.GetHumans()) do
 		if !IsValid(ply) then continue end
