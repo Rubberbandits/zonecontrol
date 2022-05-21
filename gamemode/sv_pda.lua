@@ -809,10 +809,13 @@ local RandomPDAMessageFuncs = {
 		return table.Random(RandomTalking)
 	end,
 	[3] = function()
-		local randomPlayer = table.Random(player.GetAllLoaded())
-		if !IsValid(randomPlayer) then return end
+		local randomData = table.Random(player.GetPDAs())
+		if !randomData then return end
 
-		local playerName = !randomPlayer:Hidden() and randomPlayer:HasCharFlag("X") and randomPlayer:RPName() or false
+		local randomPlayer = randomData.ply
+		local playerPda = randomData.item
+
+		local playerName = !randomPlayer:Hidden() and randomPlayer:HasCharFlag("X") and playerPda:GetVar("PDAName") or false
 		if !playerName then return end
 		
 		local randomItem = table.Random(GAMEMODE.Items)
@@ -828,21 +831,25 @@ local RandomPDAMessageFuncs = {
 		return Format(table.Random(RandomItemRelatedStrings), randomItem.Name)
 	end,
 	[5] = function()
-		local randomPlayer = table.Random(player.GetAllLoaded())
-		if !IsValid(randomPlayer) then return end
+		local randomData = table.Random(player.GetPDAs())
+		if !randomData then return end
 
-		local playerName = !randomPlayer:Hidden() and randomPlayer:RPName() or false
+		local randomPlayer = randomData.ply
+		local playerPda = randomData.item
 
+		local playerName = !randomPlayer:Hidden() and playerPda:GetVar("PDAName") or false
 		if !playerName then return end
 
 		return Format(table.Random(RandomPlayerRelatedStrings), playerName)
 	end,
 	[6] = function()
-		local randomPlayer = table.Random(player.GetAllLoaded())
-		if !IsValid(randomPlayer) then return end
+		local randomData = table.Random(player.GetPDAs())
+		if !randomData then return end
 
-		local playerName = !randomPlayer:Hidden() and randomPlayer:HasCharFlag("X") and randomPlayer:RPName() or false
+		local randomPlayer = randomData.ply
+		local playerPda = randomData.item
 
+		local playerName = !randomPlayer:Hidden() and randomPlayer:HasCharFlag("X") and playerPda:GetVar("PDAName") or false
 		if !playerName then return end
 
 		return Format(table.Random(RandomTraderRelatedStrings), playerName)

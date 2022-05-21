@@ -6,6 +6,8 @@ local meta = FindMetaTable("Player")
 function meta:CreateNewBonemerge(szModel, iBoneScale)
 	if !IsValidModel(szModel) then return end
 
+	local hookName = self:EntIndex()..szModel
+
 	local b = ClientsideModel(szModel, RENDERGROUP_OPAQUE)
 	if !b then return end
 	b:SetModel(szModel)
@@ -33,6 +35,10 @@ function meta:CreateNewBonemerge(szModel, iBoneScale)
 		self.bLastDrawState = self:GetNoDraw()
 	end
 	hook.Add("Think", b, b.Think)
+
+	b:CallOnRemove("clearThink", function(ent)
+		hook.GetTable().Think[ent] = nil
+	end)
 	
 	if iBoneScale then
 		for i = 0, b:GetBoneCount() - 1 do 
@@ -56,8 +62,11 @@ function kingston.bonemerge.add(charId, itemId, itemData)
 		charData = kingston.bonemerge.data[charId]
 	end
 
-	local transmittedItems = kingston.bonemerge.data[charId].items
-	if !transmittedItems then return end
+	local transmittedItems = charData.items
+	if !transmittedItems then 
+		charData.items = {}
+		transmittedItems = charData.items 
+	end
 
 	local itemExists = transmittedItems[itemId] and true or false
 	local parent = itemData.Owner
@@ -174,10 +183,15 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 	end
 
 	local transmittedItems = charData.items
-	if !transmittedItems then return end
+	if !transmittedItems then 
+		charData.items = {}
+		transmittedItems = charData.items
+	end
 
 	local hideBody = false
 	for itemId,itemData in next, transmittedItems do
+		itemData.parent = ply
+
 		local entity = itemData.entity
 
 		if removeEntities and IsValid(entity) then
@@ -185,7 +199,7 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 		end
 
 		if createEntities and GAMEMODE.EfficientModelCheck[ply:GetModel()] and itemData.vars.Equipped then
-			itemData.entity = kingston.bonemerge.createEntity(itemData.parent, itemData.class, itemData.vars)
+			itemData.entity = kingston.bonemerge.createEntity(ply, itemData.class, itemData.vars)
 
 			if itemData.removeBody then
 				hideBody = true
@@ -256,6 +270,23 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 	end
 end
 
+function kingston.bonemerge.clear()
+	for _,ent in ipairs(ents.FindByClass("class C_BaseFlex")) do
+		ent:Remove()
+	end
+end
+
+function kingston.bonemerge.fullUpdate()
+	kingston.bonemerge.clear()
+
+	for _,ply in ipairs(player.GetHumans()) do
+		if !IsValid(ply) then continue end
+		if ply:IsDormant() then continue end
+
+		kingston.bonemerge.manageEntities(ply, true, true)
+	end
+end
+
 // Data handling
 function GM:OnReceiveDummyItem(itemId, itemData)
 	local charId = itemData.CharID
@@ -264,14 +295,14 @@ function GM:OnReceiveDummyItem(itemId, itemData)
 end
 
 function GM:BonemergeItemAdded(parent, charId, itemId)
-	kingston.bonemerge.manageEntities(parent, true, true)
+	kingston.bonemerge.manageEntities(parent, true, true, nil, charId)
 end
 
 function GM:BonemergeItemUpdated(parent, charId, itemId)
 	local charData = kingston.bonemerge.data[charId]
 	if !charData then return end
 
-	kingston.bonemerge.manageEntities(parent, true, true)
+	kingston.bonemerge.manageEntities(parent, true, true, nil, charId)
 end
 
 // Hooks
@@ -294,12 +325,7 @@ hook.Add("EntityRemoved", "STALKER.BonemergeUpdate", function(ent)
 end)
 
 hook.Add("OnReloaded", "STALKER.BonemergeUpdate", function()
-	for _,ply in ipairs(player.GetHumans()) do
-		if !IsValid(ply) then continue end
-		if ply:IsDormant() then continue end
-
-		kingston.bonemerge.manageEntities(ply, true, true)
-	end
+	kingston.bonemerge.fullUpdate()
 end)
 
 gameevent.Listen("player_spawn")
@@ -314,6 +340,10 @@ hook.Add("player_spawn", "STALKER.BonemergeUpdate", function(data)
 	end
 
 	kingston.bonemerge.manageEntities(ply, true, true)
+
+	if ply == LocalPlayer() then
+		kingston.bonemerge.fullUpdate()
+	end
 end)
 
 gameevent.Listen("entity_killed")
@@ -344,13 +374,9 @@ hook.Add("Think", "STALKER.BonemergeRefresh", function()
 	end
 
 	if nextRefresh <= CurTime() then
-		for _,ply in ipairs(player.GetHumans()) do
-			if ply:IsDormant() then continue end
+		kingston.bonemerge.fullUpdate()
 
-			kingston.bonemerge.manageEntities(ply, true, true)
-		end
-
-		GAMEMODE.nextBonemergeRefresh = CurTime() + 300
+		GAMEMODE.nextBonemergeRefresh = CurTime() + 60
 	end
 end)
 
@@ -390,7 +416,7 @@ local ACCESSOR_HOOKS = {
 			// closure, but we need to wait for the ragdoll to be created
 			timer.Create("BonemergeSwitchParent"..value, 0, 0, function()
 				if !IsValid(ply) then 
-					timer.Remove("BonemergeSwitchParent"..data.entindex_killed)
+					timer.Remove("BonemergeSwitchParent"..value)
 					return
 				end
 
@@ -403,6 +429,30 @@ local ACCESSOR_HOOKS = {
 		else
 			kingston.bonemerge.manageEntities(ply, true, true)
 		end
+	end,
+	Body = function(ply, key, value)
+		if !ply.CharID then return end
+
+		local charId = ply:CharID()
+		if charId == 0 then return end
+
+		local charData = kingston.bonemerge.data[charId]
+		if !charData then
+			kingston.bonemerge.data[charId] = {}
+			charData = kingston.bonemerge.data[charId]
+		end
+
+		local charParts = charData.parts
+		if !charParts then
+			charData.parts = {}
+			charParts = charData.parts
+		end
+
+		charParts[string.lower(key)] = {
+			model = value
+		}
+
+		kingston.bonemerge.manageEntities(ply, true, true)
 	end,
 	BodySubMat = function(ply, key, value)
 		kingston.bonemerge.manageEntities(ply, true, true)

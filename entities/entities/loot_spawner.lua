@@ -81,7 +81,7 @@ function ENT:Think()
 		local surroundItemCount = 0
 		for _,ent in ipairs(ents.FindInSphere(self:GetPos(), 100)) do
 			if ent:GetClass() == "cc_item" then
-				if ent.DeleteTime <= CurTime() then
+				if ent.DeleteTime and ent.DeleteTime <= CurTime() then
 					ent:Remove()
 					continue
 				end
@@ -97,13 +97,13 @@ function ENT:Think()
 
 		local totalItemCount = #ents.FindByClass("cc_item")
 		local inverseRatio = 1 - playerRatio
-		if totalItemCount >= math.Clamp(200 * inverseRatio, 25, 200) then
+		if totalItemCount >= math.Clamp(100 * inverseRatio, 25, 100) then
 			self.NextLootSpawn = CurTime() + math.random(minTime,maxTime)
 			return
 		end
 
 		local playersInVicinity = 0
-		for _,ent in pairs(ents.FindInSphere(self:GetPos(), 2048)) do
+		for _,ent in pairs(ents.FindInSphere(self:GetPos(), 1024)) do
 			if ent:IsPlayer() then
 				playersInVicinity = playersInVicinity + 1
 			end

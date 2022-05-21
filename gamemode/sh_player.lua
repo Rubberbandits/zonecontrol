@@ -939,6 +939,13 @@ function meta:IsUpgradeTech()
 	return self:HasCharFlag("T")
 end
 
+function meta:IsTrader()
+	return  self:HasCharFlag("X") or 
+			self:HasCharFlag("F") or
+			self:HasCharFlag("A") or
+			self:HasCharFlag("D")
+end
+
 function meta:UnloadCharacter()
 	for _,accessor in pairs(GAMEMODE.PlayerAccessors) do
 		self["Set"..accessor[1]](self, accessor[4]) // reset all accessors
@@ -973,6 +980,8 @@ end
 
 // Helper function to grab a player's primary PDA
 function meta:GetPrimaryPDA()
+	if !self.Inventory then return end
+
 	for k,v in next, self.Inventory do
 		if v:GetClass() == "pda" then
 			if v:GetVar("Power", false) and v:GetVar("Primary", false) then
