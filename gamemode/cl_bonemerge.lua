@@ -349,7 +349,7 @@ hook.Add("Think", "STALKER.BonemergeRefresh", function()
 		nextRefresh = GAMEMODE.nextBonemergeRefresh
 	end
 
-	if nextRefresh <= CurTime() 
+	if nextRefresh <= CurTime() then
 		for _,ent in ipairs(ents.FindByClass("class C_BaseFlex")) do
 			ent:Remove()
 		end
