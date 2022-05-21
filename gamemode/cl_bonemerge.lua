@@ -34,7 +34,7 @@ function meta:CreateNewBonemerge(szModel, iBoneScale)
 		
 		self.bLastDrawState = self:GetNoDraw()
 	end
-	hook.Add("Think", hookName, function() b:Think() end)
+	hook.Add("Think", b, b.Think)
 
 	b.oldRemove = b.Remove
 	function b:Remove()
