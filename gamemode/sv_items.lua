@@ -200,7 +200,7 @@ end );
 
 netstream.Hook("RetrieveDummyItems", function(ply)
 	local transmittedItems = {}
-	local index = 0
+	local index = 1
 
 	for _,item in next, GAMEMODE.g_ItemTable do
 		if item.IsTransmitted  then
