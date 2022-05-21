@@ -36,11 +36,9 @@ function meta:CreateNewBonemerge(szModel, iBoneScale)
 	end
 	hook.Add("Think", b, b.Think)
 
-	b.oldRemove = b.Remove
-	function b:Remove()
-		hook.Remove("Think", hookName)
-		self:oldRemove()
-	end
+	b:CallOnRemove("clearThink", function(ent)
+		hook.GetTable().Think[ent] = nil
+	end)
 	
 	if iBoneScale then
 		for i = 0, b:GetBoneCount() - 1 do 
@@ -275,15 +273,6 @@ end
 function kingston.bonemerge.clear()
 	for _,ent in ipairs(ents.FindByClass("class C_BaseFlex")) do
 		ent:Remove()
-	end
-
-	local thinkHooks = hook.GetTable().Think
-	if !thinkHooks then return end
-
-	for key,_ in next, thinkHooks do
-		if IsEntity(key) and !IsValid(key) then
-			hook.Remove("Think", key)
-		end
 	end
 end
 
