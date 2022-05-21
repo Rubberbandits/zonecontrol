@@ -391,11 +391,8 @@ kingston.chat.register_type("ooc", {
 		return true
 	end,
 	can_say = function(chat_type, ply, text)
-		if ply.LastOOC and CurTime() < ply.LastOOC + GAMEMODE:OOCDelay() then
-			if !ply:IsAdmin() then
-				ply:Notify(nil, Color(200,200,200), "Wait %s seconds to talk in OOC.", tostring(math.Round(ply.LastOOC + GAMEMODE:OOCDelay() - CurTime())))
-				return false
-			end
+		if !ply:IsAdmin() and ply.LastOOC and CurTime() < ply.LastOOC + GAMEMODE:OOCDelay() then
+			return Format("Wait %s seconds to talk in OOC.", tostring(math.Round(ply.LastOOC + GAMEMODE:OOCDelay() - CurTime())))
 		end
 		
 		ply.LastOOC = CurTime()
