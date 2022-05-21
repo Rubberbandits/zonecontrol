@@ -265,19 +265,15 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 end
 
 function kingston.bonemerge.fullUpdate()
-	kingston.bonemerge.clear()
+	for _,ent in ipairs(ents.FindByClass("class C_BaseFlex")) do
+		ent:Remove()
+	end
 
 	for _,ply in ipairs(player.GetHumans()) do
 		if !IsValid(ply) then continue end
 		if ply:IsDormant() then continue end
 
 		kingston.bonemerge.manageEntities(ply, true, true)
-	end
-end
-
-function kingston.bonemerge.clear()
-	for _,ent in ipairs(ents.FindByClass("class C_BaseFlex")) do
-		ent:Remove()
 	end
 end
 
@@ -370,7 +366,7 @@ hook.Add("Think", "STALKER.BonemergeRefresh", function()
 	if nextRefresh <= CurTime() then
 		kingston.bonemerge.fullUpdate()
 
-		GAMEMODE.nextBonemergeRefresh = CurTime() + 15
+		GAMEMODE.nextBonemergeRefresh = CurTime() + 60
 	end
 end)
 
