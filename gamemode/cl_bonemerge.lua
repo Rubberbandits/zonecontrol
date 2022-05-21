@@ -163,8 +163,8 @@ function kingston.bonemerge.createEntity(ply, itemClass, itemVars)
 	end
 end
 
-function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, newParent)
-	local charId = ply.CharID and ply:CharID() or nil
+function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, newParent, overrideCharId)
+	local charId = overrideCharId or (ply.CharID and ply:CharID() or nil)
 	if !charId or charId == 0 then return end
 
 	local charData = kingston.bonemerge.data[charId]
@@ -270,14 +270,14 @@ function GM:OnReceiveDummyItem(itemId, itemData)
 end
 
 function GM:BonemergeItemAdded(parent, charId, itemId)
-	kingston.bonemerge.manageEntities(parent, true, true)
+	kingston.bonemerge.manageEntities(parent, true, true, nil, charId)
 end
 
 function GM:BonemergeItemUpdated(parent, charId, itemId)
 	local charData = kingston.bonemerge.data[charId]
 	if !charData then return end
 
-	kingston.bonemerge.manageEntities(parent, true, true)
+	kingston.bonemerge.manageEntities(parent, true, true, nil, charId)
 end
 
 // Hooks
