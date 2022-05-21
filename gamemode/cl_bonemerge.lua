@@ -190,7 +190,7 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 			entity:Remove()
 		end
 
-		if createEntities and GAMEMODE.EfficientModelCheck[ply:GetModel()] and itemData.vars.Equipped then
+		if createEntities and IsValid(ply) and GAMEMODE.EfficientModelCheck[ply:GetModel()] and itemData.vars.Equipped then
 			itemData.entity = kingston.bonemerge.createEntity(itemData.parent, itemData.class, itemData.vars)
 
 			if itemData.removeBody then
@@ -262,6 +262,19 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 	end
 end
 
+function kingston.bonemerge.fullUpdate()
+	for _,ent in ipairs(ents.FindByClass("class C_BaseFlex")) do
+		ent:Remove()
+	end
+
+	for _,ply in ipairs(player.GetHumans()) do
+		if !IsValid(ply) then continue end
+		if ply:IsDormant() then continue end
+
+		kingston.bonemerge.manageEntities(ply, true, true)
+	end
+end
+
 // Data handling
 function GM:OnReceiveDummyItem(itemId, itemData)
 	local charId = itemData.CharID
@@ -300,12 +313,7 @@ hook.Add("EntityRemoved", "STALKER.BonemergeUpdate", function(ent)
 end)
 
 hook.Add("OnReloaded", "STALKER.BonemergeUpdate", function()
-	for _,ply in ipairs(player.GetHumans()) do
-		if !IsValid(ply) then continue end
-		if ply:IsDormant() then continue end
-
-		kingston.bonemerge.manageEntities(ply, true, true)
-	end
+	kingston.bonemerge.fullUpdate()
 end)
 
 gameevent.Listen("player_spawn")
@@ -320,6 +328,10 @@ hook.Add("player_spawn", "STALKER.BonemergeUpdate", function(data)
 	end
 
 	kingston.bonemerge.manageEntities(ply, true, true)
+
+	if ply == LocalPlayer() then
+		kingston.bonemerge.fullUpdate()
+	end
 end)
 
 gameevent.Listen("entity_killed")
@@ -350,15 +362,7 @@ hook.Add("Think", "STALKER.BonemergeRefresh", function()
 	end
 
 	if nextRefresh <= CurTime() then
-		for _,ent in ipairs(ents.FindByClass("class C_BaseFlex")) do
-			ent:Remove()
-		end
-
-		for _,ply in ipairs(player.GetHumans()) do
-			if ply:IsDormant() then continue end
-
-			kingston.bonemerge.manageEntities(ply, true, true)
-		end
+		kingston.bonemerge.fullUpdate()
 
 		GAMEMODE.nextBonemergeRefresh = CurTime() + 60
 	end
