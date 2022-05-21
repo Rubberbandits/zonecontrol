@@ -4,6 +4,8 @@ kingston.bonemerge = kingston.bonemerge or {}
 // Player functions
 local meta = FindMetaTable("Player")
 function meta:CreateNewBonemerge(szModel, iBoneScale)
+	print(szModel)
+	print(debug.Trace())
 	if !IsValidModel(szModel) then return end
 
 	local b = ClientsideModel(szModel, RENDERGROUP_OPAQUE)
