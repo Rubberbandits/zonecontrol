@@ -204,7 +204,7 @@ netstream.Hook("RetrieveDummyItems", function(ply)
 
 	for _,item in next, GAMEMODE.g_ItemTable do
 		if item.IsTransmitted  then
-			table.insert(transmittedItems, v)
+			table.insert(transmittedItems, item)
 		end
 	end
 
