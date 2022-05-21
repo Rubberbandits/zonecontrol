@@ -198,19 +198,27 @@ netstream.Hook( "ItemDrop", function( ply, s_nID )
 
 end );
 
-netstream.Hook( "RetrieveDummyItems", function( ply )
+netstream.Hook("RetrieveDummyItems", function(ply)
+	local transmittedItems = {}
+	local index = 0
 
-	for k,v in next, GAMEMODE.g_ItemTable do
-	
-		if( v.IsTransmitted ) then
-		
-			netstream.Start( ply, "ReceiveDummyItem", v:GetID(), v:GetClass(), v:GetVars(), v:Owner(), v.CharID );
-		
+	for _,item in next, GAMEMODE.g_ItemTable do
+		if item.IsTransmitted  then
+			table.insert(transmittedItems, v)
 		end
-	
 	end
 
-end );
+	hook.Add("Think", "STALKER.TransmitItems"..ply:UserID(), function()
+		local item = transmittedItems[index]
+		index = index + 1
+
+		netstream.Start(ply, "ReceiveDummyItem", item:GetID(), item:GetClass(), item:GetVars(), item:Owner(), item.CharID)
+
+		if index == #transmittedItems then
+			hook.Remove("Think", "STALKER.TransmitItems"..ply:UserID())
+		end
+	end)
+end)
 
 netstream.Hook("RequestItemUpgrade", function(ply, nItemID, szUpgrade)
 	local ItemObj = GAMEMODE.g_ItemTable[nItemID]
