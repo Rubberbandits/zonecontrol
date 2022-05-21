@@ -4,8 +4,6 @@ kingston.bonemerge = kingston.bonemerge or {}
 // Player functions
 local meta = FindMetaTable("Player")
 function meta:CreateNewBonemerge(szModel, iBoneScale)
-	print(szModel)
-	print(debug.Trace())
 	if !IsValidModel(szModel) then return end
 
 	local b = ClientsideModel(szModel, RENDERGROUP_OPAQUE)
@@ -267,15 +265,19 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 end
 
 function kingston.bonemerge.fullUpdate()
-	for _,ent in ipairs(ents.FindByClass("class C_BaseFlex")) do
-		ent:Remove()
-	end
+	kingston.bonemerge.clear()
 
 	for _,ply in ipairs(player.GetHumans()) do
 		if !IsValid(ply) then continue end
 		if ply:IsDormant() then continue end
 
 		kingston.bonemerge.manageEntities(ply, true, true)
+	end
+end
+
+function kingston.bonemerge.clear()
+	for _,ent in ipairs(ents.FindByClass("class C_BaseFlex")) do
+		ent:Remove()
 	end
 end
 
@@ -368,7 +370,7 @@ hook.Add("Think", "STALKER.BonemergeRefresh", function()
 	if nextRefresh <= CurTime() then
 		kingston.bonemerge.fullUpdate()
 
-		GAMEMODE.nextBonemergeRefresh = CurTime() + 60
+		GAMEMODE.nextBonemergeRefresh = CurTime() + 15
 	end
 end)
 
