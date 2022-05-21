@@ -349,14 +349,18 @@ hook.Add("Think", "STALKER.BonemergeRefresh", function()
 		nextRefresh = GAMEMODE.nextBonemergeRefresh
 	end
 
-	if nextRefresh <= CurTime() then
+	if nextRefresh <= CurTime() 
+		for _,ent in ipairs(ents.FindByClass("class C_BaseFlex")) do
+			ent:Remove()
+		end
+
 		for _,ply in ipairs(player.GetHumans()) do
 			if ply:IsDormant() then continue end
 
 			kingston.bonemerge.manageEntities(ply, true, true)
 		end
 
-		GAMEMODE.nextBonemergeRefresh = CurTime() + 300
+		GAMEMODE.nextBonemergeRefresh = CurTime() + 60
 	end
 end)
 
