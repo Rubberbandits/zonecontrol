@@ -163,8 +163,8 @@ function kingston.bonemerge.createEntity(ply, itemClass, itemVars)
 	end
 end
 
-function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, newParent, overrideCharId)
-	local charId = overrideCharId or (ply.CharID and ply:CharID() or nil)
+function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, newParent)
+	local charId = ply.CharID and ply:CharID() or nil
 	if !charId or charId == 0 then return end
 
 	local charData = kingston.bonemerge.data[charId]
@@ -190,7 +190,7 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 			entity:Remove()
 		end
 
-		if createEntities and IsValid(ply) and GAMEMODE.EfficientModelCheck[ply:GetModel()] and itemData.vars.Equipped then
+		if createEntities and GAMEMODE.EfficientModelCheck[ply:GetModel()] and itemData.vars.Equipped then
 			itemData.entity = kingston.bonemerge.createEntity(itemData.parent, itemData.class, itemData.vars)
 
 			if itemData.removeBody then
