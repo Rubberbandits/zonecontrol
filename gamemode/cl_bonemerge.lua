@@ -184,6 +184,8 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 
 	local hideBody = false
 	for itemId,itemData in next, transmittedItems do
+		itemData.parent = ply
+
 		local entity = itemData.entity
 
 		if removeEntities and IsValid(entity) then
@@ -191,7 +193,7 @@ function kingston.bonemerge.manageEntities(ply, createEntities, removeEntities, 
 		end
 
 		if createEntities and GAMEMODE.EfficientModelCheck[ply:GetModel()] and itemData.vars.Equipped then
-			itemData.entity = kingston.bonemerge.createEntity(itemData.parent, itemData.class, itemData.vars)
+			itemData.entity = kingston.bonemerge.createEntity(ply, itemData.class, itemData.vars)
 
 			if itemData.removeBody then
 				hideBody = true
