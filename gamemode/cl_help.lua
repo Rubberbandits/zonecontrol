@@ -93,6 +93,25 @@ function GM:RefreshHelpMenuContent()
 		
 		Traders use Stockpiles to get money back from items they buy from players by selecting "sell to stockpile for Xru". Furthermore, Traders and Technicians cannot access their business menu if they are not standing near a stockpile. Technicians cannot upgrade gear without standing near a Stockpile.]]
 		},
+		{ "Looting", [[ZoneControl has a custom loot system that procs based on the amount of players on server and the proximity of a player to a spawner. There are three tiers of loot that can be scavenged from automatic spawners;
+		Worthless
+		Common
+		Uncommon
+		
+		In order to get a better chance of finding loot, you should travel across the map with a few friends. The radius of item detection is rather small, so look closely for anything in the bushes and grass that seems out of the ordinary!
+		
+		Artifacts are manually placed by staff, and do not follow the same system as generated loot. In order to find most artifacts, you'll need to equip an artifact detector. Note that some artifacts are more rare and require better detectors to find. Also, anomaly traversing is dangerous; some artifacts are simply not meant to be looted, even if you've found it.]]
+		}
+		{ "Radiation", [[In the Zone, radiation is the most common enemy one can face. Ingesting more radiation by standing in an irradiated zone or eating irradiated food will slowly deplete your maximum health over time. You'll /appear/ healthy in your health bar, but you'll be extremely weak in reality. Staff can see your true health by using the seeall function.
+			
+		In order to better protect yourself against radiation, you should consider purchasing a Geiger Counter and a few dosimeters. A Geiger Counter will detect how much radiation is emanating in the area you are standing; the closer you are to the radiation source, the more the needle will stabilize. You can equip a Geiger Counter to use as an on-screen UI feature.
+		
+		Dosimeters are disposable radiation detectors that work by detecting how much radiation you have been directly exposed to, up to 25 roentgens. Dosimeters don't ever decrease their value, so once one is maxed out, you can consider it trash and activate a new one.
+		
+		Using dosimeters and geiger counters together is extremely useful for detecting whether or not you are truly irradiated. If your geiger counter is ticking, but your newly activated dosimeter hasn't budged from zero, it's likely that you are standing near a player who is irradiated. Irradiated players cannot irradiate you, but you can detect whether or not they are irradiated and alert them so they may take medicine for it.
+		
+		Radiation is healed with certain medkits, antirads, and certain food items.]]
+		}
 		{ "Flags", 
 			[[ZoneControl uses a flag system. Most flags are automatic - you don't need to run a command to access them.
 
