@@ -11,5 +11,5 @@ ITEM.HungerReduce = 50
 ITEM.RadiationHealAmount = -25
 ITEM.Rarity = 2
 ITEM.AllowRandomSpawn = false
-ITEM.BulkPrice = 1000
-ITEM.License = "X"
+ITEM.BulkPrice = 1250
+ITEM.IsSellable = true
