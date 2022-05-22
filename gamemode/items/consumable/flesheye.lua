@@ -12,5 +12,5 @@ ITEM.AllowRandomSpawn = false
 ITEM.IsSellable = true
 ITEM.Experience = 50
 function ITEM:GetSellPrice()
-    return 75
+    return 200
 end

@@ -5,8 +5,12 @@ ITEM.Weight =  1;
 ITEM.FOV =  12;
 ITEM.CamPos =  Vector( 50, 50, 50 );
 ITEM.LookAt =  Vector( 0, 0, 0 );
-ITEM.ConsumeText = "You take a big, hungry bite out of the hunk of meat. It's chewy and hard to get down, but it's packed with deliciously meaty protein and fills you up nicely."
+ITEM.ConsumeText = "You take a big, hungry bite out of the hunk of meat. It's chewy and hard to get down, but it's packed with deliciously meaty protein and fills you up nicely. You understand why this meat is rarely eaten, however; ingesting the highly irradiated flesh makes you extremely sick."
 ITEM.UseText = "Eat"
-ITEM.HungerReduce = 65
+ITEM.HungerReduce = 50
+ITEM.RadiationHealAmount = -25
 ITEM.Rarity = 2
 ITEM.AllowRandomSpawn = false
+function ITEM:GetSellPrice()
+    return 200
+end
