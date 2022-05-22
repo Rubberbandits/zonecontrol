@@ -12,3 +12,4 @@ ITEM.RadiationHealAmount = -25
 ITEM.Rarity = 2
 ITEM.AllowRandomSpawn = false
 ITEM.BulkPrice = 1000
+ITEM.License = "X"

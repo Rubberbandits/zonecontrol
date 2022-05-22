@@ -16,3 +16,4 @@ ITEM.AllowRandomSpawn = false
 ITEM.IsSellable = true
 ITEM.Experience = 100
 ITEM.BulkPrice = 2000
+ITEM.License = "X"

@@ -11,6 +11,5 @@ ITEM.HungerReduce = 30
 ITEM.RadiationHealAmount = -20
 ITEM.Rarity = 2
 ITEM.AllowRandomSpawn = false
-function ITEM:GetSellPrice()
-    return 250
-end
+ITEM.BulkPrice = 1250
+ITEM.License = "X"
