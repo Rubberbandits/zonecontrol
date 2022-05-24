@@ -210,7 +210,18 @@ netstream.Hook("RetrieveDummyItems", function(ply)
 
 	local hookName = "STALKER.TransmitItems"..ply:UserID()
 	hook.Add("Think", hookName, function()
+		if !ply:IsValid() then
+			hook.Remove("Think", hookName)
+			return
+		end
+
 		local item = transmittedItems[index]
+		if !item then
+			transmittedItems[index] = nil
+			index = index + 1
+			return
+		end
+
 		netstream.Start(ply, "ReceiveDummyItem", item:GetID(), item:GetClass(), item:GetVars(), item:Owner(), item.CharID)
 
 		if index == #transmittedItems then
