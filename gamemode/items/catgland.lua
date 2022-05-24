@@ -12,5 +12,5 @@ ITEM.Experience = 50
 ITEM.IsSellable = true
 
 function ITEM:GetSellPrice()
-	return 100
+	return 250
 end

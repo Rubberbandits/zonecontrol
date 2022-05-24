@@ -13,5 +13,5 @@ ITEM.BulkPrice = 3000
 ITEM.IsSellable = true
 ITEM.Experience = 300
 function ITEM:GetSellPrice()
-	return 600
+	return 1000
 end

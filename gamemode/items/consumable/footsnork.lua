@@ -9,12 +9,10 @@ ITEM.W = 1
 ITEM.H = 1
 ITEM.ConsumeText = "Your morality is pushed aside for the moment as you sink your teeth into the calf of the snork leg. It's way too chewy and full of sinew to get anything down, but the little bit you can manage to taste makes you think of a leaner boar chop. You're a bit disgusted with yourself for even trying it."
 ITEM.UseText = "Eat"
-ITEM.HungerReduce = -1
+ITEM.HungerReduce = -10
+ITEM.RadiationHealAmount = -20
 ITEM.Rarity = 3
 ITEM.AllowRandomSpawn = false
-ITEM.BulkPrice = 1250
 ITEM.IsSellable = true
 ITEM.Experience = 100
-function ITEM:GetSellPrice()
-    return 250
-end
+ITEM.BulkPrice = 2000
