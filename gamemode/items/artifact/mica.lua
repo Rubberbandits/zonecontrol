@@ -31,6 +31,6 @@ ITEM.ArmorValues = {
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }
-fucntion ITEM:GetSellPrice()
+function ITEM:GetSellPrice()
     return 4500
 end
