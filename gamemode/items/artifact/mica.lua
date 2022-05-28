@@ -3,8 +3,8 @@ ITEM.Name =  "Mica"
 ITEM.Desc =  "A pocketed membrane of shiny, luminous strands. A rare artifact, as the circumstances of its creation are seemingly random. Hastens the speed of blood coagulation in users, but sears exposed skin."
 ITEM.Model =  "models/tnb/stalker/artifacts/mica.mdl"
 ITEM.Tier =  2
-ITEM.Weight =  0.5;
-ITEM.BulkPrice =  30000
+ITEM.Weight =  0.5
+ITEM.BulkPrice =  22500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -31,3 +31,6 @@ ITEM.ArmorValues = {
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }
+fucntion ITEM:GetSellPrice()
+    return 4500
+end

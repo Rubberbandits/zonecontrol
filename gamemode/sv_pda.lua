@@ -428,10 +428,10 @@ local RandomPlayerRelatedStrings = {
 local RandomNPCRelatedStrings = {
 	"Anyone seen a %s around here? Thought I heard one a minute ago.",
 	"Just took down a %s. What a bastard.",
-	"Stay alert. I hear a %s.",
+	"Stay alert. I hear %s.",
 	"Seems like every day I wake up and find a %s in my tent.",
 	"Damn %s! It left a mess all over the place.",
-	"Check it out, that %s is  getting closer.",
+	"Check it out, %s is getting closer.",
 	"Is that... a %s over there?...",
 	"i had a dream about a %s last nite",
 	"does %s taste good or nah",

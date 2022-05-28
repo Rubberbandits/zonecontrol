@@ -14,5 +14,5 @@ ITEM.RaiseCondition = 25
 ITEM.W = 1
 ITEM.H = 1
 ITEM.Vars = {
-	Uses = 4,
+	Uses = 3,
 };

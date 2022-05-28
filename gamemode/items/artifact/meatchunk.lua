@@ -3,8 +3,8 @@ ITEM.Name =  "Meat Chunk"
 ITEM.Desc =  "This organic artifact consists of deformed, mutated animal tissue. When placed in a chemically contaminated area, Meat Chunk transforms the airborne chemicals into a mucous fluid. Strangely enough, it also has healing properties, upping sensitivity to radiation in favor of cell overproduction, healing faster yet making scars uglier."
 ITEM.Model =  "models/tnb/stalker/artifacts/meatchunk.mdl"
 ITEM.Tier =  2
-ITEM.Weight =  0.5;
-ITEM.BulkPrice =  25000
+ITEM.Weight =  0.5
+ITEM.BulkPrice =  37500
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -31,3 +31,6 @@ ITEM.ArmorValues = {
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }
+function ITEM:GetSellPrice()
+    return 7500
+end

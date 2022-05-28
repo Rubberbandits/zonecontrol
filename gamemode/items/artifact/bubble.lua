@@ -3,7 +3,7 @@ ITEM.Name =  "Bubble"
 ITEM.Desc =  "A fluorescent, lustrous green compound of several hollow, organic formations. Emits a visible gaseous substance that eliminates radiation rapidly without harming the wielder. The user, over time, seems to become more insubstantial, their presence diminished."
 ITEM.Model =  "models/tnb/stalker/artifacts/bubble.mdl"
 ITEM.Tier =  3
-ITEM.Weight =  0.5;
+ITEM.Weight =  0.5
 ITEM.BulkPrice =  70000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
@@ -27,7 +27,10 @@ ITEM.ArmorValues = {
     -- "Electric Shock"
     [DMG_SHOCK] = 1,
     -- "Radiation"
-    [DMG_RADIATION] = 0.5,
+    [DMG_RADIATION] = 0.3,
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }
+function ITEM:GetSellPrice()
+    return 14000
+end

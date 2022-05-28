@@ -2,15 +2,13 @@ ITEM.Base = "artifact"
 ITEM.Name =  "Meatball"
 ITEM.Desc =  "An immaculately polished ball bearing encapsulated by unnatural muscle mass. Rumoured to be the result of gross lab experiments with bioengineered cells from Flesh, it can be felt tensing and relaxing in the hand. Known for its radiation reducing qualities."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/flame.mdl"
-
 ITEM.ItemSubmaterials = {
 { 0 , "models/barnacle/roots" },
 { 1 , "debug/env_cubemap_model" }
 }
-
-ITEM.Tier =  2
-ITEM.Weight =  0.5;
-ITEM.BulkPrice =  20000
+ITEM.Tier =  3
+ITEM.Weight =  0.5
+ITEM.BulkPrice =  75000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -37,3 +35,6 @@ ITEM.ArmorValues = {
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }
+fuction ITEM:GetSellPrice()
+    return 15000
+end

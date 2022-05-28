@@ -2,13 +2,11 @@ ITEM.Base = "artifact"
 ITEM.Name =  "Balloon"
 ITEM.Desc =  "A tiny crystal known to absorb aerosolized neurotoxins, chemicals and poisons."
 ITEM.Model =  "models/tnb/stalker/artifacts/droplet.mdl"
-
 ITEM.ItemSubmaterials = {
 { 0 , "models/props/cs_office/clouds" }
 }
-
 ITEM.Tier =  1
-ITEM.Weight =  0.33;
+ITEM.Weight =  0.33
 ITEM.BulkPrice =  6000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
@@ -36,3 +34,6 @@ ITEM.ArmorValues = {
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }
+function ITEM:GetSellPrice()
+    return 1300
+end
