@@ -1,14 +1,13 @@
 ITEM.Base = "artifact"
 ITEM.Name =  "Guts"
-ITEM.Desc =  "A semi-organic amalgam of tissue and debris. Stalkers tell stories about them being the remains of victims from the first CNPP meltdowns. Somehow, it's useful in absorbing supersonic shock waves."
+ITEM.Desc =  "A semi-organic amalgam of tissue and debris. Living flesh in a dense, fist-sized mass that slowly and constantly bleeds. Local legend holds that some artifacts coalesce from strong emotions. Others tell stories about them being the remains of victims from the first CNPP meltdowns."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/stone flower.mdl"
 ITEM.ItemSubmaterials = {
 { 0 , "models/kali/miscstuff/stalker/artifacts/stone_flower_outer_c"},
 { 1 , "models/props_lab/cornerunit_cloud"}
 }
-
 ITEM.Tier =  3
-ITEM.Weight =  0.50;
+ITEM.Weight =  0.50
 ITEM.BulkPrice =  40000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
@@ -21,7 +20,7 @@ ITEM.ArmorValues = {
     -- "Bulletproof"
     [DMG_BULLET] = 1,
     -- "Explosion"
-    [DMG_BLAST] = 0.6,
+    [DMG_BLAST] = 1,
     -- "Thermal"
     [DMG_BURN] = 1,
     [DMG_SLOWBURN] = 1,
@@ -36,3 +35,6 @@ ITEM.ArmorValues = {
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }
+function ITEM:GetSellPrice()
+    return 8000
+end

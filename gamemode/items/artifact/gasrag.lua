@@ -4,7 +4,7 @@ ITEM.Desc =  "A piece of cloth that smells strongly of gasoline. By nature, hang
 ITEM.Model =  "models/kali/miscstuff/stalker/aid/bandage.mdl"
 ITEM.Tier =  2
 ITEM.BulkPrice = 30000
-ITEM.Weight =  0.5;
+ITEM.Weight =  0.5
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -31,3 +31,6 @@ ITEM.ArmorValues = {
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }
+function ITEM:GetSellPrice()
+    return 6000
+end

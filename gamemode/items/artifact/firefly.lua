@@ -6,7 +6,6 @@ ITEM.ItemSubmaterials = {
 	{ 0 , "models/shadertest/predator" },
 	{ 1 , "models/tnb/artifacts/elec1" }
 }
-
 ITEM.Tier =  3
 ITEM.Weight =  1.5
 ITEM.ArmorValues = {

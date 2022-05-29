@@ -26,6 +26,7 @@ UPGRADE.PropertiesTooltip = {
 --CLASS
 UPGRADE.Item = {
     suit_io7 = true,
+	suit_trenchio7 = true,
 }
 
 UPGRADE.RequiredUpgrade = "io7_extra_kevlar"

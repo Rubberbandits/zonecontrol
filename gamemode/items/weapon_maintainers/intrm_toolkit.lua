@@ -11,5 +11,5 @@ ITEM.CamPos 		= Vector( -4.46, -50, 0.9 );
 ITEM.LookAt 		= Vector( 0, 0, 0 );
 ITEM.BulkPrice =  12000;
 ITEM.Vars = {
-	Uses = 4,
+	Uses = 3,
 };

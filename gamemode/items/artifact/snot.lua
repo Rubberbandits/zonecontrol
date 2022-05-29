@@ -5,10 +5,9 @@ ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/flame.mdl"
 ITEM.ItemSubmaterials = {
 { 0 , "models/barnacle/roots" }
 }
-
 ITEM.Tier =  1
 ITEM.Weight =  0.5;
-ITEM.BulkPrice =  6000
+ITEM.BulkPrice =  9000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -35,3 +34,6 @@ ITEM.ArmorValues = {
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }
+function ITEM:GetSellPrice()
+    return 1800
+end

@@ -3,8 +3,8 @@ ITEM.Name =  "Pellicle"
 ITEM.Desc =  "An unidentifiable aqua-colored substrate with iridescent properties. Its surface is striated and contoured, stretched thin by anomalous processes. Exhibits gravimetric properties and insulates from acid burns by changing the makeup of the skin."
 ITEM.Model =  "models/kali/miscstuff/stalker/artifacts/bubble.mdl"
 ITEM.Tier =  3
-ITEM.Weight =  0.5;
-ITEM.BulkPrice =  55000
+ITEM.Weight =  0.5
+ITEM.BulkPrice =  70000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
     [DMG_CRUSH] = 1,
@@ -31,3 +31,6 @@ ITEM.ArmorValues = {
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }
+function ITEM:GetSellPrice()
+    return 14000
+end

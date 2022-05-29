@@ -3,7 +3,7 @@ ITEM.Name =  "Slime"
 ITEM.Desc =  "A dazzling web of transparent, brittle chemical residue. The gaze rolls off it like water and its form seems to subtly change with time. A subtle current of air is detectable around it as well as a cooling effect. Renders users sensitive to chemicals while simultaneously possessing minor healing properties and skin protection."
 ITEM.Model =  "models/tnb/stalker/artifacts/slime.mdl"
 ITEM.Tier =  1
-ITEM.Weight =  0.50;
+ITEM.Weight =  0.50
 ITEM.BulkPrice =  4000
 ITEM.ArmorValues = {
     -- "Impact" (blunt)
@@ -31,3 +31,6 @@ ITEM.ArmorValues = {
     -- "Psychic"
     [DMG_PARALYZE] = 1,
 }
+function ITEM:GetSellPrice()
+    return 800
+end

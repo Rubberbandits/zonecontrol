@@ -20,6 +20,7 @@ UPGRADE.PropertiesTooltip = {
 --CLASS
 UPGRADE.Item = {
     suit_io7 = true,
+	suit_trenchio7 = true,
 }
 
 --TIER
