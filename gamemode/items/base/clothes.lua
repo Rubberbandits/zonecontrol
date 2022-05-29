@@ -407,7 +407,9 @@ function BASE:Paint(pnl, w, h)
 	end
 end
 
-function BASE:OnPlayerDeath()
+function BASE:OnPlayerDeath(ply, attacker, dmg)
+	if !attacker:IsPlayer() then return end
+
 	if self:GetVar("Equipped", false) and self:GetVar("Patch") then
 		local class = self:GetVar("Patch")
 		self:SetVar("Patch", nil, nil, true)

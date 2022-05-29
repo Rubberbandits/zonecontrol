@@ -611,7 +611,7 @@ function GM:DoPlayerDeath( ply, attacker, dmg )
 			
 			if( v.OnPlayerDeath ) then
 				
-				v:OnPlayerDeath()
+				v:OnPlayerDeath(ply, attacker, dmg)
 				
 			end
 			
