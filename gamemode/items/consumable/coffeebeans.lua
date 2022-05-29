@@ -16,7 +16,7 @@ ITEM.Rarity = 1
 ITEM.AllowRandomSpawn = true
 function ITEM:DynamicFunctions()
     return {
-        eat = {
+        brew = {
             CanRun = function()
                 return true
             end,

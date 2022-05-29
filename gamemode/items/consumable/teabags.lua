@@ -16,7 +16,7 @@ ITEM.UseText = "eat"
 ITEM.ConsumeText = "For whatever reason, instead of soaking these in hot water like a normal person would, you kind of just cram the bags into your mouth and let your saliva steep them. Tastes like grass."
 function ITEM:DynamicFunctions()
     return {
-        eat = {
+        brew = {
             CanRun = function()
                 return true
             end,
