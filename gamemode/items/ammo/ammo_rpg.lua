@@ -8,4 +8,4 @@ ITEM.Vars = {
     Amount = 1,
 }
 ITEM.Rarity = 3
-ITEM.AllowRandomSpawn = true
+ITEM.AllowRandomSpawn = false

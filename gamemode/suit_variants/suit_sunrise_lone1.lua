@@ -17,3 +17,4 @@ SUIT.HandsModel = {
 		--{ 2, "models/kingstonstalker/psz_suit/psz_lone1" },
 	},
 }
+ITEM.BulkPrice = 15000
