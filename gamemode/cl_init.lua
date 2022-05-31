@@ -20,6 +20,7 @@ include( "config/sh_config.lua" );
 include( "pon.lua" );
 include( "netstream2.lua" );
 include( "gui_helper.lua" );
+include( "ikon.lua" );
 include( "utf8.lua" );
 include( "markup.lua" );
 include( "shared.lua" );
