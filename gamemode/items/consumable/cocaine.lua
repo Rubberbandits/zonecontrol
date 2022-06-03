@@ -6,6 +6,5 @@ ITEM.FOV =  7
 ITEM.CamPos =  Vector( 50, 50, 50 )
 ITEM.LookAt =  Vector( 0, 0, 0 )
 ITEM.BulkPrice =  3750
-ITEM.License =  "X"
 ITEM.ConsumeText = "You pop open the small container of white powder, tugging the grain of snow up into one of your nostrils. You feel a powerful headrush in no time, amped and pumped. You're ready to take on the world!"
 ITEM.UseText = "snort"
