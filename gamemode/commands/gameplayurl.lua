@@ -24,7 +24,7 @@ else
 			if IsValid(station) then
 				station:Play()
 
-				local index = table.insert(currentSounds, {obj: station, name: url})
+				local index = table.insert(currentSounds, {obj = station, name = url})
 
 				timer.Simple(station:GetLength(), function()
 					station:Stop()
