@@ -855,14 +855,7 @@ local RandomPDAMessageFuncs = {
 		return Format(table.Random(RandomTraderRelatedStrings), playerName)
 	end,
 	[7] = function()
-		local allNPCs = {}
-		for _,ent in ipairs(ents.GetAll()) do
-			if ent:IsNextBot() or ent:IsNPC() then
-				table.insert(allNPCs, ent)
-			end
-		end
-
-		local randomNPC = table.Random(allNPCs)
+		local randomNPC = table.Random(ents.GetNPCs())
 
 		if !randomNPC then return end
 
