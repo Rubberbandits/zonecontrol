@@ -13,4 +13,4 @@ SUIT.HandsModel = {
 	model = "models/poc/stalker_viewmodels/c_sunrise.mdl",
 	skin = 2,
 }
-ITEM.BulkPrice = 15000
+ITEM.NotBuyable = true

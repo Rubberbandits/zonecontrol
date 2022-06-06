@@ -1,7 +1,7 @@
 kingston.admin.registerCommand("itemsetprice", {
 	syntax = "<string itemClass> <number price>",
 	description = "Set the business menu price of an item",
-	arguments = {ARGTYPE_TARGET, ARGTYPE_NUMBER},
+	arguments = {ARGTYPE_STRING, ARGTYPE_NUMBER},
 	onRun = function(ply, itemID, price)
 		local metaitem = GAMEMODE:GetItemByID(itemID)
 		if !metaitem then
