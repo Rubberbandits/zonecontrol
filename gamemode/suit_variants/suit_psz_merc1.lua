@@ -1,4 +1,4 @@
-SUIT.Name = "PS5-M Universal Protection (Mercenary)"
+ITEM.NotBuyable = trueSUIT.Name = "PS5-M Universal Protection (Mercenary)"
 SUIT.Desc = "A variant of the PS5-M Universal Protection suit. Mercenary colors."
 SUIT.BulkPrice = 90000
 SUIT.BaseSuit = "suit_psz"
