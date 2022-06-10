@@ -1,5 +1,5 @@
 SUIT.Name = "Heavy SEVA Suit (Duty)"
-SUIT.Desc = "A variant of an armored SEVA.  colors."
+SUIT.Desc = "A variant of an armored SEVA. Duty colors."
 SUIT.BaseSuit = "suit_heavyseva"
 SUIT.Submaterial = {
 	{ 3 , "models/seva2/cs3_lone" },
