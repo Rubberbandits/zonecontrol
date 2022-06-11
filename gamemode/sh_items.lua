@@ -246,8 +246,12 @@ for k,v in next, GM.SuitVariants do
 	ITEM.Item = v.BaseSuit
 	ITEM.SuitVariant = k
 	ITEM.BulkPrice = v.BulkPrice or 25000
-	ITEM.License = "U"
+	if !v.NotBuyable then
+		ITEM.License = "U"
+	end
 	ITEM.Weight = 0.5
+
+
 
 	/*
 		Explanation for use of Inherit:

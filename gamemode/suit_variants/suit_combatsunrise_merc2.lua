@@ -8,3 +8,4 @@ SUIT.Submaterial = {
 SUIT.ItemSubmaterials = {
 	{ 0 , "models/kingstonstalker/psz_suit/psz_merc2" }
 }
+ITEM.NotBuyable = true

@@ -8,4 +8,4 @@ SUIT.Submaterial = {
 SUIT.ItemSubmaterials = {
 	{ 0 , "models/kingstonstalker/psz_suit/psz_final2" }
 }
-ITEM.BulkPrice = 15000
+ITEM.NotBuyable = true

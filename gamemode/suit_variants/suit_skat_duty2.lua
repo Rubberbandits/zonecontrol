@@ -7,3 +7,4 @@ SUIT.Submaterial = {
 SUIT.ItemSubmaterials = {
 	{ 0 , "models/kingstonstalker/skat9_suit/skat_duty2" }
 }
+ITEM.NotBuyable = true

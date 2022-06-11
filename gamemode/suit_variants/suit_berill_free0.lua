@@ -9,3 +9,4 @@ SUIT.ItemSubmaterials = {
 	{ 0 , "models/kingstonstalker/berill_suit/beri_free" }
 }
 ITEM.BulkPrice = 50000
+ITEM.NotBuyable = true

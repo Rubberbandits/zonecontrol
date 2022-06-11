@@ -9,3 +9,4 @@ SUIT.ItemSubmaterials = {
 	{ 0 , "models/kingstonstalker/seva_suit/seva_isg1" },
 	{ 2 , "models/kingstonstalker/seva_suit/glass_seva" },
 }
+ITEM.NotBuyable = true
