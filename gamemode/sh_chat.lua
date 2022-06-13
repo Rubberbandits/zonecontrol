@@ -160,6 +160,7 @@ end
 if SERVER then
 	-- Run chat type
 	-- todo: add logging
+
 	function kingston.chat.run(id, ply, text)
 		local chat_data = kingston.chat.get(id)
 		if !chat_data then return end
@@ -184,12 +185,13 @@ if SERVER then
 		
 		if !rf then return end
 		if #rf == 0 then return end
-		
+
 		chat_data.on_run(id, ply, text)
-		
 		netstream.Start(rf, "nReceiveMessage", id, ply, text)
 	end
 end
+
+
 
 -- Process input to find out what kind of command it is.
 -- thanks to chessnut for this code, i wrote my own but it sucked. why re-invent the wheel?
@@ -464,11 +466,42 @@ kingston.chat.register_type("radio", {
 			if ply != v and ply:GetPos():DistToSqr(v:GetPos()) <= (chat_data.chat_range * chat_data.chat_range) then
 				special_rf[#special_rf + 1] = v
 			end
-			if !v:HasItem("radio") or (v:RadioFreq() != ply:RadioFreq()) then continue end
-			
-			rf[#rf + 1] = v
+
+			--local nearRadio = false
+			--local stationaryFreq = -1
+			--print("near radio: ", nearRadio)
+			if v:HasItem("radio") and v:RadioFreq() == ply:RadioFreq() and ply != v then -- First checks if the player has proper personal radio set up
+				rf[#rf + 1] = v -- If they do, they hear it regardless of the stationary radio
+				--print(v, "had a tuned personal radio")
+			else -- If not, search for a valid radio nearby
+				local successfulTransmission = false 
+
+				for key, obj in pairs(ents.FindInSphere(v:GetPos(), chat_data.chat_range)) do -- Finds radio entities within chat range
+					-- If radio entity exists & is on same freq and the sender
+					if obj.Entity and obj.Entity:IsValid() and obj.Entity:GetClass() == "cc_radio" then
+						if obj:GetChannel() == ply:RadioFreq() then
+							rf[#rf + 1] = v
+							--print(v, "was near a stationary radio")
+							successfulTransmission = true
+							break
+						end
+					end
+				end
+				if !successfulTransmission then
+					local tr = GAMEMODE:GetHandTrace( ply, 128 );
+					if tr.Entity and tr.Entity:IsValid() and tr.Entity:GetClass() == "cc_radio" then
+						if tr.Entity:GetChannel() == v:RadioFreq() then
+							rf[#rf + 1] = v
+							--print(v, "has the same freq as a stationary radio")
+							break
+						end
+					end
+				end
+			end
+			--PrintTable(rf)
+			--rf[#rf + 1] = v
 		end
-		
+
 		if #special_rf > 0 then
 			netstream.Start(special_rf, "nChatRadioSurround", chat_type, ply, text)
 		end
