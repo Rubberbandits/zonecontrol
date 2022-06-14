@@ -37,6 +37,8 @@ function nDeleteCharacter( ply, id )
 		if( ply:CharID() == id ) then return end
 		
 		local char = ply:GetCharFromID( id );
+
+		if char.Money < 9500 then return end
 		
 		ply:DeleteCharacter( id, char.RPName );
 		
