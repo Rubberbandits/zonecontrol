@@ -99,6 +99,16 @@ GM.CitizenModels = {
 	"models/srp/fmale_14.mdl",
 };
 
+GM.DonatorModels = {
+	"models/cultist/head_rips/jonny_cringe.mdl",
+	"models/cultist/head_rips/metro_anna.mdl",
+	"models/cultist/head_rips/tnb/bandit_shifty.mdl",
+	"models/cultist/head_rips/tnb/female_28.mdl",
+	"models/cultist/head_rips/tnb/female_57.mdl",
+	"models/cultist/head_rips/tnb/female_64.mdl",
+	"models/cultist/head_rips/tnb/female_75.mdl",
+}
+
 GM.BodyModels = {
 	"models/tnb/stalker_2019/anorak.mdl",
 	"models/tnb/stalker_2019/anorak_f.mdl",
@@ -107,6 +117,9 @@ GM.BodyModels = {
 -- efficiency
 GM.EfficientModelCheck = {}
 for k,v in next, GM.CitizenModels do
+	GM.EfficientModelCheck[v] = true
+end
+for k,v in next, GM.DonatorModels do
 	GM.EfficientModelCheck[v] = true
 end
 
