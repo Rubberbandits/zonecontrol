@@ -401,6 +401,7 @@ local RandomTalking = {
 	"What does radiation taste like? Because I think I'm tasting radiation right now.",
 	"I haven't smiled once since I got here.",
 	"DOWNLOAD THIS LINK TO RECEIVE FREE RUBLES!!!: realstalkercash.snet.vbs",
+	"Burnt Beans… God damn.",
 }
 
 local RandomPlayerRelatedStrings = {
