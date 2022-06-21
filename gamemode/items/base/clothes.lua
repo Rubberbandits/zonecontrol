@@ -249,7 +249,7 @@ function BASE:OnTakeDamage(dmginfo)
 	for class,_ in next, self:GetVar("Upgrades", {}) do
 		local upgrade = GAMEMODE.Upgrades[class]
 		if upgrade.DegradationProtection then
-			protection = protection + upgrade.DegradationProtection
+			protection = math.Clamp(protection + upgrade.DegradationProtection, 1, 100)
 		end
 	end
 
