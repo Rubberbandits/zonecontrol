@@ -138,12 +138,15 @@ function PANEL:Init()
 		if #lines > 0 then
 			local selectedRank = self.ranks:GetLine(self.ranks.selected).data.uniqueID
 			local perms = {}
-
+	
 			for lineID,line in pairs(lines) do
 				local text = line:GetColumnText(1)
 				table.insert(perms, text)
-
-				self.commands:RemoveLine(lineID)
+	
+				if self.commands:GetLine(lineID) then
+					self.commands:RemoveLine(lineID)
+				end
+				
 				self.permissions:AddLine(text)
 			end
 
@@ -169,12 +172,15 @@ function PANEL:Init()
 		if #lines > 0 then
 			local selectedRank = self.ranks:GetLine(self.ranks.selected).data.uniqueID
 			local perms = {}
-
+	
 			for lineID,line in pairs(lines) do
 				local text = line:GetColumnText(1)
 				table.insert(perms, text)
-
-				self.permissions:RemoveLine(lineID)
+	
+				if self.permissions:GetLine(lineID) then
+					self.permissions:RemoveLine(lineID)
+				end
+				
 				self.commands:AddLine(text)
 			end
 
