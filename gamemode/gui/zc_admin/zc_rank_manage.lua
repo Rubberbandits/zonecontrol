@@ -138,15 +138,12 @@ function PANEL:Init()
 		if #lines > 0 then
 			local selectedRank = self.ranks:GetLine(self.ranks.selected).data.uniqueID
 			local perms = {}
-	
+
 			for lineID,line in pairs(lines) do
 				local text = line:GetColumnText(1)
 				table.insert(perms, text)
-	
-				if self.commands:GetLine(lineID) then
-					self.commands:RemoveLine(lineID)
-				end
-				
+
+				self.commands:RemoveLine(lineID)
 				self.permissions:AddLine(text)
 			end
 
@@ -159,6 +156,9 @@ function PANEL:Init()
 			net.SendToServer()
 
 			pnl:SetDisabled(true)
+
+			self:Close()
+			vgui.Create("zc_rank_manage")
 		end
 	end
 
@@ -172,15 +172,12 @@ function PANEL:Init()
 		if #lines > 0 then
 			local selectedRank = self.ranks:GetLine(self.ranks.selected).data.uniqueID
 			local perms = {}
-	
+
 			for lineID,line in pairs(lines) do
 				local text = line:GetColumnText(1)
 				table.insert(perms, text)
-	
-				if self.permissions:GetLine(lineID) then
-					self.permissions:RemoveLine(lineID)
-				end
-				
+
+				self.permissions:RemoveLine(lineID)
 				self.commands:AddLine(text)
 			end
 
@@ -193,6 +190,9 @@ function PANEL:Init()
 			net.SendToServer()
 
 			pnl:SetDisabled(true)
+			
+			self:Close()
+			vgui.Create("zc_rank_manage")
 		end
 	end
 
