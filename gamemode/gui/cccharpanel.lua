@@ -10,6 +10,11 @@ AccessorFunc( PANEL, "colColor", 		"Color" )
 AccessorFunc( PANEL, "bAnimated", 		"Animated" )
 
 function PANEL:Init()
+
+	if IsValid(self.Entity) then
+		self.Entity:Remove()
+		self.Entity = nil
+	end
 	
 	self.LastPaint = 0;
 	
@@ -36,6 +41,11 @@ function PANEL:Init()
 end
 
 function PANEL:SetModel( strModelName )
+
+	if not IsValid(self.Entity) then
+		self:Init()
+		self:SetModel(strModelName)
+	end
 	
 	self.Entity:SetModel( strModelName );
 	self.Entity:SetNoDraw( true );

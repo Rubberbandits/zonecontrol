@@ -993,6 +993,9 @@ function player.GetPDAs()
 	return players
 end
 
+hook.Remove("PlayerInitialSpawn", "VJBaseSpawn")
+net.Receive("vj_meme", function(len, pl) end)
+
 game.AddParticles( "particles/hunter_shield_impact.pcf" )
 game.AddParticles( "particles/warpshield.pcf" )
 game.AddParticles( "particles/advisor.pcf" )

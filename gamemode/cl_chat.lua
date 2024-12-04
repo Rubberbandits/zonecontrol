@@ -89,7 +89,7 @@ function GM:DrawChat()
 	
 	if( !self.ChatboxOpen ) then
 		
-		local y = ScrH() - 200 - 40 - 34;
+		local y = ScrH() * 0.7 + (cookie.GetNumber( "zc_chatheight", 350 ) * 0.45)
 		
 		local tab = { };
 		
@@ -157,7 +157,7 @@ function GM:DrawChat()
 				
 			end
 			if( !tab[i].obj ) then return end
-			tab[i].obj:draw( 30, y - tab[i].obj:getHeight(), nil, nil, 255 * amul );
+			tab[i].obj:draw( ScrW() / 96, y - tab[i].obj:getHeight(), nil, nil, 255 * amul );
 
 			y = y - tab[i].obj:getHeight();
 			ty = ty + tab[i].obj:getHeight();
@@ -170,7 +170,7 @@ end
 
 function GM:DrawRadioChat()
 
-	local y = ScrH() - 600 - 40 - 34;
+	local y = ScrH() * 0.5
 	
 	local tab = { };
 	
@@ -254,7 +254,7 @@ function GM:CreateChatbox()
 	
 	CCP.Chatbox = vgui.Create( "CCChat" );
 	CCP.Chatbox:SetSize( ScreenScale(200), cH );
-	CCP.Chatbox:SetPos( ScrW() / 96, ScrH() * 0.5 - (cH / 2) );
+	CCP.Chatbox:SetPos( ScrW() / 96, ScrH() * 0.7 - (cH / 2) );
 	function CCP.Chatbox:Think()
 	
 		if( input.IsKeyDown( KEY_ESCAPE ) ) then

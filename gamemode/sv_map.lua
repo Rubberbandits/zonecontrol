@@ -2,9 +2,12 @@ GM.ServerConnectIDs = { };
 
 function GM:InitPostEntity()
 
+	hook.Add("InitSQLTables", "STALKER.LoadFromDB", function() 
+		self:LoadBans();
+		RetrieveStockpiles();
+	end)
+
 	self:InitSQL();
-	self:LoadBans();
-	RetrieveStockpiles();
 
 	net.Receive("VJSay", function(len, pl) end)
 	

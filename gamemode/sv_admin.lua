@@ -234,3 +234,9 @@ local function SetEntityDesc( ply, cmd, args, szArgs )
 	end
 end
 concommand.Add( "rp_propdesc", SetEntityDesc, "Sets a prop's description", FCVAR_USERINFO ); 
+
+netstream.Hook("nGetBansList", function(ply)
+	if not ply:IsAdmin() then return end
+
+	netstream.Start(ply, "nBansList", GAMEMODE.BanTable)
+end)

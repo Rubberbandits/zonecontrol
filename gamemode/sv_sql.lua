@@ -217,39 +217,31 @@ local ItemTable = {
 };
 
 function GM:InitSQLTable( tab, dtab )
-	
 	for _, v in pairs( tab ) do
-	
+		local q = string.format("SELECT `%s` FROM `%s`;", v[1], dtab)
+
 		local function qS()
-			
-			--self:LogSQL( "Column \"" .. v[1] .. "\" already exists in table " .. dtab .. "." );
-			
+			self:LogSQL( "Column \"" .. v[1] .. "\" already exists in table " .. dtab .. "." );
 		end
 		
 		local function qF( err )
+			print(q)
+			print(err)
 			
 			if( string.find( string.lower( err ), "unknown column" ) ) then
-				
 				self:LogSQL( "Column \"" .. v[1] .. "\" does not exist in table " .. dtab .. ", creating..." );
 				
 				local q = "ALTER TABLE " .. dtab .. " ADD COLUMN " .. v[1] .. " " .. v[2];
-				
 				if( v[3] ) then
-					
 					q = q .. " DEFAULT '" .. tostring( v[3] ) .. "'";
-					
 				end
 				
 				mysqloo.Query( q );
-				
 			end
-			
 		end
 		
-		mysqloo.Query( "SELECT " .. v[1] .. " FROM " .. dtab, qS, qF, true );
-		
+		mysqloo.Query(q, qS, qF, true);
 	end
-	
 end
 
 function GM:InitSQLTables()
@@ -886,10 +878,7 @@ end
 
 function meta:UpdatePlayerField( field, value )
 	
-	local q = "UPDATE cc_players";
-	q = q .. " SET " .. mysqloo.Escape( field );
-	q = q .. " = '" .. mysqloo.Escape( tostring( value ) );
-	q = q .. "' WHERE SteamID = '" .. self:SteamID() .. "'";
+	local q = string.format("UPDATE `cc_players` SET `%s` = '%s' WHERE `SteamID` = '%s';", mysqloo.Escape(field), mysqloo.Escape(tostring(value)), self:SteamID())
 	
 	local function qS( ret )
 		
