@@ -531,13 +531,4 @@ function GM:PlayerCommandRan(ply, cmd, args)
 end
 
 // Load all commands
-local cmd_files = file.Find( GM.FolderName.."/gamemode/commands/*.lua", "LUA", "namedesc" );
-if #cmd_files > 0 then
-	for _, v in ipairs(cmd_files) do
-		if SERVER then
-			AddCSLuaFile("commands/"..v)
-		end
-
-		include("commands/"..v)
-	end
-end
+includes.directory("commands")

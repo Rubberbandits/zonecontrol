@@ -50,7 +50,7 @@ ikon.maxSize = 8 -- 8x8 (512^2) is max icon size. eitherwise, fuck off.
 	Initialize hooks and RT Screens.
 	returns nothing
 */
-local schemaName = schemaName or (SCHEMA and SCHEMA.folder)
+local schemaName = schemaName or GM.FolderName
 
 local List = {}
 function ikon:init()
@@ -87,11 +87,6 @@ end
 if (schemaName) then
 	ikon:init()
 end
-
-hook.Add("InitializedSchema", "updatePath", function()
-	schemaName = SCHEMA.folder
-	ikon:init()
-end)
 
 /*
 	IKON Library Essential Material/Texture Declare

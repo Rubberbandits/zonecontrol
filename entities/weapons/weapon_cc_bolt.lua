@@ -20,18 +20,6 @@ SWEP.Holsterable = false;
 SWEP.AimPos = Vector();
 SWEP.AimAng = Vector();
 
-/*
-SWEP.Itemize = true;
-SWEP.ItemDescription = "A stalker's best friend when it comes to navigating anomaly fields.";
-SWEP.ItemWeight = 0.5;
-SWEP.ItemFOV = 11;
-SWEP.ItemCamPos = Vector( 50, 50, 50 );
-SWEP.ItemLookAt = Vector( 0, 0, 0 );
-
-SWEP.ItemBulkPrice		= 100
-SWEP.ItemLicense		= "X"
-*/
-
 function SWEP:CheckThrowPosition( eye, src )
 	
 	local trace = { };

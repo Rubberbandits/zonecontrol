@@ -26,18 +26,6 @@ SWEP.HolsterAng = Vector( 0, 0, 0 );
 SWEP.AimPos = Vector( 4.47, 8.04, -6.25 );
 SWEP.AimAng = Vector( 11.25, 56.25, 24.11 );
 
-/*
-SWEP.Itemize = true;
-SWEP.ItemDescription = "A short, bladed implement.";
-SWEP.ItemWeight = 0.5;
-SWEP.ItemFOV = 19;
-SWEP.ItemCamPos = Vector( -0.89, 50, -0.89 );
-SWEP.ItemLookAt = Vector( 0, 0, 8.04 );
-
-SWEP.ItemBulkPrice		= 10000;
-SWEP.ItemLicense		= "X";
-*/
-
 SWEP.SecondaryBlock = true;
 SWEP.BlockMul = 0.8;
 

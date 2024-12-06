@@ -372,3 +372,28 @@ local function zcBundleMoney(len, ply)
 	ply:GiveItem("rubles", {Stacked = bundleAmount})
 end
 net.Receive("zcBundleMoney", zcBundleMoney)
+
+local function nUnhideItem( ply, index )
+	local ent = Entity(index)
+	
+	if not IsValid(ent) then return end
+	
+	local metaitem = GAMEMODE:GetItemByID( ent:GetItemClass() );
+	local pPos = ply:GetPos()
+	local ePos = ent:GetPos()
+	if pPos:Distance(ePos) < 128 and !ent.revealed then
+		ent:SetNoDraw(false)
+
+		if metaitem.ItemSubmaterials then
+			for k,v in next, metaitem.ItemSubmaterials do
+				ent:SetSubMaterial( v[1], v[2] );
+			end
+		end
+
+		hook.Run("PlayerArtifactRevealed", ply, ent, ent:GetItemClass())
+		ent.revealed = true
+	else
+		ent:SetNoDraw(true)
+	end
+end
+netstream.Hook( "nUnhideItem", nUnhideItem )

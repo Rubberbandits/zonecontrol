@@ -1,16 +1,17 @@
--- 3/16/2022
--- two years since the date was updated in this file. this shit too old
+-- 12/5/2024
+
+AddCSLuaFile()
 
 DeriveGamemode( "sandbox" );
 
+AddCSLuaFile("config/sh_config.lua")
+include("config/sh_config.lua")
+
+includes.directory("core/shared")
+
+hook.Run("CoreLoaded")
+
 util.IncludeDir("gui", false, true, "client")
-
-include("sh_npc_code.lua")
-include("sh_drugs.lua")
-
-if StormFox2 then
-	include("sh_loadweathers.lua")
-end
 
 GM.Name = "ZoneControl";
 GM.Author = "rusty";
@@ -18,12 +19,8 @@ GM.Website = "";
 GM.Email = "";
 
 function GM:GetGameDescription()
-	
 	return self.Name;
-	
 end
-
-math.randomseed( os.time() );
 
 local meta = FindMetaTable( "Player" );
 local emeta = FindMetaTable( "Entity" );
@@ -884,9 +881,6 @@ end
 
 function GM:OnGamemodeLoaded()
 	self:LoadWeaponItems();
-	if CLIENT then
-		self:LoadBooks();
-	end
 
 	local base_class = weapons.GetStored("tfa_gun_base")
 	if base_class then

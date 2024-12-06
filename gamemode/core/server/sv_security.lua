@@ -273,13 +273,15 @@ local ignore_types = {
 	["[radio]"] = true,
 }
 
-for trait,info in next, kingston.chat.Languages do
-	local id = info[2]:sub(2, #info[2])
-	
-	ignore_types["["..id.."]"] = true
-	ignore_types["["..id.."Y]"] = true
-	ignore_types["["..id.."W]"] = true
-end
+hook.Add("CoreLoaded", "IgnoreChatTypes", function()
+	for trait,info in next, kingston.chat.Languages do
+		local id = info[2]:sub(2, #info[2])
+		
+		ignore_types["["..id.."]"] = true
+		ignore_types["["..id.."Y]"] = true
+		ignore_types["["..id.."W]"] = true
+	end
+end)
 
 local function BroadcastWatchedLogs(category, text)
 	for k,v in next, player.GetAll() do

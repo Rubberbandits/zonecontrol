@@ -168,10 +168,9 @@ function meta:HasFlag( szFlag )
 
 end
 
-local files = file.Find( GM.FolderName .. "/gamemode/charflags/*.lua", "LUA", "namedesc" );
-
+local path = string.format("%s/gamemode/charflags", GM.FolderName)
+local files = file.Find( string.format("%s/*.lua", path), "LUA", "namedesc" );
 if( #files > 0 ) then
-
 	for _, v in pairs( files ) do
 		
 		FLAG = { };
@@ -183,15 +182,14 @@ if( #files > 0 ) then
 		FLAG.ModelFunc 		= function( ply ) return ply.CharModel; end
 		FLAG.OnSpawn 		= function( ply ) end
 		
-		AddCSLuaFile( "charflags/" .. v );
-		include( "charflags/" .. v );
+		AddCSLuaFile( path.."/"..v );
+		include( path.."/"..v );
 		
 		GM.CharFlags[FLAG.Flag] = FLAG
 		
 		MsgC( Color( 200, 200, 200, 255 ), "Character flag " .. v .. " loaded.\n" );
 		
 	end
-	
 else
 	
 	if( SERVER ) then

@@ -1,17 +1,18 @@
 AddCSLuaFile()
 
-local files = file.Find( GM.FolderName.."/gamemode/weathers/*.lua", "LUA", "namedesc" );
+local path = string.format("%s/gamemode/weathers", GM.FolderName)
+local files = file.Find( path.."/*.lua", "LUA", "namedesc" );
 if( #files > 0 ) then
 
 	for _, v in next, files do
 
 		if( SERVER ) then
 		
-			AddCSLuaFile( "weathers/"..v );
+			AddCSLuaFile( path.."/"..v );
 		
 		end
 		
-		include( "weathers/"..v );
+		include( path.."/"..v );
 		
 	end
 

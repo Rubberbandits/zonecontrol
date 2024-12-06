@@ -33,7 +33,7 @@ ITEM.functions.Use = {
 	end,
 }
 
-function item:CanStack(item)
+function ITEM:CanStack(item)
 	if self.Stackable and item.Stackable and item.Base == self.Base and self.Class == item.Class then
 		local selfAmount = self.IsItem and self:GetVar("Stacked", 1) or self.Vars.Stacked
 		local otherAmount = item.IsItem and item:GetVar("Stacked", 1) or item.Vars.Stacked or 0

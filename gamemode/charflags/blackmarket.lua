@@ -1,4 +1,4 @@
-FLAG.PrintName 	= "Black Market Dealer";
+FLAG.PrintName 	= "Trader";
 FLAG.Flag 		= "X";
 
 FLAG.BusinessLicense = LICENSE_BLACK;

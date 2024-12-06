@@ -1,30 +1,6 @@
 -- there isnt any sv_items file or any other good place to put this so
 -- you know we have like 4x populate funcs... we really should just create a single modular populate func.
 GM.LoadedStockpiles = {};
-local function nUnhideItem( ply, index )
-	local ent = Entity(index)
-	
-	if not IsValid(ent) then return end
-	
-	local metaitem = GAMEMODE:GetItemByID( ent:GetItemClass() );
-	local pPos = ply:GetPos()
-	local ePos = ent:GetPos()
-	if pPos:Distance(ePos) < 128 and !ent.revealed then
-		ent:SetNoDraw(false)
-
-		if metaitem.ItemSubmaterials then
-			for k,v in next, metaitem.ItemSubmaterials do
-				ent:SetSubMaterial( v[1], v[2] );
-			end
-		end
-
-		hook.Run("PlayerArtifactRevealed", ply, ent, ent:GetItemClass())
-		ent.revealed = true
-	else
-		ent:SetNoDraw(true)
-	end
-end
-netstream.Hook( "nUnhideItem", nUnhideItem )
 
 local function nRequestStockpiles( ply )
 	
