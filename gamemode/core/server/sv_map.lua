@@ -132,12 +132,11 @@ end
 
 GM.ConnectMessages = {}
 GM.EntryPortSpawns = {}
-local files = file.Find(GM.FolderName .. "/gamemode/maps/" .. game.GetMap() .. ".lua", "LUA", "namedesc")
-if #files > 0 then
-	for _, v in pairs(files) do
-		include("maps/" .. v)
-		AddCSLuaFile("maps/" .. v)
-	end
+
+local path = string.format("%s/gamemode/maps/%s.lua", GM.FolderName, game.GetMap())
+if file.Exists(path, "LUA") then
+	AddCSLuaFile(path)
+	include(path)
 
 	MsgC(Color(200, 200, 200, 255), "Serverside map lua file for " .. game.GetMap() .. " loaded.\n")
 else

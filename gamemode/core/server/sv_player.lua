@@ -1,5 +1,4 @@
 local meta = FindMetaTable("Player")
-GM.CombineRadioFreq = 1000 -- dick weed
 function GM:PlayerInitialSpawn(ply)
 	if not self.FullyLoaded then
 		self:LogBug("ERROR: PlayerInitialSpawn on player " .. ply:Nick() .. " before gamemode fully loaded.")
@@ -25,7 +24,7 @@ function GM:PlayerInitialSpawnSafe(ply)
 	ply:SyncAllGlobalData()
 	ply:SetNotSolid(true)
 	ply:SetMoveType(MOVETYPE_NOCLIP)
-	ply:SetPos(Vector(10000, 10000, 10000))
+	ply:SetPos(self.MenuLocation)
 end
 
 function GM:PlayerCheckFlag(ply, respawn)

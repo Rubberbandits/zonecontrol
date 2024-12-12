@@ -1,7 +1,12 @@
 local PANEL = {}
 
-function PANEL:Init()
-
+function PANEL:AddSelection(text, callback)
+    local btn = self:Add("DButton")
+    btn:SetFont("MainMenuSelection")
+    btn:SetText(text)
+    btn:SetHeight(ScrH() * 0.05)
+    btn:DockMargin(0, 10, 0, 10)
+    btn.DoClick = callback
 end
 
-vgui.Register("Selection", PANEL, "DPanel")
+vgui.Register("MenuSelection", PANEL, "DListLayout")

@@ -1,6 +1,6 @@
 ITEM.Name =  "US Dollars";
 ITEM.Desc =  "A fistful of dollars. Nobody will accept this around here.";
-ITEM.Model =  "models/props/cs_assault/Dollar.mdl";
+ITEM.Model =  "models/kek1ch/money_usa.mdl";
 ITEM.Weight =  0.001;
 ITEM.FOV =  13;
 ITEM.CamPos =  Vector( 50, 50, 50 );

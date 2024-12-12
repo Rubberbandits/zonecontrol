@@ -247,38 +247,198 @@ GM.GoldDonorAmount = 30;
 -- Items
 
 GM.GearSelection = {
-	["backpack"] = 500,
-	["med_medkit"] = 900,
-	["smallmedkit"] = 100,
-	["antirad"] = 300,
-	["bread"] = 85,
-	["sausage"] = 50,
-	["energydrink"] = 80,
-	["touristcan1"] = 100,
-	["cossacks"] = 500,
-	["radio"] = 800,
-	["dollars"] = 80,
-	["pda"] = 400,
-	["morley_reds"] = 150,
-	["playboy"] = 200,
-	["guitar"] = 700,
-	["gunoil"] = 200,
-	["geiger_counter"] = 2500,
-	["dosimeter"] = 100,
-	["ammo_9x18"] = 200,
-	["weapon_srp_tokarev"] = 5500,
-	["ammo_762x25"] = 350,
-	["weapon_srp_sawnoff"] = 3500,
-	["ammo_12ga"] = 200,
-	["weapon_srp_doublebarrel"] = 6500,
-	["weapon_srp_m500"] = 7500,
-	["weapon_srp_hammerless"] = 1500,
-	["ammo_32acp"] = 100,
-	["weapon_srp_kitchenknife"] = 500,
-	["weapon_srp_kabar"] = 2500,
-	["weapon_srp_hatchet"] = 1000,
-	["suit_trenchcoat"] = 2000,
-	["weapon_srp_f1"] = 2200, 
+	backpack = {
+		cost = 500,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	med_medkit = {
+		cost = 900,
+		origin = Vector(-19, 16, 0),
+		angs = Angle(0, -90, 0),
+		scale = 1
+	},
+	smallmedkit = {
+		cost = 100,
+		origin = Vector(-20, 8.5, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	antirad = {
+		cost = 300,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	bread = {
+		cost = 85,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["sausage"] = {
+		cost = 50,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["energydrink"] = {
+		cost = 80,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["touristcan1"] = {
+		cost = 100,
+		origin = Vector(-24, 11, 0),
+		angs = Angle(0, 0, 0),
+		scale = 0.8
+	},
+	["cossacks"] = {
+		cost = 500,
+		origin = Vector(-24, 16, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["radio"] = {
+		cost = 800,
+		origin = Vector(-29, 12, 0),
+		angs = Angle(0, -90, 0),
+		scale = 1
+	},
+	["dollars"] = {
+		cost = 80,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["pda"] = {
+		cost = 400,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["morley_reds"] = {
+		cost = 150,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["playboy"] = {
+		cost = 200,
+		origin = Vector(-9, 12, 0),
+		angs = Angle(0, -90, 0),
+		scale = 1
+	},
+	["guitar"] = {
+		cost = 700,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["gunoil"] = {
+		cost = 200,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["geiger_counter"] = {
+		cost = 2500,
+		origin = Vector(-29, 4, 0),
+		angs = Angle(0, -90, 0),
+		scale = 1
+	},
+	["dosimeter"] = {
+		cost = 100,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["ammo_9x18"] = {
+		cost = 200,
+		origin = Vector(-29, -13, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["weapon_srp_tokarev"] = {
+		cost = 5500,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["ammo_762x25"] = {
+		cost = 350,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["weapon_srp_sawnoff"] = {
+		cost = 3500,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["ammo_12ga"] = {
+		cost = 200,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["weapon_srp_doublebarrel"] = {
+		cost = 6500,
+		origin = Vector(8, 16.5, 13),
+		angs = Angle(-85, -90, 90),
+		scale = 1
+	},
+	["weapon_srp_m500"] = {
+		cost = 7500,
+		origin = Vector(-2, -4, 0),
+		angs = Angle(0, -90, 90),
+		scale = 1
+	},
+	["weapon_srp_hammerless"] = {
+		cost = 1500,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["ammo_32acp"] = {
+		cost = 100,
+		origin = Vector(-29, -7, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["weapon_srp_kitchenknife"] = {
+		cost = 500,
+		origin = Vector(26, -11, 0),
+		angs = Angle(0, 90, 90),
+		scale = 1
+	},
+	["weapon_srp_kabar"] = {
+		cost = 2500,
+		origin = Vector(0, 0, 0),
+		angs = Angle(0, 0, 0),
+		scale = 1
+	},
+	["weapon_srp_hatchet"] = {
+		cost = 1000,
+		origin = Vector(12, 1, 0),
+		angs = Angle(0, 0, 90),
+		scale = 1
+	},
+	["suit_trench"] = {
+		cost = 2000,
+		origin = Vector(23, 7, 0),
+		angs = Angle(0, 90, 0),
+		scale = 1
+	},
+	["weapon_srp_f1"] = {
+		cost = 2200,
+		origin = Vector(10, 14, 1),
+		angs = Angle(90, 0, 0),
+		scale = 1
+	},
 }
 
 GM.DefaultSelfRepairCond = 80

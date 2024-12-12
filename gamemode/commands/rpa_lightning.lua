@@ -9,6 +9,11 @@ if StormFox2 then
 		description = "Zeus strike a player",
 		arguments = {ARGTYPE_TARGET},
 		onRun = function(ply, target)
+			if not StormFox2 then
+				ply:Notify(nil, COLOR_NOTIF, "StormFox is disabled.")
+				return
+			end
+
 			StormFox2.Thunder.Strike(target)
 
 			GAMEMODE:LogAdmin( "[D] " .. ply:Nick() .. " lighnting'd player " .. target:Nick() .. ".", ply );

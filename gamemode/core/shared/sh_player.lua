@@ -952,7 +952,7 @@ function meta:UnloadCharacter()
 	end
 
 	if SERVER then
-		self:SetPos(Vector(10000,10000,10000))
+		self:SetPos(vector_origin)
 		self:Freeze(true)
 		self:SetNotSolid( true );
 		self:SetMoveType( MOVETYPE_NOCLIP );

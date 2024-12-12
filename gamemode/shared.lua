@@ -63,109 +63,6 @@ hook.Add("pac_CanWearParts", "FlagRestrictPAC", function(ply)
 	end
 end)
 
-GM.ModelColors = { };
-
-for _, v in pairs( GM.CitizenModels ) do
-	GM.ModelColors[v] = Vector( 15, 71, 93 ) / 255;
-end
-
-GM.ModelColors["models/player/combine_soldier.mdl"] = Vector( 0, 0.8, 1 );
-GM.ModelColors["models/player/combine_super_soldier.mdl"] = Vector( 0.4, 0, 0 );
-
-GM.ModelFuncs = { };
-GM.ModelFuncs["models/zombie/classic.mdl"] = function( ply )
-	
-	ply:SetBodygroup( 1, 1 );
-	
-end
-GM.ModelFuncs["models/zombie/fast.mdl"] = GM.ModelFuncs["models/zombie/classic.mdl"];
-GM.ModelFuncs["models/zombie/poison.mdl"] = GM.ModelFuncs["models/zombie/classic.mdl"];
-GM.ModelFuncs["models/zombie/classic_torso.mdl"] = GM.ModelFuncs["models/zombie/classic.mdl"];
-
-GM.TranslateNPCModelTable = { };
-GM.TranslateNPCModelTable["models/humans/group01/female_01.mdl"] = "models/player/group01/female_01.mdl";
-GM.TranslateNPCModelTable["models/humans/group01/female_02.mdl"] = "models/player/group01/female_02.mdl";
-GM.TranslateNPCModelTable["models/humans/group01/female_03.mdl"] = "models/player/group01/female_03.mdl";
-GM.TranslateNPCModelTable["models/humans/group01/female_04.mdl"] = "models/player/group01/female_04.mdl";
-GM.TranslateNPCModelTable["models/humans/group01/female_06.mdl"] = "models/player/group01/female_05.mdl";
-GM.TranslateNPCModelTable["models/humans/group01/female_07.mdl"] = "models/player/group01/female_06.mdl";
-GM.TranslateNPCModelTable["models/humans/group01/male_01.mdl"] = "models/player/group01/male_01.mdl";
-GM.TranslateNPCModelTable["models/humans/group01/male_02.mdl"] = "models/player/group01/male_02.mdl";
-GM.TranslateNPCModelTable["models/humans/group01/male_03.mdl"] = "models/player/group01/male_03.mdl";
-GM.TranslateNPCModelTable["models/humans/group01/male_04.mdl"] = "models/player/group01/male_04.mdl";
-GM.TranslateNPCModelTable["models/humans/group01/male_05.mdl"] = "models/player/group01/male_05.mdl";
-GM.TranslateNPCModelTable["models/humans/group01/male_06.mdl"] = "models/player/group01/male_06.mdl";
-GM.TranslateNPCModelTable["models/humans/group01/male_07.mdl"] = "models/player/group01/male_07.mdl";
-GM.TranslateNPCModelTable["models/humans/group01/male_08.mdl"] = "models/player/group01/male_08.mdl";
-GM.TranslateNPCModelTable["models/humans/group01/male_09.mdl"] = "models/player/group01/male_09.mdl";
-GM.TranslateNPCModelTable["models/humans/group03/female_01.mdl"] = "models/player/group03/female_01.mdl";
-GM.TranslateNPCModelTable["models/humans/group03/female_02.mdl"] = "models/player/group03/female_02.mdl";
-GM.TranslateNPCModelTable["models/humans/group03/female_03.mdl"] = "models/player/group03/female_03.mdl";
-GM.TranslateNPCModelTable["models/humans/group03/female_04.mdl"] = "models/player/group03/female_04.mdl";
-GM.TranslateNPCModelTable["models/humans/group03/female_06.mdl"] = "models/player/group03/female_05.mdl";
-GM.TranslateNPCModelTable["models/humans/group03/female_07.mdl"] = "models/player/group03/female_06.mdl";
-GM.TranslateNPCModelTable["models/humans/group03/male_01.mdl"] = "models/player/group03/male_01.mdl";
-GM.TranslateNPCModelTable["models/humans/group03/male_02.mdl"] = "models/player/group03/male_02.mdl";
-GM.TranslateNPCModelTable["models/humans/group03/male_03.mdl"] = "models/player/group03/male_03.mdl";
-GM.TranslateNPCModelTable["models/humans/group03/male_04.mdl"] = "models/player/group03/male_04.mdl";
-GM.TranslateNPCModelTable["models/humans/group03/male_05.mdl"] = "models/player/group03/male_05.mdl";
-GM.TranslateNPCModelTable["models/humans/group03/male_06.mdl"] = "models/player/group03/male_06.mdl";
-GM.TranslateNPCModelTable["models/humans/group03/male_07.mdl"] = "models/player/group03/male_07.mdl";
-GM.TranslateNPCModelTable["models/humans/group03/male_08.mdl"] = "models/player/group03/male_08.mdl";
-GM.TranslateNPCModelTable["models/humans/group03/male_09.mdl"] = "models/player/group03/male_09.mdl";
-GM.TranslateNPCModelTable["models/humans/group03m/female_01.mdl"] = "models/player/group03m/female_01.mdl";
-GM.TranslateNPCModelTable["models/humans/group03m/female_02.mdl"] = "models/player/group03m/female_02.mdl";
-GM.TranslateNPCModelTable["models/humans/group03m/female_03.mdl"] = "models/player/group03m/female_03.mdl";
-GM.TranslateNPCModelTable["models/humans/group03m/female_04.mdl"] = "models/player/group03m/female_04.mdl";
-GM.TranslateNPCModelTable["models/humans/group03m/female_06.mdl"] = "models/player/group03m/female_05.mdl";
-GM.TranslateNPCModelTable["models/humans/group03m/female_07.mdl"] = "models/player/group03m/female_06.mdl";
-GM.TranslateNPCModelTable["models/humans/group03m/male_01.mdl"] = "models/player/group03m/male_01.mdl";
-GM.TranslateNPCModelTable["models/humans/group03m/male_02.mdl"] = "models/player/group03m/male_02.mdl";
-GM.TranslateNPCModelTable["models/humans/group03m/male_03.mdl"] = "models/player/group03m/male_03.mdl";
-GM.TranslateNPCModelTable["models/humans/group03m/male_04.mdl"] = "models/player/group03m/male_04.mdl";
-GM.TranslateNPCModelTable["models/humans/group03m/male_05.mdl"] = "models/player/group03m/male_05.mdl";
-GM.TranslateNPCModelTable["models/humans/group03m/male_06.mdl"] = "models/player/group03m/male_06.mdl";
-GM.TranslateNPCModelTable["models/humans/group03m/male_07.mdl"] = "models/player/group03m/male_07.mdl";
-GM.TranslateNPCModelTable["models/humans/group03m/male_08.mdl"] = "models/player/group03m/male_08.mdl";
-GM.TranslateNPCModelTable["models/humans/group03m/male_09.mdl"] = "models/player/group03m/male_09.mdl";
-GM.TranslateNPCModelTable["female_01"] = "models/player/group01/female_01.mdl";
-GM.TranslateNPCModelTable["female_02"] = "models/player/group01/female_02.mdl";
-GM.TranslateNPCModelTable["female_03"] = "models/player/group01/female_03.mdl";
-GM.TranslateNPCModelTable["female_04"] = "models/player/group01/female_04.mdl";
-GM.TranslateNPCModelTable["female_05"] = "models/player/group01/female_05.mdl";
-GM.TranslateNPCModelTable["female_06"] = "models/player/group01/female_05.mdl";
-GM.TranslateNPCModelTable["female_07"] = "models/player/group01/female_06.mdl";
-GM.TranslateNPCModelTable["male_01"] = "models/player/group01/male_01.mdl";
-GM.TranslateNPCModelTable["male_02"] = "models/player/group01/male_02.mdl";
-GM.TranslateNPCModelTable["male_03"] = "models/player/group01/male_03.mdl";
-GM.TranslateNPCModelTable["male_04"] = "models/player/group01/male_04.mdl";
-GM.TranslateNPCModelTable["male_05"] = "models/player/group01/male_05.mdl";
-GM.TranslateNPCModelTable["male_06"] = "models/player/group01/male_06.mdl";
-GM.TranslateNPCModelTable["male_07"] = "models/player/group01/male_07.mdl";
-GM.TranslateNPCModelTable["male_08"] = "models/player/group01/male_08.mdl";
-GM.TranslateNPCModelTable["male_09"] = "models/player/group01/male_09.mdl";
-GM.TranslateNPCModelTable["breen"] = "models/breen.mdl";
-GM.TranslateNPCModelTable["gman"] = "models/gman.mdl";
-GM.TranslateNPCModelTable["models/combine_soldier.mdl"] = "models/player/combine_soldier.mdl";
-GM.TranslateNPCModelTable["models/combine_super_soldier.mdl"] = "models/player/combine_super_soldier.mdl";
-
-GM.TranslatePlayerModelTable = { };
-GM.TranslatePlayerModelTable["models/player/group01/female_01.mdl"] = "models/humans/group01/female_01.mdl";
-GM.TranslatePlayerModelTable["models/player/group01/female_02.mdl"] = "models/humans/group01/female_02.mdl";
-GM.TranslatePlayerModelTable["models/player/group01/female_03.mdl"] = "models/humans/group01/female_03.mdl";
-GM.TranslatePlayerModelTable["models/player/group01/female_04.mdl"] = "models/humans/group01/female_04.mdl";
-GM.TranslatePlayerModelTable["models/player/group01/female_05.mdl"] = "models/humans/group01/female_06.mdl";
-GM.TranslatePlayerModelTable["models/player/group01/female_06.mdl"] = "models/humans/group01/female_07.mdl";
-GM.TranslatePlayerModelTable["models/player/group01/male_01.mdl"] = "models/humans/group01/male_01.mdl";
-GM.TranslatePlayerModelTable["models/player/group01/male_02.mdl"] = "models/humans/group01/male_02.mdl";
-GM.TranslatePlayerModelTable["models/player/group01/male_03.mdl"] = "models/humans/group01/male_03.mdl";
-GM.TranslatePlayerModelTable["models/player/group01/male_04.mdl"] = "models/humans/group01/male_04.mdl";
-GM.TranslatePlayerModelTable["models/player/group01/male_05.mdl"] = "models/humans/group01/male_05.mdl";
-GM.TranslatePlayerModelTable["models/player/group01/male_06.mdl"] = "models/humans/group01/male_06.mdl";
-GM.TranslatePlayerModelTable["models/player/group01/male_07.mdl"] = "models/humans/group01/male_07.mdl";
-GM.TranslatePlayerModelTable["models/player/group01/male_08.mdl"] = "models/humans/group01/male_08.mdl";
-GM.TranslatePlayerModelTable["models/player/group01/male_09.mdl"] = "models/humans/group01/male_09.mdl";
-
 function IsValidModel( szModelPath )
 
 	return file.Exists( szModelPath, "GAME" );
@@ -199,14 +96,18 @@ function meta:SetModelCC( mdl )
 	net.Broadcast()
 end
 
-GM.ModelHands = {}
-for k,v in next, GM.CitizenModels do
-	GM.ModelHands[v] = {"models/weapons/c_arms_refugee.mdl", 0, "10000000"}
-end
-for k,v in next, GM.ModelHands do
-	player_manager.AddValidModel(k, k)
-	player_manager.AddValidHands(k, v[1], v[2], v[3])
-end
+hook.Add("OnGamemodeLoaded", "PopulateHands", function()
+	local GM = gmod.GetGamemode()
+	GM.ModelHands = {}
+	for k,v in next, GM.CitizenModels do
+		GM.ModelHands[v] = {"models/weapons/c_arms_refugee.mdl", 0, "10000000"}
+	end
+
+	for k,v in next, GM.ModelHands do
+		player_manager.AddValidModel(k, k)
+		player_manager.AddValidHands(k, v[1], v[2], v[3])
+	end
+end)
 
 function GM:TranslateModelToPlayer( mdl )
 	
