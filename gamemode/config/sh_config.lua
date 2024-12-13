@@ -249,8 +249,8 @@ GM.GoldDonorAmount = 30;
 GM.GearSelection = {
 	backpack = {
 		cost = 500,
-		origin = Vector(0, 0, 0),
-		angs = Angle(0, 0, 0),
+		origin = Vector(22, 23, 14),
+		angs = Angle(90, 90, 0),
 		scale = 1
 	},
 	med_medkit = {
@@ -267,37 +267,37 @@ GM.GearSelection = {
 	},
 	antirad = {
 		cost = 300,
-		origin = Vector(0, 0, 0),
-		angs = Angle(0, 0, 0),
+		origin = Vector(-16.5, 12, 0),
+		angs = Angle(0, 90, 0),
 		scale = 1
 	},
 	bread = {
 		cost = 85,
-		origin = Vector(0, 0, 0),
-		angs = Angle(0, 0, 0),
+		origin = Vector(-21.5, 6, 0),
+		angs = Angle(0, 90, 0),
 		scale = 1
 	},
 	["sausage"] = {
 		cost = 50,
-		origin = Vector(0, 0, 0),
-		angs = Angle(0, 0, 0),
+		origin = Vector(-23, -3, 0),
+		angs = Angle(0, 90, 0),
 		scale = 1
 	},
 	["energydrink"] = {
 		cost = 80,
-		origin = Vector(0, 0, 0),
+		origin = Vector(-23.5, 18, 0),
 		angs = Angle(0, 0, 0),
 		scale = 1
 	},
 	["touristcan1"] = {
 		cost = 100,
-		origin = Vector(-24, 11, 0),
+		origin = Vector(-24, 13, 0),
 		angs = Angle(0, 0, 0),
 		scale = 0.8
 	},
 	["cossacks"] = {
 		cost = 500,
-		origin = Vector(-24, 16, 0),
+		origin = Vector(-27, 18, 0),
 		angs = Angle(0, 0, 0),
 		scale = 1
 	},
@@ -309,79 +309,73 @@ GM.GearSelection = {
 	},
 	["dollars"] = {
 		cost = 80,
-		origin = Vector(0, 0, 0),
+		origin = Vector(-7.5, 2, 0),
 		angs = Angle(0, 0, 0),
 		scale = 1
 	},
 	["pda"] = {
 		cost = 400,
-		origin = Vector(0, 0, 0),
+		origin = Vector(-29, 1, 0),
 		angs = Angle(0, 0, 0),
 		scale = 1
 	},
 	["morley_reds"] = {
 		cost = 150,
-		origin = Vector(0, 0, 0),
-		angs = Angle(0, 0, 0),
+		origin = Vector(-14, 4, 0),
+		angs = Angle(0, 90, 0),
 		scale = 1
 	},
 	["playboy"] = {
 		cost = 200,
-		origin = Vector(-9, 12, 0),
+		origin = Vector(-10.5, 12, 0),
 		angs = Angle(0, -90, 0),
-		scale = 1
-	},
-	["guitar"] = {
-		cost = 700,
-		origin = Vector(0, 0, 0),
-		angs = Angle(0, 0, 0),
 		scale = 1
 	},
 	["gunoil"] = {
 		cost = 200,
-		origin = Vector(0, 0, 0),
+		origin = Vector(-11, 5, 0),
 		angs = Angle(0, 0, 0),
-		scale = 1
+		scale = 0.2
 	},
 	["geiger_counter"] = {
 		cost = 2500,
-		origin = Vector(-29, 4, 0),
-		angs = Angle(0, -90, 0),
+		origin = Vector(-29, 5, 0),
+		angs = Angle(0, 0, 0),
 		scale = 1
 	},
 	["dosimeter"] = {
 		cost = 100,
-		origin = Vector(0, 0, 0),
+		origin = Vector(-29, -3, 0),
 		angs = Angle(0, 0, 0),
 		scale = 1
 	},
 	["ammo_9x18"] = {
 		cost = 200,
-		origin = Vector(-29, -13, 0),
+		origin = Vector(-19, -2, 0),
 		angs = Angle(0, 0, 0),
 		scale = 1
 	},
 	["weapon_srp_tokarev"] = {
 		cost = 5500,
-		origin = Vector(0, 0, 0),
-		angs = Angle(0, 0, 0),
+		origin = Vector(9, -12, 0),
+		angs = Angle(0, 90, 90),
 		scale = 1
 	},
 	["ammo_762x25"] = {
 		cost = 350,
-		origin = Vector(0, 0, 0),
+		origin = Vector(-14, -2, 0),
 		angs = Angle(0, 0, 0),
 		scale = 1
 	},
 	["weapon_srp_sawnoff"] = {
 		cost = 3500,
-		origin = Vector(0, 0, 0),
-		angs = Angle(0, 0, 0),
-		scale = 1
+		origin = Vector(3.5, -5.5, 3),
+		angs = Angle(12, -90, 0),
+		scale = 0.9
 	},
 	["ammo_12ga"] = {
 		cost = 200,
-		origin = Vector(0, 0, 0),
+		origin = Vector(-19, -9, 0),
 		angs = Angle(0, 0, 0),
 		scale = 1
 	},
@@ -399,13 +393,13 @@ GM.GearSelection = {
 	},
 	["weapon_srp_hammerless"] = {
 		cost = 1500,
-		origin = Vector(0, 0, 0),
-		angs = Angle(0, 0, 0),
+		origin = Vector(14, -13, 1.4),
+		angs = Angle(0, 90, -90),
 		scale = 1
 	},
 	["ammo_32acp"] = {
 		cost = 100,
-		origin = Vector(-29, -7, 0),
+		origin = Vector(-14, -9, 0),
 		angs = Angle(0, 0, 0),
 		scale = 1
 	},
@@ -417,8 +411,8 @@ GM.GearSelection = {
 	},
 	["weapon_srp_kabar"] = {
 		cost = 2500,
-		origin = Vector(0, 0, 0),
-		angs = Angle(0, 0, 0),
+		origin = Vector(23, -15, 0),
+		angs = Angle(0, 0, 90),
 		scale = 1
 	},
 	["weapon_srp_hatchet"] = {
@@ -440,6 +434,15 @@ GM.GearSelection = {
 		scale = 1
 	},
 }
+
+hook.Add("OnGamemodeLoaded", "GearSelectionModelPrecaching", function()
+	print("Precaching models")
+	for item_class,_ in pairs(GAMEMODE.GearSelection) do
+		local item_data = GAMEMODE.Items[item_class]
+
+		util.PrecacheModel(item_data.Model)
+	end
+end)
 
 GM.DefaultSelfRepairCond = 80
 
