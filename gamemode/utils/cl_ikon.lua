@@ -96,17 +96,19 @@ local TEXTURE_FLAGS_CLAMP_S = 0x0004
 local TEXTURE_FLAGS_CLAMP_T = 0x0008
 ikon.max = ikon.maxSize * 64
 ikon.RT = GetRenderTargetEx("zcIconRendered",
-												ikon.max,
-												ikon.max, 
-												RT_SIZE_NO_CHANGE,
-												MATERIAL_RT_DEPTH_SHARED,
-												bit.bor(TEXTURE_FLAGS_CLAMP_S, TEXTURE_FLAGS_CLAMP_T),
-												CREATERENDERTARGETFLAGS_UNFILTERABLE_OK,
- 												IMAGE_FORMAT_RGBA8888)
+	ikon.max,
+	ikon.max, 
+	RT_SIZE_NO_CHANGE,
+	MATERIAL_RT_DEPTH_SHARED,
+	bit.bor(TEXTURE_FLAGS_CLAMP_S, TEXTURE_FLAGS_CLAMP_T),
+	CREATERENDERTARGETFLAGS_UNFILTERABLE_OK,
+	IMAGE_FORMAT_RGBA8888
+)
 
 local tex_effect = GetRenderTarget( "zcIconRenderedOutline",
-												ikon.max,
-												ikon.max)
+	ikon.max,
+	ikon.max
+)
 
 local mat_outline = CreateMaterial("zcIconRenderedTemp","UnlitGeneric",{
 	["$basetexture"] = tex_effect:GetName(),
