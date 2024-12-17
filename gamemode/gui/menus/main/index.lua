@@ -89,7 +89,7 @@ hook.Add("InitPostEntity", "CreateMainMenu", function()
 end)
 
 function zonecontrol.CreateMainMenu()
-	local main_menu = vgui.Create("MainMenu")
+	local main_menu = vgui.Create("MainMenu", GetHUDPanel())
 	main_menu:SetSkin("Menu")
 	main_menu:Dock(FILL)
 	main_menu:MakePopup()
