@@ -1,3 +1,5 @@
+zonecontrol = zonecontrol or {}
+
 local PANEL = {}
 
 local GRID_X_SIZE = 64
@@ -8,9 +10,11 @@ function PANEL:Init()
 	self.max_x = math.floor(self:GetWide() / GRID_X_SIZE)
 	self.max_y = math.floor(self:GetTall() / GRID_Y_SIZE)
 
+	self.highlighted = {}
 	self.grid = {}
 	for x = 1, self.max_x do
 		self.grid[x] = {}
+		self.highlighted[x] = {}
 		for y = 1, self.max_y do
 			self.grid[x][y] = {}
 		end
@@ -25,14 +29,21 @@ end
 
 // Use real item objects instead
 function PANEL:AddItem(class, x, y)
-	local item = {class = class, x = x, y = y}
+	local item_data = GAMEMODE.Items[class]
+	if not item_data then return end
+
+	local item = {class = class, x = x, y = y, w = item_data.W, h = item_data.H}
 	table.insert(self.items, item)
 
 	self.grid = self.grid or {}
-	self.grid[x] = self.grid[x] or {}
-	self.grid[x][y] = item
 
-	// Also consider the size of the item
+	local mins, maxs = self:GetGridsByBounds(x, y, item.w, item.h)
+	for w = mins[1], maxs[1] do
+		self.grid[w] = self.grid[w] or {}
+		for h = mins[2], maxs[2] do
+			self.grid[w][h] = item
+		end
+	end
 end
 
 function PANEL:GetItemByCoord(x, y)
@@ -40,7 +51,10 @@ function PANEL:GetItemByCoord(x, y)
 		return
 	end
 
-	return self.grid[x][y]
+	local grid_data = self.grid[x][y]
+	if not grid_data.class then return end
+
+	return grid_data
 end
 
 function PANEL:GetGridByPos(x, y)
@@ -48,50 +62,110 @@ function PANEL:GetGridByPos(x, y)
 		return 0, 0
 	end
 
-	return math.Clamp(math.floor(x / GRID_X_SIZE), 1, self.max_x), math.Clamp(math.floor(y / GRID_Y_SIZE), 1, self.max_y)
+	return math.Clamp(math.ceil(x / GRID_X_SIZE), 1, self.max_x), math.Clamp(math.ceil(y / GRID_Y_SIZE), 1, self.max_y)
+end
+
+function PANEL:GetGridsByBounds(x, y, w, h)
+	local mins = {math.Clamp(x, 1, self.max_x - w + 1), math.Clamp(y, 1, self.max_y - h + 1)}
+	local maxs = {math.Clamp(x + w - 1, x, self.max_x), math.Clamp(y + h - 1, y, self.max_y)}
+
+	return mins, maxs
+end
+
+function PANEL:GetItemByBounds(x, y, w, h)
+	local mins, maxs = self:GetGridsByBounds(x, y, w, h)
+	for grid_w = mins[1], maxs[1] do
+		self.grid[grid_w] = self.grid[grid_w] or {}
+		for grid_h = mins[2], maxs[2] do
+			local grid_data = self.grid[grid_w][grid_h]
+			if grid_data.class then return grid_data end
+		end
+	end
 end
 
 function PANEL:PerformLayout(w, h)
 	self.max_x = math.floor(w / GRID_X_SIZE)
 	self.max_y = math.floor(h / GRID_Y_SIZE)
+
+	// Recompute grid
+	self.grid = {}
+	for x = 1, self.max_x do
+		self.highlighted[x] = {}
+		self.grid[x] = self.grid[x] or {}
+		for y = 1, self.max_y do
+			self.grid[x][y] = self.grid[x][y] or {}
+		end
+	end
+
+	// Recompute item positions
+	for idx,item in pairs(self.items) do
+		local mins, maxs = self:GetGridsByBounds(item.x, item.y, item.w, item.h)
+		for grid_w = mins[1], maxs[1] do
+			self.grid[grid_w] = self.grid[grid_w] or {}
+			for grid_h = mins[2], maxs[2] do
+				self.grid[grid_w][grid_h] = item
+			end
+		end
+	end
 end
 
 function PANEL:OnMousePressed(keyCode)
 	local x, y = self:CursorPos()
-	local w, h = self:GetSize()
-	local grid_x, grid_y = self:GetGridByPos()
+	local grid_x, grid_y = self:GetGridByPos(x, y)
 	if grid_x == 0 or grid_y == 0 then
 		return
 	end
-	if grid_x > self.max_x or grid_y > self.max_y then
-		return
-	end
 
+	local item = self:GetItemByCoord(grid_x, grid_y)
+	if not item then return end
 	if keyCode == MOUSE_LEFT then
-		print(grid_x, grid_y)
-		self.dragging = self:GetItemByCoord(grid_x, grid_y) or nil
+		print(string.format("Item picked up at (%d,%d)", grid_x, grid_y))
+		self.dragging = item
 	end
 
 	if keyCode == MOUSE_RIGHT then
-		local item = self:GetItemByCoord(grid_x, grid_y)
-		if not item then return end
-
 		print(grid_x, grid_y)
 	end
 end
 
 function PANEL:OnMouseReleased(keyCode)
-	local x, y = self:CursorPos()
-	local w, h = self:GetSize()
-	local grid_x, grid_y = self:GetGridByPos(x, y)
-
-	if grid_x > self.max_x or grid_y > self.max_y then
+	local grid_x, grid_y = self:GetGridByPos(self:CursorPos())
+	if grid_x == 0 or grid_y == 0 then
 		return
 	end
 
 	if keyCode == MOUSE_LEFT and self.dragging then
 		print(string.format("Item dropped at (%d,%d)", grid_x, grid_y))
+
+		// set all grids to not highlight
+		for x = 1, self.max_x do
+			self.highlighted[x] = {}
+		end
+
 		// Check grids to see if occupied
+		local item = self:GetItemByBounds(grid_x, grid_y, self.dragging.w, self.dragging.h)
+		if not item or item == self.dragging then
+			local old_mins, old_maxs = self:GetGridsByBounds(self.dragging.x, self.dragging.y, self.dragging.w, self.dragging.h)
+			for grid_w = old_mins[1], old_maxs[1] do
+				self.grid[grid_w] = self.grid[grid_w] or {}
+				for grid_h = old_mins[2], old_maxs[2] do
+					self.grid[grid_w][grid_h] = {}
+				end
+			end
+
+			local mins, maxs = self:GetGridsByBounds(grid_x, grid_y, self.dragging.w, self.dragging.h)
+			for grid_w = mins[1], maxs[1] do
+				self.grid[grid_w] = self.grid[grid_w] or {}
+				for grid_h = mins[2], maxs[2] do
+					self.grid[grid_w][grid_h] = self.dragging
+				end
+			end
+
+			self.dragging.x = mins[1]
+			self.dragging.y = mins[2]
+		end
+
+		self.dragging = nil
 	end
 
 	if keyCode == MOUSE_RIGHT then
@@ -102,12 +176,21 @@ end
 function PANEL:OnCursorMoved(x, y)
 	self.last_moved = CurTime()
 	self.current_x, self.current_y = self:GetGridByPos(x, y)
-	
+	if not self.grid[self.current_x] or not self.grid[self.current_x][self.current_y] then
+		return
+	end
+
 	if self.dragging and self.current_x > 0 and self.current_y > 0 then
-		self.grid[current_x][current_y]["highlight"] = true
-		// Consider self.dragging.width and self.dragging.height
-	else
-		self.grid[current_x][current_y]["highlight"] = false
+		for grid_x = 1, self.max_x do
+			self.highlighted[grid_x] = {}
+		end
+
+		local mins, maxs = self:GetGridsByBounds(self.current_x, self.current_y, self.dragging.w, self.dragging.h)
+		for w = mins[1], maxs[1] do
+			for h = mins[2], maxs[2] do
+				self.highlighted[w][h] = true
+			end
+		end
 	end
 end
 
@@ -117,6 +200,11 @@ end
 
 function PANEL:OnCursorExited()
 	self.cursor_inside = false
+
+	self.dragging = nil
+	for grid_x = 1, self.max_x do
+		self.highlighted[grid_x] = {}
+	end
 end
 
 function PANEL:Paint(w, h)
@@ -126,22 +214,52 @@ function PANEL:Paint(w, h)
 	surface.SetDrawColor(200, 200, 200, 255)
 	for row = 1, self.max_x do
 		for column = 1, self.max_y do
-			surface.DrawOutlinedRect(row * GRID_X_SIZE, column * GRID_Y_SIZE, GRID_X_SIZE, GRID_Y_SIZE)
+			surface.DrawOutlinedRect((row - 1) * GRID_X_SIZE, (column - 1) * GRID_Y_SIZE, GRID_X_SIZE, GRID_Y_SIZE)
 
-			local grid_data = self.grid[row][column]
-			if grid_data.highlight then
-				surface.SetDrawColor(0, 255, 0, 255)
-				surface.DrawRect(row * GRID_X_SIZE, column * GRID_Y_SIZE, GRID_X_SIZE, GRID_Y_SIZE)
+			local highlighted = self.highlighted[row][column]
+			if not highlighted then continue end
+
+			if highlighted then
+				surface.SetDrawColor(0, 180, 0, 100)
+				surface.DrawRect((row - 1) * GRID_X_SIZE, (column - 1) * GRID_Y_SIZE, GRID_X_SIZE, GRID_Y_SIZE)
+				surface.SetDrawColor(200, 200, 200, 255)
 			end
 		end
 	end
 
 	for idx,item in pairs(self.items) do
-		// Draw item icons
+		if self.dragging == item then continue end
+
+		local exIcon = ikon:getIcon(item.class)
+		if exIcon then
+			surface.SetMaterial(exIcon)
+			surface.SetDrawColor(255, 255, 255, 255)
+			surface.DrawTexturedRect((item.x - 1) * GRID_X_SIZE, (item.y - 1) * GRID_Y_SIZE, item.w * GRID_X_SIZE, item.h * GRID_Y_SIZE)
+		else
+			local item_data = GAMEMODE.Items[item.class]
+			ikon:renderIcon(
+				item.class,
+				item.w,
+				item.h,
+				item_data.Model,
+				item_data.CamInfo
+			)
+		end
 	end
 end
 
 function PANEL:PaintOver(w, h)
+	// Draw dragging icon
+	if self.dragging and self.current_x > 0 and self.current_y > 0 then
+		local mins, _ = self:GetGridsByBounds(self.current_x, self.current_y, self.dragging.w, self.dragging.h)
+		local exIcon = ikon:getIcon(self.dragging.class)
+		if exIcon then
+			surface.SetMaterial(exIcon)
+			surface.SetDrawColor(255, 255, 255, 255)
+			surface.DrawTexturedRect((mins[1] - 1) * GRID_X_SIZE, (mins[2] - 1) * GRID_Y_SIZE, self.dragging.w * GRID_X_SIZE, self.dragging.h * GRID_Y_SIZE)
+		end
+	end
+
 	if not self.last_moved or CurTime() - self.last_moved < 1 then
 		return
 	end

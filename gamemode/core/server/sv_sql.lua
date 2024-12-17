@@ -161,9 +161,7 @@ local CharTable = {
 	{ "RPName", "VARCHAR(100)" },
 	{ "Model", "VARCHAR(100)" },
 	{ "Body", "VARCHAR(100)" },
-	{ "Title", "VARCHAR(8192)", "" },
-	{ "TitleOne", "VARCHAR(160)", "" },
-	{ "TitleTwo", "VARCHAR(160)", "" },
+	{ "Description", "VARCHAR(8192)", "" },
 	{ "Money", "INT", "0" },
 	{ "Trait", "INT", TRAIT_NONE },
 	{ "Skingroup", "INT", "0" },
@@ -223,41 +221,39 @@ function GM:InitSQLTable( tab, dtab )
 		local function qS()
 			self:LogSQL( "Column \"" .. v[1] .. "\" already exists in table " .. dtab .. "." );
 		end
-		
+
 		local function qF( err )
 			print(q)
 			print(err)
-			
+
 			if( string.find( string.lower( err ), "unknown column" ) ) then
 				self:LogSQL( "Column \"" .. v[1] .. "\" does not exist in table " .. dtab .. ", creating..." );
-				
+
 				local q = "ALTER TABLE " .. dtab .. " ADD COLUMN " .. v[1] .. " " .. v[2];
 				if( v[3] ) then
 					q = q .. " DEFAULT '" .. tostring( v[3] ) .. "'";
 				end
-				
+
 				mysqloo.Query( q );
 			end
 		end
-		
+
 		mysqloo.Query(q, qS, qF, true);
 	end
 end
 
 function GM:InitSQLTables()
-	
-	mysqloo.Query( "CREATE TABLE IF NOT EXISTS cc_chars ( id INT NOT NULL auto_increment, PRIMARY KEY ( id ) );" );
-	mysqloo.Query( "CREATE TABLE IF NOT EXISTS cc_players ( SteamID VARCHAR(30) NOT NULL, PRIMARY KEY ( SteamID ) );" );
-	mysqloo.Query( "CREATE TABLE IF NOT EXISTS cc_bans ( id INT NOT NULL auto_increment, SteamID VARCHAR(30) NOT NULL, PRIMARY KEY ( id ) );" );
-	mysqloo.Query( "CREATE TABLE IF NOT EXISTS cc_stockpiles ( id INT NOT NULL auto_increment, SteamID VARCHAR(30) NOT NULL, PRIMARY KEY ( id ) );" );
-	mysqloo.Query( "CREATE TABLE IF NOT EXISTS cc_items ( id INT NOT NULL auto_increment, PRIMARY KEY ( id ) );" );
-	
-	self:InitSQLTable( CharTable, "cc_chars" );
-	self:InitSQLTable( PlayerTable, "cc_players" );
-	self:InitSQLTable( BansTable, "cc_bans" );
-	self:InitSQLTable( StockpileTable, "cc_stockpiles" );
-	self:InitSQLTable( ItemTable, "cc_items" );
-	
+	mysqloo.Query( "CREATE TABLE IF NOT EXISTS cc_chars ( id INT NOT NULL auto_increment, PRIMARY KEY ( id ) );" )
+	mysqloo.Query( "CREATE TABLE IF NOT EXISTS cc_players ( SteamID VARCHAR(30) NOT NULL, PRIMARY KEY ( SteamID ) );" )
+	mysqloo.Query( "CREATE TABLE IF NOT EXISTS cc_bans ( id INT NOT NULL auto_increment, SteamID VARCHAR(30) NOT NULL, PRIMARY KEY ( id ) );" )
+	mysqloo.Query( "CREATE TABLE IF NOT EXISTS cc_stockpiles ( id INT NOT NULL auto_increment, SteamID VARCHAR(30) NOT NULL, PRIMARY KEY ( id ) );" )
+	mysqloo.Query( "CREATE TABLE IF NOT EXISTS cc_items ( id INT NOT NULL auto_increment, PRIMARY KEY ( id ) );" )
+
+	self:InitSQLTable( CharTable, "cc_chars" )
+	self:InitSQLTable( PlayerTable, "cc_players" )
+	self:InitSQLTable( BansTable, "cc_bans" )
+	self:InitSQLTable( StockpileTable, "cc_stockpiles" )
+	self:InitSQLTable( ItemTable, "cc_items" )
 end
 
 function CreateNewStockpileEntry( ply, name )
@@ -629,112 +625,6 @@ function meta:GetCharIndexFromID( id )
 		end
 		
 	end
-	
-end
-
-function meta:SaveNewCharacter( name, title, titleone, titletwo, model, trait, skin, gear )
-	
-	if game.GetMap() != "gm_construct" and (GAMEMODE.CurrentLocation or 0) != GAMEMODE.MainServerLocation then return end
-
-	local d = os.date( "!%m/%d/%y %H:%M:%S" );
-	local ply = self;
-	local inventoryTbl = {}
-	
-	local body_mdl = GAMEMODE.BodyModels[1]
-	if string.find( model, "female" ) then 
-		body_mdl = string.StripExtension(GAMEMODE.BodyModels[1]).."_f.mdl"
-	end
-
-	local rublediff = GAMEMODE.RubleBudget;
-	for k,v in next, gear do
-	
-		for i = 1, v do
-	
-			inventoryTbl[#inventoryTbl + 1] = k;
-			
-		end
-		rublediff = rublediff - ( v * GAMEMODE.GearSelection[k] );
-		
-	end
-	local add = "";
-	add = ", Money, Location";
-	
-	local str = "INSERT INTO cc_chars ( SteamID, RPName, TitleOne, TitleTwo, Title, Model, Body, Trait, Skingroup, Date" .. add;
-	str = str .. " ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );";
-	
-	local query = CCSQL:prepare( str );
-	function query:onSuccess( ret )
-	
-		GAMEMODE:LogSQL( "Player " .. ply:Nick() .. " created character " .. name .. "." );
-		
-		local tab = { };
-		
-		for _, v in pairs( CharTable ) do
-			
-			if( v[3] ) then
-				
-				tab[v[1]] = tostring( v[3] );
-				
-			end
-			
-		end
-		
-		tab["SteamID"] = ply:SteamID();
-		tab["RPName"] = name;
-		tab["Title"] = util.TableToJSON( { ["onduty"] = "", ["offduty"] = title } );
-		tab["TitleOne"] = util.TableToJSON( { ["onduty"] = "", ["offduty"] = titleone } );
-		tab["TitleTwo"] = util.TableToJSON( { ["onduty"] = "", ["offduty"] = titletwo } );
-		tab["Model"] = model;
-		tab["Body"] = body_mdl;
-		tab["Trait"] = trait;
-		tab["Skingroup"] = skin;
-		tab["Date"] = d;
-		tab["LastOnline"] = d;
-		tab["Money"] = rublediff;
-		tab["Location"] = GAMEMODE.MainServerLocation;
-		
-		tab["id"] = tonumber( self:lastInsert() );
-		
-		table.insert( ply.SQLCharData, tab );
-		
-		local transaction = CCSQL:createTransaction()
-		for k,v in next, inventoryTbl do
-		
-			local metaitem = GAMEMODE:GetItemByID(v)
-			local str = Format("INSERT INTO cc_items ( Owner, ItemClass, Vars ) VALUES ( '%d', '%s', '%s' );", self:lastInsert(), v, util.TableToJSON(metaitem.Vars or {}));
-			local query = CCSQL:query( str );
-			transaction:addQuery(query)
-		
-		end
-		
-		function transaction:onSuccess( ret )
-		
-			netstream.Start( ply, "nCharacterList", ply.SQLCharData );
-			ply:LoadCharacter( tab );
-			
-		end
-		transaction:start()
-		
-	end
-	function query:onError( err )
-	
-		MsgC( Color( 255, 0, 0 ), "MySQL query failed: "..err );
-		
-	end
-	
-	query:setString( 1, self:SteamID() );
-	query:setString( 2, name );
-	query:setString( 3, util.TableToJSON( { ["onduty"] = "", ["offduty"] = titleone } ) );
-	query:setString( 4, util.TableToJSON( { ["onduty"] = "", ["offduty"] = titletwo } ) );
-	query:setString( 5, util.TableToJSON( { ["onduty"] = "", ["offduty"] = title } ) );
-	query:setString( 6, model );
-	query:setString( 7, body_mdl );
-	query:setNumber( 8, trait );
-	query:setNumber( 9, skin );
-	query:setString( 10, d );
-	query:setNumber( 11, rublediff );
-	query:setNumber( 12, GAMEMODE.MainServerLocation );
-	query:start();
 	
 end
 

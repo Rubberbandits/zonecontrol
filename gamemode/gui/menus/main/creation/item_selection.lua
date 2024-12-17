@@ -71,6 +71,17 @@ function PANEL:Init()
 		zonecontrol.DestroyCreationScene()
 	end
 
+	local next = div:Add("DButton")
+	next:SetFont("MainMenuSelection")
+	next:Dock(BOTTOM)
+	next:SetTall(40)
+	next:SetText("NEXT")
+	next.DoClick = function()
+		self:Remove()
+
+		zonecontrol.FinishCreation()
+	end
+
 	hook.Add("Think", "ItemSelectionHover", ItemSelectionHover)
 end
 

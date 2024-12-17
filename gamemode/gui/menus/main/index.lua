@@ -2,11 +2,28 @@ zonecontrol = zonecontrol or {}
 
 local PANEL = {}
 
+sound.Add({
+	name = "main_menu_music",
+	channel = CHAN_STATIC,
+	volume = 0.75,
+	level = 66,
+	pitch = {100, 100},
+	sound = "zonecontrol/menu/menu_music.ogg"
+})
+
 function PANEL:Init()
 	self.background = self:Add("DHTML")
 	self.background:SetSize(self:GetSize())
 	self.background:OpenURL("http://45.45.237.200/")
 	self.background:SetAllowLua(true)
+
+	local sound_data = sound.GetProperties("main_menu_music")
+	self.music = sound.PlayFile("sound/" .. sound_data.sound, "noblock", function(chan)
+		if not IsValid(chan) then return end
+		chan:EnableLooping(true)
+
+		self.music_chan = chan
+	end)
 
 	local div = self:Add("DPanel")
 	div:Dock(LEFT)
@@ -30,7 +47,15 @@ function PANEL:Init()
 
 		self:Remove()
 	end)
-	selection:AddSelection("LOAD", function() self:Remove() end)
+	selection:AddSelection("LOAD", function()
+		local char_select = vgui.Create("CharacterSelection")
+		char_select:SetSkin("Menu")
+		char_select:Dock(FILL)
+		char_select:DockPadding(ScrW() * 0.33, ScrH() * 0.1, ScrW() * 0.33, ScrH() * 0.1)
+		char_select:MakePopup()
+
+		self:Remove()
+	end)
 	selection:AddSelection("SETTINGS", function() self:Remove() end)
 	selection:AddSelection("QUIT", function() self:Remove() end)
 end
@@ -50,6 +75,11 @@ function PANEL:Paint()
 		surface.SetTextPos(ScrW() / 2, ScrH() / 2)
 		surface.SetFont("MainMenuSelection")
 		surface.DrawText("Loading...")
+end
+
+function PANEL:OnRemove()
+	if not IsValid(self.music_chan) then return end
+	self.music_chan:Stop()
 end
 
 vgui.Register("MainMenu", PANEL, "DPanel")

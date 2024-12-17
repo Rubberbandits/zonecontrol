@@ -1,31 +1,21 @@
-function nCreateCharacter( ply, name, desc, titleone, titletwo, model, trait, skin, gear )
-	if ply:SQLGetNumChars() >= GAMEMODE.MaxCharacters then return end
-	
-	local r, err = GAMEMODE:CheckCharacterValidity(name, desc, titleone, titletwo, model, trait, skin, gear)
-	if r then
-		ply:SaveNewCharacter(name, desc, titleone, titletwo, model, trait, skin, gear)
-	end
-end
-netstream.Hook("nCreateCharacter", nCreateCharacter)
-
 function nSelectCharacter( ply, id )
-	if( ply:SQLCharExists( id ) ) then
+	if ply:SQLCharExists( id ) then
 		if ply:CharID() == id then return end
 		if tonumber(ply:GetCharFromID(id).Banned) == 1 then return end
 		if GAMEMODE.CurrentLocation and ply:GetCharFromID( id ).Location != GAMEMODE.CurrentLocation and !ply:IsAdmin() then return end
-		
+
 		ply:LoadCharacter( ply:GetCharFromID( id ) );
 	end
 end
 netstream.Hook("nSelectCharacter", nSelectCharacter)
 
 function nDeleteCharacter( ply, id )
-	if( ply:SQLCharExists( id ) ) then
-		if( ply:CharID() == id ) then return end
-		
+	if ply:SQLCharExists( id ) then
+		if ply:CharID() == id then return end
+
 		local char = ply:GetCharFromID( id );
 		if char.Money < 9500 then return end
-		
+
 		ply:DeleteCharacter( id, char.RPName );
 	end
 end

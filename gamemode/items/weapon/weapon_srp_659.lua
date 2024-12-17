@@ -7,9 +7,13 @@ ITEM.SafetyPos = Vector(0,0,0)
 ITEM.SafetyAng = Vector(-12.4, 0, 0)
 ITEM.JamChance = 0.0008
 ITEM.DegradeRate = 0.013
-ITEM.FOV 			= 6;
-ITEM.CamPos 		= Vector( 0, 100, 25 );
-ITEM.LookAt 		= Vector( -0.5, 4, 0 );
+ITEM.CamInfo = {
+    pos = Vector(-1.435227, 190.635239, -13.699380),
+    ang = Angle(-3.813, 270.052, 0.000),
+    fov = 3.2
+}
+ITEM.W = 2
+ITEM.H = 1
 ITEM.SelfRepairCondition = 90
 ITEM.AmmoType = "ammo_9x19"
 ITEM.License = "B"

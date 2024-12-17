@@ -1018,20 +1018,6 @@ function SWEP:CalcIron()
 end
 
 function SWEP:GetViewModelPosition(pos, ang)
-	if CCP.IronDev then
-
-		ang:RotateAroundAxis(ang:Up(), GAMEMODE.IronDevAng.y)
-		ang:RotateAroundAxis(ang:Right(), GAMEMODE.IronDevAng.x)
-		ang:RotateAroundAxis(ang:Forward(), GAMEMODE.IronDevAng.z)
-
-		pos = pos + GAMEMODE.IronDevPos.x * ang:Right()
-		pos = pos + GAMEMODE.IronDevPos.y * ang:Up()
-		pos = pos + GAMEMODE.IronDevPos.z * ang:Forward()
-
-		return pos, ang
-
-	end
-
 	local vOriginalOrigin = pos
 	local vOriginalAngles = ang
 
@@ -1147,14 +1133,6 @@ function SWEP:DrawHUD()
 
 		surface.SetDrawColor(0, 0, 0, 255)
 
-		surface.DrawLine(0, ScrH() / 2, ScrW(), ScrH() / 2)
-		surface.DrawLine(ScrW() / 2, 0, ScrW() / 2, ScrH())
-
-	end
-
-	if CCP.IronDev then
-
-		surface.SetDrawColor(255, 255, 255, 255)
 		surface.DrawLine(0, ScrH() / 2, ScrW(), ScrH() / 2)
 		surface.DrawLine(ScrW() / 2, 0, ScrW() / 2, ScrH())
 

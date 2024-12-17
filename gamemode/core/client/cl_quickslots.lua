@@ -5,7 +5,7 @@ kingston.quickslot.binds = kingston.quickslot.binds or {}
 function kingston.quickslot.use(key)
 	local data = kingston.quickslot.is_bound(key)
 	if !data then return end
-	
+
 	data:BindUsed()
 end
 
@@ -31,7 +31,7 @@ end
 
 local function get_quickslot_press(ply, key)
 	if !IsFirstTimePredicted() then return end
-	
+
 	kingston.quickslot.use(key)
 end
 hook.Add("PlayerButtonUp", "STALKER.GetQuickslotPress", get_quickslot_press)
@@ -61,6 +61,6 @@ if !kingston.quickslot.binds_created then
 		}
 		kingston.quickslot.create_bind(bind)
 	end
-	
+
 	kingston.quickslot.binds_created = true
 end

@@ -83,24 +83,6 @@ function GM:PlayerSpawn(ply)
 	ply:SetNotSolid(false)
 	ply:SetMoveType(MOVETYPE_WALK)
 	if ply:Ragdoll() and ply:Ragdoll():IsValid() then ply:Ragdoll():Remove() end
-	if ply:IsBot() then
-		if not ply.CharCreateCompleted then
-			local data = {}
-			data.Date = os.date("!%m/%d/%y %H:%M:%S")
-			data.RPName = ply:Nick()
-			data.Model = table.Random(self.CitizenModels)
-			data.Money = 200
-			data.CharFlags = ""
-			data.Inventory = "backpack:1"
-			data.BusinessLicenses = 0
-			data.Hunger = 0
-			data.Title = "This bot, named " .. ply:Nick() .. ", was born today out of a Xen portal anomaly. They don't remember much, as they have no memories, and their motor functions are extremely hindered by the fact that they have no brain. They cannot speak, simply existing as a shell, forever doomed to wander around Garry's Mod roleplay servers, fruitlessly."
-			data.TitleOne = "[]"
-			data.TitleTwo = "[]"
-			ply:LoadCharacter(data)
-		end
-		return
-	end
 
 	if not ply.InitialSafeSpawn then
 		ply.InitialSafeSpawn = true
@@ -129,6 +111,7 @@ end
 
 function meta:LoadPlayer(data)
 	if not data then return end
+
 	self:SetToolTrust(tonumber(data.ToolTrust), true)
 	self:SetPhysTrust(tonumber(data.PhysTrust), true)
 	self:SetPropTrust(tonumber(data.PropTrust), true)
@@ -141,6 +124,7 @@ function meta:LoadPlayer(data)
 	self:SetDonationAmount(tonumber(data.DonationAmount), true)
 	self:SetUserGroup(data.Rank)
 	self:SetWatched(tobool(data.Watched), true)
+
 	if self:Watched() then GAMEMODE:Notify(player.GetAdmins(), nil, COLOR_ERROR, "Watched player %s has joined the server.", self:Nick()) end
 end
 
@@ -150,25 +134,23 @@ function nRequestPData(ply)
 		ply.RequestedPData = true
 	end
 end
-
 netstream.Hook("nRequestPData", nRequestPData)
+
 function meta:LoadCharacter(data)
 	if self.CharCreateCompleted and self:CharID() and self:CharID() > 0 then GAMEMODE:UpdateCharacterFieldOffline(self:CharID(), "Health", self:Health()) end
 	self.CharCreateCompleted = true
+
 	self:Freeze(false)
 	self:StripWeapons()
 	self.EquippedWeapons = {}
 	self:ClearDrug()
 	self:SetTeam(TEAM_CITIZEN)
+
 	self:SetCharCreationDate(data.Date)
 	self:SetCharID(tonumber(data.id))
-	local TitleOneTab = util.JSONToTable(data.TitleOne) or {}
-	local TitleTwoTab = util.JSONToTable(data.TitleTwo) or {}
-	local DescTab = util.JSONToTable(data.Title) or {}
 	self:SetRPName(data.RPName)
-	self:SetDescription(DescTab["offduty"] or "")
-	self:SetTitleOne(TitleOneTab["offduty"] or "")
-	self:SetTitleTwo(TitleTwoTab["offduty"] or "")
+	self:SetDescription(data.Description)
+
 	self.CharModel = data.Model
 	if table.HasValue(GAMEMODE.CitizenModels, data.Model) then
 		self:SetBody(data.Body)
@@ -185,19 +167,19 @@ function meta:LoadCharacter(data)
 	self.JustTransitioned = tobool(data.JustTransitioned)
 	self:UpdateCharacterField("LastOnline", os.date("!%m/%d/%y %H:%M:%S"))
 	if self:IsBot() then return end
+
 	self:SyncAllOtherData()
 	self:PostLoadCharacter()
-	if self.Inventory then
-		if table.Count(self.Inventory) > 0 then
-			for k, v in next, self.Inventory do
-				if v.OnUnloadItem then
-					v:OnUnloadItem()
-					netstream.Start(self, "UnloadItem", k)
-				end
 
-				GAMEMODE.g_ItemTable[k] = nil
-				self.Inventory[k] = nil
+	if self.Inventory and table.Count(self.Inventory) > 0 then
+		for k, v in next, self.Inventory do
+			if v.OnUnloadItem then
+				v:OnUnloadItem()
+				netstream.Start(self, "UnloadItem", k)
 			end
+
+			GAMEMODE.g_ItemTable[k] = nil
+			self.Inventory[k] = nil
 		end
 	end
 

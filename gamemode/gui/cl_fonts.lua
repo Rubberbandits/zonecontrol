@@ -33,3 +33,21 @@ surface.CreateFont("RubleCount", {
 	additive = false,
 	outline = false,
 })
+
+surface.CreateFont("Subtitle", {
+	font = "Roboto Cn",
+	extended = false,
+	size = 32,
+	weight = 1024,
+	blursize = 0,
+	scanlines = 0,
+	antialias = true,
+	underline = false,
+	italic = false,
+	strikeout = false,
+	symbol = false,
+	rotary = false,
+	shadow = false,
+	additive = false,
+	outline = false,
+})

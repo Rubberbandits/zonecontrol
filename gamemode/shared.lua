@@ -11,6 +11,9 @@ includes.directory("core/shared")
 
 hook.Run("CoreLoaded")
 
+includes.directory("meta")
+
+util.IncludeDir("core/client", false, true, "client")
 util.IncludeDir("gui", false, true, "client")
 
 GM.Name = "ZoneControl";
@@ -227,78 +230,44 @@ end
 
 local allowedChars = [[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 -|+=.,\/;:]];
 
-function GM:CheckCharacterValidity( name, desc, titleone, titletwo, model, trait, skin, gear )
-	
-	if( string.len( name ) < self.MinNameLength ) then
-		return false, "Name must be longer than " .. self.MinNameLength .. " characters.";
+function GM:CheckCharacterValidity(name, desc, model, trait, skin)
+	if string.len(name) < self.MinNameLength then
+		return false, "Name must be longer than " .. self.MinNameLength .. " characters."
 	end
-	
-	if( string.len( name ) > self.MaxNameLength ) then
-		return false, "Name must be shorter than " .. self.MaxNameLength .. " characters.";
+
+	if string.len(name) > self.MaxNameLength then
+		return false, "Name must be shorter than " .. self.MaxNameLength .. " characters."
 	end
-	
-	if( string.len( desc ) > self.MaxDescLength ) then
-		return false, "Description must be shorter than " .. self.MaxDescLength .. " characters.";
+
+	if string.len(desc) > self.MaxDescLength then
+		return false, "Description must be shorter than " .. self.MaxDescLength .. " characters."
 	end
-	
-	if( string.len( titleone ) > 128 ) then
-		return false, "Description line one must be shorter than 128 characters.";
+
+	if !table.HasValue(self.CitizenModels, string.lower(model)) then
+		return false, "Invalid model."
 	end
-	
-	if( string.len( titletwo ) > 128 ) then
-		return false, "Description line two must be shorter than 128 characters.";
+
+	if string.find(name, "#", nil, true) or string.find(name, "~", nil, true) or string.find(name, "%", nil, true) then
+		return false, "Invalid name."
 	end
-	
-	if( !table.HasValue( self.CitizenModels, string.lower( model ) ) ) then
-		return false, "Invalid model.";
+
+	if !self.Traits[trait] then
+		return false, "Invalid trait."
 	end
-	
-	if( string.find( name, "#", nil, true ) or string.find( name, "~", nil, true ) or string.find( name, "%", nil, true ) ) then
-		return false, "Invalid name.";
+
+	if string.find(allowedChars, name, 1, true) then
+		return false, "Invalid characters in name."
 	end
-	
-	if( !self.Traits[trait] ) then
-		return false, "Invalid trait.";
+
+	if !skin or !isnumber(skin) then
+		return false, "No skin selected!"
 	end
-	
-	if( string.find( allowedChars, name, 1, true ) ) then
-		return false, "Invalid characters in name.";
+
+	if skin > 3 then
+		return false, "Invalid skin!"
 	end
-	
-	if( !skin or !isnumber( skin ) ) then
-	
-		return false, "No skin selected!";
-		
-	end
-	
-	if( skin > 3 ) then
-	
-		return false, "Invalid skin!";
-		
-	end
-	
-	local totalrubles = 0;
-	
-	for k,v in next, gear do
-		
-		if( !self.GearSelection[k] ) then
-		
-			return false, "Invalid item selected!";
-			
-		end
-		
-		totalrubles = totalrubles + ( v * self.GearSelection[k] );
-		
-	end
-	
-	if( totalrubles > self.RubleBudget ) then
-	
-		return false, "You've gone over your budget!";
-		
-	end
-	
-	return true;
-	
+
+	return true
 end
 
 function GM:FormatLine( str, font, size )

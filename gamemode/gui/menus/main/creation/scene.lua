@@ -239,11 +239,11 @@ function zonecontrol.SetupItemSelection()
 		ent.class = item_class
 		ent.data = data
 		ent.count = 0
-		ent.RenderOverride = function(ent)
+		ent.RenderOverride = function(self)
 			if not zonecontrol.creation then return end
 
-			ent:DrawModel()
-			ItemCountRender(ent)
+			self:DrawModel()
+			ItemCountRender(self)
 		end
 
 		zonecontrol.creation.models[item_class] = ent

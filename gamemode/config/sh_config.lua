@@ -436,7 +436,6 @@ GM.GearSelection = {
 }
 
 hook.Add("OnGamemodeLoaded", "GearSelectionModelPrecaching", function()
-	print("Precaching models")
 	for item_class,_ in pairs(GAMEMODE.GearSelection) do
 		local item_data = GAMEMODE.Items[item_class]
 
@@ -537,12 +536,14 @@ GM.ToolTrustBlacklist = {
 	"duplicator",
 };
 
-GM.MainServerLocation = LOCATION_CROSSROADS
+hook.Add("OnGamemodeLoaded", "SetMainServerLocation", function()
+	GAMEMODE.MainServerLocation = LOCATION_CROSSROADS
+end)
 
 GM.RandomMutantGroups = {
 	"vj_mutant_bloodsucker4",
 	{
-		"vj_mutant_boar", 
+		"vj_mutant_boar",
 		"vj_mutant_flesh",
 		"vj_mutant_flesh",
 		"vj_mutant_flesh",

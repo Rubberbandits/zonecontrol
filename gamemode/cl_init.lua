@@ -39,4 +39,4 @@ end)
 
 GM.FullyLoaded = true
 
-MsgC(Color(200, 200, 200, 255), "Clientside loaded.\n") 
+MsgC(Color(200, 200, 200, 255), "Clientside loaded.\n")
