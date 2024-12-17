@@ -6,8 +6,8 @@ local GRID_X_SIZE = 64
 local GRID_Y_SIZE = 64
 
 function PANEL:Init()
-	self.max_x = math.floor(w / GRID_X_SIZE)
-	self.max_y = math.floor(h / GRID_Y_SIZE)
+	self.max_x = math.floor(self:GetWide() / GRID_X_SIZE)
+	self.max_y = math.floor(self:GetTall() / GRID_Y_SIZE)
 
 	self:Reset()
 end
@@ -33,16 +33,14 @@ function PANEL:AddItem(class, x, y)
 	self:SetGridsByBounds(item, x, y, item.w, item.h)
 end
 
-function PANEL:RemoveItem(x, y)
-	local item = self:GetItemByCoord(x, y)
-	if not item then return end
+function PANEL:RemoveItem(item)
+	if not item then error("RemoveItem failed: invalid item") end
 
 	self:SetGridsByBounds({}, item.x, item.y, item.w, item.h)
 
 	for idx,grid_item in pairs(self.items) do
 		if grid_item == item then
 			table.remove(self.items, idx)
-			break
 		end
 	end
 end
@@ -62,13 +60,15 @@ function PANEL:Reset()
 end
 
 function PANEL:SetGridsByBounds(value, x, y, w, h)
-	local mins, maxs = self:GetGridsByBounds(item.x, item.y, item.w, item.h)
-	for w = mins[1], maxs[1] do
-		self.grid[w] = self.grid[w] or {}
-		for h = mins[2], maxs[2] do
-			self.grid[w][h] = value
+	local mins, maxs = self:GetGridsByBounds(x, y, w, h)
+	for grid_w = mins[1], maxs[1] do
+		self.grid[grid_w] = self.grid[grid_w] or {}
+		for grid_h = mins[2], maxs[2] do
+			self.grid[grid_w][grid_h] = value
 		end
 	end
+
+	return mins, maxs
 end
 
 function PANEL:GetItemByCoord(x, y)
@@ -163,7 +163,8 @@ function PANEL:OnMouseReleased(keyCode)
 		if not item or item == self.dragging then
 			local origin = self.dragging.origin
 			if origin then
-				origin:RemoveItem(self.dragging.x, self.dragging.y)
+				self:RemoveItem(self.dragging)
+				origin:RemoveItem(self.dragging)
 				table.insert(self.items, self.dragging)
 			else
 				// Clear out last grid position
@@ -171,7 +172,7 @@ function PANEL:OnMouseReleased(keyCode)
 			end
 
 			// Set new grid positions
-			self:SetGridsByBounds(self.dragging, grid_x, grid_y, self.dragging.w, self.dragging.h)
+			local mins, _ = self:SetGridsByBounds(self.dragging, grid_x, grid_y, self.dragging.w, self.dragging.h)
 
 			self.dragging.x = mins[1]
 			self.dragging.y = mins[2]
@@ -187,10 +188,11 @@ function PANEL:OnMouseReleased(keyCode)
 end
 
 function PANEL:CanDrop(target)
-	return target:GetName() == "InventoryGrid"
+	return IsValid(target) and target:GetName() == "InventoryGrid"
 end
 
 function PANEL:TransitionDraggedItem(target)
+	print("TransitionDraggedItem")
 	if not self.dragging then return end
 
 	target.dragging = self.dragging
@@ -204,16 +206,6 @@ function PANEL:OnCursorMoved(x, y)
 	self.current_x, self.current_y = self:GetGridByPos(x, y)
 
 	if not self.dragging then return end
-
-	// Outside of the bounds of the panel
-	if self.current_x == 0 or self.current_y == 0 then
-		local target = vgui.GetHoveredPanel()
-		if not self:CanDrop(target) then return end
-
-		self:TransitionDraggedItem(target)
-		return
-	end
-
 	for grid_x = 1, self.max_x do
 		self.highlighted[grid_x] = {}
 	end
@@ -233,9 +225,22 @@ end
 function PANEL:OnCursorExited()
 	self.cursor_inside = false
 
-	self.dragging = nil
 	for grid_x = 1, self.max_x do
 		self.highlighted[grid_x] = {}
+	end
+end
+
+function PANEL:Think()
+	if not self.dragging then return end
+
+	local grid_x, grid_y = self:GetGridByPos(self:LocalCursorPos())
+	// Outside of the bounds of the panel
+	if grid_x == 0 or grid_y == 0 then
+		local target = vgui.GetHoveredPanel()
+		if not self:CanDrop(target) then return end
+
+		self:TransitionDraggedItem(target)
+		return
 	end
 end
 
@@ -261,6 +266,7 @@ function PANEL:Paint(w, h)
 
 	for idx,item in pairs(self.items) do
 		if self.dragging == item then continue end
+		if item.origin then continue end
 
 		local exIcon = ikon:getIcon(item.class)
 		if exIcon then
@@ -314,4 +320,12 @@ function zonecontrol.TestInventory()
 	grid:SetItems({
 		{class = "weapon_srp_659", x = 2, y = 1},
 	})
+
+	local frame = vgui.Create("DFrame")
+	frame:SetSize(800, 600)
+	frame:Center()
+	frame:MakePopup()
+
+	local grid = frame:Add("InventoryGrid")
+	grid:Dock(FILL)
 end
