@@ -6,22 +6,15 @@ local GRID_X_SIZE = 64
 local GRID_Y_SIZE = 64
 
 function PANEL:Init()
-	self.items = {}
-	self.max_x = math.floor(self:GetWide() / GRID_X_SIZE)
-	self.max_y = math.floor(self:GetTall() / GRID_Y_SIZE)
+	self.max_x = math.floor(w / GRID_X_SIZE)
+	self.max_y = math.floor(h / GRID_Y_SIZE)
 
-	self.highlighted = {}
-	self.grid = {}
-	for x = 1, self.max_x do
-		self.grid[x] = {}
-		self.highlighted[x] = {}
-		for y = 1, self.max_y do
-			self.grid[x][y] = {}
-		end
-	end
+	self:Reset()
 end
 
 function PANEL:SetItems(items)
+	self:Reset()
+
 	for _,item in pairs(items) do
 		self:AddItem(item.class, item.x, item.y)
 	end
@@ -37,11 +30,43 @@ function PANEL:AddItem(class, x, y)
 
 	self.grid = self.grid or {}
 
-	local mins, maxs = self:GetGridsByBounds(x, y, item.w, item.h)
+	self:SetGridsByBounds(item, x, y, item.w, item.h)
+end
+
+function PANEL:RemoveItem(x, y)
+	local item = self:GetItemByCoord(x, y)
+	if not item then return end
+
+	self:SetGridsByBounds({}, item.x, item.y, item.w, item.h)
+
+	for idx,grid_item in pairs(self.items) do
+		if grid_item == item then
+			table.remove(self.items, idx)
+			break
+		end
+	end
+end
+
+function PANEL:Reset()
+	self.items = {}
+	self.grid = {}
+	self.highlighted = {}
+
+	for x = 1, self.max_x do
+		self.grid[x] = {}
+		self.highlighted[x] = {}
+		for y = 1, self.max_y do
+			self.grid[x][y] = {}
+		end
+	end
+end
+
+function PANEL:SetGridsByBounds(value, x, y, w, h)
+	local mins, maxs = self:GetGridsByBounds(item.x, item.y, item.w, item.h)
 	for w = mins[1], maxs[1] do
 		self.grid[w] = self.grid[w] or {}
 		for h = mins[2], maxs[2] do
-			self.grid[w][h] = item
+			self.grid[w][h] = value
 		end
 	end
 end
@@ -99,13 +124,7 @@ function PANEL:PerformLayout(w, h)
 
 	// Recompute item positions
 	for idx,item in pairs(self.items) do
-		local mins, maxs = self:GetGridsByBounds(item.x, item.y, item.w, item.h)
-		for grid_w = mins[1], maxs[1] do
-			self.grid[grid_w] = self.grid[grid_w] or {}
-			for grid_h = mins[2], maxs[2] do
-				self.grid[grid_w][grid_h] = item
-			end
-		end
+		self:SetGridsByBounds(item, item.x, item.y, item.w, item.h)
 	end
 end
 
@@ -119,7 +138,6 @@ function PANEL:OnMousePressed(keyCode)
 	local item = self:GetItemByCoord(grid_x, grid_y)
 	if not item then return end
 	if keyCode == MOUSE_LEFT then
-		print(string.format("Item picked up at (%d,%d)", grid_x, grid_y))
 		self.dragging = item
 	end
 
@@ -135,8 +153,6 @@ function PANEL:OnMouseReleased(keyCode)
 	end
 
 	if keyCode == MOUSE_LEFT and self.dragging then
-		print(string.format("Item dropped at (%d,%d)", grid_x, grid_y))
-
 		// set all grids to not highlight
 		for x = 1, self.max_x do
 			self.highlighted[x] = {}
@@ -145,51 +161,67 @@ function PANEL:OnMouseReleased(keyCode)
 		// Check grids to see if occupied
 		local item = self:GetItemByBounds(grid_x, grid_y, self.dragging.w, self.dragging.h)
 		if not item or item == self.dragging then
-			local old_mins, old_maxs = self:GetGridsByBounds(self.dragging.x, self.dragging.y, self.dragging.w, self.dragging.h)
-			for grid_w = old_mins[1], old_maxs[1] do
-				self.grid[grid_w] = self.grid[grid_w] or {}
-				for grid_h = old_mins[2], old_maxs[2] do
-					self.grid[grid_w][grid_h] = {}
-				end
+			local origin = self.dragging.origin
+			if origin then
+				origin:RemoveItem(self.dragging.x, self.dragging.y)
+				table.insert(self.items, self.dragging)
+			else
+				// Clear out last grid position
+				self:SetGridsByBounds({}, self.dragging.x, self.dragging.y, self.dragging.w, self.dragging.h)
 			end
 
-			local mins, maxs = self:GetGridsByBounds(grid_x, grid_y, self.dragging.w, self.dragging.h)
-			for grid_w = mins[1], maxs[1] do
-				self.grid[grid_w] = self.grid[grid_w] or {}
-				for grid_h = mins[2], maxs[2] do
-					self.grid[grid_w][grid_h] = self.dragging
-				end
-			end
+			// Set new grid positions
+			self:SetGridsByBounds(self.dragging, grid_x, grid_y, self.dragging.w, self.dragging.h)
 
 			self.dragging.x = mins[1]
 			self.dragging.y = mins[2]
+			self.dragging.origin = nil
 		end
 
 		self.dragging = nil
 	end
 
 	if keyCode == MOUSE_RIGHT then
-		print(grid_x, grid_y)
+		// Open context menu
 	end
+end
+
+function PANEL:CanDrop(target)
+	return target:GetName() == "InventoryGrid"
+end
+
+function PANEL:TransitionDraggedItem(target)
+	if not self.dragging then return end
+
+	target.dragging = self.dragging
+	target.dragging.origin = self
+
+	self.dragging = nil
 end
 
 function PANEL:OnCursorMoved(x, y)
 	self.last_moved = CurTime()
 	self.current_x, self.current_y = self:GetGridByPos(x, y)
-	if not self.grid[self.current_x] or not self.grid[self.current_x][self.current_y] then
+
+	if not self.dragging then return end
+
+	// Outside of the bounds of the panel
+	if self.current_x == 0 or self.current_y == 0 then
+		local target = vgui.GetHoveredPanel()
+		if not self:CanDrop(target) then return end
+
+		self:TransitionDraggedItem(target)
 		return
 	end
 
-	if self.dragging and self.current_x > 0 and self.current_y > 0 then
-		for grid_x = 1, self.max_x do
-			self.highlighted[grid_x] = {}
-		end
+	for grid_x = 1, self.max_x do
+		self.highlighted[grid_x] = {}
+	end
 
-		local mins, maxs = self:GetGridsByBounds(self.current_x, self.current_y, self.dragging.w, self.dragging.h)
-		for w = mins[1], maxs[1] do
-			for h = mins[2], maxs[2] do
-				self.highlighted[w][h] = true
-			end
+	local mins, maxs = self:GetGridsByBounds(self.current_x, self.current_y, self.dragging.w, self.dragging.h)
+	for w = mins[1], maxs[1] do
+		for h = mins[2], maxs[2] do
+			self.highlighted[w][h] = true
 		end
 	end
 end
