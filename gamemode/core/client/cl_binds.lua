@@ -34,11 +34,15 @@ function GM:PlayerButtonUp(ply, key_code)
 	if zonecontrol.binds.get(key_code) == "open_inventory" then
 		zonecontrol.inventory.open()
 	end
+
+	if zonecontrol.binds.get(key_code) == "open_main_menu" then
+		zonecontrol.CreateMainMenu()
+	end
 end
 
 hook.Add("OnGamemodeLoaded", "RegisterBindSettings", function()
-	zonecontrol.settings.new("open_inventory", "int", KEY_I)
-	zonecontrol.settings.new("open_main_menu", "int", KEY_F1)
+	zonecontrol.settings.new("open_inventory", "int", "controls", "Open Inventory", KEY_I)
+	zonecontrol.settings.new("open_main_menu", "int", "controls", "Open Main Menu", KEY_F1)
 end)
 
 hook.Add("SettingsLoaded", "LoadBinds", function()

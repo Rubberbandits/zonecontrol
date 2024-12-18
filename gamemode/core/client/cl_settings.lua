@@ -2,10 +2,19 @@ zonecontrol = zonecontrol or {}
 zonecontrol.settings = zonecontrol.settings or {}
 zonecontrol.settings.map = zonecontrol.settings.map or {}
 zonecontrol.settings.default = zonecontrol.settings.default or {
-	music_volume = {type = "float", default = 1.0},
-	cutscene_volume = {type = "float", default = 1.0},
-	stalker_cursor = {type = "bool", default = false}
+	music_volume = {type = "float", category = "sound", text = "Music Volume", default = 1.0},
+	cutscene_volume = {type = "float", category = "sound", text = "Cutscene Volume", default = 1.0},
+	stalker_cursor = {type = "bool", category = "display", text = "Stylized Cursor", default = false}
 }
+zonecontrol.settings.categories = zonecontrol.settings.categories or {
+	"sound",
+	"display",
+	"controls"
+}
+
+for key, data in pairs(zonecontrol.settings.default) do
+	language.Add(key, data.text)
+end
 
 function zonecontrol.settings.load()
 	local f = file.Open("zonecontrol/settings.txt", "r", "DATA")
@@ -34,8 +43,8 @@ function zonecontrol.settings.save()
 	hook.Run("SettingsSaved")
 end
 
-function zonecontrol.settings.new(key, type, default)
-	zonecontrol.settings.default[key] = {type = type, default = default}
+function zonecontrol.settings.new(key, type, category, text, default)
+	zonecontrol.settings.default[key] = {type = type, category = category, text = text, default = default}
 end
 
 function zonecontrol.settings.set(key, value)

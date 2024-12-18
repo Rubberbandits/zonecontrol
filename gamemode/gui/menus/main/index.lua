@@ -29,6 +29,10 @@ function PANEL:Init()
 	div:Dock(LEFT)
 	div:SetSize(ScrW() * 0.2, ScrH() * 0.8)
 
+	local content = self:Add("DPanel")
+	content:Dock(FILL)
+	content:DockMargin(16, 0, 0, 0)
+
 	local icon = div:Add("DImage")
 	icon:Dock(TOP)
 	icon:SetImage("gm_construct/flatsign")
@@ -56,7 +60,10 @@ function PANEL:Init()
 
 		self:Remove()
 	end)
-	selection:AddSelection("SETTINGS", function() self:Remove() end)
+	selection:AddSelection("SETTINGS", function()
+		local settings = content:Add("Settings")
+		settings:Dock(FILL)
+	end)
 	selection:AddSelection("QUIT", function() self:Remove() end)
 end
 
