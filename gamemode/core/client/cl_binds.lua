@@ -11,22 +11,29 @@ function GM:PlayerBindPress(ply, bind, down, key_code)
 	if down and zonecontrol.binds.get(key_code) then
 		return true
 	end
+
+	if down and bind == "messagemode" then
+		zonecontrol.chat.open()
+		return true
+	end
 end
 
 local is_down = {}
 
 function GM:PlayerButtonDown(ply, key_code)
 	if is_down[key_code] then return end
-
-	if zonecontrol.binds.get(key_code) == "open_inventory" then
-		zonecontrol.TestInventory()
-	end
-
 	is_down[key_code] = true
 end
 
 function GM:PlayerButtonUp(ply, key_code)
+	if not is_down[key_code] then return end
 	is_down[key_code] = nil
+
+	if type(vgui.GetKeyboardFocus()) != "no value" then return end
+
+	if zonecontrol.binds.get(key_code) == "open_inventory" then
+		zonecontrol.inventory.open()
+	end
 end
 
 hook.Add("OnGamemodeLoaded", "RegisterBindSettings", function()

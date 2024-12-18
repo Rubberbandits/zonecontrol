@@ -8,60 +8,60 @@ if CLIENT then
 	netstream.Hook("nReceiveMessage", function(id, ply, text)
 		local chat_data = kingston.chat.get(id)
 		if !chat_data then return end
-		
+
 		chat_data.on_run(id, ply, text)
 	end)
-	
+
 	function nConSay( str )
 
 		GAMEMODE:AddChat({[CB_ALL] = true, [CB_OOC] = true}, "CombineControl.ChatNormal", Color( 200, 0, 0, 255 ), "Console: " .. str);
-		
+
 	end
 	netstream.Hook( "nConSay", nConSay );
-	
+
 	function nConASay( str )
 
 		GAMEMODE:AddChat({[CB_ALL] = true, [CB_OOC] = true}, "CombineControl.ChatNormal", Color(255, 107, 218), "[ADMIN] ", Color(255, 156, 230), "Console: " .. str);
-		
+
 	end
 	netstream.Hook( "nConASay", nConASay );
 else
 	-- nSay: carryover from old CC system
 	netstream.Hook("nSay", function(ply, text)
 		ply:SetTyping( false );
-		
+
 		if ply:CharID() < 1 then return end
 		if !ply.LastChat then ply.LastChat = 0 end
 		if CurTime() - ply.LastChat < 0.05 then return end
 		ply.LastChat = CurTime();
-		
+
 		if #text > 2000 then return end
-		
+
 		local chat_type, message = kingston.chat.process(ply, text)
-		
+
 		if chat_type == "ic" then
 			if kingston.command.process(ply, text) then
 				return
 			end
 		end
-		
+
 		kingston.chat.run(chat_type, ply, message)
 	end)
-	
+
 	function nChangeRadio( ply, val )
 
 		if( !ply:HasItem( "radio" ) ) then return end
-		
+
 		if( val >= 0 ) then
-			
+
 			if( val <= 999 ) then
-			
+
 				ply:SetRadioFreq( math.Round( val, 2 ) );
-				
+
 			end
-			
+
 		end
-		
+
 	end
 	netstream.Hook( "nChangeRadio", nChangeRadio );
 end
@@ -69,30 +69,30 @@ end
 kingston.chat.default_type = {
 	construct_string = function(chat_type, ply, text)
 		local chat_data = kingston.chat.get(chat_type)
-		
+
 		return {chat_data.text_color, Format(chat_data.text_format, ply:RPName(), text)}
 	end,
 	on_run = function(chat_type, ply, text)
 		local chat_data = kingston.chat.get(chat_type)
 		local chat_str_data = chat_data.construct_string(chat_type, ply, text)
-		
+
 		chat_data.handle_log(chat_type, ply, text)
-		
+
 		if CLIENT then
 			if chat_data.print_console then
 				MsgC(chat_data.text_color, chat_data.print_console(chat_type, ply, text))
 			end
-		
+
 			GAMEMODE:AddChat(chat_data.chat_filter, chat_data.chat_font, unpack(chat_str_data))
 		end
 	end,
 	can_say = function(chat_type, ply)
 		local chat_data = kingston.chat.get(chat_type)
-		
+
 		if !chat_data.while_dead and !ply:Alive() then
 			return "You can't speak, you're dead."
 		end
-		
+
 		if !chat_data.while_dead and ply:PassedOut() then
 			return "You can't speak, you're passed out."
 		end
@@ -101,7 +101,7 @@ kingston.chat.default_type = {
 	end,
 	can_hear = function(chat_type, speaker, listener)
 		local chat_data = kingston.chat.get(chat_type)
-	
+
 		return speaker:GetPos():DistToSqr(listener:GetPos()) <= (chat_data.chat_range * chat_data.chat_range)
 	end,
 	handle_log = function(chat_type, ply, text)
@@ -109,14 +109,14 @@ kingston.chat.default_type = {
 		if chat_data.no_console_print then
 			kingston.log.console_log = false
 		end
-		
+
 		kingston.log.write("chat", "[%s (%s)][%s] %s", ply:RPName(), ply:Nick(), chat_type, text)
-		
+
 		if chat_data.no_console_print then
 			kingston.log.console_log = true
 		end
 	end,
-	
+
 	-- default args: name, text
 	-- text_format can use markup
 	text_format = "%s: %s",
@@ -124,7 +124,7 @@ kingston.chat.default_type = {
 	chat_range = 400,
 	chat_font = "CombineControl.ChatNormal",
 	chat_filter = {
-		[CB_ALL] = true, 
+		[CB_ALL] = true,
 		[CB_IC] = true,
 	},
 	text_color = Color(91, 166, 221),
@@ -147,7 +147,7 @@ function kingston.chat.register_type(id, data)
 	-- maybe we should implement error handling
 	if !id or #id == 0 then return end
 	if !data then return end
-	
+
 	table.Inherit(data, kingston.chat.default_type)
 	kingston.chat.types[id] = data
 end
@@ -164,25 +164,25 @@ if SERVER then
 	function kingston.chat.run(id, ply, text)
 		local chat_data = kingston.chat.get(id)
 		if !chat_data then return end
-		
+
 		local ret = chat_data.can_say(id, ply)
 		if isstring(ret) then -- error
 			ply:Notify(nil, Color(200,0,0,255), ret)
 			return
 		end
-		
+
 		local rf = {}
 		if !chat_data.calculate_rf then
 			for k,v in next, player.GetAll() do
 				if v:CharID() < 1 then continue end
 				if !chat_data.can_hear(id, ply, v) then continue end
-				
+
 				rf[#rf + 1] = v
 			end
 		else
 			rf = chat_data.calculate_rf(id, ply, text)
 		end
-		
+
 		if !rf then return end
 		if #rf == 0 then return end
 
@@ -232,7 +232,7 @@ function kingston.chat.process(ply, input)
 	if !input:find("%S") then
 		return
 	end
-	
+
 	return chat_type, input
 end
 
@@ -359,7 +359,7 @@ kingston.chat.register_type("event", {
 		if !ply:HasPermission("event") then
 			return "You must be admin/gamemaster to run this command."
 		end
-		
+
 		return true
 	end,
 })
@@ -375,7 +375,7 @@ kingston.chat.register_type("localevent", {
 		if !ply:HasPermission("localevent") then
 			return "You must be admin/gamemaster to run this command."
 		end
-		
+
 		return true
 	end,
 })
@@ -383,7 +383,7 @@ kingston.chat.register_type("localevent", {
 kingston.chat.register_type("ooc", {
 	chat_command = {"/ooc", "//"},
 	chat_filter = {
-		[CB_ALL] = true, 
+		[CB_ALL] = true,
 		[CB_OOC] = true
 	},
 	construct_string = function(chat_type, ply, text)
@@ -396,7 +396,7 @@ kingston.chat.register_type("ooc", {
 		if !ply:IsAdmin() and ply.LastOOC and CurTime() < ply.LastOOC + GAMEMODE:OOCDelay() then
 			return Format("Wait %s seconds to talk in OOC.", tostring(math.Round(ply.LastOOC + GAMEMODE:OOCDelay() - CurTime())))
 		end
-		
+
 		ply.LastOOC = CurTime()
 		return true
 	end,
@@ -405,7 +405,7 @@ kingston.chat.register_type("ooc", {
 kingston.chat.register_type("looc", {
 	chat_command = {"/looc", ".//", "[["},
 	chat_filter = {
-		[CB_ALL] = true, 
+		[CB_ALL] = true,
 		[CB_OOC] = true
 	},
 	no_console_print = true,
@@ -420,7 +420,7 @@ kingston.chat.register_type("looc", {
 kingston.chat.register_type("admin", {
 	chat_command = {"/a", "/admin"},
 	chat_filter = {
-		[CB_ALL] = true, 
+		[CB_ALL] = true,
 		[CB_OOC] = true
 	},
 	construct_string = function(chat_type, ply, text)
@@ -442,7 +442,7 @@ kingston.chat.register_type("admin", {
 kingston.chat.register_type("radio", {
 	chat_command = {"/r", "/radio"},
 	chat_filter = {
-		[CB_ALL] = true, 
+		[CB_ALL] = true,
 		[CB_RADIO] = true,
 		[CB_IC] = true,
 	},
@@ -455,7 +455,7 @@ kingston.chat.register_type("radio", {
 				return {chat_data.text_color, Format(chat_data.text_format, ply:RPName(), text)}
 			end
 		end
-	
+
 		return {Color(72, 118, 255), "[Radio] ", ply, ": ", text}
 	end,
 	calculate_rf = function(chat_type, ply, text)
@@ -474,7 +474,7 @@ kingston.chat.register_type("radio", {
 				rf[#rf + 1] = v -- If they do, they hear it regardless of the stationary radio
 				--print(v, "had a tuned personal radio")
 			else -- If not, search for a valid radio nearby
-				local successfulTransmission = false 
+				local successfulTransmission = false
 
 				for key, obj in pairs(ents.FindInSphere(v:GetPos(), chat_data.chat_range)) do -- Finds radio entities within chat range
 					-- If radio entity exists & is on same freq and the sender
@@ -512,7 +512,7 @@ kingston.chat.register_type("radio", {
 		if !ply:Alive() then
 			return "You can't speak, you're dead."
 		end
-		
+
 		if ply:PassedOut() then
 			return "You can't speak, you're passed out."
 		end
@@ -521,11 +521,11 @@ kingston.chat.register_type("radio", {
 		if tr.Entity and tr.Entity:IsValid() and tr.Entity:GetClass() == "cc_radio" then
 			return true
 		end
-		
+
 		if ply:HasItem("radio") then
 			return true
 		end
-		
+
 		return "You don't have a radio or you're not near one!"
 	end,
 })
@@ -533,17 +533,17 @@ kingston.chat.register_type("radio", {
 if CLIENT then
 	netstream.Hook("nChatRadioSurround", function(chat_type, ply, text)
 		local chat_data = kingston.chat.get(chat_type)
-	
+
 		kingston.log.write("chat", "[%s (%s)][radio_sur] %s", ply:RPName(), ply:Nick(), text)
 		GAMEMODE:AddChat(
-			{ 
-				[CB_ALL] = true, 
+			{
+				[CB_ALL] = true,
 				[CB_IC] = true
-			}, 
-			"CombineControl.ChatNormal", 
-			chat_data.text_color, 
-			ply, 
-			": ", 
+			},
+			"CombineControl.ChatNormal",
+			chat_data.text_color,
+			ply,
+			": ",
 			text
 		)
 	end)
@@ -561,7 +561,7 @@ kingston.chat.Languages[TRAIT_POLISH] = { "Polish", "/pol" };
 
 for trait,info in next, kingston.chat.Languages do
 	local id = info[2]:sub(2, #info[2])
-	
+
 	kingston.chat.register_type(id, {
 		no_console_print = true,
 		chat_command = info[2],
@@ -570,24 +570,24 @@ for trait,info in next, kingston.chat.Languages do
 			if CLIENT and LocalPlayer():HasTrait(trait) then
 				return {Color(255, 167, 73), Format("[%s] ", info[1]), ply, ": ", text}
 			end
-			
+
 			return {Color(255, 167, 73), ply, Format(" says something in %s.", info[1])}
 		end,
 		can_say = function(chat_type, ply, text)
 			if !ply:Alive() then
 				return "You can't speak, you're dead."
 			end
-			
+
 			if ply:PassedOut() then
 				return "You can't speak, you're passed out."
 			end
-		
+
 			if !ply:HasTrait(trait) then
 				return Format("You cannot speak %s!", info[1])
 			end
 		end,
 	})
-	
+
 	kingston.chat.register_type(id.."Y", {
 		no_console_print = true,
 		chat_command = info[2].."y",
@@ -598,24 +598,24 @@ for trait,info in next, kingston.chat.Languages do
 			if CLIENT and LocalPlayer():HasTrait(trait) then
 				return {Color( 255, 167, 73, 255 ), Format("[%s - Yell] ", info[1]), ply, ": ", text}
 			end
-			
+
 			return {Color( 255, 167, 73, 255 ), ply, Format(" yells something in %s.", info[1])}
 		end,
 		can_say = function(chat_type, ply, text)
 			if !ply:Alive() then
 				return "You can't speak, you're dead."
 			end
-			
+
 			if ply:PassedOut() then
 				return "You can't speak, you're passed out."
 			end
-		
+
 			if !ply:HasTrait(trait) then
 				return Format("You cannot speak %s!", info[1])
 			end
 		end,
 	})
-	
+
 	kingston.chat.register_type(id.."W", {
 		no_console_print = true,
 		chat_command = info[2].."w",
@@ -626,18 +626,18 @@ for trait,info in next, kingston.chat.Languages do
 			if CLIENT and LocalPlayer():HasTrait(trait) then
 				return {Color( 255, 167, 73, 255 ), Format("[%s - Whisper] ", info[1]), ply, ": ", text}
 			end
-			
+
 			return {Color( 255, 167, 73, 255 ), ply, Format(" whispers something in %s.", info[1])}
 		end,
 		can_say = function(chat_type, ply, text)
 			if !ply:Alive() then
 				return "You can't speak, you're dead."
 			end
-			
+
 			if ply:PassedOut() then
 				return "You can't speak, you're passed out."
 			end
-		
+
 			if !ply:HasTrait(trait) then
 				return Format("You cannot speak %s!", info[1])
 			end

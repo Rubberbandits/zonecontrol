@@ -245,9 +245,6 @@ function PANEL:Think()
 end
 
 function PANEL:Paint(w, h)
-	surface.SetDrawColor(0, 0, 0, 255)
-	surface.DrawRect(0, 0, w, h)
-
 	surface.SetDrawColor(200, 200, 200, 255)
 	for row = 1, self.max_x do
 		for column = 1, self.max_y do
