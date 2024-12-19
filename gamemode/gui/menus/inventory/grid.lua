@@ -24,7 +24,7 @@ function PANEL:SetItems(items)
 	self:Reset()
 
 	for _,item in pairs(items) do
-		self:AddItem(item.class, item.x, item.y)
+		self:AddItem(item.class, item.x, item.y, item.item)
 	end
 end
 
@@ -183,8 +183,12 @@ function PANEL:OnMouseReleased(keyCode)
 		// Check grids to see if occupied
 		local item = self:GetItemByBounds(grid_x, grid_y, self.dragging.w, self.dragging.h)
 		if not item or item == self.dragging then
+			// Check to see if item can be moved, item:CanMove()
+
 			local origin = self.dragging.origin
 			if origin then
+				// Send network message to move item from origin inventory
+
 				self:RemoveItem(self.dragging)
 				origin:RemoveItem(self.dragging)
 				table.insert(self.items, self.dragging)
