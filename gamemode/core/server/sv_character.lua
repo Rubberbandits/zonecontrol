@@ -63,7 +63,6 @@ function zonecontrol.characters.Create(ply, name, desc, model, skin, items)
 			end
 
 			function transaction:onSuccess()
-				netstream.Start(ply, "nCharacterList", ply.SQLCharData)
 				ply:LoadCharacter(character)
 			end
 			transaction:start()
@@ -135,3 +134,18 @@ local function CharacterFetch(len, ply)
 	mysqloo.Query("SELECT * FROM cc_chars WHERE SteamID = '" .. ply:SteamID() .. "'", qS, qF)
 end
 net.Receive("CharacterFetch", CharacterFetch)
+
+util.AddNetworkString("CharacterDelete")
+local function CharacterDelete(len, ply)
+	local id = net.ReadUInt(32)
+
+	if ply:SQLCharExists(id) then
+		if ply:CharID() == id then return end
+
+		local char = ply:GetCharFromID(id)
+		if char.Money < 9500 then return end
+
+		ply:DeleteCharacter(id, char.RPName)
+	end
+end
+net.Receive("CharacterDelete", CharacterDelete)

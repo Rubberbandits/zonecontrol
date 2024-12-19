@@ -21,11 +21,15 @@ function PANEL:SetItems(items)
 end
 
 // Use real item objects instead
-function PANEL:AddItem(class, x, y)
+function PANEL:AddItem(class, x, y, item_obj)
 	local item_data = GAMEMODE.Items[class]
 	if not item_data then return end
 
-	local item = {class = class, x = x, y = y, w = item_data.W, h = item_data.H}
+	if not x or not y then
+		x, y = self:GetBestPosition(item_data.W, item_data.H)
+	end
+
+	local item = {class = class, x = x, y = y, w = item_data.W, h = item_data.H, item = item_obj}
 	table.insert(self.items, item)
 
 	self.grid = self.grid or {}
@@ -55,6 +59,16 @@ function PANEL:Reset()
 		self.highlighted[x] = {}
 		for y = 1, self.max_y do
 			self.grid[x][y] = {}
+		end
+	end
+end
+
+function PANEL:GetBestPosition(w, h)
+	for x = 1, self.max_x do
+		for y = 1, self.max_y do
+			if not self:GetItemByBounds(x, y, w, h) then
+				return x, y
+			end
 		end
 	end
 end

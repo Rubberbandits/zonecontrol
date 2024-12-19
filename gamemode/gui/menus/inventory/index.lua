@@ -37,4 +37,8 @@ function zonecontrol.inventory.open()
     inventory:SetSize(ScrW() * 0.263, ScrH())
     inventory:MakePopup()
     inventory:SetSkin("Inventory")
+
+    for id, item in pairs(zonecontrol.inventory.items) do
+        inventory.grid:AddItem(item:GetClass(), nil, nil, item)
+    end
 end

@@ -1,23 +1,21 @@
+zonecontrol = zonecontrol or {}
+zonecontrol.inventory = zonecontrol.inventory or {}
+zonecontrol.inventory.items = zonecontrol.inventory.items or {}
+
 GM.DummyItems = GM.DummyItems or {};
 
 netstream.Hook( "LoadItems", function( s_ItemTable )
-
-	if !LocalPlayer().Inventory then
-		LocalPlayer().Inventory = {}
-	end
-
 	for k,v in next, s_ItemTable do
-	
 		GAMEMODE.g_ItemTable[v.id] = nil;
-		local s_Object = item( 
-			LocalPlayer(), 
-			v.ItemClass, 
-			v.id, 
+		local s_Object = item(
+			LocalPlayer(),
+			v.ItemClass,
+			v.id,
 			util.JSONToTable( v.Vars )
 		); -- need all before Initialize is called.
-	
-	end
 
+		zonecontrol.inventory.items[v.id] = s_Object;
+	end
 end );
 
 netstream.Hook("ReceiveItem", function(class, id, vars, x, y)
@@ -28,7 +26,7 @@ netstream.Hook("ReceiveItem", function(class, id, vars, x, y)
 	if GAMEMODE.g_ItemTable[id] then
 		GAMEMODE.g_ItemTable[id] = nil
 	end
-	
+
 	local s_Object = item(LocalPlayer(), class, id, vars, x, y)
 	if GAMEMODE.Inventory and IsValid(GAMEMODE.Inventory) then
 		GAMEMODE.Inventory:PopulateItems()
@@ -40,16 +38,16 @@ end)
 netstream.Hook( "ReceiveDummyItem", function( s_iID, s_szClass, s_Vars, s_Owner, s_CharID )
 
 	local tbl = {
-	
+
 		szClass = s_szClass,
 		Vars = s_Vars,
 		Owner = s_Owner,
 		CharID = s_CharID,
-		
+
 	};
 
 	hook.Run( "OnReceiveDummyItem", s_iID, tbl );
-	
+
 end );
 
 netstream.Hook("SetItemVar", function(id, key, value)

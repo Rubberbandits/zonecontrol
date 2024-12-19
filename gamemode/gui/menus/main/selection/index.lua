@@ -46,9 +46,14 @@ function PANEL:Init()
 	delete:SetTall(40)
 	delete:SetText("DELETE")
 	delete.DoClick = function()
-		self:Remove()
+		self.loading = true
 
-		zonecontrol.CreateMainMenu()
+		net.Start("CharacterDelete")
+			net.WriteUInt(self.selected_character, 32)
+		net.SendToServer()
+
+		net.Start("CharacterFetch")
+		net.SendToServer()
 	end
 
 	local select = div:Add("DButton")
@@ -104,6 +109,10 @@ function PANEL:Init()
 
 		local character_data = characters[1]
 		local scene_origin = scene.models.scene:GetPos()
+		if scene.models.character then
+			scene.models.character:Remove()
+		end
+
 		local character = ClientsideModel(character_data.model, RENDERGROUP_OPAQUE)
 			character:SetPos(scene_origin + character_origin)
 			character:SetAngles(character_angles)
@@ -112,12 +121,20 @@ function PANEL:Init()
 			character:Spawn()
 		scene.models.character = character
 
+		if scene.models.character_body then
+			scene.models.character_body:Remove()
+		end
+
 		local character_body = ClientsideModel(character_data.body, RENDERGROUP_OPAQUE)
 			character_body:SetParent(character)
 			character_body:AddEffects(EF_BONEMERGE + EF_BONEMERGE_FASTCULL)
 			character_body:SetupBones()
 			character_body:Spawn()
 		scene.models.character_body = character_body
+
+		if scene.models.lamp then
+			scene.models.lamp:Remove()
+		end
 
 		scene.models.lamp = SetupLamp(scene_origin + character_origin + Vector(0, 0, 128), Angle(90, 0, 0))
 
