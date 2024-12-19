@@ -73,6 +73,10 @@ function PANEL:GetBestPosition(w, h)
 	end
 end
 
+function PANEL:SortItems(style)
+
+end
+
 function PANEL:SetGridsByBounds(value, x, y, w, h)
 	local mins, maxs = self:GetGridsByBounds(x, y, w, h)
 	for grid_w = mins[1], maxs[1] do
@@ -154,10 +158,6 @@ function PANEL:OnMousePressed(keyCode)
 	if keyCode == MOUSE_LEFT then
 		self.dragging = item
 	end
-
-	if keyCode == MOUSE_RIGHT then
-		print(grid_x, grid_y)
-	end
 end
 
 function PANEL:OnMouseReleased(keyCode)
@@ -196,8 +196,15 @@ function PANEL:OnMouseReleased(keyCode)
 		self.dragging = nil
 	end
 
-	if keyCode == MOUSE_RIGHT then
-		// Open context menu
+	if keyCode == MOUSE_RIGHT and then
+		local data = self:GetItemByCoord(grid_x, grid_y)
+		if not data then return end
+
+		local ctx = vgui.Create("ItemContextMenu")
+			ctx:SetSkin("Inventory")
+			ctx:SetItem(data.item)
+			ctx:Setup()
+		ctx:Open()
 	end
 end
 
@@ -206,7 +213,6 @@ function PANEL:CanDrop(target)
 end
 
 function PANEL:TransitionDraggedItem(target)
-	print("TransitionDraggedItem")
 	if not self.dragging then return end
 
 	target.dragging = self.dragging
