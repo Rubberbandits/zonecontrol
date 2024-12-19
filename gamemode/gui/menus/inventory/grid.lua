@@ -10,6 +10,14 @@ function PANEL:Init()
 	self.max_y = math.floor(self:GetTall() / GRID_Y_SIZE)
 
 	self:Reset()
+
+	hook.Add("NetworkedItemReceived", "UpdateInventory", function(item)
+		self:AddItem(item:GetClass(), nil, nil, item)
+	end)
+end
+
+function PANEL:OnRemove()
+	hook.Remove("NetworkedItemReceived", "UpdateInventory")
 end
 
 function PANEL:SetItems(items)

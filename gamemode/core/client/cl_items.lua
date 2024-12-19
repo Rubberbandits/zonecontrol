@@ -28,9 +28,6 @@ netstream.Hook("ReceiveItem", function(class, id, vars, x, y)
 	end
 
 	local s_Object = item(LocalPlayer(), class, id, vars, x, y)
-	if GAMEMODE.Inventory and IsValid(GAMEMODE.Inventory) then
-		GAMEMODE.Inventory:PopulateItems()
-	end
 
 	hook.Run("NetworkedItemReceived", s_Object)
 end)
