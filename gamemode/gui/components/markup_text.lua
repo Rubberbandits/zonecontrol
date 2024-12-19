@@ -2,7 +2,6 @@ local PANEL = {}
 
 function PANEL:SetText(text)
 	self.text = text
-	//self.markup = king.markup.parse(text, self:GetWide())
 	self:InvalidateLayout(true)
 end
 
