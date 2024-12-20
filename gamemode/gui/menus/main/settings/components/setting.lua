@@ -66,6 +66,15 @@ function PANEL:CreateBinder(current_value, on_change)
 	end
 end
 
+function PANEL:CreateColorPicker(current_value, on_change)
+	local color_picker = self.container:Add("DColorCombo")
+	color_picker:Dock(RIGHT)
+	color_picker:SetColor(current_value)
+	color_picker.OnValueChanged = function(_, color)
+		on_change(color_picker, color)
+	end
+end
+
 function PANEL:PerformLayout(w, h)
 	self.name:DockMargin(4, 2, w * 0.5 - 8, 2)
 

@@ -28,12 +28,12 @@ if CLIENT then
 else
 	-- nSay: carryover from old CC system
 	netstream.Hook("nSay", function(ply, text)
-		ply:SetTyping( false );
+		ply:SetTyping(false)
 
 		if ply:CharID() < 1 then return end
 		if !ply.LastChat then ply.LastChat = 0 end
 		if CurTime() - ply.LastChat < 0.05 then return end
-		ply.LastChat = CurTime();
+		ply.LastChat = CurTime()
 
 		if #text > 2000 then return end
 
@@ -49,28 +49,20 @@ else
 	end)
 
 	function nChangeRadio( ply, val )
+		if not ply:HasItem("radio") then return end
 
-		if( !ply:HasItem( "radio" ) ) then return end
-
-		if( val >= 0 ) then
-
-			if( val <= 999 ) then
-
-				ply:SetRadioFreq( math.Round( val, 2 ) );
-
-			end
-
+		if val >= 0 and val <= 999 then
+			ply:SetRadioFreq(math.Round(val, 2))
 		end
-
 	end
-	netstream.Hook( "nChangeRadio", nChangeRadio );
+	netstream.Hook("nChangeRadio", nChangeRadio)
 end
 
 kingston.chat.default_type = {
 	construct_string = function(chat_type, ply, text)
 		local chat_data = kingston.chat.get(chat_type)
 
-		return {chat_data.text_color, Format(chat_data.text_format, ply:RPName(), text)}
+		return {zonecontrol.settings.get("chat_color_" .. chat_type), Format(chat_data.text_format, ply:RPName(), text)}
 	end,
 	on_run = function(chat_type, ply, text)
 		local chat_data = kingston.chat.get(chat_type)
@@ -80,7 +72,7 @@ kingston.chat.default_type = {
 
 		if CLIENT then
 			if chat_data.print_console then
-				MsgC(chat_data.text_color, chat_data.print_console(chat_type, ply, text))
+				MsgC(zonecontrol.settings.get("chat_color_" .. chat_type), chat_data.print_console(chat_type, ply, text))
 			end
 
 			GAMEMODE:AddChat(chat_data.chat_filter, chat_data.chat_font, unpack(chat_str_data))
@@ -150,6 +142,10 @@ function kingston.chat.register_type(id, data)
 
 	table.Inherit(data, kingston.chat.default_type)
 	kingston.chat.types[id] = data
+
+	if CLIENT and data.text_color then
+		zonecontrol.settings.new("chat_color_"..id, "color", "chat", "Chat color for " .. id, data.text_color)
+	end
 end
 
 -- Get data structure of a chat type
@@ -190,8 +186,6 @@ if SERVER then
 		netstream.Start(rf, "nReceiveMessage", id, ply, text)
 	end
 end
-
-
 
 -- Process input to find out what kind of command it is.
 -- thanks to chessnut for this code, i wrote my own but it sucked. why re-invent the wheel?
@@ -287,8 +281,9 @@ kingston.chat.register_type("yell", {
 	chat_font = "CombineControl.ChatBig",
 	chat_range = 1000,
 	no_console_print = true,
+	text_color = Color(255, 50, 50),
 	construct_string = function(chat_type, ply, text)
-		return {Color(255, 50, 50), "[YELL] ", ply, ": ", text}
+		return {zonecontrol.settings.get("chat_color_" .. chat_type), "[YELL] ", ply, ": ", text}
 	end,
 })
 
@@ -297,8 +292,9 @@ kingston.chat.register_type("whisper", {
 	chat_range = 100,
 	chat_font = "CombineControl.ChatSmall",
 	no_console_print = true,
+	text_color = Color(91, 166, 221),
 	construct_string = function(chat_type, ply, text)
-		return {Color(91, 166, 221), "[WHISPER] ", ply, ": ", text}
+		return {zonecontrol.settings.get("chat_color_" .. chat_type), "[WHISPER] ", ply, ": ", text}
 	end,
 })
 
@@ -306,8 +302,9 @@ kingston.chat.register_type("it", {
 	chat_command = "/it",
 	no_console_print = true,
 	while_dead = true,
+	text_color = Color(131, 196, 251)
 	construct_string = function(chat_type, ply, text)
-		return {Color(131, 196, 251), "** ", text}
+		return {zonecontrol.settings.get("chat_color_" .. chat_type), "** ", text}
 	end,
 	print_console = function(chat_type, ply, text)
 		return Format("[i][%s] ", ply:RPName())
@@ -319,8 +316,9 @@ kingston.chat.register_type("lit", {
 	chat_range = 1000,
 	no_console_print = true,
 	while_dead = true,
+	text_color = Color(131, 196, 251)
 	construct_string = function(chat_type, ply, text)
-		return {Color(131, 196, 251), "** ", text}
+		return {zonecontrol.settings.get("chat_color_" .. chat_type), "** ", text}
 	end,
 	print_console = function(chat_type, ply, text)
 		return Format("[Li][%s] ", ply:RPName())
@@ -332,8 +330,9 @@ kingston.chat.register_type("me", {
 	no_space = true,
 	no_console_print = true,
 	while_dead = true,
+	text_color = Color(131, 196, 251),
 	construct_string = function(chat_type, ply, text)
-		return {Color(131, 196, 251), "** ", ply, (text[1] == "'" and "" or " "), text}
+		return {zonecontrol.settings.get("chat_color_" .. chat_type), "** ", ply, (text[1] == "'" and "" or " "), text}
 	end,
 })
 
@@ -343,8 +342,9 @@ kingston.chat.register_type("lme", {
 	chat_range = 2000,
 	no_console_print = true,
 	while_dead = true,
+	text_color = Color(131, 196, 251),
 	construct_string = function(chat_type, ply, text)
-		return {Color(131, 196, 251), "** ", ply, (text[1] == "'" and "" or " "), text}
+		return {zonecontrol.settings.get("chat_color_" .. chat_type), "** ", ply, (text[1] == "'" and "" or " "), text}
 	end,
 })
 
@@ -352,8 +352,9 @@ kingston.chat.register_type("event", {
 	chat_command = "/ev",
 	chat_range = math.huge,
 	chat_font = "CombineControl.ChatBig",
+	text_color = Color(0, 191, 255),
 	construct_string = function(chat_type, ply, text)
-		return {Color(0, 191, 255), "[EVENT] ", text}
+		return {zonecontrol.settings.get("chat_color_" .. chat_type), "[EVENT] ", text}
 	end,
 	can_say = function(chat_type, ply, text)
 		if !ply:HasPermission("event") then
@@ -368,8 +369,9 @@ kingston.chat.register_type("localevent", {
 	chat_command = "/lev",
 	chat_range = 3000,
 	chat_font = "CombineControl.ChatBig",
+	text_color = Color(0, 191, 255),
 	construct_string = function(chat_type, ply, text)
-		return {Color(0, 191, 255), "[L-EVENT] ", text}
+		return {zonecontrol.settings.get("chat_color_" .. chat_type), "[L-EVENT] ", text}
 	end,
 	can_say = function(chat_type, ply, text)
 		if !ply:HasPermission("localevent") then
@@ -386,8 +388,9 @@ kingston.chat.register_type("ooc", {
 		[CB_ALL] = true,
 		[CB_OOC] = true
 	},
+	text_color = Color(255, 255, 255)
 	construct_string = function(chat_type, ply, text)
-		return {Color(200, 0, 0), "[OOC] ", IsValid(ply) and team.GetColor(ply:Team()) or Color( 0, 120, 0, 255 ), ply, Color( 255, 255, 255, 255 ), ": ", text}
+		return {Color(200, 0, 0), "[OOC] ", IsValid(ply) and team.GetColor(ply:Team()) or Color( 0, 120, 0, 255 ), ply, zonecontrol.settings.get("chat_color_" .. chat_type), ": ", text}
 	end,
 	can_hear = function(chat_type, speaker, listener)
 		return true
@@ -409,8 +412,9 @@ kingston.chat.register_type("looc", {
 		[CB_OOC] = true
 	},
 	no_console_print = true,
+	text_color = Color(138, 185, 209),
 	construct_string = function(chat_type, ply, text)
-		return {Color(138, 185, 209), "[LOOC] ", ply, ": ", text}
+		return {zonecontrol.settings.get("chat_color_" .. chat_type), "[LOOC] ", ply, ": ", text}
 	end,
 	can_say = function(chat_type, ply, text)
 		return true
@@ -423,11 +427,12 @@ kingston.chat.register_type("admin", {
 		[CB_ALL] = true,
 		[CB_OOC] = true
 	},
+	text_color = Color(255, 156, 230),
 	construct_string = function(chat_type, ply, text)
 		if ply.IsAdmin and ply:IsAdmin() or ply:IsEventCoordinator() then
-			return {Color(255, 107, 218), "[ADMIN] ", Color(255, 156, 230), ply, ": ", text}
+			return {Color(255, 107, 218), "[ADMIN] ", zonecontrol.settings.get("chat_color_" .. chat_type), ply, ": ", text}
 		else
-			return {Color(255, 107, 218), "[ADMIN - Request] ", Color(255, 156, 230), ply, ": ", text}
+			return {Color(255, 107, 218), "[ADMIN - Request] ", zonecontrol.settings.get("chat_color_" .. chat_type), ply, ": ", text}
 		end
 	end,
 	can_hear = function(chat_type, speaker, listener)
@@ -448,15 +453,16 @@ kingston.chat.register_type("radio", {
 	},
 	chat_font = "CombineControl.ChatRadio",
 	no_console_print = true,
+	text_color = Color(72, 118, 255),
 	construct_string = function(chat_type, ply, text)
 		local chat_data = kingston.chat.get(chat_type)
 		if CLIENT then
 			if ply != LocalPlayer() and ply:GetPos():DistToSqr(LocalPlayer():GetPos()) <= (chat_data.chat_range * chat_data.chat_range) then
-				return {chat_data.text_color, Format(chat_data.text_format, ply:RPName(), text)}
+				return {zonecontrol.settings.get("chat_color_ic"), Format(chat_data.text_format, ply:RPName(), text)}
 			end
 		end
 
-		return {Color(72, 118, 255), "[Radio] ", ply, ": ", text}
+		return {zonecontrol.settings.get("chat_color_" .. chat_type), "[Radio] ", ply, ": ", text}
 	end,
 	calculate_rf = function(chat_type, ply, text)
 		local chat_data = kingston.chat.get(chat_type)
@@ -541,7 +547,7 @@ if CLIENT then
 				[CB_IC] = true
 			},
 			"NewChatFont",
-			chat_data.text_color,
+			zonecontrol.settings.get("chat_color_" .. chat_type),
 			ply,
 			": ",
 			text

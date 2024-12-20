@@ -29,6 +29,10 @@ function PANEL:Init()
 				setting:CreateBinder(current_value, function(_, choice)
 					self.changed_settings[key] = choice
 				end)
+			elseif data.type == "color" then
+				setting:CreateColorPicker(current_value, function(_, choice)
+					self.changed_settings[key] = choice
+				end)
 			end
 		end
 
