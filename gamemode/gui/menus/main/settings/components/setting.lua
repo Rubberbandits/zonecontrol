@@ -67,11 +67,13 @@ function PANEL:CreateBinder(current_value, on_change)
 end
 
 function PANEL:CreateColorPicker(current_value, on_change)
-	local color_picker = self.container:Add("DColorCombo")
-	color_picker:Dock(RIGHT)
-	color_picker:SetColor(current_value)
-	color_picker.OnValueChanged = function(_, color)
-		on_change(color_picker, color)
+	local picker = self.container:Add("ColorPicker")
+	picker:Dock(RIGHT)
+	picker:SetWide(64)
+	picker:DockMargin(0, 0, 4, 0)
+	picker:SetColor(current_value)
+	picker.OnColorChanged = function(_, color)
+		on_change(picker, color)
 	end
 end
 
