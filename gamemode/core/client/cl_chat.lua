@@ -117,7 +117,7 @@ hook.Add("HUDPaint", "PaintChat", function()
 
 			local alpha = 255
 			if CurTime() - line.added > 5 then
-				local progress = (CurTime() - (line.added + 5)) / 1
+				local progress = CurTime() - (line.added + 5)
 				alpha = Lerp(progress, 255, 0)
 			end
 
