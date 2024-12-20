@@ -208,7 +208,7 @@ function PANEL:OnMouseReleased(keyCode)
 		self.dragging = nil
 	end
 
-	if keyCode == MOUSE_RIGHT and then
+	if keyCode == MOUSE_RIGHT then
 		local data = self:GetItemByCoord(grid_x, grid_y)
 		if not data then return end
 

@@ -13,7 +13,10 @@ function GM:PlayerBindPress(ply, bind, down, key_code)
 	end
 
 	if down and bind == "messagemode" then
-		zonecontrol.chat.open()
+		if IsValid(GAMEMODE.Chat) then
+			zonecontrol.chat.open(GAMEMODE.Chat)
+		end
+
 		return true
 	end
 end
@@ -50,7 +53,9 @@ hook.Add("SettingsLoaded", "LoadBinds", function()
 	zonecontrol.binds.map[zonecontrol.settings.get("open_main_menu")] = "open_main_menu"
 end)
 
-hook.Add("SettingsChanged", "UpdateBinds", function(key, value)
-	if not zonecontrol.binds.map[value] then return end
-	zonecontrol.binds.map[value] = key
+hook.Add("SettingsChanged", "UpdateBinds", function(key, old_value, new_value)
+	if not zonecontrol.binds.map[old_value] then return end
+
+	zonecontrol.binds.map[new_value] = key
+	zonecontrol.binds.map[old_value] = nil
 end)

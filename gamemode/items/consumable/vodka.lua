@@ -19,30 +19,30 @@ GM:CreateDrugType("VODKA", {
 		Think = function()
 			if GAMEMODE.DrugType and GAMEMODE.DrugType == "VODKA" then
 				local d = CurTime() - GAMEMODE.DrugStart
-				
+
 				if( d <= 60 ) then
 					local mul = 1;
-					
+
 					if( d < 4 ) then
-						
+
 						mul = d / 4;
-						
+
 					else
-						
+
 						mul = 1 - ( ( d - 4 ) / 56 );
-						
+
 					end
-					
+
 					if( GAMEMODE.DrugAmbience ) then
-						
+
 						GAMEMODE.DrugAmbience:ChangeVolume( math.abs( math.sin( CurTime() * 3 ) * 0.5 * mul ), 0 );
-						
+
 					end
-					
+
 				else
-					
+
 					GAMEMODE:ResetDrugFX();
-					
+
 				end
 			end
 		end,
@@ -55,16 +55,16 @@ GM:CreateDrugType("VODKA", {
 
 			if GAMEMODE.DrugType and GAMEMODE.DrugType == "VODKA" then
 				local d = CurTime() - GAMEMODE.DrugStart
-			
+
 				if d <= 60 then
 					local mul = 1
-					
+
 					if( d < 4 ) then
 						mul = d / 4
 					else
 						mul = 1 - ( ( d - 4 ) / 56 );
 					end
-					
+
 					render.SetBlend( mul )
 					render.UpdateScreenEffectTexture()
 					matWater:SetFloat( "$envmap", 0 )
@@ -84,12 +84,12 @@ GM:CreateDrugType("VODKA", {
 
 			if drug == "VODKA" then
 				GAMEMODE:ResetDrugFX();
-				
+
 				GAMEMODE.DrugType = "VODKA";
 				GAMEMODE.DrugStart = CurTime();
-				
+
 				surface.PlaySound( Sound( "ambient/atmosphere/city_skypass1.wav" ) );
-				
+
 				GAMEMODE.DrugAmbience = CreateSound( LocalPlayer(), "ambient/water/underwater.wav" );
 				GAMEMODE.DrugAmbience:SetSoundLevel( 0 );
 				GAMEMODE.DrugAmbience:Play();

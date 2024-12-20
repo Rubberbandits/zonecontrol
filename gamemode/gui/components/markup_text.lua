@@ -3,26 +3,45 @@ local PANEL = {}
 function PANEL:SetText(text)
 	self.text = text
 	self:InvalidateLayout(true)
+
+	local w, h = self:GetSize()
+	local markup_obj = king.markup.parse(self.text, w - 2)
+	if not markup_obj then return end
+
+	if h != markup_obj:getHeight() then
+		local _, markup_h = markup_obj:size()
+		self:SetSize(w, markup_h + 10)
+		self.markup = markup_obj
+	end
 end
 
 function PANEL:GetText()
 	return self.text
 end
 
+/*
 function PANEL:PerformLayout(w, h)
 	if not self.text then return end
 
-	local markup_obj = king.markup.parse(self.text, w)
+	local markup_obj = king.markup.parse(self.text, w - 2)
+	if not markup_obj then return end
+
 	if h != markup_obj:getHeight() then
-		self:SetSize(markup_obj:size())
+		local markup_w, markup_h = markup_obj:size()
+		self:SetSize(self:GetWide(), markup_h + 10)
 		self.markup = markup_obj
 	end
 end
 
+*/
+
 function PANEL:Paint(w, h)
 	if not self.markup then return end
 
-	self.markup:draw(0, 0)
+	surface.SetDrawColor(20, 20, 20, 200)
+	surface.DrawRect(0, 0, w, h)
+
+	self.markup:draw(2, 5)
 end
 
 vgui.Register("MarkupText", PANEL, "Panel")

@@ -14,14 +14,14 @@ if CLIENT then
 
 	function nConSay( str )
 
-		GAMEMODE:AddChat({[CB_ALL] = true, [CB_OOC] = true}, "CombineControl.ChatNormal", Color( 200, 0, 0, 255 ), "Console: " .. str);
+		GAMEMODE:AddChat({[CB_ALL] = true, [CB_OOC] = true}, "NewChatFont", Color( 200, 0, 0, 255 ), "Console: " .. str);
 
 	end
 	netstream.Hook( "nConSay", nConSay );
 
 	function nConASay( str )
 
-		GAMEMODE:AddChat({[CB_ALL] = true, [CB_OOC] = true}, "CombineControl.ChatNormal", Color(255, 107, 218), "[ADMIN] ", Color(255, 156, 230), "Console: " .. str);
+		GAMEMODE:AddChat({[CB_ALL] = true, [CB_OOC] = true}, "NewChatFont", Color(255, 107, 218), "[ADMIN] ", Color(255, 156, 230), "Console: " .. str);
 
 	end
 	netstream.Hook( "nConASay", nConASay );
@@ -122,7 +122,7 @@ kingston.chat.default_type = {
 	text_format = "%s: %s",
 	chat_command = "",
 	chat_range = 400,
-	chat_font = "CombineControl.ChatNormal",
+	chat_font = "NewChatFont",
 	chat_filter = {
 		[CB_ALL] = true,
 		[CB_IC] = true,
@@ -540,7 +540,7 @@ if CLIENT then
 				[CB_ALL] = true,
 				[CB_IC] = true
 			},
-			"CombineControl.ChatNormal",
+			"NewChatFont",
 			chat_data.text_color,
 			ply,
 			": ",

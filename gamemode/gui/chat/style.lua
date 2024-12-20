@@ -108,6 +108,9 @@ function SKIN:PaintSliderKnob(panel, w, h)
 end
 
 function SKIN:PaintTextEntry(panel, w, h)
+	surface.SetDrawColor(20, 20, 20, 200)
+	surface.DrawRect(0, 0, w, h)
+
 	-- Hack on a hack, but this produces the most close appearance to what it will actually look if text was actually there
 	if ( panel.GetPlaceholderText && panel.GetPlaceholderColor && panel:GetPlaceholderText() && panel:GetPlaceholderText():Trim() != "" && panel:GetPlaceholderColor() && ( not panel:GetText() || panel:GetText() == "" ) ) then
 
@@ -163,4 +166,4 @@ function SKIN:PaintCheckBox(panel, w, h)
 	end
 end
 
-derma.DefineSkin("Menu", "", SKIN)
+derma.DefineSkin("Chat", "", SKIN)

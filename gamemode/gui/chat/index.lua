@@ -7,13 +7,35 @@ function PANEL:Init()
 	self.chat = self:Add("ChatText")
 	self.chat:Dock(FILL)
 	self.chat:DockMargin(4, 4, 4, 4)
-	self.chat:DockPadding(8, 4, 4, 2)
+	self.chat:GetCanvas():DockPadding(8, 4, 4, 2)
 	self.chat:SetPaintedManually(true)
 
 	self.entry = self:Add("ChatEntry")
+	self.entry:SetFont("NewChatFont")
 	self.entry:Dock(BOTTOM)
 	self.entry:DockMargin(4, 4, 4, 4)
-	self.entry:RequestFocus()
+	self.entry:SetTabbingDisabled(true)
+	self.entry.OnEnter = function(entry)
+		if #entry:GetValue() == 0 then
+			self:SetAlpha(0)
+			self:SetMouseInputEnabled(false)
+			self:SetKeyboardInputEnabled(false)
+
+			return
+		end
+
+		if string.len(entry:GetValue()) > 2000 then
+			GAMEMODE:AddChat( {[CB_ALL] = true, [CB_OOC] = true}, "NewChatFont", Color(200, 0, 0, 255), "The maximum chat length is 2000 characters. You typed " .. string.len(self:GetValue()) .. "." );
+			GAMEMODE.NextChatText = entry:GetValue();
+		end
+
+		netstream.Start("nSay", entry:GetValue())
+		entry:SetText("")
+
+		self:SetAlpha(0)
+		self:SetMouseInputEnabled(false)
+		self:SetKeyboardInputEnabled(false)
+	end
 end
 
 function PANEL:PerformLayout(w, h)
@@ -31,17 +53,28 @@ end
 
 function PANEL:OnKeyCodeReleased(key_code)
 	if (input.LookupKeyBinding(key_code) == "messagemode" and not self.entry:HasFocus()) or input.LookupKeyBinding(key_code) == "cancelselect" then
-		self:Remove()
+		self:SetAlpha(0)
+		self:SetMouseInputEnabled(false)
+		self:SetKeyboardInputEnabled(false)
 	end
 end
 
 vgui.Register("ChatBox", PANEL, "EditablePanel")
 
-function zonecontrol.chat.open()
+function zonecontrol.chat.create()
 	local chatbox = vgui.Create("ChatBox")
 	chatbox:Dock(FILL)
 	chatbox:DockMargin(10, ScrH() * 0.5, ScrW() * 0.6, ScrH() * 0.1)
+	chatbox:SetAlpha(0)
+	chatbox:SetSkin("Chat")
+
+	return chatbox
+end
+
+function zonecontrol.chat.open(chatbox)
+	chatbox:SetAlpha(255)
 	chatbox:MakePopup()
-	chatbox:AddLine("<font=NewChatFont>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida nibh in nunc rhoncus, id aliquam magna lacinia. Mauris posuere eu enim et mollis. Proin finibus elit erat, eget tincidunt magna lacinia vel. Fusce mattis mi ut metus elementum, vel pharetra arcu porta.</font>")
-	chatbox:AddLine("<font=NewChatFont>Ut in malesuada sem. Phasellus sem arcu, sagittis ultricies gravida pulvinar, dapibus eu ligula. Aenean eleifend ac leo in vulputate. Phasellus nec lacinia tellus. Pellentesque pulvinar tristique risus, a pretium massa sodales ut. Praesent sed odio arcu. Integer sem magna, elementum vitae pulvinar et, mattis ut ipsum. Donec pellentesque ullamcorper libero eu dapibus.</font>")
+	chatbox:SetMouseInputEnabled(true)
+	chatbox:SetKeyboardInputEnabled(true)
+	chatbox.entry:RequestFocus()
 end

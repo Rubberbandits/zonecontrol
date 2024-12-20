@@ -9,7 +9,8 @@ zonecontrol.settings.default = zonecontrol.settings.default or {
 zonecontrol.settings.categories = zonecontrol.settings.categories or {
 	"sound",
 	"display",
-	"controls"
+	"controls",
+	"chat"
 }
 
 for key, data in pairs(zonecontrol.settings.default) do
@@ -50,9 +51,12 @@ end
 function zonecontrol.settings.set(key, value)
 	if not zonecontrol.settings.default[key] then error(string.format("Attempted to set invalid setting: %s", key)) end
 
+	local old_value = zonecontrol.settings.get(key)
+
 	zonecontrol.settings.map[key] = value
 	zonecontrol.settings.save()
-	hook.Run("SettingsChanged", key, value)
+
+	hook.Run("SettingsChanged", key, old_value, value)
 end
 
 function zonecontrol.settings.get(key)
