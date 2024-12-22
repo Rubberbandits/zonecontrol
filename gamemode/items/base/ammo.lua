@@ -16,7 +16,7 @@ end
 function BASE:OnStack(item)
 	self:SetVar("Amount", self:GetVar("Amount", 0) + item:GetVar("Amount", 0), nil, true)
 	item:RemoveItem(true)
-	
+
 	return true
 end
 
@@ -24,15 +24,15 @@ function BASE:GetWeight()
 	local meta = GAMEMODE:GetItemByID(self.Class)
 	local start_amount = meta.Vars.Amount
 	local start_weight = meta.Weight
-	
+
 	return math.Round(start_weight * (self:GetVar("Amount", 0) / start_amount), 2)
 end
 
 function BASE:Paint(pnl, w, h)
-	surface.SetFont("CombineControl.ChatSmall")
+	surface.SetFont("SmallChatFont")
 	local amt = self:GetVar("Amount", 0)
 	local tW, tH = surface.GetTextSize(amt)
-	
+
 	surface.SetTextColor(Color(100,200,100))
 	surface.SetTextPos(w - tW, h - tH)
 	surface.DrawText(amt)
@@ -50,11 +50,11 @@ function BASE:SplitStack(amt, x, y)
 	if !amt then
 		amt = math.Round(self:GetVar("Amount", 0) / 2)
 	end
-	
+
 	if amt >= self:GetVar("Amount", 0) then return end
-	
+
 	self:SetVar("Amount", self:GetVar("Amount", 0) - amt, false, true)
-	
+
 	local item = self:Owner():GiveItem(self.Class, {
 		Amount = amt,
 	}, x, y)

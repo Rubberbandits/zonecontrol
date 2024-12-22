@@ -3,7 +3,7 @@ kingston.admin.registerCommand("gamerestart", {
 	description = "Restart the server via changelevel. Only refreshes Lua state",
 	arguments = {},
 	onRun = function(ply)
-		GAMEMODE:Notify(nil, "CombineControl.ChatHuge", COLOR_ERROR, "%s is restarting the server in five seconds.", ply:Nick())
+		GAMEMODE:Notify(nil, "GiantChatFont", COLOR_ERROR, "%s is restarting the server in five seconds.", ply:Nick())
 		
 		GAMEMODE:LogAdmin( "[R] " .. ply:Nick() .. " restarted the server.", ply );
 		

@@ -73,7 +73,7 @@ end
 
 function ITEM:Paint(pnl, w, h)
 	if !self:GetVar("Activated", false) then
-		surface.SetFont("CombineControl.ChatSmall")
+		surface.SetFont("SmallChatFont")
 		local amt = self:GetVar("Stacked", 0)
 		local tW, tH = surface.GetTextSize(amt)
 		

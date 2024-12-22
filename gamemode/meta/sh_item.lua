@@ -1,6 +1,6 @@
 AddCSLuaFile();
 
-item = {};
+local item = {};
 item.__index = item;
 item.IsItem = true;
 item.W = 1
@@ -14,8 +14,7 @@ end
 local blacklist = {
 	["Vars"] = true,
 	["id"] = true,
-	["owner"] = true,
-	["CharID"] = true,
+	["inventory"] = true,
 	["Initialize"] = true,
 	["functions"] = true,
 	["FunctionHooks"] = true,
@@ -23,79 +22,39 @@ local blacklist = {
 	["Weight"] = true,
 }
 
-function item:New( owner, metaitem, id, vars, x, y )
-	if( !metaitem ) then return end
-	if( isstring( metaitem ) ) then
-	
-		metaitem = GAMEMODE:GetItemByID( metaitem );
-		
+function item:New(metaitem, id, vars)
+	if !metaitem then return end
+	if isstring(metaitem) then
+		metaitem = GAMEMODE:GetItemByID(metaitem)
 	end
-	if( !metaitem ) then return end -- yeah not exactly amazing
-	
+	if !metaitem then return end -- yeah not exactly amazing
+
 	local itemdata = {};
 	for k,v in next, metaitem do
-		if isfunction(v) then continue end
-		if blacklist[k] then continue end
-		
-		itemdata["Get"..k] = function(self)
-			return self:GetVar(k, v)
-		end
-		itemdata["Set"..k] = function(self, value, network)
-			self:SetVar(k, value, nil, network) 
-		end
+		itemdata[k] = v
 	end
-	
-	for k,v in next, metaitem do
-	
-		itemdata[k] = v;
-	
-	end
-	
-	if IsValid(owner) then
-		itemdata["owner"] = owner;
-		itemdata["CharID"] = owner:CharID();
-	end
-	
-	if( id ) then
-	
-		itemdata["id"] = id;
-		
-	end
-	
-	if( vars and istable( vars ) ) then
 
-		itemdata["Vars"] = vars;
-		
-	else
+	if id then
+		itemdata["id"] = id
+	end
 
-		itemdata["Vars"] = metaitem.Vars or {};
-		
-	end
-	
-	setmetatable( itemdata, item );
-	
-	if x and y then
-		itemdata.x = x
-		itemdata.y = y
+	if vars and istable(vars) then
+		itemdata["Vars"] = vars
 	else
-		x,y = itemdata:FindBestPosition()
-		
-		itemdata.x = x
-		itemdata.y = y
+		itemdata["Vars"] = metaitem.Vars or {}
 	end
+
+	setmetatable(itemdata, item)
 
 	if itemdata.Initialize then
-		itemdata:Initialize();
+		itemdata:Initialize()
 	end
-	
-	if( id ) then
-	
-		GAMEMODE.g_ItemTable[id] = itemdata;
-		owner.Inventory[id] = itemdata;
-		
+
+	if id then
+		GAMEMODE.g_ItemTable[id] = itemdata
 	end
-	
-	return itemdata;
+
+	return itemdata
 end
 
 function item:GetName()
@@ -122,25 +81,17 @@ function item:GetModel()
 	return self.Model
 end
 
-function item:Owner()
-	return self.owner
-end
-
 function item:GetVars(private)
 	local tbl = table.Copy(self.Vars) or {}
 	if !private then
 		tbl["PrivateVars"] = nil
 	end
-	
+
 	return tbl
 end
 
 function item:CanSell()
 	return self.IsSellable
-end
-
-function item:StockpileID()
-	return self.stockpile or 0
 end
 
 function item:SetVar(key, value, noSave, network)
@@ -149,14 +100,14 @@ function item:SetVar(key, value, noSave, network)
 	end
 
 	if self.Vars[key] == value then return end
-	
+
 	self.Vars[key] = value
 
 	if SERVER then
 		if network then
 			netstream.Start(item:Owner(), "SetItemVar", self:GetID(), key, value)
 		end
-	
+
 		if !noSave then
 			self:UpdateSave()
 		end
@@ -165,12 +116,8 @@ end
 
 function item:GetVar(key, fallback)
 	if !self.Vars then return fallback end
-	
-	return table.Copy(self.Vars)[key] or fallback
-end
 
-function item:GetCharID()
-	return self.CharID or 0
+	return table.Copy(self.Vars)[key] or fallback
 end
 
 function item:GetClass()
@@ -185,32 +132,12 @@ function item:SetID(nID)
 	self.id = nID
 end
 
-function item:SetCharID(nID)
-	self.CharID = nID
-end
-
-function item:FindBestPosition()
-	for j = 1, GAMEMODE.InventoryHeight do
-		for i = 1, GAMEMODE.InventoryWidth do
-			if !self:Owner():IsInventorySlotOccupiedItem(i, j, self.W, self.H) then
-				return i, j
-			end
-		end
-	end
-	
-	return false, false
-end
-
-function item:GetBounds()
-	return self.x, self.y, self.W, self.H
-end
-
 function item:GetSize()
 	return self.W, self.H
 end
 
-function item:GetPos()
-	return self.x, self.y
+function item:GetInventory()
+	return zonecontrol.inventory.list[self.inventory]
 end
 
 function item:CallFunction(szKey, bNetwork)
@@ -220,7 +147,7 @@ function item:CallFunction(szKey, bNetwork)
 				if self.FunctionHooks and self.FunctionHooks["Pre"..szKey] then
 					self.FunctionHooks["Pre"..szKey](self)
 				end
-				
+
 				if bNetwork then
 					if SERVER then
 						netstream.Start(self:Owner(), "CallFunction", self:GetID(), szKey)
@@ -228,17 +155,17 @@ function item:CallFunction(szKey, bNetwork)
 						netstream.Start("ItemCallFunction", self:GetID(), szKey)
 					end
 				end
-			
+
 				local ret = self.functions[szKey].OnUse(self)
-				
+
 				if self.FunctionHooks and self.FunctionHooks["Post"..szKey] then
 					self.FunctionHooks["Post"..szKey](self)
 				end
-				
+
 				if self.functions[szKey].RemoveOnUse and ret then
 					self:RemoveItem();
 				end
-				
+
 				return ret
 			end
 		end
@@ -255,28 +182,28 @@ function item:DropItem(network)
 
 	if( !self:CanDrop() ) then return end
 	if( CLIENT ) then
-	
+
 		self.CharID = 0;
 		self:Owner().Inventory[self:GetID()] = nil;
 		self.owner = nil;
 		GAMEMODE.g_ItemTable[self:GetID()] = nil;
-	
+
 	end
-	
+
 	self.x = -1
 	self.y = -1
-	
+
 	if( SERVER ) then
-	
+
 		if network then
 			netstream.Start(self:Owner(), "DropItem", self:GetID())
 		end
-		
+
 		kingston.log.write("items", "[%s (%s)(%s)] dropped item %s [ID: %d]", self:Owner():RPName(), self:Owner():Nick(), self:Owner():SteamID(), self:GetName(), self:GetID())
-		
+
 		local ent = GAMEMODE:DropItem( self );
 		return ent
-		
+
 	end
 
 end
@@ -284,52 +211,30 @@ end
 function item:RemoveItem(network)
 
 	if( SERVER ) then
-	
+
 		self:DeleteItem();
-		
+
 		if network then
 			netstream.Start(self:Owner(), "RemoveItem", self:GetID())
 		end
-		
+
 	end
-	
+
 	if self.OnDeleted then
 		self:OnDeleted()
 	end
 
 	GAMEMODE.g_ItemTable[self:GetID()] = nil;
-	
+
 	if self:Owner() and self:Owner():IsValid() and self:Owner():IsPlayer() then
 		self:Owner().Inventory[self:GetID()] = nil;
-		
+
 		hook.Run("ItemDropped", self:Owner(), self)
 	end
-	
+
 	setmetatable( self, nil );
 	self = nil;
-	
-	if CLIENT then
-		if GAMEMODE.Inventory and IsValid(GAMEMODE.Inventory) then
-			GAMEMODE.Inventory:PopulateItems()
-		end
-	end
 
-end
-
-function item:StockpileItem( id )
-	local stockpile = GAMEMODE.LoadedStockpiles[id]
-
-	local function onSuccess()
-		stockpile.Inventory[self:GetID()] = true
-		GAMEMODE.g_ItemTable[self:GetID()] = nil
-		self:Owner().Inventory[self:GetID()] = nil
-		
-		hook.Run("ItemDropped", self:Owner(), self)
-		
-		setmetatable(self, nil)
-		self = nil
-	end
-	mysqloo.Query(Format("UPDATE cc_items SET Owner = 0, Stockpile = %d WHERE id = %d", id, self:GetID()), onSuccess)
 end
 
 function item:OnNewCreation()
@@ -345,10 +250,10 @@ end
 -- return true here to refresh the inventory
 function item:OnStack(item)
 	if !self.Stackable then return end
-	
+
 	self:SetVar("Stacked", self:GetVar("Stacked", 0) + item:GetVar("Stacked", 0), nil, true)
 	item:RemoveItem(true)
-	
+
 	return true
 end
 
@@ -360,11 +265,11 @@ end
 
 function item:Paint(pnl, w, h)
 	if !self.Stackable then return end
-	
-	surface.SetFont("CombineControl.ChatSmall")
+
+	surface.SetFont("SmallChatFont")
 	local amt = self:GetVar("Stacked", 0)
 	local tW, tH = surface.GetTextSize(amt)
-	
+
 	surface.SetTextColor(Color(100,200,100))
 	surface.SetTextPos(w - tW, h - tH)
 	surface.DrawText(amt)
@@ -372,7 +277,7 @@ end
 
 function item:CanSplitStack(amt)
 	if !self.Stackable then return end
-	
+
 	if !amt then
 		amt = math.Round(self:GetVar("Stacked", 0) / 2)
 	end
@@ -386,11 +291,11 @@ function item:SplitStack(amt, x, y)
 	if !amt then
 		amt = math.Round(self:GetVar("Stacked", 0) / 2)
 	end
-	
+
 	if amt >= self:GetVar("Stacked", 0) then return end
 
 	self:SetVar("Stacked", self:GetVar("Stacked", 0) - amt, false, true)
-	
+
 	local item = self:Owner():GiveItem(self.Class, {
 		Stacked = amt,
 	}, x, y)
@@ -399,7 +304,7 @@ end
 function item:AddItemToStack(item)
 	if !self.Stackable then return end
 	if item and !item.Stackable then return end
-	
+
 	if item then
 		self:OnStack(item)
 	else
@@ -410,33 +315,33 @@ end
 
 function item:SaveNewObject( cb )
 	if !SERVER then return end
-	
+
 	local query_str = "INSERT INTO cc_items ( Owner, ItemClass, Vars, PosX, PosY ) VALUES ( ?, ?, ?, ?, ? )"
 	local query = CCSQL:prepare( query_str );
 	query.onSuccess = function( query, ret )
 		local insertTable = {
 			["id"] = query:lastInsert(),
 		}
-		
+
 		table.Merge(self, insertTable)
-		
+
 		GAMEMODE.g_ItemTable[query:lastInsert()] = self
 		if IsValid(self:Owner()) then
 			self:Owner().Inventory[query:lastInsert()] = self
 		end
-		
+
 		if self.OnNewCreation then
 			self:OnNewCreation()
 		end
-		
+
 		if cb then
 			cb()
 		end
 	end
 	function query:onError( err )
-	
+
 		MsgC( Color( 255, 0, 0 ), "MySQL Query failed: "..err );
-	
+
 	end
 	query:setNumber( 1, self:GetCharID() );
 	query:setString( 2, self:GetClass() );
@@ -454,9 +359,9 @@ function item:UpdateSave()
 	function query:onSuccess( ret )
 	end
 	function query:onError( err )
-	
+
 		MsgC( Color( 255, 0, 0 ), "MySQL Query failed: "..err );
-	
+
 	end
 	query:setNumber( 1, self:GetCharID() );
 	query:setString( 2, util.TableToJSON( self:GetVars(true) or {} ) );
@@ -470,13 +375,13 @@ end
 -- use this when transferring owners!
 function item:TransmitToOwner()
 	if !SERVER then return end
-	
+
 	netstream.Start( self:Owner(), "ReceiveItem", self:GetClass(), self:GetID(), self:GetVars(), self.x, self.y );
 end
 
 function item:Transmit( ply ) -- for sending some item info that is only needed for shit like bonemerge
 	if !SERVER then return end
-	
+
 	-- if ply is nil, netstream broadcasts to all clients.
 	netstream.Start( ply, "ReceiveDummyItem", self:GetID(), self:GetClass(), self:GetVars(), self:Owner(), self.CharID );
 	self.IsTransmitted = true; -- for join in progress, client asks server to supply all dummy items.
@@ -484,10 +389,14 @@ end
 
 function item:DeleteItem()
 	if !SERVER then return end
-	
+
 	local function onSuccess()
 	end
 	mysqloo.Query( Format( "DELETE FROM cc_items WHERE id = '%d'", self:GetID() ), onSuccess );
 end
-	
+
 setmetatable( item, { __call = item.New } )
+
+zonecontrol = zonecontrol or {}
+zonecontrol.meta = zonecontrol.meta or {}
+zonecontrol.meta.item = item

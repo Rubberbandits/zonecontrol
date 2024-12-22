@@ -205,15 +205,6 @@ local StockpileTable = {
 	{ "Name", "TEXT" }
 };
 
-local ItemTable = {
-	{ "Owner", "INT" },
-	{ "Stockpile", "INT", 0 },
-	{ "ItemClass", "VARCHAR(256)" },
-	{ "PosX", "INT" },
-	{ "PosY", "INT" },
-	{ "Vars", "TEXT" },
-};
-
 function GM:InitSQLTable( tab, dtab )
 	for _, v in pairs( tab ) do
 		local q = string.format("SELECT `%s` FROM `%s`;", v[1], dtab)
@@ -247,13 +238,11 @@ function GM:InitSQLTables()
 	mysqloo.Query( "CREATE TABLE IF NOT EXISTS cc_players ( SteamID VARCHAR(30) NOT NULL, PRIMARY KEY ( SteamID ) );" )
 	mysqloo.Query( "CREATE TABLE IF NOT EXISTS cc_bans ( id INT NOT NULL auto_increment, SteamID VARCHAR(30) NOT NULL, PRIMARY KEY ( id ) );" )
 	mysqloo.Query( "CREATE TABLE IF NOT EXISTS cc_stockpiles ( id INT NOT NULL auto_increment, SteamID VARCHAR(30) NOT NULL, PRIMARY KEY ( id ) );" )
-	mysqloo.Query( "CREATE TABLE IF NOT EXISTS cc_items ( id INT NOT NULL auto_increment, PRIMARY KEY ( id ) );" )
 
 	self:InitSQLTable( CharTable, "cc_chars" )
 	self:InitSQLTable( PlayerTable, "cc_players" )
 	self:InitSQLTable( BansTable, "cc_bans" )
 	self:InitSQLTable( StockpileTable, "cc_stockpiles" )
-	self:InitSQLTable( ItemTable, "cc_items" )
 end
 
 function CreateNewStockpileEntry( ply, name )

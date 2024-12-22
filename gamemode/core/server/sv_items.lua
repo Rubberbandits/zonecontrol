@@ -13,7 +13,7 @@ function kingston.item.gm_request_item(gamemaster, item_class, data, reason)
 			vars = data,
 			reason = reason
 		}
-		
+
 		netstream.Start(player.GetAdmins(), "nAddNotification", Format("Player %s (%s) is requesting item %s (%s)", gamemaster:Nick(), gamemaster:RPName(), (data or {}).Name or metaitem.Name, item_class))
 	else
 		gamemaster:GiveItem(item_class, data)
@@ -25,11 +25,11 @@ end
 function kingston.item.approve_gm_item(id)
 	local request = kingston.item.item_requests[id]
 	if !request then return end
-	
+
 	request.requester:GiveItem(request.class, request.vars)
 	netstream.Start(request.requester, "nAddNotification", Format("Your request for item %s was approved.", request.class))
 	kingston.log.write("admin", "%s (%s) spawned %s", request.requester:Nick(), request.requester:SteamID(), request.class)
-	
+
 	kingston.item.item_requests[id] = nil
 end
 
@@ -43,7 +43,7 @@ function GM:DropItem( s_Item )
 		local item_ent = self:CreateItemEntity( s_Item, s_Item:Owner():EyePos() + s_Item:Owner():GetAimVector() * 50, Angle() );
 		hook.Run( "ItemDropped", ply, s_Item );
 		return item_ent
-		
+
 	end
 
 end
@@ -57,11 +57,11 @@ function GM:CreateNewItemEntity( szClass, pos, ang )
 	ent:SetAngles( ang );
 	ent:Spawn();
 	ent:Activate();
-	
+
 	hook.Run( "OnNewItemEntityCreated", ent );
-	
+
 	return ent;
-	
+
 end
 
 GM.OnAdminCreatedItemEntity = GM.OnAdminCreatedItem;
@@ -85,7 +85,7 @@ function GM:CreateItemEntity( ItemObj, pos, ang )
 	ent:SetAngles( ang );
 	ent:Spawn();
 	ent:Activate();
-	
+
 	return ent;
 
 end
@@ -110,13 +110,13 @@ function GM:ItemPickedUp( ply, item )
 				item:SetVar("Primary", false, nil, true)
 			end
 		end
-		
+
 		kingston.log.write("items", "[%s (%s)(%s)] picked up item %s [ID: %d]", ply:RPName(), ply:Nick(), ply:SteamID(), item:GetName(), item:GetID())
 	end
 
 	if isstring(item) then
 		local metaitem = GAMEMODE:GetItemByID(item)
-		
+
 		if metaitem and metaitem.PickupSound then
 			ply:EmitSound(metaitem.PickupSound, 75, 100, 1, CHAN_ITEM)
 		end
@@ -125,13 +125,13 @@ function GM:ItemPickedUp( ply, item )
 			ply:EmitSound(item.PickupSound, 75, 100, 1, CHAN_ITEM)
 		end
 	end
-	
+
 	hook.Run("UpdateEncumberance", ply, item)
 end
 
 function GM:ItemDropped( ply, item )
 	-- when this is called, the entity hasnt actually
-	-- been created yet. 
+	-- been created yet.
 
 	hook.Run("UpdateEncumberance", ply, item)
 end
@@ -139,10 +139,10 @@ end
 function GM:MoneyGiven(giver, receiver, amount)
 	local giver_msg = Format("You've given %d RU to %s", amount, receiver:RPName())
 	giver:PDANotify("Message", giver_msg, 5, 7)
-	
+
 	local receiver_msg = Format("You've received %d RU from %s", amount, giver:RPName())
 	receiver:PDANotify("Message", receiver_msg, 5, 8)
-	
+
 	kingston.log.write("items", "Player %s (%s) has given %s (%s) %d rubles.", giver:RPName(), giver:Nick(), receiver:RPName(), receiver:Nick(), amount)
 end
 
@@ -152,7 +152,7 @@ hook.Add("CanPickup", "CC_HiddenCheck", function(ply, item_object, item_ent)
 	if( item_ent:GetNoDraw() and !ply:IsAdmin() ) then
 		return false
 	end
-	
+
 	return true
 end)
 
@@ -162,7 +162,7 @@ netstream.Hook( "ItemCallFunction", function( ply, s_nID, s_szKey )
 	if( s_Item ) then
 
 		s_Item:CallFunction( s_szKey );
-		
+
 	end
 
 
@@ -171,29 +171,29 @@ end );
 netstream.Hook( "ItemCallDynamicFunction", function( ply, s_nID, s_nFuncKey )
 
 	local s_Item = ply:FindItemByID( s_nID );
-	
+
 	if( s_Item and s_Item.DynamicFunctions ) then
-	
+
 		local struct = s_Item:DynamicFunctions()[s_nFuncKey];
-	
+
 		if( struct.CanRun( s_Item ) ) then
-	
+
 			struct.OnUse( s_Item );
-			
+
 		end
-		
+
 	end
-	
+
 end );
 
 netstream.Hook( "ItemDrop", function( ply, s_nID )
 
 	local s_Item = ply:FindItemByID( s_nID );
-	
+
 	if( s_Item ) then
 
 		s_Item:DropItem();
-		
+
 	end
 
 end );
@@ -257,12 +257,12 @@ netstream.Hook("ChangeItemData", function(ply, id, data)
 	local item = GAMEMODE.g_ItemTable[id]
 	if !item then return end
 	if !data then return end
-	
+
 	-- need to do minmax checking and auth
-	
+
 	for k,v in next, data do
 		if k == "PrivateVars" then continue end
-		
+
 		item:SetVar(k, v, nil, true)
 	end
 end)
@@ -270,7 +270,7 @@ end)
 netstream.Hook("StackItem", function(ply, item_id, to_stack_id)
 	local item = ply.Inventory[item_id]
 	local to_stack = ply.Inventory[to_stack_id]
-	
+
 	if item and to_stack then
 		if item:CanStack(to_stack) then
 			item:OnStack(to_stack)
@@ -294,7 +294,7 @@ netstream.Hook("ItemSetPos", function(ply, item_id, x, y)
 	if !item then return end
 	if x > GAMEMODE.InventoryWidth then return end
 	if y > GAMEMODE.InventoryHeight then return end
-	
+
 	item.x = x
 	item.y = y
 	item:UpdateSave()
@@ -303,15 +303,15 @@ end)
 netstream.Hook("RequestItemSpawn", function(ply, item_class, data, reason)
 	if !item_class then return end
 	if !GAMEMODE:GetItemByID(item_class) then return end
-	
+
 	-- need to do minmax checking and auth
-	
+
 	kingston.item.gm_request_item(ply, item_class, data, reason)
 end)
 
 netstream.Hook("AdminRequestedItems", function(ply)
 	if !ply:IsAdmin() then return end
-	
+
 	netstream.Start(ply, "AdminRequestedItems", kingston.item.item_requests)
 end)
 
@@ -375,9 +375,9 @@ net.Receive("zcBundleMoney", zcBundleMoney)
 
 local function nUnhideItem( ply, index )
 	local ent = Entity(index)
-	
+
 	if not IsValid(ent) then return end
-	
+
 	local metaitem = GAMEMODE:GetItemByID( ent:GetItemClass() );
 	local pPos = ply:GetPos()
 	local ePos = ent:GetPos()
@@ -397,3 +397,24 @@ local function nUnhideItem( ply, index )
 	end
 end
 netstream.Hook( "nUnhideItem", nUnhideItem )
+
+local ItemTable = {
+	{ "Inventory", "INT" },
+	{ "ItemClass", "VARCHAR(256)" },
+};
+
+hook.Add("InitSQLTables", "InitializeItemTables", function()
+	mysqloo.Query("CREATE TABLE IF NOT EXISTS cc_items (id INT NOT NULL auto_increment, PRIMARY KEY (id));")
+	GAMEMODE:InitSQLTable(ItemTable, "cc_items")
+
+	mysqloo.Query([[
+		CREATE TABLE IF NOT EXISTS cc_item_data (
+			item INT NOT NULL,
+			type VARCHAR(128) NOT NULL,
+			varkey VARCHAR(128) NOT NULL,
+			value VARCHAR(4096) NOT NULL,
+			FOREIGN KEY (`item`) REFERENCES cc_items(`id`) ON DELETE CASCADE,
+			CONSTRAINT UNQ_KEY UNIQUE (`item`, `varkey`)
+		) CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
+	]])
+end)

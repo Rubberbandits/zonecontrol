@@ -21,6 +21,7 @@ function PANEL:Init()
 	self.music = sound.PlayFile("sound/" .. sound_data.sound, "noblock", function(chan)
 		if not IsValid(chan) then return end
 		chan:EnableLooping(true)
+		chan:SetVolume(zonecontrol.settings.get("music_volume") * sound_data.volume)
 
 		self.music_chan = chan
 	end)
@@ -61,6 +62,8 @@ function PANEL:Init()
 		self:Remove()
 	end)
 	selection:AddSelection("SETTINGS", function()
+		if IsValid(content:GetChild(0)) then return end
+
 		local settings = content:Add("Settings")
 		settings:Dock(FILL)
 	end)

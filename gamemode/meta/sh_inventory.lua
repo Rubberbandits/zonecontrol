@@ -1,11 +1,11 @@
 AddCSLuaFile()
 
-inventory = {}
+zonecontrol = zonecontrol or {}
+zonecontrol.meta = zonecontrol.meta or {}
+
+local inventory = {}
 inventory.__index = inventory
 inventory.inventory = true
-inventory.items = {}
-
-setmetatable(inventory, {})
 
 function inventory:__tostring()
 	return string.format("inventory[%d]", self.id or 0)
@@ -19,7 +19,8 @@ end
 
 function inventory:__call(id)
 	local inv = {
-		id = id
+		id = id,
+		items = {}
 	}
 
 	return setmetatable(inv, self)
@@ -31,14 +32,31 @@ function inventory:add(item)
 	self.items[item:GetID()] = item
 end
 
-function inventory:remove(id)
+function inventory:remove(item)
+	local id = item:GetID()
 	if not self.items[id] then error("Attempted to remove non-existent item from inventory!") end
 
 	self.items[id] = nil
 end
 
+function inventory:set_owner(id)
+	self.owner = id
+end
+
+function inventory:get_items()
+	return self.items
+end
+
+setmetatable(inventory, {__call = inventory.__call})
+
+zonecontrol.meta.inventory = inventory
+
 if SERVER then return end
 
 function inventory:transmit(ply)
 	// TODO: Transmit inventory to player
+end
+
+function inventory:save()
+	zonecontrol.inventory.save(self)
 end

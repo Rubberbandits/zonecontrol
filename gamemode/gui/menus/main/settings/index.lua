@@ -5,6 +5,7 @@ function PANEL:Init()
 
 	for _,category in pairs(zonecontrol.settings.categories) do
 		local panel = self:Add("DScrollPanel")
+		panel:GetVBar():SetHideButtons(true)
 
 		for key,data in pairs(zonecontrol.settings.default) do
 			if data.category != category then continue end

@@ -31,4 +31,9 @@ function PANEL:AddLine(text)
 	self.last_line_added = CurTime()
 end
 
+function PANEL:Paint(w, h)
+	surface.SetDrawColor(20, 20, 20, 200)
+	surface.DrawRect(0, 0, w, h)
+end
+
 vgui.Register("ChatText", PANEL, "DScrollPanel")

@@ -29,3 +29,9 @@ surface.CreateFont("SmallChatFont", {
 	antialias = true,
 	additive = false
 })
+
+surface.CreateFont( "RadioChatFont", {
+	font = "Lucida Console",
+	size = ScreenScale(5),
+	weight = 500
+})

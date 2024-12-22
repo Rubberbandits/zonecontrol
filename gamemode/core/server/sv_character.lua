@@ -110,28 +110,21 @@ net.Receive("CharacterLoad", CharacterLoad)
 
 util.AddNetworkString("CharacterFetch")
 local function CharacterFetch(len, ply)
-	local function qS(results)
+	zonecontrol.character.fetch_by_player(ply:SteamID(), function(results)
+		if not results then results = {} end
+
 		net.Start("CharacterFetch")
 			net.WriteUInt(#results, 8)
 
-			for _,data in pairs(results) do
-				net.WriteUInt(data["id"], 32)
-				net.WriteString(data["RPName"])
-				net.WriteString(data["Model"])
-				net.WriteString(data["Body"])
-				net.WriteUInt(data["Skingroup"], 8)
+			for _,row in pairs(results) do
+				net.WriteUInt(row["id"], 32)
+				net.WriteString(row["RPName"])
+				net.WriteString(row["Model"])
+				net.WriteString(row["Body"])
+				net.WriteUInt(row["Skingroup"], 8)
 			end
 		net.Send(ply)
-	end
-
-	local function qF(err)
-		net.Start("CharacterFetch")
-			net.WriteUInt(0, 8)
-		net.Send(ply)
-
-		print("Some kind of error occurred loading characters: " .. err)
-	end
-	mysqloo.Query("SELECT * FROM cc_chars WHERE SteamID = '" .. ply:SteamID() .. "'", qS, qF)
+	end)
 end
 net.Receive("CharacterFetch", CharacterFetch)
 
@@ -149,3 +142,38 @@ local function CharacterDelete(len, ply)
 	end
 end
 net.Receive("CharacterDelete", CharacterDelete)
+
+zonecontrol = zonecontrol or {}
+zonecontrol.character = zonecontrol.character or {}
+
+local LOAD_CHARACTER = [[SELECT * FROM `cc_chars` WHERE `id` = ?;]];
+local FETCH_CHARACTERS = [[SELECT `id`, `RPName`, `Model`, `Body`, `Skingroup` FROM `cc_chars` WHERE `SteamID` = ?;]];
+
+function zonecontrol.character.load(id, callback)
+	local query = CCSQL:prepare(LOAD_CHARACTER)
+	query.onSuccess = function(_, results)
+		callback(results[1])
+	end
+	query:setNumber(1, id)
+	query:start()
+end
+
+function zonecontrol.character.fetch_by_player(steamid, callback)
+	local query = CCSQL:prepare(FETCH_CHARACTERS)
+	query.onSuccess = function(_, results)
+		callback(results)
+	end
+	query.onError = function(_, err)
+		callback()
+	end
+	query:setString(1, steamid)
+	query:start()
+end
+
+function zonecontrol.character.delete(id)
+
+end
+
+function zonecontrol.character.create(data)
+
+end

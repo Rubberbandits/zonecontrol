@@ -63,8 +63,8 @@ vgui.Register("ChatBox", PANEL, "EditablePanel")
 
 function zonecontrol.chat.create()
 	local chatbox = vgui.Create("ChatBox")
-	chatbox:Dock(FILL)
-	chatbox:DockMargin(10, ScrH() * 0.5, ScrW() * 0.6, ScrH() * 0.1)
+	chatbox:SetSize(ScrW() * 0.33, ScrH() * 0.4)
+	chatbox:SetPos(10, ScrH() * 0.5)
 	chatbox:SetAlpha(0)
 	chatbox:SetSkin("Chat")
 

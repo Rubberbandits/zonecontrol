@@ -23,6 +23,7 @@ function PANEL:StartCutscene()
 		sound.PlayFile("sound/" .. sound_data.sound, "noblock", function(chan, err)
 			if not chan then error(err) end
 			chan:EnableLooping(true)
+			chan:SetVolume(zonecontrol.settings.get("cutscene_volume") * sound_data.volume)
 
 			table.insert(self.ActiveSounds, chan)
 		end)
@@ -56,6 +57,8 @@ function PANEL:StartCutscene()
 		local sound_data = sound.GetProperties(current_dialog.sound)
 		sound.PlayFile("sound/" .. sound_data.sound, "", function(chan)
 			if not chan then return end
+
+			chan:SetVolume(zonecontrol.settings.get("cutscene_volume") * sound_data.volume)
 
 			self.last_sound_start = CurTime()
 			self.last_sound_len = chan:GetLength()

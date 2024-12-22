@@ -17,6 +17,41 @@ for key, data in pairs(zonecontrol.settings.default) do
 	language.Add(key, data.text)
 end
 
+local function StringToType( str, typename )
+	typename = typename:lower()
+
+	if ( typename == "vector" )	then return Vector( str ) end
+	if ( typename == "angle" )	then return Angle( str ) end
+	if ( typename == "float" or typename == "number" )	then return tonumber( str ) end
+	if ( typename == "int" )	then local v = tonumber( str ) return v and math.Round( v ) or nil end
+	if ( typename == "bool" or typename == "boolean" )	then return tobool( str ) end
+	if ( typename == "string" )	then return tostring( str ) end
+	if ( typename == "entity" )	then return Entity( str ) end
+	if ( typename == "color" ) then return Color(unpack(string.Explode(",", str))) end
+
+	MsgN("util.StringToType: unknown type \"", typename, "\"!")
+end
+
+local function TypeToString( v )
+
+	local iD = TypeID( v )
+
+	if ( iD == TYPE_VECTOR or iD == TYPE_ANGLE ) then
+		return string.format( "%.2f %.2f %.2f", v:Unpack() )
+	end
+
+	if ( iD == TYPE_NUMBER ) then
+		return util.NiceFloat( v )
+	end
+
+	if iD == TYPE_TABLE and v.r and v.g and v.b then
+		return string.format("%d,%d,%d,%d", v.r, v.g, v.b, v.a)
+	end
+
+	return tostring( v )
+
+end
+
 function zonecontrol.settings.load()
 	local f = file.Open("zonecontrol/settings.txt", "r", "DATA")
 	if not f then hook.Run("SettingsLoaded") return end
@@ -30,14 +65,15 @@ function zonecontrol.settings.load()
 		local settings_data = zonecontrol.settings.default[key]
 		if not settings_data then return end
 
-		zonecontrol.settings.map[key] = util.StringToType(split[2], settings_data.type)
+		zonecontrol.settings.map[key] = StringToType(split[2], settings_data.type)
 	end)
 end
 
 function zonecontrol.settings.save()
 	local f = file.Open("zonecontrol/settings.txt", "w", "DATA")
 		for key,value in pairs(zonecontrol.settings.map) do
-			f:Write(string.format("%s=%s\n", key, util.TypeToString(value)))
+			print(key, TypeToString(value))
+			f:Write(string.format("%s=%s\n", key, TypeToString(value)))
 		end
 	f:Close()
 
