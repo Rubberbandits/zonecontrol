@@ -3,10 +3,11 @@ zonecontrol.characters = zonecontrol.characters or {}
 
 local function CharacterLoad()
 	local id = net.ReadUInt(32)
-	// name
-	// model
-	// body
-	// skin
+	local name = net.ReadString()
+	local model = net.ReadString()
+	local body = net.ReadString()
+	local skin = net.ReadUInt(8)
+	local money = net.ReadUInt(32)
 
 	hook.Run("CharacterLoaded", id)
 end

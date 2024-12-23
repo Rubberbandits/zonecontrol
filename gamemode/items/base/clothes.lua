@@ -47,7 +47,7 @@ BASE.functions.Equip = {
 				item:Owner():SetModelCC( item.WearModel );
 			end
 			
-			item:Transmit()
+			item:Transmit(nil, true)
 			
 			GAMEMODE:SpeedThink( item:Owner() )
 		end
@@ -79,7 +79,7 @@ BASE.functions.WearHelmet = {
 			for i = 1, #item:Owner():GetMaterials() do
 				item:Owner():SetSubMaterial(i - 1, "engine/occlusionproxy")
 			end
-			item:Transmit()
+			item:Transmit(nil, true)
 		end
 		
 		return true
@@ -96,7 +96,7 @@ BASE.functions.RemoveHelmet = {
 		item:SetVar( "HelmetEquipped", false, nil, true );
 		
 		if SERVER then
-			item:Transmit()
+			item:Transmit(nil, true)
 
 			for index,material in next, item:Owner():GetMaterials() do
 				item:Owner():SetSubMaterial(index - 1, material)
@@ -136,7 +136,7 @@ BASE.functions.Unequip = {
 				item:Owner():SetModelCC( item:Owner().CharModel );
 				item:Owner():SetBody( item:Owner():GetCharFromID( item:Owner():CharID() ).Body );
 			elseif metaitem.Bonemerge then
-				item:Transmit()
+				item:Transmit(nil, true)
 			end
 			
 			item:Owner():SetSkin( item:Owner():GetCharFromID( item:Owner():CharID() ).Skingroup );

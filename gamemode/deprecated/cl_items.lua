@@ -88,7 +88,7 @@ netstream.Hook("UnloadItem", function(id)
 	if !LocalPlayer().Inventory then return end
 	local item = LocalPlayer().Inventory[id]
 	if item then
-		item:OnUnloadItem()
+		item:OnUnload()
 		LocalPlayer().Inventory[id] = nil
 		GAMEMODE.g_ItemTable[id] = nil
 	end

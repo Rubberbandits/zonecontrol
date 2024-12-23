@@ -15,7 +15,7 @@ kingston.admin.registerCommand("stockpiletakeitem", {
 					if !GAMEMODE:GetItemByID(v.ItemClass) then continue end
 				
 					local object = item( ply, v.ItemClass, v.id, util.JSONToTable(v.Vars) );
-					object:TransmitToOwner();
+					object:Transmit(ply);
 					object:UpdateSave();
 					stockpile.Inventory[item] = nil
 					

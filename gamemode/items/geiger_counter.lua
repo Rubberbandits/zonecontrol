@@ -51,7 +51,7 @@ function ITEM:CanDrop()
 	return !self:GetVar( "Equipped", false );
 end
 
-function ITEM:OnUnloadItem()
+function ITEM:OnUnload()
 	GAMEMODE.GeigerCounterEquipped = false
 end
 

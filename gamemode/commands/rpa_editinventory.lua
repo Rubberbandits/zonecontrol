@@ -23,7 +23,7 @@ local function nARemoveItem( ply, targ, k )
 		item.owner = ply;
 		item:SetCharID( ply:CharID() )
 		item:UpdateSave();
-		item:TransmitToOwner();
+		item:Transmit(ply);
 		targ.Inventory[k] = nil
 		ply.Inventory[k] = item
 		

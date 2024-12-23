@@ -83,7 +83,7 @@ end
 function BASE:CanDrop()
 	return !self:GetVar( "Equipped", false );
 end
-function BASE:OnUnloadItem()
+function BASE:OnUnload()
 	if( GAMEMODE.Detector and IsValid( GAMEMODE.Detector ) ) then
 		GAMEMODE.Detector:Remove();
 		GAMEMODE.Detector = nil;

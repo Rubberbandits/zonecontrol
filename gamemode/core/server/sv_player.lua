@@ -136,69 +136,70 @@ function nRequestPData(ply)
 end
 netstream.Hook("nRequestPData", nRequestPData)
 
-function meta:LoadCharacter(data)
-	if self.CharCreateCompleted and self:CharID() and self:CharID() > 0 then GAMEMODE:UpdateCharacterFieldOffline(self:CharID(), "Health", self:Health()) end
-	self.CharCreateCompleted = true
+local function LoadCharacter(ply, character)
+	ply:Freeze(false)
+	ply:StripWeapons()
+	ply.EquippedWeapons = {}
+	ply:ClearDrug()
+	ply:SetTeam(TEAM_CITIZEN)
 
-	self:Freeze(false)
-	self:StripWeapons()
-	self.EquippedWeapons = {}
-	self:ClearDrug()
-	self:SetTeam(TEAM_CITIZEN)
+	ply:SetCharCreationDate(character.Date)
+	ply:SetCharID(tonumber(character.id))
+	ply:SetRPName(character.RPName)
+	ply:SetDescription(character.Description)
 
-	self:SetCharCreationDate(data.Date)
-	self:SetCharID(tonumber(data.id))
-	self:SetRPName(data.RPName)
-	self:SetDescription(data.Description)
-
-	self.CharModel = data.Model
-	if table.HasValue(GAMEMODE.CitizenModels, data.Model) then
-		self:SetBody(data.Body)
+	ply.CharModel = character.Model
+	if table.HasValue(GAMEMODE.CitizenModels, character.Model) then
+		ply:SetBody(character.Body)
 	else
-		self:SetBody("")
+		ply:SetBody("")
 	end
 
-	self:SetTrait(tonumber(data.Trait))
-	self:SetMoney(tonumber(data.Money))
-	self:SetCharFlags(data.CharFlags)
-	self:SetBusinessLicenses(tonumber(data.BusinessLicenses))
-	self:SetHunger(tonumber(data.Hunger))
-	self.EntryPort = tonumber(data.EntryPort)
-	self.JustTransitioned = tobool(data.JustTransitioned)
-	self:UpdateCharacterField("LastOnline", os.date("!%m/%d/%y %H:%M:%S"))
-	if self:IsBot() then return end
+	ply:SetTrait(tonumber(character.Trait))
+	ply:SetMoney(tonumber(character.Money))
+	ply:SetCharFlags(character.CharFlags)
+	ply:SetBusinessLicenses(tonumber(character.BusinessLicenses))
+	ply:SetHunger(tonumber(character.Hunger))
+	ply.EntryPort = tonumber(character.EntryPort)
+	ply.JustTransitioned = tobool(character.JustTransitioned)
+	ply:UpdateCharacterField("LastOnline", os.date("!%m/%d/%y %H:%M:%S"))
+	if ply:IsBot() then return end
 
-	self:SyncAllOtherData()
-	self:PostLoadCharacter()
+	ply:SyncAllOtherData()
+	ply:PostLoadCharacter()
 
-	if self.Inventory and table.Count(self.Inventory) > 0 then
-		for k, v in next, self.Inventory do
-			if v.OnUnloadItem then
-				v:OnUnloadItem()
-				netstream.Start(self, "UnloadItem", k)
-			end
+	zonecontrol.inventory.fetch_by_character(character.id, function(inventory)
+		zonecontrol.inventory.load(inventory.id, function()
+			netstream.Start(ply, "CharacterLoaded")
+			hook.Run("CharacterLoaded", ply, data)
+			ply:Spawn()
 
-			GAMEMODE.g_ItemTable[k] = nil
-			self.Inventory[k] = nil
+			GAMEMODE:LogSQL("Player " .. self:Nick() .. " loaded character " .. data.RPName .. ".")
+		end)
+	end)
+end
+
+function meta:LoadCharacter(character)
+	local last_character = zonecontrol.characters.all[self:CharID()]
+	if last_character then
+		if last_character.inventory then
+			zonecontrol.inventory.save(last_character.id, function()
+				for id, item in next, last_character.inventory:get_items() do
+					if item.OnUnload then
+						item:OnUnload()
+						netstream.Start(self, "UnloadItem", id)
+					end
+		
+					GAMEMODE.g_ItemTable[id] = nil
+					last_character.inventory.items[id] = nil
+				end
+
+				LoadCharacter(self, character)
+			end)
 		end
+	else
+		LoadCharacter(self, character)
 	end
-
-	self.Inventory = {}
-	netstream.Start(self, "nLoadInventory", {})
-	local function onSuccess(ret)
-		for k, v in next, ret do
-			if not GAMEMODE:GetItemByID(v.ItemClass) then continue end
-			local object = item(self, v.ItemClass, v.id, util.JSONToTable(v.Vars), v.PosX, v.PosY)
-			object:TransmitToOwner()
-		end
-
-		netstream.Start(self, "CharacterLoaded")
-		hook.Run("CharacterLoaded", self, data)
-		self:Spawn()
-	end
-
-	mysqloo.Query(Format("SELECT * FROM cc_items WHERE Owner = '%d' AND Stockpile = 0", self:CharID()), onSuccess)
-	GAMEMODE:LogSQL("Player " .. self:Nick() .. " loaded character " .. data.RPName .. ".")
 end
 
 function meta:PostLoadCharacter()

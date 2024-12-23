@@ -372,19 +372,30 @@ function item:UpdateSave()
 	query:start();
 end
 
--- use this when transferring owners!
-function item:TransmitToOwner()
-	if !SERVER then return end
+util.AddNetworkString("NetworkItem")
+function ITEM:Transmit(ply, dummy)
+	if not SERVER then return end
 
-	netstream.Start( self:Owner(), "ReceiveItem", self:GetClass(), self:GetID(), self:GetVars(), self.x, self.y );
-end
-
-function item:Transmit( ply ) -- for sending some item info that is only needed for shit like bonemerge
-	if !SERVER then return end
-
-	-- if ply is nil, netstream broadcasts to all clients.
-	netstream.Start( ply, "ReceiveDummyItem", self:GetID(), self:GetClass(), self:GetVars(), self:Owner(), self.CharID );
-	self.IsTransmitted = true; -- for join in progress, client asks server to supply all dummy items.
+	if dummy then
+		net.Start("NetworkItem")
+			net.WriteBool(true)
+			net.WriteEntity(self:Owner())
+			net.WriteString(self:GetClass())
+			net.WriteUInt(self:GetID(), 32)
+			net.WriteTable(self:GetVars())
+		net.Send(ply)
+	else
+		net.Start("NetworkItem")
+			net.WriteBool(false)
+			net.WriteString(self:GetClass())
+			net.WriteUInt(self:GetID(), 32)
+			net.WriteTable(self:GetVars())
+		if ply then
+			net.Send(ply)
+		else
+			net.Broadcast()
+		end
+	end
 end
 
 function item:DeleteItem()

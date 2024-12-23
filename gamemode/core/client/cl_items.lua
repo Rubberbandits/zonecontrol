@@ -4,19 +4,19 @@ zonecontrol.inventory.items = zonecontrol.inventory.items or {}
 
 GM.DummyItems = GM.DummyItems or {};
 
-netstream.Hook( "LoadItems", function( s_ItemTable )
-	for k,v in next, s_ItemTable do
-		GAMEMODE.g_ItemTable[v.id] = nil;
-		local s_Object = item(
-			LocalPlayer(),
-			v.ItemClass,
-			v.id,
-			util.JSONToTable( v.Vars )
-		); -- need all before Initialize is called.
-
-		zonecontrol.inventory.items[v.id] = s_Object;
+local function NetworkItem(len)
+	local dummy = net.ReadBool()
+	local owner
+	if dummy then
+		owner = net.ReadEntity()
 	end
-end );
+	local class = net.ReadString()
+	local id = net.ReadUInt(32)
+	local vars = net.ReadTable()
+
+	// do stuff
+end
+net.Receive("NetworkItem", NetworkItem)
 
 netstream.Hook("ReceiveItem", function(class, id, vars, x, y)
 	if !LocalPlayer().Inventory then
@@ -83,7 +83,7 @@ netstream.Hook("UnloadItem", function(id)
 	if !LocalPlayer().Inventory then return end
 	local item = LocalPlayer().Inventory[id]
 	if item then
-		item:OnUnloadItem()
+		item:OnUnload()
 		LocalPlayer().Inventory[id] = nil
 		GAMEMODE.g_ItemTable[id] = nil
 	end

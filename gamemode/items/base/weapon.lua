@@ -342,7 +342,7 @@ function BASE:OnPlayerDeath()
 		self:SetVar("Clip1", weapon:Clip1(), false, true)
 	end
 end
-function BASE:OnUnloadItem()
+function BASE:OnUnload()
 	if !self:Owner().EquippedWeapons then
 		self:Owner().EquippedWeapons = {}
 	end

@@ -106,7 +106,7 @@ function zonecontrol.inventory.create(owner_id, callback)
 	query:start()
 end
 
-function zonecontrol.inventory.save(inventory)
+function zonecontrol.inventory.save(inventory, callback)
 
 end
 

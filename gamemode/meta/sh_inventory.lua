@@ -47,14 +47,43 @@ function inventory:get_items()
 	return self.items
 end
 
+function inventory:unload()
+	for id,item in pairs(self.items) do
+		if item.OnUnload then
+			item:OnUnload()
+		end
+	end
+
+	zonecontrol.inventory.list[self.id] = nil
+end
+
 setmetatable(inventory, {__call = inventory.__call})
 
 zonecontrol.meta.inventory = inventory
 
 if SERVER then return end
 
+util.AddNetworkString("NetworkInventory")
+
 function inventory:transmit(ply)
-	// TODO: Transmit inventory to player
+	net.Start("NetworkInventory")
+		net.WriteUInt(self.id, 32)
+		net.WriteUInt(self.owner or 0, 32)
+	net.Send(ply)
+
+	local idx = 1
+	local item_count = table.Count(self.items)
+	local item_ids = table.GetKeys(self.items)
+	hook.Add("Think", "NetworkInventoryItems", function()
+		local item = self.items[item_ids[idx]]
+		item:Transmit(ply)
+
+		if idx == item_count then
+			hook.Remove("Think", "NetworkInventoryItems")
+		end
+
+		idx = idx + 1
+	end)
 end
 
 function inventory:save()
