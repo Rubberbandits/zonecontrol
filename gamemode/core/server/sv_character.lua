@@ -3,7 +3,24 @@ zonecontrol.characters = zonecontrol.characters or {}
 zonecontrol.characters.all = zonecontrol.characters.all or {}
 zonecontrol.characters.by_steamid = zonecontrol.characters.by_steamid or {}
 
-function zonecontrol.characters.Create(ply, name, desc, model, skin, items)
+util.AddNetworkString("CharacterCreationStatus")
+
+util.AddNetworkString("CharacterCreate")
+local function CharacterCreate(len, ply)
+	local name = net.ReadString()
+	local desc = net.ReadString()
+	local model = net.ReadString()
+	local skin = net.ReadUInt(8)
+	local items_count = net.ReadUInt(8)
+
+	local items = {}
+	for i = 1, items_count do
+		table.insert(items, {item = net.ReadString(), count = net.ReadUInt(8)})
+	end
+
+	local valid = hook.Run("CheckCharacterValidity", name, desc, model, TRAIT_NONE, skin)
+	if not valid then return end
+
 	local date = os.date("!%m/%d/%y %H:%M:%S")
 
 	local body_mdl = GAMEMODE.BodyModels[1]
@@ -25,72 +42,57 @@ function zonecontrol.characters.Create(ply, name, desc, model, skin, items)
 
 	if remaining_budget < 0 then return end
 
-	local query = CCSQL:prepare("INSERT INTO cc_chars (SteamID, RPName, Description, Model, Body, Skingroup, Date, Money, Location) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")
-		query:setString(1, ply:SteamID())
-		query:setString(2, name)
-		query:setString(3, desc)
-		query:setString(4, model)
-		query:setString(5, body_mdl)
-		query:setNumber(6, skin)
-		query:setString(7, date)
-		query:setNumber(8, remaining_budget)
-		query:setNumber(9, GAMEMODE.MainServerLocation)
-		function query:onSuccess(ret)
-			GAMEMODE:LogSQL("Player " .. ply:Nick() .. " created character " .. name .. ".");
+	zonecontrol.characters.create({
+		SteamID = ply:SteamID(),
+		RPName = name,
+		Description = desc,
+		Model = model,
+		Body = body_mdl,
+		Skingroup = skin,
+		Date = date,
+		Money = remaining_budget,
+		Location = GAMEMODE.MainServerLocation
+	}, function(id)
+		if not id then return end
 
-			local character = {};
-			character.SteamID = ply:SteamID()
-			character.RPName = name
-			character.Description = desc
-			character.Model = model
-			character.Body = body_mdl
-			character.Trait = TRAIT_NONE
-			character.Skingroup = skin
-			character.Date = date
-			character.LastOnline = date
-			character.Money = remaining_budget
-			character.Location = GAMEMODE.MainServerLocation
-			character.id = tonumber(self:lastInsert())
+		local character = {};
+		character.SteamID = ply:SteamID()
+		character.RPName = name
+		character.Description = desc
+		character.Model = model
+		character.Body = body_mdl
+		character.Trait = TRAIT_NONE
+		character.Skingroup = skin
+		character.Date = date
+		character.LastOnline = date
+		character.Money = remaining_budget
+		character.Location = GAMEMODE.MainServerLocation
+		character.id = tonumber(id)
 
-			table.insert(ply.SQLCharData, character)
+		zonecontrol.inventory.create(character.id, function(inventory)
+			character.inventory = inventory
 
 			local transaction = CCSQL:createTransaction()
 			for _,class in next, starting_items do
-				local metaitem = GAMEMODE.Items[class]
-				local str = Format("INSERT INTO cc_items ( Owner, ItemClass, Vars ) VALUES ( '%d', '%s', '%s' );", self:lastInsert(), class, util.TableToJSON(metaitem.Vars or {}))
-				local q = CCSQL:query(str)
+				local q = CCSQL:prepare("INSERT INTO cc_items (Inventory, ItemClass) VALUES (?, ?);")
+					q:setNumber(1, id)
+					q:setString(2, class)
 				transaction:addQuery(q)
 			end
-
+	
 			function transaction:onSuccess()
-				ply:LoadCharacter(character)
+				net.Start("CharacterCreationStatus")
+					net.WriteUInt(2, 8)
+					net.WriteUInt(id, 32)
+				net.Send(ply)
 			end
 			transaction:start()
+		end)
 
-		end
-		function query:onError( err )
-			MsgC(Color(255, 0, 0), "MySQL query failed: " .. err)
-		end
-	query:start()
-end
-
-util.AddNetworkString("CharacterCreate")
-local function CharacterCreate(len, ply)
-	local name = net.ReadString()
-	local desc = net.ReadString()
-	local model = net.ReadString()
-	local skin = net.ReadUInt(8)
-	local items_count = net.ReadUInt(8)
-
-	local items = {}
-	for i = 1, items_count do
-		table.insert(items, {item = net.ReadString(), count = net.ReadUInt(8)})
-	end
-
-	local valid = hook.Run("CheckCharacterValidity", name, desc, model, TRAIT_NONE, skin)
-	if not valid then return end
-
-	zonecontrol.characters.Create(ply, name, desc, model, skin, items)
+		net.Start("CharacterCreationStatus")
+			net.WriteUInt(1, 8)
+		net.Send(ply)
+	end)
 end
 net.Receive("CharacterCreate", CharacterCreate)
 
@@ -98,19 +100,19 @@ util.AddNetworkString("CharacterLoad")
 local function CharacterLoad(len, ply)
 	local id = net.ReadUInt(32)
 
-	if ply:SQLCharExists(id) then
-		if ply:CharID() == id then return end
-		if tonumber(ply:GetCharFromID(id).Banned) == 1 then return end
-		if GAMEMODE.CurrentLocation and ply:GetCharFromID(id).Location != GAMEMODE.CurrentLocation and not ply:IsAdmin() then return end
+	local character = zonecontrol.characters.all[id]
+	if not character then return end
+	if character.SteamID != ply:SteamID() then return end
+	if character.Banned == 1 then return end
+	if GAMEMODE.CurrentLocation and character.Location != GAMEMODE.CurrentLocation and not ply:IsAdmin() then return end
 
-		ply:LoadCharacter(ply:GetCharFromID(id))
-	end
+	ply:LoadCharacter(character)
 end
 net.Receive("CharacterLoad", CharacterLoad)
 
 util.AddNetworkString("CharacterFetch")
 local function CharacterFetch(len, ply)
-	zonecontrol.character.fetch_by_player(ply:SteamID(), function(results)
+	zonecontrol.characters.fetch_by_player(ply:SteamID(), function(results)
 		if not results then results = {} end
 
 		net.Start("CharacterFetch")
@@ -143,22 +145,20 @@ local function CharacterDelete(len, ply)
 end
 net.Receive("CharacterDelete", CharacterDelete)
 
-zonecontrol = zonecontrol or {}
-zonecontrol.character = zonecontrol.character or {}
-
 local LOAD_CHARACTER = [[SELECT * FROM `cc_chars` WHERE `id` = ?;]];
 local FETCH_CHARACTERS = [[SELECT `id`, `RPName`, `Model`, `Body`, `Skingroup` FROM `cc_chars` WHERE `SteamID` = ?;]];
 
-function zonecontrol.character.load(id, callback)
+function zonecontrol.characters.load(id, callback)
 	local query = CCSQL:prepare(LOAD_CHARACTER)
 	query.onSuccess = function(_, results)
+		zonecontrol.characters.all[id] = results[1]
 		callback(results[1])
 	end
 	query:setNumber(1, id)
 	query:start()
 end
 
-function zonecontrol.character.fetch_by_player(steamid, callback)
+function zonecontrol.characters.fetch_by_player(steamid, callback)
 	local query = CCSQL:prepare(FETCH_CHARACTERS)
 	query.onSuccess = function(_, results)
 		callback(results)
@@ -170,10 +170,30 @@ function zonecontrol.character.fetch_by_player(steamid, callback)
 	query:start()
 end
 
-function zonecontrol.character.delete(id)
-
+function zonecontrol.characters.delete(id, callback)
+	local query = CCSQL:prepare("DELETE FROM `cc_chars` WHERE `id` = ?;")
+	query.onSuccess = function(_)
+		callback()
+	end
+	query:setNumber(1, id)
+	query:start()
 end
 
-function zonecontrol.character.create(data)
+local CREATE_CHARACTER = [[INSERT INTO `cc_chars` (SteamID, RPName, Description, Model, Body, Skingroup, Date, Money, Location) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);]]
 
+function zonecontrol.characters.create(data, callback)
+	local query = CCSQL:prepare(CREATE_CHARACTER)
+	query.onSuccess = function(_, results)
+		callback(query:lastInsert())
+	end
+		query:setString(1, data.SteamID)
+		query:setString(2, data.RPName)
+		query:setString(3, data.Description)
+		query:setString(4, data.Model)
+		query:setString(5, data.Body)
+		query:setNumber(6, data.Skingroup)
+		query:setString(7, data.Date)
+		query:setNumber(8, data.Money)
+		query:setNumber(9, data.Location)
+	query:start()
 end

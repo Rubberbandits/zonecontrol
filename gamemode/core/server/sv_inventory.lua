@@ -41,7 +41,7 @@ function zonecontrol.inventory.load(id, callback)
 			inventory.items[item_id] = item
 		end
 
-		callback()
+		callback(inventory)
 	end
 	query:setNumber(1, id)
 	query:start()
@@ -71,7 +71,39 @@ function zonecontrol.inventory.fetch(id, callback)
 end
 
 function zonecontrol.inventory.fetch_by_character(id, callback)
+	local query = CCSQL:prepare(FETCH_INVENTORY_BY_OWNER)
+	query.onSuccess = function(_, results)
+		local row = results[1]
+		local inventory = zonecontrol.meta.inventory(row.id)
+		inventory:set_owner(id)
 
+		zonecontrol.inventory.list[row.id] = inventory
+
+		callback(inventory)
+	end
+	query:setNumber(1, id)
+	query:start()
+end
+
+local CREATE_INVENTORY = [[INSERT INTO `cc_inventories` (`Owner`) VALUES (?);]]
+
+function zonecontrol.inventory.create(owner_id, callback)
+	owner_id = owner_id or 0
+
+	local query = CCSQL:prepare(CREATE_INVENTORY)
+	query.onSuccess = function(_, results)
+		local inventory_id = query:lastInsert()
+		local inventory = zonecontrol.meta.inventory(inventory_id)
+		if owner_id > 0 then
+			inventory:set_owner(owner_id)
+		end
+
+		zonecontrol.inventory.list[inventory_id] = inventory
+
+		callback(inventory)
+	end
+	query:setNumber(1, id)
+	query:start()
 end
 
 function zonecontrol.inventory.save(inventory)

@@ -1,15 +1,16 @@
 zonecontrol = zonecontrol or {}
 zonecontrol.characters = zonecontrol.characters or {}
 
-local function nCharacterList(tbl)
-	GAMEMODE.Characters = tbl
-end
-netstream.Hook("nCharacterList", nCharacterList)
+local function CharacterLoad()
+	local id = net.ReadUInt(32)
+	// name
+	// model
+	// body
+	// skin
 
-local function CharacterLoaded()
-	hook.Run("CharacterLoaded")
+	hook.Run("CharacterLoaded", id)
 end
-netstream.Hook("CharacterLoaded", CharacterLoaded)
+net.Receive("CharacterLoad", CharacterLoad)
 
 local function CharacterFetch()
 	local characters = {}
@@ -30,6 +31,18 @@ local function CharacterFetch()
 	hook.Run("CharacterFetch", characters)
 end
 net.Receive("CharacterFetch", CharacterFetch)
+
+local function CharacterCreationStatus(len)
+	local status = net.ReadUInt(8)
+
+	if status == 2 then
+		local id = net.ReadUInt(32)
+		hook.Run("CharacterCreated", id)
+	end
+
+	hook.Run("CharacterCreationStatus", status)
+end
+net.Receive("CharacterCreationStatus", CharacterCreationStatus)
 
 local function zcNetworkCharVarChange(len)
 	local charID = net.ReadUInt(32)
