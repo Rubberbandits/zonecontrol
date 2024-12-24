@@ -11,8 +11,6 @@ includes.directory("core/shared")
 
 hook.Run("CoreLoaded")
 
-includes.directory("meta")
-
 util.IncludeDir("core/client", false, true, "client")
 util.IncludeDir("gui", false, true, "client")
 

@@ -9,6 +9,7 @@ end
 include("utils/include.lua")
 
 includes.directory("utils")
+includes.directory("meta")
 includes.directory("core/client", nil, "")
 
 include("shared.lua")

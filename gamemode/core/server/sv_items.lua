@@ -75,11 +75,8 @@ function GM:CreateItemEntity( ItemObj, pos, ang )
 
 	local ent = ents.Create( "cc_item" );
 	ent:SetVarString( util.TableToJSON( ItemObj:GetVars() ) );
-	ItemObj:Owner().Inventory[ItemObj:GetID()] = nil;
 	ItemObj.owner = ent;
-	ItemObj:SetCharID( 0 );
 	ent.ItemObj = ItemObj;
-	ItemObj:UpdateSave();
 	ent:SetItemClass( ItemObj:GetClass() );
 	ent:SetPos( pos );
 	ent:SetAngles( ang );
@@ -287,17 +284,6 @@ netstream.Hook("SplitStack", function(ply, item_id, amt, x, y)
 
 		item:SplitStack(amt, x, y)
 	end
-end)
-
-netstream.Hook("ItemSetPos", function(ply, item_id, x, y)
-	local item = ply.Inventory[item_id]
-	if !item then return end
-	if x > GAMEMODE.InventoryWidth then return end
-	if y > GAMEMODE.InventoryHeight then return end
-
-	item.x = x
-	item.y = y
-	item:UpdateSave()
 end)
 
 netstream.Hook("RequestItemSpawn", function(ply, item_class, data, reason)

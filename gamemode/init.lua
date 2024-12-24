@@ -6,6 +6,7 @@ AddCSLuaFile("utils/include.lua")
 include("utils/include.lua")
 
 includes.directory("utils")
+includes.directory("meta")
 includes.directory("core/server")
 
 include( "config/sv_config.lua" )

@@ -36,9 +36,9 @@ local function init_log_pda_tbl(db)
 	mysqloo.Query("CREATE TABLE IF NOT EXISTS cc_pda_journal ( id INT NOT NULL auto_increment, PRIMARY KEY ( id ) );")
 	GAMEMODE:InitSQLTable(kingston.pda.chat_db_struct, "cc_pda_chat")
 	GAMEMODE:InitSQLTable(kingston.pda.journal_db_struct, "cc_pda_journal")
-	
+
 	kingston.pda.chat_insert = db:prepare(kingston.pda.chat_insert_str)
-	
+
 	kingston.pda.journal_insert = db:prepare(kingston.pda.journal_insert_str)
 	kingston.pda.journal_delete = db:prepare(kingston.pda.delete_journal_str)
 	kingston.pda.journal_recover = db:prepare(kingston.pda.recover_journals_str)
@@ -65,11 +65,11 @@ function kingston.pda.find_contacts()
 	for k,v in next, GAMEMODE.g_ItemTable do
 		if v:GetClass() == "pda" then
 			if !v:GetVar("Power", false) then continue end
-			
+
 			rf[#rf + 1] = {name = v:GetVar("PDAName", "UNKNOWN_USER"), rank = v:GetPDARank()}
 		end
 	end
-	
+
 	return rf
 end
 
@@ -98,7 +98,7 @@ function kingston.pda.write_journal(pda, title, message, update)
 			end)
 		end
 	end
-	
+
 	kingston.pda.journal_insert.onError = function(q, err)
 		print(err)
 	end
@@ -133,7 +133,7 @@ function kingston.pda.player_authenticated(ply, pda)
 	if !item then return false end
 	if !item:GetVar("HasPassword", false) then return true end
 	if !kingston.pda.authenticated[pda] then return false end
-	
+
 	return kingston.pda.authenticated[pda][ply:CharID()] or false
 end
 
@@ -167,7 +167,7 @@ netstream.Hook("PDAGrabContacts", PDAGrabContacts)
 local function PDAWriteJournal(ply, id, title, message, update)
 	if #title > 128 then return end
 	if #message > 2048 then return end
-	
+
 	local item = ply.Inventory[id]
 	if item and item:GetClass() == "pda" and item:GetVar("Power", false) and kingston.pda.player_authenticated(ply, id) then
 		kingston.pda.write_journal(id, title, message, update)
@@ -194,16 +194,16 @@ local function PDARecoverJournals(ply, pda)
 	if !ply:IsPDATech() or !ply:HasItem("pda_recover") then return end
 	if item:GetVar("Encrypted", false) then return end
 	if ply.StartPDARecover + 119 > CurTime() then return end
-	
+
 	local items = ply:HasItem("pda_recover")
 	if istable(items) and !items.IsItem then
 		items = items[1]
 	end
-	
+
 	if math.random(1,3) > 1 then
 		items:RemoveItem(true)
 	end
-	
+
 	kingston.pda.recover_journals(pda)
 	ply.StartPDARecover = nil
 end
@@ -216,13 +216,13 @@ local function PDAEncrypt(ply, pda)
 	if item:GetVar("HasPassword", false) then return end
 	if !ply:IsPDATech() or !ply:HasItem("pda_encryption") then return end
 	if ply.StartPDAEncrypt + 19 > CurTime() then return end
-	
+
 	local items = ply:HasItem("pda_encryption")
 	if istable(items) and !items.IsItem then
 		items = items[1]
 	end
 	items:RemoveItem(true)
-	
+
 	item:SetVar("Encrypted", true, false, true)
 	ply.StartPDAEncrypt = nil
 end
@@ -234,13 +234,13 @@ local function PDADecrypt(ply, pda)
 	if !item:GetVar("Encrypted", false) then return end
 	if !ply:IsPDATech() or !ply:HasItem("pda_decryption") then return end
 	if ply.StartPDADecrypt + 199 > CurTime() then return end
-	
+
 	local items = ply:HasItem("pda_decryption")
 	if istable(items) and !items.IsItem then
 		items = items[1]
 	end
 	items:RemoveItem(true)
-	
+
 	item:SetVar("Encrypted", false, false, true)
 	item:SetVar("HasPassword", false, false, true)
 	item:SetVar("PrivateVars", {Password = ""})
@@ -250,14 +250,14 @@ netstream.Hook("PDADecrypt", PDADecrypt)
 
 local function PDASetPassword(ply, pda, password)
 	local item = ply.Inventory[pda]
-	
+
 	if !item then return end
 	if !item:GetVar("Encrypted", false) then return end
 	if item:GetVar("HasPassword", false) then return end
-	
-	local private_vars = item:GetVar("PrivateVars", {}) 
+
+	local private_vars = item:GetVar("PrivateVars", {})
 	private_vars.Password = password
-	
+
 	item:SetVar("PrivateVars", private_vars)
 	item:SetVar("HasPassword", true, false, true)
 end
@@ -268,7 +268,7 @@ local function AuthenticatePDA(ply, pda, password)
 	if !item then return end
 	if !item:GetVar("HasPassword", false) then return end
 	if item:GetVar("PrivateVars", {}).Password != password then return end
-	
+
 	if !kingston.pda.authenticated[pda] then
 		kingston.pda.authenticated[pda] = {}
 	end
@@ -818,7 +818,7 @@ local RandomPDAMessageFuncs = {
 
 		local playerName = !randomPlayer:Hidden() and randomPlayer:HasCharFlag("X") and playerPda:GetVar("PDAName") or false
 		if !playerName then return end
-		
+
 		local randomItem = table.Random(GAMEMODE.Items)
 
 		if DisallowItems[randomItem.Class] then return end
@@ -861,7 +861,7 @@ local RandomPDAMessageFuncs = {
 		if !randomNPC then return end
 
 		local npcData = scripted_ents.GetStored(randomNPC:GetClass())
-		
+
 		if !npcData then return end
 		if !npcData.t then return end
 		if !npcData.t.PrintName then return end
@@ -889,7 +889,7 @@ local function RandomPDAMessages()
 		local randomMessage = table.Random(RandomPDAMessageFuncs)
 		local message = randomMessage()
 
-		if !message then 
+		if !message then
 			return
 		end
 
@@ -898,7 +898,7 @@ local function RandomPDAMessages()
 
 			if !pda then continue end
 
-			local poweredOn 
+			local poweredOn
 			if !pda.IsItem and istable(pda) then
 				for _,item in ipairs(pda) do
 					if item:GetVar("Power", false) then

@@ -144,9 +144,7 @@ function kingston.shipment.fail_delivery(id, threats)
 			local ent = ents.Create( "cc_item" );
 			ent:SetVarString(util.TableToJSON(object:GetVars()))
 			object.owner = ent
-			object:SetCharID(0)
 			ent.ItemObj = object
-			object:UpdateSave()
 			ent:SetItemClass(object:GetClass())
 			ent:SetPos(spawnPos)
 			ent:SetAngles(Angle(0,0,0))

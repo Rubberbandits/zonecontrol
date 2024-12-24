@@ -44,17 +44,6 @@ function GM:PlayerCheckFlag(ply, respawn)
 	end
 end
 
-function GM:PlayerCheckInventory(ply)
-	if not ply.Inventory then ply.Inventory = {} end
-	for _, v in next, ply.Inventory do
-		local metaitem = GAMEMODE:GetItemByID(v:GetClass())
-		if not metaitem then continue end
-		if v.Initialize then v:Initialize() end
-	end
-
-	ply.LastCharID = ply:CharID()
-end
-
 function GM:PlayerSpawn(ply)
 	self.BaseClass:PlayerSpawn(ply)
 	player_manager.SetPlayerClass(ply, "player_cc")
@@ -91,7 +80,6 @@ function GM:PlayerSpawn(ply)
 
 	if not ply.CharCreateCompleted then return end
 	self:PlayerCheckFlag(ply, true)
-	self:PlayerCheckInventory(ply)
 	self:SpeedThink(ply)
 	ply.LastCharID = ply:CharID()
 end
@@ -162,7 +150,6 @@ local function LoadCharacter(ply, character)
 	ply:SetHunger(tonumber(character.Hunger))
 	ply.EntryPort = tonumber(character.EntryPort)
 	ply.JustTransitioned = tobool(character.JustTransitioned)
-	ply:UpdateCharacterField("LastOnline", os.date("!%m/%d/%y %H:%M:%S"))
 	if ply:IsBot() then return end
 
 	ply:SyncAllOtherData()
@@ -170,11 +157,20 @@ local function LoadCharacter(ply, character)
 
 	zonecontrol.inventory.fetch_by_character(character.id, function(inventory)
 		zonecontrol.inventory.load(inventory.id, function()
-			netstream.Start(ply, "CharacterLoaded")
-			hook.Run("CharacterLoaded", ply, data)
+			net.Start("CharacterLoad")
+				net.WriteUInt(character.id, 32)
+				net.WriteString(character.RPName)
+				net.WriteString(character.Model)
+				net.WriteString(character.Body)
+				net.WriteUInt(character.Skingroup, 8)
+				net.WriteUInt(character.Money, 32)
+			net.Send(ply)
+
+			hook.Run("CharacterLoaded", ply, character)
 			ply:Spawn()
 
-			GAMEMODE:LogSQL("Player " .. self:Nick() .. " loaded character " .. data.RPName .. ".")
+			ply:UpdateCharacterField("LastOnline", os.date("!%m/%d/%y %H:%M:%S"))
+			GAMEMODE:LogSQL("Player " .. ply:Nick() .. " loaded character " .. character.RPName .. ".")
 		end)
 	end)
 end
@@ -189,7 +185,7 @@ function meta:LoadCharacter(character)
 						item:OnUnload()
 						netstream.Start(self, "UnloadItem", id)
 					end
-		
+
 					GAMEMODE.g_ItemTable[id] = nil
 					last_character.inventory.items[id] = nil
 				end

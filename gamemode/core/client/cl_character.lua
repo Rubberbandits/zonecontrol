@@ -1,13 +1,26 @@
 zonecontrol = zonecontrol or {}
 zonecontrol.characters = zonecontrol.characters or {}
+zonecontrol.characters.list = zonecontrol.characters.list or {}
 
 local function CharacterLoad()
+	print("CharacterLoad")
 	local id = net.ReadUInt(32)
 	local name = net.ReadString()
 	local model = net.ReadString()
 	local body = net.ReadString()
 	local skin = net.ReadUInt(8)
 	local money = net.ReadUInt(32)
+
+	zonecontrol.characters.list[id] = {
+		id = id,
+		RPName = name,
+		Model = model,
+		Body = body,
+		Skin = skin,
+		Money = money
+	}
+
+	PrintTable(zonecontrol.characters.list)
 
 	hook.Run("CharacterLoaded", id)
 end
@@ -46,10 +59,16 @@ end
 net.Receive("CharacterCreationStatus", CharacterCreationStatus)
 
 local function zcNetworkCharVarChange(len)
+	print("zcNetworkCharVarChange")
 	local charID = net.ReadUInt(32)
 	local key = net.ReadString()
 	local value = net.ReadString()
 
-	LocalPlayer():GetCharFromID(charID)[key] = value
+	print(charID, key, value)
+
+	local character = zonecontrol.characters.list[charID]
+	if not character then return end
+
+	character[key] = value
 end
 net.Receive("zcNetworkCharVarChange", zcNetworkCharVarChange)

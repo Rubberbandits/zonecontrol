@@ -16,7 +16,6 @@ kingston.admin.registerCommand("stockpiletakeitem", {
 				
 					local object = item( ply, v.ItemClass, v.id, util.JSONToTable(v.Vars) );
 					object:Transmit(ply);
-					object:UpdateSave();
 					stockpile.Inventory[item] = nil
 					
 					GAMEMODE:LogAdmin( Format("[F] %s removed %s from stash \"%s\".", ply:Nick(), object:GetName(), stockpile.Name), ply );

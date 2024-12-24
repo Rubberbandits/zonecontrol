@@ -28,6 +28,7 @@ end
 
 function inventory:add(item)
 	if not istable(item) and not item.IsItem then error("Attempted to add non-item object to inventory!") end
+	item.inventory = self
 
 	self.items[item:GetID()] = item
 end
@@ -41,6 +42,15 @@ end
 
 function inventory:set_owner(id)
 	self.owner = id
+end
+
+function inventory:get_owner()
+	// TODO: Implement player list by character ID
+	for _,ply in pairs(player.GetHumans()) do
+		if ply.CharID and ply:CharID() == self.owner then
+			return ply
+		end
+	end
 end
 
 function inventory:get_items()
@@ -61,7 +71,7 @@ setmetatable(inventory, {__call = inventory.__call})
 
 zonecontrol.meta.inventory = inventory
 
-if SERVER then return end
+if not SERVER then return end
 
 util.AddNetworkString("NetworkInventory")
 
@@ -74,12 +84,12 @@ function inventory:transmit(ply)
 	local idx = 1
 	local item_count = table.Count(self.items)
 	local item_ids = table.GetKeys(self.items)
-	hook.Add("Think", "NetworkInventoryItems", function()
+	hook.Add("Think", "NetworkInventoryItems" .. self.id, function()
 		local item = self.items[item_ids[idx]]
 		item:Transmit(ply)
 
 		if idx == item_count then
-			hook.Remove("Think", "NetworkInventoryItems")
+			hook.Remove("Think", "NetworkInventoryItems" .. self.id)
 		end
 
 		idx = idx + 1

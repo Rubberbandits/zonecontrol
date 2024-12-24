@@ -2,6 +2,7 @@ zonecontrol = zonecontrol or {}
 zonecontrol.characters = zonecontrol.characters or {}
 zonecontrol.characters.all = zonecontrol.characters.all or {}
 zonecontrol.characters.by_steamid = zonecontrol.characters.by_steamid or {}
+zonecontrol.characters.minimal = zonecontrol.characters.minimal or {}
 
 util.AddNetworkString("CharacterCreationStatus")
 
@@ -69,6 +70,8 @@ local function CharacterCreate(len, ply)
 		character.Location = GAMEMODE.MainServerLocation
 		character.id = tonumber(id)
 
+		zonecontrol.characters.all[character.id] = character
+
 		zonecontrol.inventory.create(character.id, function(inventory)
 			character.inventory = inventory
 
@@ -79,7 +82,7 @@ local function CharacterCreate(len, ply)
 					q:setString(2, class)
 				transaction:addQuery(q)
 			end
-	
+
 			function transaction:onSuccess()
 				net.Start("CharacterCreationStatus")
 					net.WriteUInt(2, 8)
@@ -100,13 +103,15 @@ util.AddNetworkString("CharacterLoad")
 local function CharacterLoad(len, ply)
 	local id = net.ReadUInt(32)
 
-	local character = zonecontrol.characters.all[id]
+	local character = zonecontrol.characters.minimal[id]
 	if not character then return end
 	if character.SteamID != ply:SteamID() then return end
 	if character.Banned == 1 then return end
 	if GAMEMODE.CurrentLocation and character.Location != GAMEMODE.CurrentLocation and not ply:IsAdmin() then return end
 
-	ply:LoadCharacter(character)
+	zonecontrol.characters.load(id, function(full_character)
+		ply:LoadCharacter(full_character)
+	end)
 end
 net.Receive("CharacterLoad", CharacterLoad)
 
@@ -146,11 +151,12 @@ end
 net.Receive("CharacterDelete", CharacterDelete)
 
 local LOAD_CHARACTER = [[SELECT * FROM `cc_chars` WHERE `id` = ?;]];
-local FETCH_CHARACTERS = [[SELECT `id`, `RPName`, `Model`, `Body`, `Skingroup` FROM `cc_chars` WHERE `SteamID` = ?;]];
+local FETCH_CHARACTERS = [[SELECT `id`, `RPName`, `Model`, `Body`, `Skingroup`, `SteamID`, `Banned`, `Location` FROM `cc_chars` WHERE `SteamID` = ?;]];
 
 function zonecontrol.characters.load(id, callback)
 	local query = CCSQL:prepare(LOAD_CHARACTER)
 	query.onSuccess = function(_, results)
+		PrintTable(results)
 		zonecontrol.characters.all[id] = results[1]
 		callback(results[1])
 	end
@@ -161,6 +167,19 @@ end
 function zonecontrol.characters.fetch_by_player(steamid, callback)
 	local query = CCSQL:prepare(FETCH_CHARACTERS)
 	query.onSuccess = function(_, results)
+		for _,row in pairs(results) do
+			zonecontrol.characters.minimal[row.id] = {
+				id = row.id,
+				RPName = row.RPName,
+				Model = row.Model,
+				Body = row.Body,
+				Skingroup = row.Skingroup,
+				SteamID = row.SteamID,
+				Banned = row.Banned,
+				Location = row.Location
+			}
+		end
+
 		callback(results)
 	end
 	query.onError = function(_, err)

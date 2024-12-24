@@ -1,159 +1,159 @@
 local meta = FindMetaTable( "Player" );
 
 if( !mysqloo ) then
-	
+
 	require( "mysqloo" );
-	
+
 end
 
 function GM:RunQueue()
 
 	for k, v in pairs( self.SQLQueue ) do
-		
+
 		timer.Simple( 0.01 * ( k - 1 ), function()
-			
+
 			mysqloo.Query( v[1], v[2] );
-			
+
 		end );
-		
+
 	end
-	
+
 	self.SQLQueue = { };
 
 end
 
 function GM:InitSQL()
-	
+
 	if( !CCSQL ) then
-		
+
 		self.SQLQueue = { };
-		
+
 	end
-	
+
 	CCSQL = mysqloo.connect( self.MySQLHost, self.MySQLUser, self.MySQLPass, self.MySQLDB, self.MySQLPort );
-	
+
 	function CCSQL:onConnected()
-		
+
 		MsgC( Color( 200, 200, 200, 255 ), "MySQL successfully connected to " .. self:hostInfo() .. ".\nMySQL server version: " .. self:serverInfo() .. "\n" );
 		GAMEMODE.NoMySQL = false;
-		
+
 		timer.Simple(0.01, function()
 			hook.Run("InitSQLTables", self)
 		end)
-		
+
 		for k, v in pairs( GAMEMODE.SQLQueue ) do
-			
+
 			timer.Simple( 0.01 * ( k - 1 ), function()
-				
+
 				mysqloo.Query( v[1], v[2] );
-				
+
 			end );
-			
+
 		end
 
 		GAMEMODE.SQLQueue = { };
-		
+
 		mysqloo.Query( "SET interactive_timeout = 28800" );
 		mysqloo.Query( "SET wait_timeout = 28800" );
 		mysqloo.Query("DELETE FROM cc_logs WHERE CAST(Date AS UNSIGNED) < (UNIX_TIMESTAMP() - 1209600);")
 		mysqloo.Query("DELETE FROM cc_pda_journal WHERE DeletionDate < (UNIX_TIMESTAMP() - 259200);")
-		
+
 	end
 
 	function CCSQL:onConnectionFailed( err )
-		
+
 		GAMEMODE:LogBug( "ERROR: MySQL connection failed (\"" .. err .. "\")." );
 		GAMEMODE.NoMySQL = true;
-		
+
 		if( string.find( err, "Unknown MySQL server host" ) ) then return end
-		
+
 		GAMEMODE:InitSQL();
-		
+
 	end
 
 	CCSQL:connect();
 end
 
 function mysqloo.Query( q, cb, cbe, noerr )
-	
+
 	if( GAMEMODE.NoMySQL ) then
-		
+
 		cb( { } );
 		return;
-		
+
 	end
-	
+
 	local qo = CCSQL:query( q );
-	
+
 	if( !qo ) then
-		
+
 		table.insert( GAMEMODE.SQLQueue, { q, cb } );
 		CCSQL:abortAllQueries();
 		CCSQL:connect();
 		return;
-		
+
 	end
-	
+
 	function qo:onSuccess( ret )
-		
+
 		if( cb ) then
-			
+
 			cb( ret, qo );
-			
+
 		end
-		
+
 	end
-	
+
 	function qo:onError( err )
-		
+
 		if( CCSQL:status() == mysqloo.DATABASE_NOT_CONNECTED ) then
-			
+
 			table.insert( GAMEMODE.SQLQueue, { q, cb } );
 			GAMEMODE:RunQueue();
 			return;
-			
+
 		end
-		
+
 		if( err == "MySQL server has gone away" ) then
-			
+
 			table.insert( GAMEMODE.SQLQueue, { q, cb } );
 			GAMEMODE:RunQueue();
 			return;
-			
+
 		end
-		
+
 		if( string.find( err, "Lost connection to MySQL server" ) ) then
-			
+
 			table.insert( GAMEMODE.SQLQueue, { q, cb } );
 			GAMEMODE:RunQueue();
 			return;
-			
+
 		end
-		
+
 		if( cbe ) then
-			
+
 			cbe( err, qo );
-			
+
 		end
-		
+
 		if( !noerr ) then
-			
+
 			GAMEMODE:LogBug( "ERROR: MySQL query \"" .. q .. "\" failed (\"" .. err .. "\")." );
-			
+
 		end
-		
+
 	end
-	
+
 	qo:start();
-	
+
 end
 
 function mysqloo.Escape( s )
-	
+
 	if( !s ) then return "" end
-	
+
 	return CCSQL:escape( s );
-	
+
 end
 
 local CharTable = {
@@ -248,11 +248,11 @@ end
 function CreateNewStockpileEntry( ply, name )
 
 	if( ply:CharID() <= 0 ) then return end
-	
+
 	local function NameCheck( ret )
-		
+
 		if( #ret == 0 ) then
-		
+
 			local function onSuccess(ret, query)
 				GAMEMODE.LoadedStockpiles[query:lastInsert()] = {
 					["Name"] = mysqloo.Escape( name ),
@@ -261,25 +261,25 @@ function CreateNewStockpileEntry( ply, name )
 				}
 			end
 			mysqloo.Query( Format( "INSERT INTO cc_stockpiles ( SteamID, Accessors, Name ) VALUES ( '%s', '%s', '%s' )", ply:SteamID(), util.TableToJSON( { math.floor( ply:CharID() ) } ), mysqloo.Escape( name ) ), onSuccess );
-			
+
 		else
-		
+
 			netstream.Start( ply, "nStockpileNameTaken" );
-		
+
 		end
-		
+
 	end
 	mysqloo.Query( Format( "SELECT * FROM cc_stockpiles WHERE Name = '%s'", mysqloo.Escape( name ) ), NameCheck );
-	
+
 end
 
 function RetrieveStockpiles()
 
 	local function onSuccess( ret )
-	
+
 		for k,v in next, ret do
-	
-			GAMEMODE.LoadedStockpiles[v.id] = { 
+
+			GAMEMODE.LoadedStockpiles[v.id] = {
 				["Name"] = v.Name,
 				["Inventory"] = {},
 				["Accessors"] = util.JSONToTable( v.Accessors )
@@ -291,181 +291,181 @@ function RetrieveStockpiles()
 				end
 			end
 			mysqloo.Query(Format("SELECT id FROM cc_items WHERE Stockpile = %d", v.id), onSuccess)
-			
+
 		end
-	
+
 	end
 	mysqloo.Query( "SELECT * FROM cc_stockpiles", onSuccess );
 
 end
 
 function GM:DumpSQL( t )
-	
+
 	if( !t ) then return end
-	
+
 	local function qS( ret )
-		
+
 		MsgC( Color( 200, 200, 200, 255 ), "Dumping table...\n" );
-		
+
 		if( ret ) then
-			
+
 			PrintTable( ret );
-			
+
 		end
-		
+
 		MsgC( Color( 200, 200, 200, 255 ), "Finished dumping table.\n" );
-		
+
 	end
-	
+
 	MsgC( Color( 200, 200, 200, 255 ), "Loading table " .. t .. "...\n" );
 	mysqloo.Query( "SELECT * FROM " .. t, qS );
-	
+
 end
 
 function GM:PurgeSQL()
-	
+
 	local function qS( ret )
-		
+
 		GAMEMODE:LogSQL( "SQL has been purged." );
-		
+
 		game.ConsoleCommand( "changelevel " .. game.GetMap() .. "\n" );
-		
+
 	end
-	
+
 	local function qF( err )
-		
+
 		self:PurgeSQL();
-		
+
 	end
-	
+
 	mysqloo.Query( "DROP TABLE cc_chars;", qS, qF );
-	
+
 end
 
 function GM:LoadBans()
-	
+
 	local function qS( ret )
-		
+
 		local nBans = #ret;
-		
+
 		self:LogSQL( "Banlist successfully retrieved. " .. nBans .. " entries loaded." );
 		self.BanTable = ret;
-		
+
 		for k, v in pairs( self.BanTable ) do
-			
+
 			if( v.Length > 0 and util.TimeSinceDate( v.Date ) > v.Length ) then
-				
+
 				table.remove( self.BanTable, k );
 				self:RemoveBan( v.SteamID, "time's up" );
-				
+
 			end
-			
+
 		end
-		
+
 	end
-	
+
 	local function qF( err )
-		
+
 		self:LoadBans();
-		
+
 	end
-	
+
 	mysqloo.Query( "SELECT * FROM cc_bans", qS, qF );
-	
+
 end
 
 function GM:AddBan( steam, len, reason, t )
-	
+
 	local function qS( ret )
-		
+
 		self:LogSQL( "Banned SteamID " .. steam .. " for " .. len .. " minutes (" .. reason .. ")." );
-		
+
 	end
-	
+
 	local function qF( err )
-		
+
 		--self:AddBan( steam, len, mysqloo.Escape( reason ), t );
 		PRINT("BROKEN BAN")
-		
+
 	end
-	
+
 	mysqloo.Query( "INSERT INTO cc_bans ( SteamID, Length, Reason, Date ) VALUES ( '" .. steam .. "', '" .. len .. "', '" .. mysqloo.Escape( reason ) .. "', '" .. t .. "' )", qS, qF );
-	
+
 end
 
 function GM:RemoveBan( steam, r )
-	
+
 	local function qS( ret )
-		
+
 		self:LogSQL( "Unbanned SteamID " .. steam .. ": " .. r .. "." );
-		
+
 	end
-	
+
 	local function qF( err )
-		
+
 		self:RemoveBan( steam, r );
-		
+
 	end
-	
+
 	mysqloo.Query( "DELETE FROM cc_bans WHERE SteamID = '" .. steam .. "'", qS, qF );
-	
+
 end
 
 function GM:LookupBan( steam )
-	
+
 	if( !GAMEMODE.BanTable ) then GAMEMODE.BanTable = { } end
-	
+
 	for k, v in pairs( self.BanTable ) do
-		
+
 		if( v.SteamID == steam ) then
-			
+
 			return k;
-			
+
 		end
-		
+
 	end
-	
+
 end
 
 function meta:SQLSaveNewPlayer()
-	
+
 	local function qS( ret )
-		
+
 		GAMEMODE:LogSQL( "Created new player record for user " .. self:Nick() .. "." );
-		
+
 		local tab = { };
-		
+
 		for _, v in pairs( PlayerTable ) do
-			
+
 			if( v[3] ) then
-				
+
 				tab[v[1]] = tostring( v[3] );
-				
+
 			end
-			
+
 		end
-		
+
 		tab["SteamID"] = self:SteamID();
-		
+
 		self.SQLPlayerData = tab;
-		
+
 		self:LoadPlayer( self.SQLPlayerData );
-		
+
 		self:LoadCharsInfo();
-		
+
 	end
-	
+
 	GAMEMODE:LogSQL( "Creating new player record for user " .. self:Nick() .. "..." );
 	mysqloo.Query( "INSERT INTO cc_players ( SteamID, IPAddress, LastName ) VALUES ( '" .. self:SteamID() .. "', '".. self:IPAddress() .."', '".. mysqloo.Escape(self:Nick()) .."' )", qS );
-	
+
 end
 
 function meta:PostLoadCharsInfo()
-	
+
 	if( self:SQLGetNumChars() > 0 ) then
-		
+
 		netstream.Start( self, "nCharacterList", self.SQLCharData );
-		
+
 		local nStartType = 0;
 		if( (GAMEMODE.CurrentLocation or 0) != GAMEMODE.MainServerLocation ) then
 			nStartType = CC_SELECT;
@@ -480,45 +480,45 @@ function meta:PostLoadCharsInfo()
 		if game.GetMap() == "gm_construct" then
 			nStartType = CC_CREATESELECT
 		end
-		
+
 		netstream.Start( self, "nOpenCharCreate", nStartType );
-		
+
 	else
-		
+
 		if( GAMEMODE.CurrentLocation and GAMEMODE.CurrentLocation != GAMEMODE.MainServerLocation ) then
 
 			netstream.Start( self, "nConnect", IP_GENERAL..PORT_GARBAGE );
 			return;
-			
+
 		end
-		
+
 		netstream.Start( self, "nOpenCharCreate", CC_CREATE );
-		
+
 	end
-	
+
 end
 
 function meta:PostLoadPlayerInfo()
-	
+
 	netstream.Start( self, "nIntroStart", false );
-	
+
 	if( !self:SQLHasPlayer() ) then
-		
+
 		self:SQLSaveNewPlayer();
-		
+
 	else
-		
+
 		self:LoadPlayer( self.SQLPlayerData );
 		self:LoadCharsInfo();
-		
+
 	end
-	
+
 	self:UpdateCharacterField( "LastName", self:Nick() );
-	
+
 end
 
 function meta:LoadCharsInfo()
-	
+
 	local function qS( ret )
 		if #ret > 0 then
 			self.SQLCharData = ret;
@@ -528,154 +528,154 @@ function meta:LoadCharsInfo()
 			self:PostLoadCharsInfo();
 		end
 	end
-	
+
 	local function qF( err )
-	
+
 		self.SQLCharData = { };
 		self:PostLoadCharsInfo();
-		
+
 	end
 	mysqloo.Query( "SELECT * FROM cc_chars WHERE SteamID = '" .. self:SteamID() .. "'", qS, qF );
-	
+
 end
 
 function meta:LoadPlayerInfo()
-	
+
 	local function qS( ret )
-		
+
 		self.SQLPlayerData = ret[1];
 		self:PostLoadPlayerInfo();
-		
+
 	end
-	
+
 	local function qF( err )
-		
+
 		self.SQLPlayerData = { };
 		self:PostLoadPlayerInfo();
-		
+
 	end
-	
+
 	mysqloo.Query( "SELECT * FROM cc_players WHERE SteamID = '" .. self:SteamID() .. "'", qS, qF );
-	
+
 end
 
 function meta:SQLCharExists( id )
-	
+
 	for _, v in pairs( self.SQLCharData ) do
-		
+
 		if( tonumber( v.id ) == id ) then
-			
+
 			return true;
-			
+
 		end
-		
+
 	end
-	
+
 	return false;
-	
+
 end
 
 function meta:SQLHasPlayer()
-	
+
 	return self.SQLPlayerData and table.Count( self.SQLPlayerData ) > 0;
-	
+
 end
 
 function meta:SQLGetNumChars()
-	
+
 	if( !self.SQLCharData ) then return 0 end
-	
+
 	return #self.SQLCharData;
-	
+
 end
 
 function meta:GetCharFromID( id )
-	
+
 	for _, v in ipairs( self.SQLCharData ) do
-		
+
 		if( tonumber( v.id ) == id ) then
-			
+
 			return v;
-			
+
 		end
-		
+
 	end
-	
+
 end
 
 function meta:GetCharIndexFromID( id )
-	
+
 	for k, v in ipairs( self.SQLCharData ) do
-		
+
 		if( tonumber( v.id ) == id ) then
-			
+
 			return k;
-			
+
 		end
-		
+
 	end
-	
+
 end
 
 function GM:DeleteCharacter( id, deleter, name )
-	
+
 	local function qS()
-		
+
 		GAMEMODE:LogSQL( "Player " .. deleter .. " deleted character " .. name .. "." );
-		
+
 	end
-	
+
 	mysqloo.Query( "DELETE FROM cc_chars WHERE id = '" .. tostring( id ) .. "'", qS );
-	
+
 end
 
 function meta:DeleteCharacter( id, name )
-	
+
 	for k, v in pairs( self.SQLCharData ) do
-		
+
 		if( v.id == id ) then
-			
+
 			table.remove( self.SQLCharData, k );
-			
+
 		end
-		
+
 	end
-	
+
 	local function qS()
-		
+
 		GAMEMODE:LogSQL( "Player " .. self:Nick() .. " deleted character " .. name .. "." );
-		
+
 	end
-	
+
 	mysqloo.Query( "DELETE FROM cc_chars WHERE id = '" .. tostring( id ) .. "'", qS );
-	
+
 end
 
 util.AddNetworkString("zcNetworkCharVarChange")
 function meta:UpdateCharacterField( field, value, nolog )
-	
+
 	if( self:IsBot() ) then return end
 
 	local charID = self:CharID()
 	if( charID == -1 ) then return end
-	
-	if( self.SQLCharData[self:GetCharIndexFromID( charID )][field] == tostring( value ) ) then return end
+
+	if zonecontrol.characters.all[charID][field] == tostring(value) then return end
 
 	local ply = self;
 	local q = "UPDATE cc_chars";
 	q = q .. " SET " .. mysqloo.Escape( field );
 	q = q .. " = ? WHERE id = '" .. charID .. "'";
-	
+
 	local query = CCSQL:prepare( q );
 	function query:onSuccess( ret )
-	
+
 		if( !nolog ) then
-			
+
 			GAMEMODE:LogSQL( "Player " .. ply:Nick() .. " (" .. ply:RPName() .. ") updated character field " .. field .. " to " .. tostring( value ) .. "." );
-			
+
 		end
-		
-		ply.SQLCharData[ply:GetCharIndexFromID( charID )][field] = tostring( value );
+
+		zonecontrol.characters.all[charID][field] = tostring( value );
 
 		net.Start("zcNetworkCharVarChange")
 			net.WriteUInt(charID, 32)
@@ -684,110 +684,110 @@ function meta:UpdateCharacterField( field, value, nolog )
 		net.Send(ply)
 	end
 	function query:onError( err )
-	
+
 		MsgC( Color( 255, 0, 0 ), "MySQL Query failed: "..err );
-	
+
 	end
 	query:setString( 1, tostring( value ) );
 	query:start();
-	
+
 end
 
 function GM:UpdateCharacterFieldOffline( id, field, value, nolog )
-	
+
 	local q = "UPDATE cc_chars";
 	q = q .. " SET " .. mysqloo.Escape( field );
 	q = q .. " = ? WHERE id = ?";
-	
+
 	local query = CCSQL:prepare( q );
 	function query:onSuccess( ret )
-	
+
 		if( !nolog ) then
-			
+
 			--GAMEMODE:LogSQL( "Character " .. id .. " updated character field " .. field .. " to " .. tostring( value ) .. "." );
-			
+
 		end
-		
+
 	end
 	function query:onError( err )
-	
+
 		MsgC( Color( 255, 0, 0 ), "MySQL Query failed: "..err );
-	
+
 	end
 	query:setString( 1, tostring( value ) );
 	query:setNumber( 2, id );
 	query:start();
-	
+
 	for _, v in pairs( player.GetAll() ) do
-		
+
 		if( v.SQLCharData["id"] == id ) then
-			
+
 			v.SQLCharData[field] = value;
-			
+
 		end
-		
+
 	end
-	
+
 end
 
 function GM:AddCharacterFieldOffline( id, field, value, min, max )
-	
+
 	local q = "SELECT " .. field .. " FROM cc_chars WHERE id = '" .. id .. "'";
-	
+
 	local function qS( ret )
-		
+
 		local q = "UPDATE cc_chars";
 		q = q .. " SET " .. mysqloo.Escape( field );
 		q = q .. " = '" .. mysqloo.Escape( tostring( math.Clamp( tonumber( ret[1][field] ) + tonumber( value ), min or -math.huge, max or math.huge ) ) );
 		q = q .. "' WHERE id = '" .. id .. "'";
-		
+
 		local function qS( ret )
-			
+
 			--GAMEMODE:LogSQL( "Character " .. id .. " updated character field " .. field .. " to " .. tostring( value ) .. "." );
-			
+
 		end
-		
+
 		mysqloo.Query( q, qS );
-		
+
 	end
-	
+
 	mysqloo.Query( q, qS );
-	
+
 end
 
 function meta:UpdatePlayerField( field, value )
-	
+
 	local q = string.format("UPDATE `cc_players` SET `%s` = '%s' WHERE `SteamID` = '%s';", mysqloo.Escape(field), mysqloo.Escape(tostring(value)), self:SteamID())
-	
+
 	local function qS( ret )
-		
+
 		--GAMEMODE:LogSQL( "Player " .. self:Nick() .. " (" .. self:RPName() .. ") updated player field " .. field .. " to " .. tostring( value ) .. "." );
-		
+
 		self.SQLPlayerData[field] = tostring( value );
-		
+
 	end
-	
+
 	mysqloo.Query( q, qS );
-	
+
 end
 
 function GM:UpdatePlayerFieldOffline( steamid, field, value )
-	
+
 	local q = "UPDATE cc_players";
 	q = q .. " SET " .. mysqloo.Escape( field );
 	q = q .. " = '" .. mysqloo.Escape( tostring( value ) );
 	q = q .. "' WHERE SteamID = '" .. steamid .. "'";
-	
+
 	local function qS( ret )
-		
+
 		--GAMEMODE:LogSQL( "Player " .. steamid .. " updated player field " .. field .. " to " .. tostring( value ) .. "." );
-		
+
 	end
-	
+
 	mysqloo.Query( q, qS );
-	
+
 end
 
 function GM:SQLThink()
-	
+
 end

@@ -1,10 +1,8 @@
 zonecontrol = zonecontrol or {}
 zonecontrol.inventory = zonecontrol.inventory or {}
 zonecontrol.inventory.list = zonecontrol.inventory.list or {}
-zonecontrol.inventory.list[0] = {
-	items = {},
-	world = true
-}
+zonecontrol.inventory.list[0] = zonecontrol.meta.inventory(0)
+zonecontrol.inventory.list[0].world = true
 
 local InventoryTable = {
 	{"Owner", "INT", "0"}
@@ -102,7 +100,7 @@ function zonecontrol.inventory.create(owner_id, callback)
 
 		callback(inventory)
 	end
-	query:setNumber(1, id)
+	query:setNumber(1, owner_id)
 	query:start()
 end
 

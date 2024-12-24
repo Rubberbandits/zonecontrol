@@ -6,21 +6,8 @@ item.IsItem = true;
 item.W = 1
 item.H = 1
 function item:__tostring()
-
-	return "item["..( self.id or 0 ).."]";
-
+	return "item[" .. (self.id or 0) .. "]"
 end
-
-local blacklist = {
-	["Vars"] = true,
-	["id"] = true,
-	["inventory"] = true,
-	["Initialize"] = true,
-	["functions"] = true,
-	["FunctionHooks"] = true,
-	["Class"] = true,
-	["Weight"] = true,
-}
 
 function item:New(metaitem, id, vars)
 	if !metaitem then return end
@@ -94,6 +81,10 @@ function item:CanSell()
 	return self.IsSellable
 end
 
+if SERVER then
+	util.AddNetworkString("NetworkItemVar")
+end
+
 function item:SetVar(key, value, noSave, network)
 	if !self.Vars then
 		self.Vars = {}
@@ -105,11 +96,25 @@ function item:SetVar(key, value, noSave, network)
 
 	if SERVER then
 		if network then
-			netstream.Start(item:Owner(), "SetItemVar", self:GetID(), key, value)
+			net.Start("NetworkItemVar")
+				net.WriteUInt(self:GetID(), 32)
+				net.WriteString(key)
+				net.WriteType(value)
+			net.Send(self:GetInventory():get_owner())
 		end
 
 		if !noSave then
-			self:UpdateSave()
+			local query = CCSQL:prepare("INSERT INTO `cc_item_data` (`item`, `type`, `varkey`, `value`) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `type`=?, `value`=?;")
+			query.onError = function(_, err)
+				error(err)
+			end
+			query:setNumber(1, self:GetID())
+			query:setString(2, type(value))
+			query:setString(3, key)
+			query:setString(4, util.TypeToString(value))
+			query:setString(5, type(value))
+			query:setString(6, util.TypeToString(value))
+			query:start()
 		end
 	end
 end
@@ -137,38 +142,34 @@ function item:GetSize()
 end
 
 function item:GetInventory()
-	return zonecontrol.inventory.list[self.inventory]
+	return self.inventory or zonecontrol.inventory.list[0]
 end
 
 function item:CallFunction(szKey, bNetwork)
-	if self.functions then
-		if self.functions[szKey] then
-			if self.functions[szKey].CanRun(self) then
-				if self.FunctionHooks and self.FunctionHooks["Pre"..szKey] then
-					self.FunctionHooks["Pre"..szKey](self)
-				end
+	if self.functions and self.functions[szKey] and self.functions[szKey].CanRun(self) then
+		if self.FunctionHooks and self.FunctionHooks["Pre" .. szKey] then
+			self.FunctionHooks["Pre" .. szKey](self)
+		end
 
-				if bNetwork then
-					if SERVER then
-						netstream.Start(self:Owner(), "CallFunction", self:GetID(), szKey)
-					else
-						netstream.Start("ItemCallFunction", self:GetID(), szKey)
-					end
-				end
-
-				local ret = self.functions[szKey].OnUse(self)
-
-				if self.FunctionHooks and self.FunctionHooks["Post"..szKey] then
-					self.FunctionHooks["Post"..szKey](self)
-				end
-
-				if self.functions[szKey].RemoveOnUse and ret then
-					self:RemoveItem();
-				end
-
-				return ret
+		if bNetwork then
+			if SERVER then
+				netstream.Start(self:Owner(), "CallFunction", self:GetID(), szKey)
+			else
+				netstream.Start("ItemCallFunction", self:GetID(), szKey)
 			end
 		end
+
+		local ret = self.functions[szKey].OnUse(self)
+
+		if self.FunctionHooks and self.FunctionHooks["Post" .. szKey] then
+			self.FunctionHooks["Post" .. szKey](self)
+		end
+
+		if self.functions[szKey].RemoveOnUse and ret then
+			self:RemoveItem();
+		end
+
+		return ret
 	end
 end
 
@@ -313,67 +314,40 @@ function item:AddItemToStack(item)
 	end
 end
 
-function item:SaveNewObject( cb )
+function item:SaveNewObject(callback)
 	if !SERVER then return end
 
-	local query_str = "INSERT INTO cc_items ( Owner, ItemClass, Vars, PosX, PosY ) VALUES ( ?, ?, ?, ?, ? )"
-	local query = CCSQL:prepare( query_str );
-	query.onSuccess = function( query, ret )
+	local query = CCSQL:prepare("INSERT INTO `cc_items` (Inventory, ItemClass) VALUES (?, ?);")
+	query.onSuccess = function(_, ret)
+		local id = query:lastInsert()
 		local insertTable = {
-			["id"] = query:lastInsert(),
+			["id"] = id,
 		}
 
 		table.Merge(self, insertTable)
 
-		GAMEMODE.g_ItemTable[query:lastInsert()] = self
-		if IsValid(self:Owner()) then
-			self:Owner().Inventory[query:lastInsert()] = self
-		end
+		GAMEMODE.g_ItemTable[id] = self
 
 		if self.OnNewCreation then
 			self:OnNewCreation()
 		end
 
-		if cb then
-			cb()
+		if callback then
+			callback()
 		end
 	end
 	function query:onError( err )
-
-		MsgC( Color( 255, 0, 0 ), "MySQL Query failed: "..err );
-
+		MsgC(Color(255, 0, 0), "MySQL Query failed: " .. err)
 	end
-	query:setNumber( 1, self:GetCharID() );
-	query:setString( 2, self:GetClass() );
-	query:setString( 3, util.TableToJSON( self:GetVars(true) or {} ) );
-	query:setNumber( 4, self.x );
-	query:setNumber( 5, self.y );
-	query:start();
+	query:setNumber(1, self:GetInventory().id)
+	query:setString(2, self:GetClass())
+	query:start()
 end
 
-function item:UpdateSave()
-	if !SERVER then return end
-
-	local query_str = "UPDATE cc_items SET Owner = ?, Vars = ?, Stockpile = ?, PosX = ?, PosY = ? WHERE id = ?"
-	local query = CCSQL:prepare( query_str );
-	function query:onSuccess( ret )
-	end
-	function query:onError( err )
-
-		MsgC( Color( 255, 0, 0 ), "MySQL Query failed: "..err );
-
-	end
-	query:setNumber( 1, self:GetCharID() );
-	query:setString( 2, util.TableToJSON( self:GetVars(true) or {} ) );
-	query:setNumber( 3, self:StockpileID() );
-	query:setNumber( 4, self.x );
-	query:setNumber( 5, self.y );
-	query:setNumber( 6, self:GetID() );
-	query:start();
+if SERVER then
+	util.AddNetworkString("NetworkItem")
 end
-
-util.AddNetworkString("NetworkItem")
-function ITEM:Transmit(ply, dummy)
+function item:Transmit(ply, dummy)
 	if not SERVER then return end
 
 	if dummy then
@@ -403,7 +377,7 @@ function item:DeleteItem()
 
 	local function onSuccess()
 	end
-	mysqloo.Query( Format( "DELETE FROM cc_items WHERE id = '%d'", self:GetID() ), onSuccess );
+	mysqloo.Query(Format("DELETE FROM cc_items WHERE id = '%d'", self:GetID()), onSuccess)
 end
 
 setmetatable( item, { __call = item.New } )

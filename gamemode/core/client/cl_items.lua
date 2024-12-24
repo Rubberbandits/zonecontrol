@@ -1,6 +1,6 @@
 zonecontrol = zonecontrol or {}
-zonecontrol.inventory = zonecontrol.inventory or {}
-zonecontrol.inventory.items = zonecontrol.inventory.items or {}
+zonecontrol.items = zonecontrol.items or {}
+zonecontrol.items.list = zonecontrol.items.list or {}
 
 GM.DummyItems = GM.DummyItems or {};
 
@@ -27,7 +27,7 @@ netstream.Hook("ReceiveItem", function(class, id, vars, x, y)
 		GAMEMODE.g_ItemTable[id] = nil
 	end
 
-	local s_Object = item(LocalPlayer(), class, id, vars, x, y)
+	local s_Object = zonecontrol.meta.item(LocalPlayer(), class, id, vars, x, y)
 
 	hook.Run("NetworkedItemReceived", s_Object)
 end)
@@ -46,6 +46,18 @@ netstream.Hook( "ReceiveDummyItem", function( s_iID, s_szClass, s_Vars, s_Owner,
 	hook.Run( "OnReceiveDummyItem", s_iID, tbl );
 
 end );
+
+local function NetworkItemVar()
+	local id = net.ReadUInt(32)
+	local key = net.ReadString()
+	local value = net.ReadType()
+
+	local item = zonecontrol.items.list[id]
+	if item then
+		item:SetVar(key, value)
+	end
+end
+net.Receive("NetworkItemVar", NetworkItemVar)
 
 netstream.Hook("SetItemVar", function(id, key, value)
 	if !LocalPlayer().Inventory then return end
