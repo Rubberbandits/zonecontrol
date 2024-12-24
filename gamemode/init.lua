@@ -22,7 +22,7 @@ local buttons = {
 function GM:Initialize()
 	game.ConsoleCommand( "net_maxfilesize 64\n" );
 	game.ConsoleCommand( "sv_kickerrornum 0\n" );
-	
+
 	game.ConsoleCommand( "sv_allowupload 0\n" );
 	game.ConsoleCommand( "sv_allowdownload 0\n" );
 	game.ConsoleCommand( "pac_restrictions 1\n" );
@@ -36,19 +36,19 @@ function GM:Initialize()
 	game.ConsoleCommand( "sv_tfa_damage_multiplier 1\n" );
 	game.ConsoleCommand( "sv_tfa_damage_mult_min 1\n" );
 	game.ConsoleCommand( "sv_tfa_damage_mult_max 1\n" );
-	
+
 	if( game.IsDedicated() and !self.PrivateMode ) then
-		
+
 		game.ConsoleCommand( "sv_allowcslua 0\n" );
-		
+
 	else
-		
+
 		game.ConsoleCommand( "sv_allowcslua 1\n" );
-		
+
 	end
-	
+
 	hook.Run("SetupDataDirectories")
-	
+
 	for k,v in next, buttons do
 		local ent = ents.GetMapCreatedEntity(k)
 		if !ent then return end

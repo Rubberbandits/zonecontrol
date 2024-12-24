@@ -5,47 +5,34 @@ zonecontrol.items.list = zonecontrol.items.list or {}
 GM.DummyItems = GM.DummyItems or {};
 
 local function NetworkItem(len)
-	local dummy = net.ReadBool()
-	local owner
-	if dummy then
-		owner = net.ReadEntity()
-	end
-	local class = net.ReadString()
 	local id = net.ReadUInt(32)
+	local class = net.ReadString()
 	local vars = net.ReadTable()
 
-	// do stuff
+	local dummy = net.ReadBool()
+	if dummy then
+		local owner = net.ReadEntity()
+
+		local tbl = {
+			szClass = class,
+			Vars = vars,
+			Owner = owner,
+			CharID = owner:CharID(),
+		}
+
+		hook.Run("OnReceiveDummyItem", s_iID, tbl)
+		return
+	else
+		local inventory_id = net.ReadUInt(32)
+
+		local item = zonecontrol.meta.item(class, id, vars)
+		local inventory = zonecontrol.inventory.list[inventory_id]
+		inventory:add(item)
+
+		hook.Run("NetworkedItemReceived", item)
+	end
 end
 net.Receive("NetworkItem", NetworkItem)
-
-netstream.Hook("ReceiveItem", function(class, id, vars, x, y)
-	if !LocalPlayer().Inventory then
-		LocalPlayer().Inventory = {}
-	end
-
-	if GAMEMODE.g_ItemTable[id] then
-		GAMEMODE.g_ItemTable[id] = nil
-	end
-
-	local s_Object = zonecontrol.meta.item(LocalPlayer(), class, id, vars, x, y)
-
-	hook.Run("NetworkedItemReceived", s_Object)
-end)
-
-netstream.Hook( "ReceiveDummyItem", function( s_iID, s_szClass, s_Vars, s_Owner, s_CharID )
-
-	local tbl = {
-
-		szClass = s_szClass,
-		Vars = s_Vars,
-		Owner = s_Owner,
-		CharID = s_CharID,
-
-	};
-
-	hook.Run( "OnReceiveDummyItem", s_iID, tbl );
-
-end );
 
 local function NetworkItemVar()
 	local id = net.ReadUInt(32)
@@ -58,14 +45,6 @@ local function NetworkItemVar()
 	end
 end
 net.Receive("NetworkItemVar", NetworkItemVar)
-
-netstream.Hook("SetItemVar", function(id, key, value)
-	if !LocalPlayer().Inventory then return end
-	local item = LocalPlayer().Inventory[id]
-	if item then
-		item:SetVar(key, value)
-	end
-end)
 
 netstream.Hook("RemoveItem", function(id)
 	if !LocalPlayer().Inventory then return end

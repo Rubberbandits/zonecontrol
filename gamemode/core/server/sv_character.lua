@@ -71,6 +71,16 @@ local function CharacterCreate(len, ply)
 		character.id = tonumber(id)
 
 		zonecontrol.characters.all[character.id] = character
+		zonecontrol.characters.minimal[character.id] = {
+			id = character.id,
+			RPName = character.RPName,
+			Model = character.Model,
+			Body = character.Body,
+			Skingroup = character.Skingroup,
+			SteamID = character.SteamID,
+			Banned = character.Banned,
+			Location = character.Location
+		}
 
 		zonecontrol.inventory.create(character.id, function(inventory)
 			character.inventory = inventory

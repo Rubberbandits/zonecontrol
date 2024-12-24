@@ -166,6 +166,9 @@ local function LoadCharacter(ply, character)
 				net.WriteUInt(character.Money, 32)
 			net.Send(ply)
 
+			character.inventory = inventory
+			inventory:transmit(ply)
+
 			hook.Run("CharacterLoaded", ply, character)
 			ply:Spawn()
 
@@ -179,20 +182,14 @@ function meta:LoadCharacter(character)
 	local last_character = zonecontrol.characters.all[self:CharID()]
 	if last_character then
 		if last_character.inventory then
-			zonecontrol.inventory.save(last_character.id, function()
-				for id, item in next, last_character.inventory:get_items() do
-					if item.OnUnload then
-						item:OnUnload()
-						netstream.Start(self, "UnloadItem", id)
-					end
-
-					GAMEMODE.g_ItemTable[id] = nil
-					last_character.inventory.items[id] = nil
-				end
+			zonecontrol.inventory.save(last_character.inventory.id, function()
+				inventory:unload()
 
 				LoadCharacter(self, character)
 			end)
 		end
+
+		// Unload character
 	else
 		LoadCharacter(self, character)
 	end

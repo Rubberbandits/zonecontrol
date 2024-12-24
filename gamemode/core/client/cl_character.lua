@@ -49,8 +49,17 @@ net.Receive("CharacterFetch", CharacterFetch)
 local function CharacterCreationStatus(len)
 	local status = net.ReadUInt(8)
 
+	print("CharacterCreationStatus", status)
+
 	if status == 2 then
 		local id = net.ReadUInt(32)
+		print("Load newly created character")
+		print(id)
+
+		net.Start("CharacterLoad")
+			net.WriteUInt(id, 32)
+		net.SendToServer()
+
 		hook.Run("CharacterCreated", id)
 	end
 
@@ -70,5 +79,6 @@ local function zcNetworkCharVarChange(len)
 	if not character then return end
 
 	character[key] = value
+	print("Value set")
 end
 net.Receive("zcNetworkCharVarChange", zcNetworkCharVarChange)

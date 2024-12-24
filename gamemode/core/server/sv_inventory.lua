@@ -30,6 +30,9 @@ function zonecontrol.inventory.load(id, callback)
 		for _,row in pairs(results) do
 			local item_id = row.id
 			local item = inventory.items[item_id] or zonecontrol.meta.item(row.ItemClass, item_id)
+			if not item.inventory then
+				item.inventory = inventory
+			end
 
 			if row.type then
 				item.Vars = item.Vars or {}

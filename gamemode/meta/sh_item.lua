@@ -352,18 +352,21 @@ function item:Transmit(ply, dummy)
 
 	if dummy then
 		net.Start("NetworkItem")
+			net.WriteUInt(self:GetID(), 32)
+			net.WriteString(self:GetClass())
+			net.WriteTable(self:GetVars())
+
 			net.WriteBool(true)
 			net.WriteEntity(self:Owner())
-			net.WriteString(self:GetClass())
-			net.WriteUInt(self:GetID(), 32)
-			net.WriteTable(self:GetVars())
 		net.Send(ply)
 	else
 		net.Start("NetworkItem")
-			net.WriteBool(false)
-			net.WriteString(self:GetClass())
 			net.WriteUInt(self:GetID(), 32)
+			net.WriteString(self:GetClass())
 			net.WriteTable(self:GetVars())
+
+			net.WriteBool(false)
+			net.WriteUInt(self:GetInventory().id, 32)
 		if ply then
 			net.Send(ply)
 		else
