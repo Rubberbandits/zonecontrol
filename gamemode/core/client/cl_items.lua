@@ -46,36 +46,33 @@ local function NetworkItemVar()
 end
 net.Receive("NetworkItemVar", NetworkItemVar)
 
-netstream.Hook("RemoveItem", function(id)
-	if !LocalPlayer().Inventory then return end
-	local item = LocalPlayer().Inventory[id]
-	if item then
-		item:RemoveItem()
-	end
-end)
+local function NetworkItemFunction()
+	local id = net.ReadUInt(32)
+	local key = net.ReadString()
 
-netstream.Hook("CallFunction", function(id, key)
-	if !LocalPlayer().Inventory then return end
-	local item = LocalPlayer().Inventory[id]
+	local item = zonecontrol.items.list[id]
 	if item then
 		item:CallFunction(key)
 	end
-end)
+end
+net.Receive("NetworkItemFunction", NetworkItemFunction)
 
-netstream.Hook("DropItem", function(id)
-	if !LocalPlayer().Inventory then return end
-	local item = LocalPlayer().Inventory[id]
+local function NetworkItemDrop()
+	local id = net.ReadUInt(32)
+
+	local item = zonecontrol.items.list[id]
 	if item then
 		item:DropItem()
 	end
-end)
+end
+net.Receive("NetworkItemDrop", NetworkItemDrop)
 
-netstream.Hook("UnloadItem", function(id)
-	if !LocalPlayer().Inventory then return end
-	local item = LocalPlayer().Inventory[id]
+local function NetworkItemUnload()
+	local id = net.ReadUInt(32)
+
+	local item = zonecontrol.items.list[id]
 	if item then
 		item:OnUnload()
-		LocalPlayer().Inventory[id] = nil
-		GAMEMODE.g_ItemTable[id] = nil
 	end
-end)
+end
+net.Receive("NetworkItemUnload", NetworkItemUnload)

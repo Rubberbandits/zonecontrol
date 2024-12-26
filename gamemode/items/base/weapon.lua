@@ -286,16 +286,6 @@ function BASE:GetDesc()
 
 	return Format("%s\nLoaded with %d rounds.\nWeapon condition: %d%%\n%s%s", self:GetVar("Desc", self.Desc), self:GetVar("Clip1", 0), self:GetVar("Durability", 100), upgrades_text, attachments_text)
 end
-function BASE:OnDisconnected()
-	if self:GetVar("Equipped", false) then
-		local weapon = self:Owner():GetWeapon(self.WeaponClass)
-		if !weapon or !weapon:IsValid() then return end
-		local new_durability = math.Clamp(self:GetVar("Durability",100) - (self.DegradeRate * weapon:GetNW2Int("TimesFired", 0)), 0, self:GetVar("Durability",100)) 
-		
-		self:SetVar("Durability", new_durability)
-		self:SetVar("Clip1", weapon:Clip1())
-	end
-end
 function BASE:GetJamChance()
 	if !self.JamChance then return end
 
@@ -343,6 +333,15 @@ function BASE:OnPlayerDeath()
 	end
 end
 function BASE:OnUnload()
+	if self:GetVar("Equipped", false) then
+		local weapon = self:Owner():GetWeapon(self.WeaponClass)
+		if !weapon or !weapon:IsValid() then return end
+		local new_durability = math.Clamp(self:GetVar("Durability",100) - (self.DegradeRate * weapon:GetNW2Int("TimesFired", 0)), 0, self:GetVar("Durability",100)) 
+		
+		self:SetVar("Durability", new_durability)
+		self:SetVar("Clip1", weapon:Clip1())
+	end
+
 	if !self:Owner().EquippedWeapons then
 		self:Owner().EquippedWeapons = {}
 	end

@@ -1,13 +1,5 @@
 local meta = FindMetaTable( "Player" );
 
-function meta:SaveInventory()
-	
-	local str = util.TableToJSON( self.Inventory );
-	
-	self:UpdateCharacterField( "Inventory", str );
-	
-end
-
 if( CLIENT ) then
 	
 	local function nLoadInventory( inv )
@@ -104,27 +96,6 @@ function meta:HasItem( itemid )
 	end
 	
 	return false
-end
-
-function meta:InventoryWeight()
-	
-	if( !self.Inventory ) then return 0 end
-	
-	local w = 0;
-	
-	for _, v in pairs( self.Inventory ) do
-		
-		local meta = GAMEMODE:GetItemByID( v:GetClass() );
-		if( meta and meta.Weight ) then
-			
-			w = w + v:GetWeight();
-			
-		end
-		
-	end
-	
-	return w;
-	
 end
 
 function meta:InventoryMaxWeight()
@@ -266,49 +237,4 @@ function meta:TakeFromStockpile( k, id )
 		
 	end
 
-end
-
-function meta:GetWeight()
-
-	local nWeight = 0;
-	for k,v in next, self.Inventory do
-		
-		nWeight = nWeight + v:GetWeight();
-
-	end
-	
-	return nWeight;
-
-end
-
-function meta:IsInventorySlotOccupiedItem( i, j, w, h )
-	if i + w - 1 <= GAMEMODE.InventoryWidth and j + h - 1 <= GAMEMODE.InventoryHeight then
-		local good = true
-
-		for x = 1, w do
-			for y = 1, h do
-				if self:IsInventorySlotOccupied(i + x - 1, j + y - 1) then
-					good = false
-				end
-			end
-		end
-		
-		return !good
-	end
-	
-	return true
-end
-
-function meta:IsInventorySlotOccupied( x, y )
-	for _,item in next, self.Inventory do
-		local metaitem = GAMEMODE:GetItemByID(item.Class)
-
-		if x >= item.x and x <= item.x + (metaitem.W or 1) - 1 then
-			if y >= item.y and y <= item.y + (metaitem.H or 1) - 1 then
-				return item
-			end
-		end
-	end
-
-	return false
 end

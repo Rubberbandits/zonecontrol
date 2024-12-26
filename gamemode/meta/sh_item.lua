@@ -38,7 +38,7 @@ function item:New(metaitem, id, vars)
 	end
 
 	if id then
-		GAMEMODE.g_ItemTable[id] = itemdata
+		zonecontrol.items.list[id] = self
 	end
 
 	return itemdata
@@ -153,9 +153,15 @@ function item:CallFunction(szKey, bNetwork)
 
 		if bNetwork then
 			if SERVER then
-				netstream.Start(self:Owner(), "CallFunction", self:GetID(), szKey)
+				net.Start("NetworkItemFunction")
+					net.WriteUInt(self:GetID(), 32)
+					net.WriteString(szKey)
+				net.Send(self:GetInventory():get_owner())
 			else
-				netstream.Start("ItemCallFunction", self:GetID(), szKey)
+				net.Start("NetworkItemFunction")
+					net.WriteUInt(self:GetID(), 32)
+					net.WriteString(szKey)
+				net.SendToServer()
 			end
 		end
 
@@ -174,78 +180,65 @@ function item:CallFunction(szKey, bNetwork)
 end
 
 function item:CanDrop()
-
-	return true;
-
+	return true
 end
 
 function item:DropItem(network)
+	if !self:CanDrop() then return end
 
-	if( !self:CanDrop() ) then return end
-	if( CLIENT ) then
-
-		self.CharID = 0;
-		self:Owner().Inventory[self:GetID()] = nil;
-		self.owner = nil;
-		GAMEMODE.g_ItemTable[self:GetID()] = nil;
-
+	self:GetInventory():remove(self)
+	if CLIENT then
+		zonecontrol.items.list[id] = nil
 	end
 
-	self.x = -1
-	self.y = -1
-
-	if( SERVER ) then
-
+	if SERVER then
 		if network then
-			netstream.Start(self:Owner(), "DropItem", self:GetID())
+			net.Start("NetworkItemDrop")
+				net.WriteUInt(self:GetID(), 32)
+			net.Send(self:GetInventory():get_owner())
 		end
 
 		kingston.log.write("items", "[%s (%s)(%s)] dropped item %s [ID: %d]", self:Owner():RPName(), self:Owner():Nick(), self:Owner():SteamID(), self:GetName(), self:GetID())
 
-		local ent = GAMEMODE:DropItem( self );
+		local ent = GAMEMODE:DropItem(self)
 		return ent
-
 	end
-
 end
 
+if SERVER then
+	util.AddNetworkString("NetworkItemUnload")
+end
 function item:RemoveItem(network)
-
-	if( SERVER ) then
-
-		self:DeleteItem();
+	if SERVER then
+		self:DeleteItem()
 
 		if network then
-			netstream.Start(self:Owner(), "RemoveItem", self:GetID())
+			net.Start("NetworkItemUnload")
+				net.WriteUInt(self:GetID(), 32)
+			net.Send(self:GetInventory():get_owner())
 		end
-
 	end
 
 	if self.OnDeleted then
 		self:OnDeleted()
 	end
 
-	GAMEMODE.g_ItemTable[self:GetID()] = nil;
+	zonecontrol.items.list[self:GetID()] = nil
+	if not self:GetInventory().world then
+		self:GetInventory():remove(self)
 
-	if self:Owner() and self:Owner():IsValid() and self:Owner():IsPlayer() then
-		self:Owner().Inventory[self:GetID()] = nil;
-
-		hook.Run("ItemDropped", self:Owner(), self)
+		hook.Run("ItemDropped", self:GetInventory():get_owner(), self)
 	end
 
-	setmetatable( self, nil );
-	self = nil;
-
+	setmetatable(self, nil)
+	self = nil
 end
 
 function item:OnNewCreation()
-
 end
 
 function item:DynamicFunctions()
-
-	return {};
-
+	return {}
 end
 
 -- return true here to refresh the inventory
@@ -325,8 +318,6 @@ function item:SaveNewObject(callback)
 		}
 
 		table.Merge(self, insertTable)
-
-		GAMEMODE.g_ItemTable[id] = self
 
 		if self.OnNewCreation then
 			self:OnNewCreation()

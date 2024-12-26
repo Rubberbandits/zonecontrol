@@ -45,6 +45,8 @@ function inventory:set_owner(id)
 end
 
 function inventory:get_owner()
+	if not self.owner then return end
+
 	// TODO: Implement player list by character ID
 	for _,ply in pairs(player.GetHumans()) do
 		if ply.CharID and ply:CharID() == self.owner then
@@ -65,6 +67,20 @@ function inventory:unload()
 	end
 
 	zonecontrol.inventory.list[self.id] = nil
+end
+
+function inventory:can_access(ply)
+	if not self.owner then return true end
+
+	return ply:CharID() == self.owner
+end
+
+function inventory:get_weight()
+	local weight = 0
+	for _,item in pairs(self.items) do
+		weight = weight + item:GetWeight()
+	end
+	return weight
 end
 
 setmetatable(inventory, {__call = inventory.__call})

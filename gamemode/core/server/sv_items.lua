@@ -33,6 +33,10 @@ function kingston.item.approve_gm_item(id)
 	kingston.item.item_requests[id] = nil
 end
 
+zonecontrol = zonecontrol or {}
+zonecontrol.item = zonecontrol.item or {}
+zonecontrol.item.list = zonecontrol.item.list or {}
+
 /* Gamemode Hooks */
 
 function GM:DropItem( s_Item )
@@ -143,8 +147,6 @@ function GM:MoneyGiven(giver, receiver, amount)
 	kingston.log.write("items", "Player %s (%s) has given %s (%s) %d rubles.", giver:RPName(), giver:Nick(), receiver:RPName(), receiver:Nick(), amount)
 end
 
-/* Networking */
-
 hook.Add("CanPickup", "CC_HiddenCheck", function(ply, item_object, item_ent)
 	if( item_ent:GetNoDraw() and !ply:IsAdmin() ) then
 		return false
@@ -153,47 +155,45 @@ hook.Add("CanPickup", "CC_HiddenCheck", function(ply, item_object, item_ent)
 	return true
 end)
 
-netstream.Hook( "ItemCallFunction", function( ply, s_nID, s_szKey )
+/* Networking */
 
-	local s_Item = ply:FindItemByID( s_nID );
-	if( s_Item ) then
+util.AddNetworkString("NetworkItemFunction")
 
-		s_Item:CallFunction( s_szKey );
+local function NetworkItemFunction(len, ply)
+	local item_id = net.ReadUInt(32)
+	local key = net.ReadString()
 
+	local item = zonecontrol.item.list[item_id]
+	if item and item:GetInventory():can_access() then
+		item:CallFunction(key)
 	end
+end
+net.Receive("NetworkItemFunction", NetworkItemFunction)
 
+util.AddNetworkString("NetworkItemDynamicFunction")
+local function NetworkItemDynamicFunction(len, ply)
+	local item_id = net.ReadUInt(32)
+	local key = net.ReadString()
 
-end );
+	local item = zonecontrol.item.list[item_id]
+	if item and item:GetInventory():can_access() and item.DynamicFunctions then
+		local func_data = item:DynamicFunctions()[key]
 
-netstream.Hook( "ItemCallDynamicFunction", function( ply, s_nID, s_nFuncKey )
-
-	local s_Item = ply:FindItemByID( s_nID );
-
-	if( s_Item and s_Item.DynamicFunctions ) then
-
-		local struct = s_Item:DynamicFunctions()[s_nFuncKey];
-
-		if( struct.CanRun( s_Item ) ) then
-
-			struct.OnUse( s_Item );
-
+		if func_data.CanRun( item ) then
+			func_data.OnUse( item )
 		end
-
 	end
+end
+net.Receive("NetworkItemDynamicFunction", NetworkItemDynamicFunction)
 
-end );
-
-netstream.Hook( "ItemDrop", function( ply, s_nID )
-
-	local s_Item = ply:FindItemByID( s_nID );
-
-	if( s_Item ) then
-
-		s_Item:DropItem();
-
+util.AddNetworkString("NetworkItemDrop")
+local function NetworkItemDrop(len, ply)
+	local item_id = net.ReadUInt(32)
+	local item = zonecontrol.item.list[item_id]
+	if item and item:GetInventory():can_access() then
+		item:DropItem()
 	end
-
-end );
+end
 
 netstream.Hook("RetrieveDummyItems", function(ply)
 	local transmittedItems = {}
@@ -236,14 +236,6 @@ netstream.Hook("RequestItemUpgrade", function(ply, nItemID, szUpgrade)
 	if ItemObj and Upgrade then
 		if Upgrade.CanUpgrade(Upgrade, ItemObj) then
 			Upgrade.OnUpgrade(Upgrade, ItemObj)
-		end
-	end
-end)
-
-hook.Add("PlayerDisconnected", "STALKER.ItemDisconnected", function(ply)
-	for k,v in next, GAMEMODE.g_ItemTable do
-		if v:Owner() == ply and v.OnDisconnected then
-			v:OnDisconnected()
 		end
 	end
 end)
@@ -383,6 +375,10 @@ local function nUnhideItem( ply, index )
 	end
 end
 netstream.Hook( "nUnhideItem", nUnhideItem )
+
+/*
+	Database
+*/
 
 local ItemTable = {
 	{ "Inventory", "INT" },

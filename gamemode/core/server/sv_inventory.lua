@@ -118,3 +118,12 @@ end
 function zonecontrol.inventory.put(id, item)
 
 end
+
+hook.Add("PlayerDisconnected", "HandlePlayerInventory", function(ply)
+	for id,inventory in pairs(zonecontrol.inventory.list) do
+		if inventory.owner == ply:CharID() then
+			inventory:unload()
+			zonecontrol.inventory.list[id] = nil
+		end
+	end
+end)
