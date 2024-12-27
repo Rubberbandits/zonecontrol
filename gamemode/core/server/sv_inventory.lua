@@ -4,6 +4,8 @@ zonecontrol.inventory.list = zonecontrol.inventory.list or {}
 zonecontrol.inventory.list[0] = zonecontrol.meta.inventory(0)
 zonecontrol.inventory.list[0].world = true
 
+zonecontrol.inventory.by_charid = zonecontrol.inventory.by_charid or {}
+
 local InventoryTable = {
 	{"Owner", "INT", "0"}
 }
@@ -56,6 +58,7 @@ function zonecontrol.inventory.fetch(id, callback)
 			local inventory = zonecontrol.meta.inventory(id)
 			if row.Owner > 0 then
 				inventory:set_owner(row.Owner)
+				zonecontrol.inventory.by_charid[row.Owner] = inventory
 			end
 
 			zonecontrol.inventory.list[id] = inventory

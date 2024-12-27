@@ -76,14 +76,6 @@ netstream.Hook("CallFunction", function(id, key)
 	end
 end)
 
-netstream.Hook("DropItem", function(id)
-	if !LocalPlayer().Inventory then return end
-	local item = LocalPlayer().Inventory[id]
-	if item then
-		item:DropItem()
-	end
-end)
-
 netstream.Hook("UnloadItem", function(id)
 	if !LocalPlayer().Inventory then return end
 	local item = LocalPlayer().Inventory[id]

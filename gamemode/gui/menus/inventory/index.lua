@@ -37,16 +37,15 @@ function zonecontrol.inventory.open()
 	inventory:SetSize(ScrW() * 0.263, ScrH())
 	inventory:MakePopup()
 	inventory:SetSkin("Inventory")
-
-	timer.Simple(0, function()
+	inventory.grid.OnInitialLayout = function(grid)
 		for _, inv in pairs(zonecontrol.inventory.list) do
 			if inv.owner and inv.owner == LocalPlayer():CharID() then
 				for _, item in pairs(inv:get_items()) do
-					inventory.grid:AddItem(item:GetClass(), nil, nil, item)
+					grid:AddItem(item:GetClass(), nil, nil, item)
 				end
 
 				break
 			end
 		end
-	end)
+	end
 end

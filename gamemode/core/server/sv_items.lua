@@ -39,17 +39,12 @@ zonecontrol.item.list = zonecontrol.item.list or {}
 
 /* Gamemode Hooks */
 
-function GM:DropItem( s_Item )
-
-	if( s_Item ) then
-
-		local ply = s_Item:Owner()
-		local item_ent = self:CreateItemEntity( s_Item, s_Item:Owner():EyePos() + s_Item:Owner():GetAimVector() * 50, Angle() );
-		hook.Run( "ItemDropped", ply, s_Item );
+function GM:DropItem(item, ply)
+	if item then
+		local item_ent = self:CreateItemEntity(item, ply:EyePos() + ply:GetAimVector() * 50, Angle())
+		hook.Run("ItemDropped", ply, item)
 		return item_ent
-
 	end
-
 end
 
 -- when a previous item object does not exist.
@@ -190,10 +185,11 @@ util.AddNetworkString("NetworkItemDrop")
 local function NetworkItemDrop(len, ply)
 	local item_id = net.ReadUInt(32)
 	local item = zonecontrol.item.list[item_id]
-	if item and item:GetInventory():can_access() then
+	if item and item:GetInventory():can_access(ply) then
 		item:DropItem()
 	end
 end
+net.Receive("NetworkItemDrop", NetworkItemDrop)
 
 netstream.Hook("RetrieveDummyItems", function(ply)
 	local transmittedItems = {}

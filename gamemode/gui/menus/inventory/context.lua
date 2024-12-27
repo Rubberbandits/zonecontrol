@@ -49,7 +49,10 @@ function PANEL:Setup()
 		end
 
 		self:AddOption("drop", function()
-			netstream.Start("ItemDrop", item:GetID())
+			net.Start("NetworkItemDrop")
+				net.WriteUInt(item:GetID(), 32)
+			net.SendToServer()
+
 			item:DropItem()
 		end)
 	end

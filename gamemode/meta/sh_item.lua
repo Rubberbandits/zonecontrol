@@ -21,10 +21,6 @@ function item:New(metaitem, id, vars)
 		itemdata[k] = v
 	end
 
-	if id then
-		itemdata["id"] = id
-	end
-
 	if vars and istable(vars) then
 		itemdata["Vars"] = vars
 	else
@@ -33,12 +29,13 @@ function item:New(metaitem, id, vars)
 
 	setmetatable(itemdata, item)
 
-	if itemdata.Initialize then
-		itemdata:Initialize()
+	if id then
+		zonecontrol.item.list[id] = itemdata
+		itemdata.id = id
 	end
 
-	if id then
-		zonecontrol.items.list[id] = self
+	if itemdata.Initialize then
+		itemdata:Initialize()
 	end
 
 	return itemdata
@@ -184,23 +181,24 @@ function item:CanDrop()
 end
 
 function item:DropItem(network)
-	if !self:CanDrop() then return end
+	if not self:CanDrop() then return end
 
 	self:GetInventory():remove(self)
 	if CLIENT then
-		zonecontrol.items.list[id] = nil
+		zonecontrol.item.list[self:GetID()] = nil
 	end
 
 	if SERVER then
+		local owner = self:GetInventory():get_owner()
 		if network then
 			net.Start("NetworkItemDrop")
 				net.WriteUInt(self:GetID(), 32)
-			net.Send(self:GetInventory():get_owner())
+			net.Send(owner)
 		end
 
-		kingston.log.write("items", "[%s (%s)(%s)] dropped item %s [ID: %d]", self:Owner():RPName(), self:Owner():Nick(), self:Owner():SteamID(), self:GetName(), self:GetID())
+		kingston.log.write("items", "[%s (%s)(%s)] dropped item %s [ID: %d]", owner:RPName(), owner:Nick(), owner:SteamID(), self:GetName(), self:GetID())
 
-		local ent = GAMEMODE:DropItem(self)
+		local ent = GAMEMODE:DropItem(self, owner)
 		return ent
 	end
 end
@@ -223,7 +221,7 @@ function item:RemoveItem(network)
 		self:OnDeleted()
 	end
 
-	zonecontrol.items.list[self:GetID()] = nil
+	zonecontrol.item.list[self:GetID()] = nil
 	if not self:GetInventory().world then
 		self:GetInventory():remove(self)
 

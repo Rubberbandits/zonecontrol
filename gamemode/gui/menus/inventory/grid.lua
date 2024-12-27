@@ -152,6 +152,11 @@ function PANEL:PerformLayout(w, h)
 	for idx,item in pairs(self.items) do
 		self:SetGridsByBounds(item, item.x, item.y, item.w, item.h)
 	end
+
+	if not self.laid_out and self.OnInitialLayout then
+		self:OnInitialLayout()
+		self.laid_out = true
+	end
 end
 
 function PANEL:OnMousePressed(keyCode)

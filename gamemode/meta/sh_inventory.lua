@@ -35,6 +35,8 @@ end
 
 function inventory:remove(item)
 	local id = item:GetID()
+	print(id)
+	PrintTable(self.items)
 	if not self.items[id] then error("Attempted to remove non-existent item from inventory!") end
 
 	self.items[id] = nil

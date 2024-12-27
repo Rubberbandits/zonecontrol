@@ -1,6 +1,6 @@
 zonecontrol = zonecontrol or {}
-zonecontrol.items = zonecontrol.items or {}
-zonecontrol.items.list = zonecontrol.items.list or {}
+zonecontrol.item = zonecontrol.item or {}
+zonecontrol.item.list = zonecontrol.item.list or {}
 
 GM.DummyItems = GM.DummyItems or {};
 
@@ -39,7 +39,7 @@ local function NetworkItemVar()
 	local key = net.ReadString()
 	local value = net.ReadType()
 
-	local item = zonecontrol.items.list[id]
+	local item = zonecontrol.item.list[id]
 	if item then
 		item:SetVar(key, value)
 	end
@@ -50,7 +50,7 @@ local function NetworkItemFunction()
 	local id = net.ReadUInt(32)
 	local key = net.ReadString()
 
-	local item = zonecontrol.items.list[id]
+	local item = zonecontrol.item.list[id]
 	if item then
 		item:CallFunction(key)
 	end
@@ -60,7 +60,7 @@ net.Receive("NetworkItemFunction", NetworkItemFunction)
 local function NetworkItemDrop()
 	local id = net.ReadUInt(32)
 
-	local item = zonecontrol.items.list[id]
+	local item = zonecontrol.item.list[id]
 	if item then
 		item:DropItem()
 	end
@@ -70,7 +70,7 @@ net.Receive("NetworkItemDrop", NetworkItemDrop)
 local function NetworkItemUnload()
 	local id = net.ReadUInt(32)
 
-	local item = zonecontrol.items.list[id]
+	local item = zonecontrol.item.list[id]
 	if item then
 		item:OnUnload()
 	end
